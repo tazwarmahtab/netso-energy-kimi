@@ -52,8 +52,8 @@ function Hero() {
           Rooftop Solar Utility · Dhaka & Chattogram Industrial Belts
         </motion.p>
 
-        <h1 className="font-display max-w-5xl text-[15.5vw] text-cream sm:text-8xl md:text-[7rem] lg:text-[8.25rem]">
-          <Words text="The roof. Re-wired." accent={0} delay={0.35} />
+        <h1 className="font-display max-w-5xl text-[13vw] text-cream sm:text-7xl md:text-[6.5rem] lg:text-[7.5rem]">
+          <Words text="Your roof. Now an energy asset." accent={0} delay={0.35} />
         </h1>
 
         <motion.p
