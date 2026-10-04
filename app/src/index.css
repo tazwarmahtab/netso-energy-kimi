@@ -13,28 +13,28 @@
     --card-foreground: 0 0% 7%;
     --popover: 42 100% 96%;
     --popover-foreground: 0 0% 7%;
-    --primary: 25 100% 48%;
+    --primary: 28 92% 44%;
     --primary-foreground: 42 100% 96%;
     --secondary: 38 56% 88%;
     --secondary-foreground: 0 0% 7%;
-    --muted: 38 56% 88%;
-    --muted-foreground: 30 6% 57%;
+    --muted: 38 45% 88%;
+    --muted-foreground: 28 10% 38%;
     --accent: 38 56% 88%;
     --accent-foreground: 0 0% 7%;
     --destructive: 8 72% 40%;
     --destructive-foreground: 42 100% 96%;
-    --border: 33 30% 82%;
-    --input: 33 30% 82%;
-    --ring: 25 100% 48%;
+    --border: 33 25% 80%;
+    --input: 33 25% 80%;
+    --ring: 28 92% 44%;
     --radius: 0.75rem;
     --sidebar-background: 42 100% 96%;
     --sidebar-foreground: 0 0% 7%;
-    --sidebar-primary: 25 100% 48%;
+    --sidebar-primary: 28 92% 44%;
     --sidebar-primary-foreground: 42 100% 96%;
     --sidebar-accent: 38 56% 88%;
     --sidebar-accent-foreground: 0 0% 7%;
-    --sidebar-border: 33 30% 82%;
-    --sidebar-ring: 25 100% 48%;
+    --sidebar-border: 33 25% 80%;
+    --sidebar-ring: 28 92% 44%;
   }
 }
 
@@ -84,6 +84,7 @@
     font-weight: 560;
     letter-spacing: -0.02em;
     line-height: 0.95;
+    font-variant-numeric: tabular-nums;
   }
 
   .font-display-wide {
@@ -92,15 +93,17 @@
     font-weight: 540;
     letter-spacing: -0.02em;
     line-height: 0.95;
+    font-variant-numeric: tabular-nums;
   }
 
-  /* Mono eyebrow label: always uppercase, tracked */
+  /* Mono eyebrow label: clean, tracked institutional metadata */
   .eyebrow {
     font-family: "Space Mono", ui-monospace, monospace;
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     line-height: 1.35;
+    font-variant-numeric: tabular-nums;
   }
 
   /* Daylight spectrum — diagonal dawn bands */

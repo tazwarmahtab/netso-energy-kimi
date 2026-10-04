@@ -43,17 +43,17 @@ function Hero() {
         style={{ opacity: fade }}
       >
         <motion.p
-          className="eyebrow mb-6 flex items-center gap-2 text-sun"
+          className="eyebrow mb-6 flex items-center gap-2 text-sun/90"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.7, ease: EASE }}
         >
-          <span className="inline-block h-1.5 w-1.5 animate-pulse-soft rounded-full bg-sun" />
-          Energy as a service · Bangladesh
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-sun/80" />
+          Rooftop Solar Utility · Dhaka & Chattogram Industrial Belts
         </motion.p>
 
         <h1 className="font-display max-w-5xl text-[15.5vw] text-cream sm:text-8xl md:text-[7rem] lg:text-[8.25rem]">
-          <Words text="The roof. Re-wired." accent={2} delay={0.35} />
+          <Words text="The roof. Re-wired." accent={0} delay={0.35} />
         </h1>
 
         <motion.p
@@ -74,7 +74,7 @@ function Hero() {
         >
           <a
             href="#how-it-works"
-            className="inline-flex h-[52px] items-center gap-2 rounded-full bg-orange px-7 text-[15.5px] font-semibold text-cream transition-transform duration-300 hover:scale-[1.04] active:scale-[0.97]"
+            className="inline-flex h-[52px] items-center gap-2 rounded-full bg-orange px-7 text-[15.5px] font-semibold text-cream transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
           >
             See if your roof qualifies
             <ArrowRight className="h-4 w-4" />
@@ -89,12 +89,11 @@ function Hero() {
       </motion.div>
 
       <motion.div
-        className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-cream/60"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-cream/40"
+        style={{ opacity: fade }}
         aria-hidden="true"
       >
-        <ArrowDown className="h-5 w-5" />
+        <ArrowDown className="h-4 w-4" />
       </motion.div>
     </section>
   );
@@ -106,8 +105,8 @@ const TABS = [
     id: "save",
     eyebrow: "save",
     title: "Cut your electricity cost by 28–35%",
-    accent: 2,
-    copy: "A Netso PPA rate of ৳10.00–10.50/kWh replaces grid power that now peaks at ৳18.43/kWh. One predictable monthly bill — below the utility tariff from day one.",
+    accent: 0,
+    copy: "A Netso PPA rate of ৳10.00/kWh replaces grid power that now peaks at ৳18.43/kWh. One predictable monthly bill — below the utility tariff from day one.",
     img: solarRoof,
     alt: "A pergola-style solar canopy on a factory rooftop at dusk, warm sky visible between the panels",
   },
@@ -115,7 +114,7 @@ const TABS = [
     id: "protect",
     eyebrow: "protect",
     title: "Lock your tariff for 20 years",
-    accent: 2,
+    accent: 0,
     copy: "Grid tariffs jumped 16.7% in a single BERC order. Your PPA rate doesn't move. Budget certainty for two decades, whatever the grid does next.",
     img: batteryWall,
     alt: "Smart inverters and electrical cabinets inside a factory electrical room",
@@ -124,7 +123,7 @@ const TABS = [
     id: "control",
     eyebrow: "control",
     title: "Track every kWh in NEOS",
-    accent: 2,
+    accent: 0,
     copy: "Generation, savings, automated PPA invoicing and I-REC certificates — metered to class 0.2s accuracy, in real time, from anywhere.",
     img: null,
     alt: "",
@@ -144,9 +143,19 @@ function Benefits() {
               <button
                 key={t.id}
                 role="tab"
+                tabIndex={active === i ? 0 : -1}
                 aria-selected={active === i}
                 onClick={() => setActive(i)}
-                className={`eyebrow h-11 rounded-full border px-5 transition-all duration-300 ${
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowRight") {
+                    e.preventDefault();
+                    setActive((i + 1) % TABS.length);
+                  } else if (e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    setActive((i - 1 + TABS.length) % TABS.length);
+                  }
+                }}
+                className={`eyebrow h-11 rounded-full border px-5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                   active === i
                     ? "border-ink bg-ink text-cream"
                     : "border-ink/20 text-ink/60 hover:border-ink/50 hover:text-ink"
@@ -163,10 +172,10 @@ function Benefits() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={tab.id}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.55, ease: EASE }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.45, ease: EASE }}
               >
                 <h2 className="font-display max-w-xl text-5xl text-ink md:text-7xl">
                   <Words text={tab.title} accent={tab.accent} once={false} />
@@ -187,10 +196,10 @@ function Benefits() {
               <motion.div
                 key={tab.id}
                 className="absolute inset-0"
-                initial={{ opacity: 0, scale: 1.06 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.7, ease: EASE }}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ type: "spring", stiffness: 340, damping: 30 }}
               >
                 {tab.img ? (
                   <img src={tab.img} alt={tab.alt} className="h-full w-full object-cover" />
@@ -257,12 +266,12 @@ function StepVisual({ kind }: { kind: string }) {
           </div>
           <div className="flex items-center justify-between gap-10">
             <span className="text-[13px] font-semibold text-ink">Netso PPA</span>
-            <span className="font-mono text-[15px] font-bold text-orange">৳10.50</span>
+            <span className="font-mono text-[15px] font-bold text-orange">৳10.00</span>
           </div>
           <div className="h-px bg-ink/10" />
           <div className="flex items-center justify-between gap-10">
             <span className="eyebrow !text-[10px] text-ink/50">You save</span>
-            <span className="font-mono text-[15px] font-bold text-ink">32%</span>
+            <span className="font-mono text-[15px] font-bold text-ink">35%</span>
           </div>
         </div>
       </div>
@@ -279,7 +288,7 @@ function HowItWorks() {
         </FadeUp>
         <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:items-end">
           <h2 className="font-display text-5xl text-ink md:text-7xl">
-            <Words text="A new way to power industry" accent={2} />
+            <Words text="A new way to power industry" accent={0} />
           </h2>
           <FadeUp delay={0.15}>
             <p className="max-w-md text-[16.5px] leading-relaxed text-ink/70 lg:ml-auto">
@@ -344,10 +353,10 @@ function Why() {
       />
       <div className="relative mx-auto max-w-[1440px] px-5 md:px-10">
         <FadeUp>
-          <p className="eyebrow text-orange">why netso</p>
+          <p className="eyebrow text-sun">why netso</p>
         </FadeUp>
         <h2 className="font-display mt-6 max-w-5xl text-[11.5vw] text-cream sm:text-7xl md:text-8xl">
-          <Words text="The grid can’t carry Bangladesh’s ambition" accent={2} accentClassName="spectrum-text" />
+          <Words text="The grid can’t carry Bangladesh’s ambition" accent={0} />
         </h2>
 
         <div className="mt-16 md:mt-24">
@@ -392,7 +401,7 @@ function Network() {
             <h2 className="font-display mt-6 max-w-xl text-4xl text-ink md:text-6xl">
               <Words
                 text="Netso is building Bangladesh’s distributed energy network, one rooftop at a time"
-                accent={4}
+                accent={0}
               />
             </h2>
           </div>
