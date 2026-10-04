@@ -13,6 +13,9 @@ import solarRoof from "../assets/solar-roof-dusk.jpg";
 import batteryWall from "../assets/battery-wall.jpg";
 import panels from "../assets/panels-closeup.jpg";
 import aerial from "../assets/neighborhood-aerial.jpg";
+import pergolaVideo from "../assets/pergola-dusk.mp4";
+import pergolaPoster from "../assets/pergola-dusk-poster.jpg";
+import netsoMarkCream from "../assets/netso-mark-cream.png";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -20,80 +23,146 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
+  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
   const fade = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
 
   return (
-    <section ref={ref} className="relative flex min-h-[100svh] flex-col overflow-hidden bg-ink text-cream">
-      <motion.div className="absolute inset-0" style={{ y: imgY, scale: imgScale }}>
-        <img
-          src={heroHouse}
-          alt="A Bangladeshi industrial factory rooftop in Chattogram at dusk, covered by a pergola-style solar canopy"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/72 via-ink/25 to-ink/85" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/45 via-transparent to-transparent" />
+    <section ref={ref} className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden bg-ink text-cream">
+      {/* Living Video Background */}
+      <motion.div className="absolute inset-0" style={{ y: imgY }}>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={pergolaPoster}
+          className="h-full w-full object-cover object-center"
+        >
+          <source src={pergolaVideo} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/35 to-ink/95" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/40 to-transparent" />
       </motion.div>
 
-      <StatChips />
+      <div />
 
+      {/* Hero Content Grid */}
       <motion.div
-        className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-end px-5 pb-16 pt-32 md:px-10 md:pb-20"
+        className="relative z-10 mx-auto w-full max-w-[1440px] px-5 pb-16 pt-32 md:px-10 md:pb-20"
         style={{ opacity: fade }}
       >
-        <motion.p
-          className="eyebrow mb-6 flex items-center gap-2 text-sun/90"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25, duration: 0.7, ease: EASE }}
-        >
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-sun/80" />
-          Rooftop Solar Utility · Dhaka & Chattogram Industrial Belts
-        </motion.p>
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
+          {/* Left Column: Headline & Value Proposition */}
+          <div className="lg:col-span-7">
+            <motion.p
+              className="eyebrow mb-6 flex items-center gap-2 text-sun/90"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.7, ease: EASE }}
+            >
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-sun/80" />
+              Commercial & Institutional Solar Pergolas · Bangladesh
+            </motion.p>
 
-        <h1 className="font-display max-w-5xl text-[13vw] text-cream sm:text-7xl md:text-[6.5rem] lg:text-[7.5rem]">
-          <Words text="Your roof. Now an energy asset." accent={0} delay={0.35} />
-        </h1>
+            <h1 className="font-display max-w-4xl text-[12vw] text-cream sm:text-7xl md:text-[5.5rem] lg:text-[6.25rem]">
+              <Words text="Your roof. Now an energy asset." accent={0} delay={0.35} />
+            </h1>
 
-        <motion.p
-          className="mt-7 max-w-md text-[16.5px] leading-relaxed text-cream/85 md:text-lg"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.85, duration: 0.8, ease: EASE }}
-        >
-          Rooftop solar, financed, built and operated by Netso. ৳0 upfront. A power bill below the grid
-          tariff, locked in for 20 years.
-        </motion.p>
+            <motion.p
+              className="mt-6 max-w-xl text-[16.5px] leading-relaxed text-cream/85 md:text-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.8, ease: EASE }}
+            >
+              A stunning architectural terrace that pays for itself. Financed, engineered and maintained by
+              Netso at ৳0 upfront CAPEX — cutting your electricity bills by 35% under a 20-year guaranteed PPA.
+            </motion.p>
 
-        <motion.div
-          className="mt-9 flex flex-wrap items-center gap-3"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.8, ease: EASE }}
-        >
-          <a
-            href="#how-it-works"
-            className="inline-flex h-[52px] items-center gap-2 rounded-full bg-orange px-7 text-[15.5px] font-semibold text-cream transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
+            <motion.div
+              className="mt-8 flex flex-wrap items-center gap-3"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.8, ease: EASE }}
+            >
+              <a
+                href="#how-it-works"
+                className="inline-flex h-[52px] items-center gap-2 rounded-full bg-orange px-7 text-[15.5px] font-semibold text-cream transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
+              >
+                Request feasibility study
+                <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+                href="#benefits"
+                className="glass-chip inline-flex h-[52px] items-center rounded-full px-7 text-[15.5px] font-medium text-cream transition-colors duration-300 hover:bg-cream/10"
+              >
+                How it works
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Live Glassmorphic Telemetry Card (Mockup brought to life) */}
+          <motion.div
+            className="lg:col-span-5 lg:justify-self-end w-full max-w-md"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8, ease: EASE }}
           >
-            See if your roof qualifies
-            <ArrowRight className="h-4 w-4" />
-          </a>
-          <a
-            href="#benefits"
-            className="glass-chip inline-flex h-[52px] items-center rounded-full px-7 text-[15.5px] font-medium text-cream transition-colors duration-300 hover:bg-cream/10"
-          >
-            How it works
-          </a>
-        </motion.div>
+            <div className="relative overflow-hidden rounded-3xl border border-cream/20 bg-ink/40 p-6 md:p-8 backdrop-blur-2xl shadow-2xl text-cream">
+              <div className="flex items-center justify-between border-b border-cream/10 pb-4">
+                <span className="eyebrow text-sun">PPA Commercial Model</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-cream/10 px-3 py-1 text-[11px] font-medium text-cream/90 backdrop-blur-md">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Live Benchmark
+                </span>
+              </div>
+
+              <div className="mt-5 space-y-4">
+                <div>
+                  <p className="eyebrow text-cream/50">Current Grid Cost</p>
+                  <div className="mt-1 flex items-baseline gap-2">
+                    <span className="font-mono text-2xl font-semibold text-cream/40 line-through">৳ 15.36</span>
+                    <span className="text-[13px] text-cream/50">/kWh peak</span>
+                  </div>
+                </div>
+
+                <div className="border-t border-cream/10 pt-4">
+                  <p className="eyebrow text-sun">Our Solar PPA Rate</p>
+                  <div className="mt-1 flex items-baseline gap-2">
+                    <span className="font-mono text-4xl font-bold text-cream">৳ 10.00</span>
+                    <span className="text-sm text-cream/70">/kWh locked for 20 yrs</span>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl bg-cream/5 p-4 border border-cream/10 flex items-center justify-between">
+                  <div>
+                    <p className="eyebrow text-cream/60">Savings</p>
+                    <p className="font-mono text-3xl font-extrabold text-sun">35%</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="eyebrow text-cream/60">Customer CAPEX</p>
+                    <p className="font-mono text-2xl font-bold text-cream">৳ 0</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 flex items-center gap-3 border-t border-cream/10 pt-4">
+                <img src={netsoMarkCream} alt="Netso Mark" className="h-6 w-auto opacity-80" />
+                <div className="leading-tight">
+                  <p className="text-[13px] font-semibold text-cream">Netso Energy Ltd</p>
+                  <p className="text-[11px] text-cream/60">Commercial & Institutional Solar Infrastructure</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </motion.div>
 
       <motion.div
-        className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-cream/40"
+        className="relative z-10 pb-6 text-center text-cream/40"
         style={{ opacity: fade }}
         aria-hidden="true"
       >
-        <ArrowDown className="h-4 w-4" />
+        <ArrowDown className="mx-auto h-4 w-4" />
       </motion.div>
     </section>
   );
