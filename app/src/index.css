@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 42 100% 96%;
+    --foreground: 0 0% 7%;
+    --card: 42 100% 96%;
+    --card-foreground: 0 0% 7%;
+    --popover: 42 100% 96%;
+    --popover-foreground: 0 0% 7%;
+    --primary: 25 100% 48%;
+    --primary-foreground: 42 100% 96%;
+    --secondary: 38 56% 88%;
+    --secondary-foreground: 0 0% 7%;
+    --muted: 38 56% 88%;
+    --muted-foreground: 30 6% 57%;
+    --accent: 38 56% 88%;
+    --accent-foreground: 0 0% 7%;
+    --destructive: 8 72% 40%;
+    --destructive-foreground: 42 100% 96%;
+    --border: 33 30% 82%;
+    --input: 33 30% 82%;
+    --ring: 25 100% 48%;
+    --radius: 0.75rem;
+    --sidebar-background: 42 100% 96%;
+    --sidebar-foreground: 0 0% 7%;
+    --sidebar-primary: 25 100% 48%;
+    --sidebar-primary-foreground: 42 100% 96%;
+    --sidebar-accent: 38 56% 88%;
+    --sidebar-accent-foreground: 0 0% 7%;
+    --sidebar-border: 33 30% 82%;
+    --sidebar-ring: 25 100% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-cream text-ink font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #f66f00;
+    color: #fff7e9;
+  }
+
+  img {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  input, textarea, select {
+    caret-color: #f66f00;
+  }
+
+  :focus-visible {
+    outline: 2px solid #f66f00;
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  /* Condensed grotesque display, per brand: 95% LH, -2% LS */
+  .font-display {
+    font-family: "Archivo", "General Sans", system-ui, sans-serif;
+    font-variation-settings: "wdth" 76;
+    font-weight: 560;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+  }
+
+  .font-display-wide {
+    font-family: "Archivo", "General Sans", system-ui, sans-serif;
+    font-variation-settings: "wdth" 88;
+    font-weight: 540;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+  }
+
+  /* Mono eyebrow label: always uppercase, tracked */
+  .eyebrow {
+    font-family: "Space Mono", ui-monospace, monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    line-height: 1.35;
+  }
+
+  /* Daylight spectrum — diagonal dawn bands */
+  .spectrum {
+    background:
+      linear-gradient(115deg, rgba(17, 17, 17, 0) 40%, rgba(17, 17, 17, 0.12) 100%),
+      repeating-linear-gradient(
+        115deg,
+        #cc3d00 0%,
+        #e25400 10%,
+        #f66f00 20%,
+        #fb8c00 30%,
+        #ffab1e 40%,
+        #fccc3c 50%,
+        #ffab1e 60%,
+        #fb8c00 70%,
+        #f66f00 80%,
+        #e25400 90%,
+        #cc3d00 100%
+      );
+    background-size: 100% 100%, 220% 220%;
+  }
+
+  .spectrum-animated {
+    animation: spectrum-pan 14s ease-in-out infinite alternate;
+  }
+
+  /* Soft radial sunrise for CTA / dividers */
+  .sunrise {
+    background:
+      radial-gradient(120% 90% at 50% 115%, #fccc3c 0%, #fb8c00 26%, #f66f00 45%, #b03a00 68%, #3d1f00 100%);
+  }
+
+  .spectrum-text {
+    background: linear-gradient(100deg, #fccc3c 0%, #fb8c00 35%, #f66f00 60%, #ff9d2e 85%, #fccc3c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.34'/%3E%3C/svg%3E");
+  }
+
+  .glass-chip {
+    background: rgba(17, 17, 17, 0.42);
+    -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    backdrop-filter: blur(14px) saturate(1.3);
+    border: 1px solid rgba(255, 247, 233, 0.14);
+  }
+
+  .glass-chip-light {
+    background: rgba(255, 247, 233, 0.72);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+    border: 1px solid rgba(17, 17, 17, 0.08);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .link-underline:hover {
+    background-size: 100% 1px;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  .text-stroke-cream {
+    -webkit-text-stroke: 1px rgba(255, 247, 233, 0.4);
+    color: transparent;
+  }
+}
+
+@keyframes spectrum-pan {
+  from {
+    background-position: 0% 0%, 0% 50%;
+  }
+  to {
+    background-position: 0% 0%, 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
