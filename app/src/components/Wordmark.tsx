@@ -29,33 +29,31 @@ export function SunMark({
   );
 }
 
+/**
+ * Modernist Typographic Wordmark: NETSO°ENERGY
+ * Directly matched to the Swiss/modernist design specification.
+ */
 export function Wordmark({
   className = "",
   dark = false,
-  showTagline = false,
+  showMark = false,
 }: {
   className?: string;
   dark?: boolean;
+  showMark?: boolean;
   showTagline?: boolean;
 }) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <SunMark variant={dark ? "ink" : "yellow"} className="h-[1.15em] w-[1.15em] shrink-0" />
-      <span className="inline-flex flex-col">
-        <span
-          className={`font-display leading-none tracking-[-0.02em] ${dark ? "text-ink" : "text-cream"}`}
-          style={{ fontSize: "1.3em", fontWeight: 700 }}
-        >
-          NETSO<span className="text-gold font-bold ml-0.5">°</span>
-          <span className={`text-[0.8em] font-normal tracking-[0.05em] ml-1.5 ${dark ? "text-ink/60" : "text-cream/60"}`}>
-            ENERGY
-          </span>
-        </span>
-        {showTagline && (
-          <span className={`font-mono text-[8px] tracking-[0.2em] uppercase mt-0.5 ${dark ? "text-ink/40" : "text-cream/40"}`}>
-            Rooftop Utility
-          </span>
-        )}
+    <span className={`inline-flex items-center gap-2 select-none tracking-tight ${className}`}>
+      {showMark && (
+        <SunMark variant={dark ? "ink" : "yellow"} className="h-4 w-4 shrink-0" />
+      )}
+      <span
+        className={`font-display text-[15px] sm:text-[17px] font-extrabold uppercase tracking-tight transition-colors ${
+          dark ? "text-ink" : "text-cream"
+        }`}
+      >
+        NETSO<span className="text-gold mx-[0.5px]">°</span>ENERGY
       </span>
     </span>
   );
