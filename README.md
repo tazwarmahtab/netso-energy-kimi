@@ -17,11 +17,11 @@
 
 Netso Energy finances, constructs, and operates utility-grade architectural solar pergolas for commercial and industrial facilities across Bangladesh under a **Build-Own-Operate (BOO / RESCO)** model.
 
-- **Client CAPEX:** **৳0 Upfront** — 100% financed and insured by Netso Energy.
-- **Commercial Benchmark:** **৳10.00/kWh** fixed 20-year PPA (CGS 80 kWp flagship executed benchmark) vs. **৳15.36–18.43/kWh** utility peak tariffs (35% instant savings).
-- **The Beth Doctrine:** Floating 30% discount to Bangladesh Power Development Board (PDB) MT-2 industrial tariff (`PDB × 0.70`), ensuring client power costs always stay below the grid.
+- **Client CAPEX:** **৳0 Upfront** — 100% financed and insured by Netso Energy under a 20-year IDCOL-backed agreement.
+- **Commercial Structure:** **30% Guaranteed Savings** below utility grid tariffs, delivering immediate 6-figure monthly cash savings directly to operational EBITDA.
+- **The Beth Doctrine:** Floating 30% discount to utility grid tariffs (`Utility Bill × 0.70`), ensuring client power costs always stay below the grid under all market conditions.
 - **Concessionary Capital:** Qualified for IDCOL 80% senior debt facility at 5.0%–5.5% interest, backed by sovereign green refinancing.
-- **Regulatory Framework:** SREDA Net Metering (NEM) Guidelines 2025 (90% monthly settlement credit, 10% DSM reserve) and BERC June 2026 tariff schedule.
+- **Regulatory Framework:** SREDA Net Metering (NEM) Guidelines 2025 (90% monthly settlement credit, 10% DSM reserve) and BERC industrial tariff schedules.
 - **RMG Operational Edge:** Non-penetrative standing-seam clamps (zero roof puncture), zero factory downtime during installation, 98% daytime load matching, and EU CBAM carbon audit compliance.
 
 ---
@@ -38,8 +38,8 @@ Netso Energy finances, constructs, and operates utility-grade architectural sola
 - Interactive diurnal time-of-day slider that triggers under-canopy linear architectural LEDs at dusk and night.
 
 ### 3. Beth Doctrine 25-Year CFO Simulation Engine
-- Interactive SVG modeling engine comparing PDB MT-2 escalating grid tariffs against Netso's floating 30% discount.
-- Live scenario stress tests: Baseline (৳11.50), Tariff Hike (৳15.50), Tariff Dip (৳9.50), highlighting cumulative 20-year corporate treasury savings.
+- Interactive SVG modeling engine comparing utility power bills against Netso's floating 30% discount floor.
+- Live scenario stress tests: Baseline Utility Index, Tariff Hike (+35%), Tariff Softening, highlighting cumulative 20-year corporate treasury savings with zero per-unit rate disclosure.
 
 ### 4. NEOS Utility SCADA Telemetry Terminal
 - Bankable operational telemetry interface displaying real-time power generation (64.8 kW active), Performance Ratio (81.4% PR), Class 0.2s bidirectional meter accuracy, and automated I-REC carbon certification.
