@@ -9,6 +9,7 @@ import CTASection from "../components/CTASection";
 import { FadeUp, Stagger, StaggerItem, Words } from "../components/Reveal";
 import CanvasHero from "../components/CanvasHero";
 import InstitutionalEconomics from "../components/InstitutionalEconomics";
+import ArchitecturalTransformation from "../components/ArchitecturalTransformation";
 import SolarPergola3D from "../components/SolarPergola3D";
 import FeasibilityModal from "../components/FeasibilityModal";
 import { CinematicIntro } from "../components/CinematicIntro";
@@ -383,6 +384,7 @@ export default function Home() {
         <CanvasHero onOpenAssessment={() => setIsModalOpen(true)} />
         <MarqueeTicker />
         <InstitutionalEconomics onOpenAssessment={() => setIsModalOpen(true)} />
+        <ArchitecturalTransformation onOpenAssessment={() => setIsModalOpen(true)} />
         <RMGEdgeSection onOpenFeasibility={() => setIsModalOpen(true)} />
         <section id="pergola-twin" className="relative bg-forest-dark py-24 md:py-36 text-warm border-t border-warm/10">
           <div className="mx-auto max-w-[1440px] px-5 md:px-10">
