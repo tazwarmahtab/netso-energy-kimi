@@ -31,37 +31,85 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
     canvas.width = 1280;
     canvas.height = 720;
 
-    const frames: HTMLImageElement[] = [];
+    // Preload with chunked priority queue to prevent mobile network starvation
+    const frames: HTMLImageElement[] = new Array(TOTAL_FRAMES);
+    let lastRenderedIndex = 0;
 
-    // Load first frame immediately
-    const firstImg = new Image();
-    firstImg.src = "/assets/frames/f001.jpg";
-    firstImg.onload = () => {
-      ctx.drawImage(firstImg, 0, 0, canvas.width, canvas.height);
-    };
-
-    // Preload all frames
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    const loadFrame = (i: number): HTMLImageElement => {
+      if (frames[i - 1]) return frames[i - 1];
       const img = new Image();
       const numStr = String(i).padStart(3, "0");
       img.src = `/assets/frames/f${numStr}.jpg`;
       img.decoding = "async";
-      frames.push(img);
+      frames[i - 1] = img;
+      return img;
+    };
+
+    // 1. Eagerly load first frame and initial sequence (1-30) for instant interactive response
+    const firstImg = loadFrame(1);
+    firstImg.onload = () => {
+      ctx.drawImage(firstImg, 0, 0, canvas.width, canvas.height);
+      const wrapper = containerRef.current?.querySelector(".hero-canvas-wrapper");
+      if (wrapper) (wrapper as HTMLElement).style.opacity = "1";
+    };
+
+    for (let i = 2; i <= 30; i++) {
+      loadFrame(i);
+    }
+
+    // 2. Progressively stream remaining frames (31-240) in chunks during browser idle time
+    let nextChunkStart = 31;
+    const CHUNK_SIZE = 20;
+
+    const scheduleNextChunk = () => {
+      if (nextChunkStart > TOTAL_FRAMES) return;
+      const end = Math.min(TOTAL_FRAMES, nextChunkStart + CHUNK_SIZE);
+      for (let i = nextChunkStart; i <= end; i++) {
+        loadFrame(i);
+      }
+      nextChunkStart = end + 1;
+      if (nextChunkStart <= TOTAL_FRAMES) {
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(scheduleNextChunk, { timeout: 1000 });
+        } else {
+          setTimeout(scheduleNextChunk, 80);
+        }
+      }
+    };
+
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(scheduleNextChunk, { timeout: 500 });
+    } else {
+      setTimeout(scheduleNextChunk, 100);
     }
 
     const renderFrame = (index: number) => {
       const safeIndex = Math.max(0, Math.min(TOTAL_FRAMES - 1, index));
-      const targetImg = frames[safeIndex];
+      // Ensure target frame is initiated if user scrolls faster than idle queue
+      const targetImg = loadFrame(safeIndex + 1);
       if (targetImg && targetImg.complete && targetImg.naturalWidth > 0) {
         ctx.drawImage(targetImg, 0, 0, canvas.width, canvas.height);
+        lastRenderedIndex = safeIndex;
+      } else {
+        // Fallback to nearest rendered frame to eliminate black frame flicker
+        const fallback = frames[lastRenderedIndex];
+        if (fallback && fallback.complete && fallback.naturalWidth > 0) {
+          ctx.drawImage(fallback, 0, 0, canvas.width, canvas.height);
+        }
       }
     };
 
-    // Responsive canvas aspect ratio sizing
-    const handleResize = () => {
-      ScrollTrigger.refresh();
-    };
-    window.addEventListener("resize", handleResize);
+    // Responsive canvas aspect ratio sizing via ResizeObserver
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const resizeObserver = new ResizeObserver(() => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 150);
+    });
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
 
     // GSAP ScrollTrigger Timeline
     const ctxCleanup = gsap.context(() => {
@@ -119,7 +167,8 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
     }, containerRef);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimer);
+      resizeObserver.disconnect();
       ctxCleanup.revert();
     };
   }, []);

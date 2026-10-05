@@ -6,9 +6,17 @@ export function FloatingWhatsApp() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      // Reveal after user scrolls past top viewport threshold (300px)
-      setVisible(window.scrollY > 300);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          // Reveal after user scrolls past top viewport threshold (300px)
+          const isPast = window.scrollY > 300;
+          setVisible((prev) => (prev !== isPast ? isPast : prev));
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

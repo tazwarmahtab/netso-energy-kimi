@@ -237,30 +237,64 @@ export default function SolarPergola3D() {
       ledMesh: ledX,
     };
 
-    // Animation Render Loop
-    let animId: number;
+    // Animation Render Loop with Viewport Visibility Gating
+    let animId: number = 0;
+    let isVisible = true;
+
     const animate = () => {
+      if (!isVisible) return;
       animId = requestAnimationFrame(animate);
       controls.update();
       renderer.render(scene, camera);
     };
-    animate();
 
-    // Window Resize Handler
-    const onResize = () => {
-      if (!containerRef.current) return;
-      const w = containerRef.current.clientWidth;
-      const h = containerRef.current.clientHeight || 540;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    };
-    window.addEventListener("resize", onResize);
+    // Pause rendering loop completely when off-screen to preserve CPU/GPU battery
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const visible = entry.isIntersecting;
+        isVisible = visible;
+        if (visible) {
+          cancelAnimationFrame(animId);
+          animate();
+        } else {
+          cancelAnimationFrame(animId);
+        }
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(container);
+
+    // Responsive Canvas Resize via ResizeObserver (eliminates window resize layout thrashing)
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width: w, height: h } = entry.contentRect;
+        if (w > 0 && h > 0) {
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h);
+        }
+      }
+    });
+    resizeObserver.observe(container);
 
     return () => {
       cancelAnimationFrame(animId);
-      window.removeEventListener("resize", onResize);
+      observer.disconnect();
+      resizeObserver.disconnect();
       controls.dispose();
+
+      // Deep clean geometries and materials to prevent WebGL GPU memory leaks
+      scene.traverse((obj) => {
+        if (obj instanceof THREE.Mesh) {
+          obj.geometry?.dispose();
+          if (Array.isArray(obj.material)) {
+            obj.material.forEach((m) => m.dispose());
+          } else {
+            obj.material?.dispose();
+          }
+        }
+      });
+
       renderer.dispose();
     };
   }, []);
