@@ -1,63 +1,33 @@
-import React, { useId } from "react";
+import React from "react";
 
 interface WhatsAppIconProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
 }
 
-export function WhatsAppIcon({ className = "h-5 w-5 shrink-0", ...props }: WhatsAppIconProps) {
-  const rawId = useId();
-  // Strip colons and special characters so Safari/WebKit treats URL fragment selectors as valid
-  const cleanId = rawId.replace(/[^a-zA-Z0-9]/g, "_");
-  const gradA = `netso_wa_green_${cleanId}`;
-  const gradB = `netso_wa_white_${cleanId}`;
-
+export function WhatsAppIcon({ className = "h-6 w-6 shrink-0", ...props }: WhatsAppIconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill="none"
       viewBox="0 0 96 96"
+      width="24"
+      height="24"
       className={className}
       aria-hidden="true"
       {...props}
     >
-      <defs>
-        <linearGradient
-          id={gradA}
-          x1="48.1979"
-          y1="92.6453"
-          x2="48.1979"
-          y2="2.62695"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#1FAF38" />
-          <stop offset="1" stopColor="#60D669" />
-        </linearGradient>
-        <linearGradient
-          id={gradB}
-          x1="48.2045"
-          y1="95"
-          x2="48.2045"
-          y2="1"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#F9F9F9" />
-          <stop offset="1" stopColor="#FFFFFF" />
-        </linearGradient>
-      </defs>
-
-      {/* Path 1: Inner Green Speech Bubble */}
+      {/* WhatsApp Green Background Speech Bubble */}
       <path
-        fill={`url(#${gradA})`}
+        fill="#25D366"
         d="M3.20676 47.591c-.00237 7.924 2.06817 15.6613 6.00506 22.4808l-6.38174 23.301 23.84542-6.2524c6.5694 3.5806 13.9665 5.4706 21.4944 5.4725h.0199c24.7897 0 44.9692-20.1724 44.9796-44.9664.0048-12.0148-4.6698-23.3123-13.1629-31.812C71.5149 7.3153 60.2212 2.63217 48.1879 2.62695 23.3953 2.62695 3.21718 22.798 3.20676 47.591Z"
       />
 
-      {/* Path 2: Outer White Border Contour */}
+      {/* WhatsApp Outer White Ring Contour */}
       <path
-        fill={`url(#${gradB})`}
+        fill="#FFFFFF"
         d="M1.60084 47.5769C1.598 55.7861 3.74293 63.8001 7.82006 70.8637L1.20947 95l24.70063-6.4765c6.8058 3.7109 14.4683 5.6672 22.2657 5.6701h.0199c25.6791 0 46.5836-20.8979 46.5945-46.5793.0042-12.4465-4.8386-24.15-13.6349-32.9544C72.3577 5.85655 60.6598 1.00521 48.1957 1 22.5119 1 1.61126 21.8945 1.60084 47.5769ZM16.3103 69.6474l-.9221-1.4641c-3.8772-6.1647-5.92355-13.2884-5.92071-20.6036C9.47603 26.2337 26.8483 8.86713 48.2104 8.86713 58.5551 8.8714 68.2777 12.904 75.59 20.221c7.3123 7.3175 11.3359 17.0448 11.333 27.3905-.0095 21.3465-17.3822 38.7154-38.7273 38.7154h-.0151c-6.9503-.0038-13.7666-1.8701-19.7114-5.3971l-1.4148-.8392-14.6578 3.8431 3.9137-14.2863Z"
       />
 
-      {/* Path 3: White Phone Receiver Handset (Streamline Official Path) */}
+      {/* WhatsApp White Receiver Handset Vector */}
       <path
         fill="#FFFFFF"
         fillRule="evenodd"

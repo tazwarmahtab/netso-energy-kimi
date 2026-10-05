@@ -86,35 +86,17 @@ export default function Nav({
           </nav>
 
           <div className="relative z-50 flex items-center gap-3">
-            {/* Minimalist Icon-Only WhatsApp Capsule */}
+            {/* Direct WhatsApp Speed-Dial Capsule */}
             <a
               href={getNetsoWhatsAppUrl("Hello Netso Energy team, I am interested in exploring a commercial solar PPA for our industrial facility.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden h-10 w-10 items-center justify-center rounded-full border border-warm/20 bg-forest/70 backdrop-blur-md transition-all duration-300 hover:border-emerald-400/80 hover:bg-emerald-950/40 hover:scale-105 active:scale-95 sm:inline-flex shadow-sm"
+              className="hidden h-10 w-10 items-center justify-center rounded-full border border-warm/20 bg-forest/80 backdrop-blur-md transition-all duration-300 hover:border-emerald-400 hover:bg-emerald-950/60 hover:scale-105 active:scale-95 sm:inline-flex shadow-sm"
               title="Direct WhatsApp line to Netso Origination Desk"
               aria-label="Direct WhatsApp line to Netso Origination Desk"
             >
-              <WhatsAppIcon className="h-5.5 w-5.5 shrink-0" />
+              <WhatsAppIcon className="h-5 w-5 shrink-0" />
             </a>
-
-            {/* Permanent Assessment CTA across all scroll positions */}
-            {onOpenAssessment ? (
-              <button
-                type="button"
-                onClick={onOpenAssessment}
-                className="hidden sm:inline-flex h-10 items-center rounded-full bg-gold px-5 text-sm font-semibold text-forest transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98] shadow-md shadow-gold/20"
-              >
-                Get roof assessment
-              </button>
-            ) : (
-              <a
-                href="/#get-started"
-                className="hidden sm:inline-flex h-10 items-center rounded-full bg-gold px-5 text-sm font-semibold text-forest transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
-              >
-                Get roof assessment
-              </a>
-            )}
 
             <button
               className="flex h-11 w-11 items-center justify-center rounded-full lg:hidden"
