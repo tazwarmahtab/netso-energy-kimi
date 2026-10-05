@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, ShieldCheck, Zap, Activity } from "lucide-react";
+import { ArrowRight, ShieldCheck, Activity, TrendingUp } from "lucide-react";
 import { LiquidMetalButton } from "./ui/liquid-metal-button";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -27,11 +27,23 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
     const ctx = canvas.getContext("2d", { alpha: false });
     if (!ctx) return;
 
-    // Set canvas dimensions
-    canvas.width = 1280;
-    canvas.height = 720;
+    // Retina & high-DPR adaptive canvas sizing
+    const updateCanvasDimensions = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const targetW = Math.round(rect.width * dpr);
+      const targetH = Math.round(rect.height * dpr);
+      if (canvas.width !== targetW || canvas.height !== targetH) {
+        canvas.width = targetW;
+        canvas.height = targetH;
+      }
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+    };
 
-    // Preload with chunked priority queue to prevent mobile network starvation
+    updateCanvasDimensions();
+
+    // Preload with chunked priority queue to prevent network starvation
     const frames: HTMLImageElement[] = new Array(TOTAL_FRAMES);
     let lastRenderedIndex = 0;
 
@@ -45,17 +57,42 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
       return img;
     };
 
+    // Aspect-ratio cover drawing to maintain pristine aspect ratio with zero distortion
+    const drawCover = (img: HTMLImageElement) => {
+      const cw = canvas.width;
+      const ch = canvas.height;
+      const nw = img.naturalWidth || 1280;
+      const nh = img.naturalHeight || 720;
+
+      const imgRatio = nw / nh;
+      const canvasRatio = cw / ch;
+
+      let dw = cw;
+      let dh = ch;
+      let ox = 0;
+      let oy = 0;
+
+      if (canvasRatio > imgRatio) {
+        dw = cw;
+        dh = cw / imgRatio;
+        oy = (ch - dh) / 2;
+      } else {
+        dh = ch;
+        dw = ch * imgRatio;
+        ox = (cw - dw) / 2;
+      }
+
+      ctx.drawImage(img, ox, oy, dw, dh);
+    };
+
     // 1. Eagerly load first frame and initial sequence (1-30) for instant interactive response
     const firstImg = loadFrame(1);
     firstImg.onload = () => {
-      ctx.drawImage(firstImg, 0, 0, canvas.width, canvas.height);
+      updateCanvasDimensions();
+      drawCover(firstImg);
       const wrapper = containerRef.current?.querySelector(".hero-canvas-wrapper");
       if (wrapper) (wrapper as HTMLElement).style.opacity = "1";
     };
-
-    for (let i = 2; i <= 30; i++) {
-      loadFrame(i);
-    }
 
     // 2. Progressively stream remaining frames (31-240) in chunks during browser idle time
     let nextChunkStart = 31;
@@ -85,16 +122,14 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
 
     const renderFrame = (index: number) => {
       const safeIndex = Math.max(0, Math.min(TOTAL_FRAMES - 1, index));
-      // Ensure target frame is initiated if user scrolls faster than idle queue
       const targetImg = loadFrame(safeIndex + 1);
       if (targetImg && targetImg.complete && targetImg.naturalWidth > 0) {
-        ctx.drawImage(targetImg, 0, 0, canvas.width, canvas.height);
+        drawCover(targetImg);
         lastRenderedIndex = safeIndex;
       } else {
-        // Fallback to nearest rendered frame to eliminate black frame flicker
         const fallback = frames[lastRenderedIndex];
         if (fallback && fallback.complete && fallback.naturalWidth > 0) {
-          ctx.drawImage(fallback, 0, 0, canvas.width, canvas.height);
+          drawCover(fallback);
         }
       }
     };
@@ -104,6 +139,8 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
     const resizeObserver = new ResizeObserver(() => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
+        updateCanvasDimensions();
+        renderFrame(lastRenderedIndex);
         ScrollTrigger.refresh();
       }, 150);
     });
@@ -113,7 +150,6 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
 
     // GSAP ScrollTrigger Timeline
     const ctxCleanup = gsap.context(() => {
-      // Set initial positions cleanly with GSAP
       gsap.set(".line-reveal-inner", { yPercent: 110 });
       gsap.set(".hero-meta-elem", { opacity: 0, y: 20 });
       gsap.set(scrollCueRef.current, { opacity: 0 });
@@ -145,6 +181,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
       });
 
       // Synchronized typographic overlay timeline
+      // Keep shade overlay subtle (max 0.35) so twilight colors and pergola lights stay vibrant
       gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -153,12 +190,11 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           scrub: 0.5,
         },
       })
-        .to(shadeRef.current, { opacity: 0.65, duration: 1 }, 0)
+        .to(shadeRef.current, { opacity: 0.35, duration: 1 }, 0)
         .to(scrollCueRef.current, { opacity: 0, duration: 0.12 }, 0)
         .to(headlineRef.current, { y: -80, opacity: 0, duration: 0.25, ease: "power1.in" }, 0.18)
         .set(phase2Ref.current, { visibility: "visible" }, 0.72)
-        .fromTo(phase2Ref.current, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.12 }, 0.75)
-        .to(phase2Ref.current, { opacity: 1, duration: 0.18 }, 0.85)
+        .fromTo(phase2Ref.current, { opacity: 0, y: 35 }, { opacity: 1, y: 0, duration: 0.15 }, 0.75)
         .fromTo(telemetryRef.current, { opacity: 0, scale: 0.95, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.12 }, 0.76);
 
       return () => {
@@ -186,15 +222,15 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           <canvas
             ref={canvasRef}
             className="h-full w-full object-cover object-center"
-            style={{ filter: "brightness(0.95) contrast(1.05)" }}
+            style={{ filter: "brightness(0.98) contrast(1.04)" }}
           />
         </div>
 
-        {/* Ambient Gradient Shade */}
+        {/* Ambient Gradient Shade (Subtle to preserve dusk lighting and crisp details) */}
         <div
           ref={shadeRef}
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-forest/90 via-forest/30 to-forest/40 opacity-50"
+          className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/25 opacity-25 transition-opacity"
         />
 
         {/* Phase 1: Opening Kinetic Headline */}
@@ -231,7 +267,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           </h1>
 
           <p className="hero-meta-elem mt-4 max-w-xl text-sm leading-relaxed text-warm/85 md:text-base">
-            We finance, design, and construct luxury architectural solar pergolas for institutional buildings. You pay zero upfront and buy clean power at a fixed rate <span className="font-semibold text-warm">35% below the grid peak</span>.
+            We finance, design, and construct luxury architectural solar pergolas for institutional buildings. You pay zero upfront and buy clean power at a guaranteed <span className="font-semibold text-warm">30% discount below your utility grid tariff</span>.
           </p>
 
           <div className="hero-meta-elem mt-6 flex flex-wrap items-center gap-4">
@@ -249,50 +285,61 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           </div>
         </div>
 
-        {/* Phase 2: 3 Institutional Value Pillars */}
+        {/* Phase 2: Sleek Low-Profile Architectural Glass Dock (Unobstructed Executive View) */}
         <div
           ref={phase2Ref}
           aria-label="Institutional Value Propositions"
-          className="invisible absolute inset-x-0 bottom-0 z-10 max-w-[1240px] px-6 pb-20 opacity-0 md:px-12 md:pb-28 lg:px-16"
+          className="invisible absolute inset-x-0 bottom-6 z-10 mx-auto w-full max-w-5xl px-4 opacity-0 md:bottom-8"
         >
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-            <div className="rounded-2xl border-t-2 border-gold/70 bg-forest/85 p-6 backdrop-blur-md shadow-2xl transition-all">
-              <div className="flex items-center gap-2 text-gold mb-2">
-                <ShieldCheck className="h-5 w-5" />
-                <span className="font-mono text-xs font-semibold uppercase tracking-wider text-gold/80">Capital Cost</span>
+          <div className="rounded-2xl md:rounded-full border border-white/15 bg-black/40 p-3 md:px-8 md:py-3.5 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)]">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 divide-y md:divide-y-0 md:divide-x divide-white/10">
+              {/* Pillar 1 */}
+              <div className="flex items-center gap-3.5 md:flex-1">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold/15 border border-gold/30 text-gold">
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-display text-lg font-bold text-warm">৳0 Upfront</span>
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">CAPEX Free</span>
+                  </div>
+                  <p className="text-xs text-sage/80 line-clamp-1">
+                    100% financed under 20-year IDCOL senior debt
+                  </p>
+                </div>
               </div>
-              <p className="font-display text-3xl font-bold tracking-tight text-warm md:text-4xl">
-                ৳0 Upfront
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-sage">
-                100% financed and insured by Netso under a 20-year IDCOL-backed RESCO agreement. Zero balance-sheet liability.
-              </p>
-            </div>
 
-            <div className="rounded-2xl border-t-2 border-gold/70 bg-forest/85 p-6 backdrop-blur-md shadow-2xl transition-all">
-              <div className="flex items-center gap-2 text-gold mb-2">
-                <Activity className="h-5 w-5" />
-                <span className="font-mono text-xs font-semibold uppercase tracking-wider text-gold/80">Turnkey Operations</span>
+              {/* Pillar 2 */}
+              <div className="pt-3 md:pt-0 md:pl-6 flex items-center gap-3.5 md:flex-1">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold/15 border border-gold/30 text-gold">
+                  <Activity className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-display text-lg font-bold text-warm">We Operate It</span>
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-emerald-400 font-semibold bg-emerald-500/10 px-1.5 py-0.5 rounded">Turnkey O&M</span>
+                  </div>
+                  <p className="text-xs text-sage/80 line-clamp-1">
+                    24/7 automated IoT monitoring & daily cleaning
+                  </p>
+                </div>
               </div>
-              <p className="font-display text-3xl font-bold tracking-tight text-warm md:text-4xl">
-                We Operate It
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-sage">
-                24/7 automated IoT monitoring, daily cleaning, and tier-1 maintenance handled end-to-end by our engineering team.
-              </p>
-            </div>
 
-            <div className="rounded-2xl border-t-2 border-gold/70 bg-forest/85 p-6 backdrop-blur-md shadow-2xl transition-all">
-              <div className="flex items-center gap-2 text-gold mb-2">
-                <Zap className="h-5 w-5" />
-                <span className="font-mono text-xs font-semibold uppercase tracking-wider text-gold/80">Tariff Hedge</span>
+              {/* Pillar 3 */}
+              <div className="pt-3 md:pt-0 md:pl-6 flex items-center gap-3.5 md:flex-1">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold/15 border border-gold/30 text-gold">
+                  <TrendingUp className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-display text-lg font-bold text-warm">30% Savings</span>
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">Guaranteed</span>
+                  </div>
+                  <p className="text-xs text-sage/80 line-clamp-1">
+                    Floating discount indexed below utility grid tariffs
+                  </p>
+                </div>
               </div>
-              <p className="font-display text-3xl font-bold tracking-tight text-warm md:text-4xl">
-                30% Savings
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-sage">
-                Contractually guaranteed 30% discount below the utility grid tariff — shielding your bottom line from future BERC rate hikes.
-              </p>
             </div>
           </div>
         </div>
@@ -302,7 +349,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           ref={telemetryRef}
           className="pointer-events-none invisible absolute top-20 right-6 z-20 hidden opacity-0 lg:block lg:right-12"
         >
-          <div className="w-80 rounded-2xl border border-gold/30 bg-forest/85 p-5 shadow-2xl backdrop-blur-xl">
+          <div className="w-80 rounded-2xl border border-gold/30 bg-black/50 p-5 shadow-2xl backdrop-blur-xl">
             <div className="flex items-center justify-between border-b border-warm/10 pb-3">
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2.5 w-2.5">
@@ -326,9 +373,9 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                 </p>
               </div>
               <div>
-                <p className="font-mono text-[11px] text-warm/60">Hourly Savings</p>
+                <p className="font-mono text-[11px] text-warm/60">Offtaker Savings</p>
                 <p className="font-display text-2xl font-bold tabular-nums text-emerald-400">
-                  ৳1,420 <span className="text-xs font-normal text-warm/60">/hr</span>
+                  30% <span className="text-xs font-normal text-warm/60">Guaranteed</span>
                 </p>
               </div>
             </div>
@@ -349,13 +396,13 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
         <div
           ref={scrollCueRef}
           aria-hidden="true"
-          className="absolute right-6 bottom-8 z-20 flex flex-col items-center gap-3 opacity-0 md:right-12"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 pointer-events-none"
         >
-          <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.25em] text-warm/70 [writing-mode:vertical-rl]">
-            Scroll to descend
+          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-warm/60">
+            Scroll to Explore
           </span>
-          <div className="relative h-14 w-[1.5px] overflow-hidden bg-warm/20">
-            <div className="absolute top-0 left-0 h-1/2 w-full animate-scroll-beam bg-gold" />
+          <div className="w-5 h-8 rounded-full border border-warm/30 flex justify-center p-1">
+            <div className="w-1 h-2 bg-gold rounded-full animate-bounce" />
           </div>
         </div>
       </div>

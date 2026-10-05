@@ -136,7 +136,7 @@ const TAGLINES = [
 
 const PRINCIPLES = [
   { n: "01", t: "Direct & Grounded", d: "We write for C-suite industrial executives and plant engineers. Short sentences, bankable numbers, zero marketing fluff." },
-  { n: "02", t: "Contractually Precise", d: "All figures cite exact benchmarks: 30% guaranteed grid discount, ৳15.36 BERC peak tariff, 80% IDCOL debt, 1.25× DSCR." },
+  { n: "02", t: "Contractually Precise", d: "All figures cite exact benchmarks: 30% guaranteed grid discount, ৳0 customer CAPEX, 80% IDCOL debt, 1.25× DSCR." },
   { n: "03", t: "Institutional Authority", d: "Calm, architectural, and legally sound. Designed to withstand scrutiny from senior lenders, credit committees, and international buyers." },
   { n: "04", t: "Engineering Truth", d: "Dual-glass bifacial TOPCon modules, certified 160 km/h wind load pergolas, and Class 0.2s utility meters with daily billing settlement." },
 ];
@@ -495,8 +495,8 @@ export default function Brand() {
                       <span className="font-mono text-base font-bold text-forest">30% Below Grid</span>
                     </span>
                     <span className="rounded-2xl border border-ink/10 bg-cream p-4">
-                      <span className="font-mono text-[10px] text-ink/50 uppercase block">BERC Industrial Peak</span>
-                      <span className="font-mono text-base font-bold text-forest">৳15.36 / kWh</span>
+                      <span className="font-mono text-[10px] text-ink/50 uppercase block">BERC Tariff Hedge</span>
+                      <span className="font-mono text-base font-bold text-forest">Floating Discount</span>
                     </span>
                     <span className="rounded-2xl border border-ink/10 bg-cream p-4">
                       <span className="font-mono text-[10px] text-ink/50 uppercase block">Customer CAPEX</span>

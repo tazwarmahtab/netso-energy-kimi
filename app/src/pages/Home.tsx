@@ -263,8 +263,8 @@ function HowItWorks() {
 
 /* --------------------------- Why netso --------------------------- */
 const RISKS = [
-  { big: "+16.7%", label: "Industrial tariffs jumped 16.7% in one BERC order", note: "June 2026 pushed industrial power to ৳15.36–18.43/kWh — with no ceiling in sight." },
-  { big: "৳18.43", label: "Peak commercial power now costs up to ৳18.43 per kWh", note: "Energy has become a board-level margin risk for every factory and institution." },
+  { big: "+16.7%", label: "Industrial tariffs jumped 16.7% in one BERC order", note: "The latest BERC escalation exposed factory operating budgets with no ceiling in sight." },
+  { big: "30%", label: "Guaranteed floating discount margin against utility rate hikes", note: "Energy transitions from an unhedged operational risk into contractually guaranteed savings." },
   { big: "3,600 MWp", label: "Bangladesh's industrial rooftops could host 3,600 MWp", note: "A $2.1B market sitting idle above the buildings that need it most." },
 ];
 

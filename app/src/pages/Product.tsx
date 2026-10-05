@@ -58,7 +58,7 @@ function Hero({ onOpenAssessment }: { onOpenAssessment: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8, ease: EASE }}
         >
-          An elevated pergola-style solar canopy transforms idle commercial rooftops into high-yield, utility-grade generating assets. Netso finances, constructs, and maintains the entire plant — you simply purchase clean power at a fixed rate <span className="font-semibold text-warm">35% below peak grid tariffs</span>.
+          An elevated pergola-style solar canopy transforms idle commercial rooftops into high-yield, utility-grade generating assets. Netso finances, constructs, and maintains the entire plant — you simply purchase clean power at a guaranteed <span className="font-semibold text-warm">30% discount below utility grid tariffs</span>.
         </motion.p>
 
         <motion.div
@@ -451,7 +451,7 @@ function Network() {
 
 /* --------------------------- Compare table --------------------------- */
 const ROWS = [
-  { k: "Upfront Capital Expenditure", cash: "৳45,000–60,000/kWp from cash reserves", dl: "৳0 — 100% financed by Netso via senior debt" },
+  { k: "Upfront Capital Expenditure", cash: "Millions in capital deployed from corporate reserves", dl: "৳0 — 100% financed by Netso via senior debt" },
   { k: "Contractual Tariff", cash: "Unpredictable ROI dependent on execution", dl: "Locked at 30% guaranteed savings below utility grid peak" },
   { k: "Technical & Generation Risk", cash: "Borne 100% by your facility", dl: "Netso bears 100% performance & degradation risk" },
   { k: "Operations & Maintenance (O&M)", cash: "Your internal staff, inverter replacement costs", dl: "20-year comprehensive O&M, washing & spares included" },
@@ -510,7 +510,7 @@ function Compare() {
         <FadeUp className="mt-12 max-w-2xl">
           <h3 className="font-display text-2xl font-bold text-ink">Why institutional clients choose the Netso PPA</h3>
           <p className="mt-3 text-base leading-relaxed text-ink/75">
-            Unless energy generation is your core competency, deploying millions in corporate capital into solar hardware, ongoing string maintenance, and utility grid compliance is inefficient. Netso delivers the same high-efficiency solar energy on your roof — zero capital outlay, guaranteed uptime, and an immediate 35% tariff reduction on day one.
+            Unless energy generation is your core competency, deploying millions in corporate capital into solar hardware, ongoing string maintenance, and utility grid compliance is inefficient. Netso delivers the same high-efficiency solar energy on your roof — zero capital outlay, guaranteed uptime, and an immediate 30% tariff reduction on day one.
           </p>
         </FadeUp>
       </div>

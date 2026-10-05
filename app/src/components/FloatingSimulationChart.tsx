@@ -1,31 +1,47 @@
 import { useState } from "react";
-import { ShieldCheck, ArrowRight } from "lucide-react";
+import { ShieldCheck, ArrowRight, TrendingUp, CheckCircle2 } from "lucide-react";
 
 interface Scenario {
   id: string;
   label: string;
-  gridTariff: number;
+  badge: string;
+  gridStatus: string;
+  netsoStatus: string;
+  offtakerBenefit: string;
   description: string;
+  cashImpact: string;
 }
 
 const SCENARIOS: Scenario[] = [
   {
     id: "baseline",
     label: "Current Baseline",
-    gridTariff: 11.50,
-    description: "Standard BERC industrial MT-2 tariff across Dhaka and Gazipur feeders.",
+    badge: "Active Utility Tariff",
+    gridStatus: "100% Unhedged",
+    netsoStatus: "30% Guaranteed Discount",
+    offtakerBenefit: "30% Net Savings",
+    description: "Standard industrial utility power bill. Netso delivers immediate 30% cash reduction across all daytime solar generation.",
+    cashImpact: "Delivers immediate 6-figure monthly cash flow expansion directly to operational EBITDA from Month 1.",
   },
   {
     id: "hike",
-    label: "Tariff Escalation (+35%)",
-    gridTariff: 15.50,
-    description: "Projected 2027–2029 escalation as LNG import subsidies phase out.",
+    label: "Grid Tariff Hike (+35%)",
+    badge: "Escalation Shock",
+    gridStatus: "+35% Escalation",
+    netsoStatus: "Protected 30% Spread",
+    offtakerBenefit: "+35% Cash Retained",
+    description: "When the utility increases tariffs, conventional fixed-rate developers capture the windfall. Under Netso, your 30% discount margin is preserved — expanding your total cash savings automatically.",
+    cashImpact: "Your absolute cash savings expand in lockstep with utility hikes. Zero margin compression.",
   },
   {
     id: "dip",
-    label: "Tariff Dip Scenario",
-    gridTariff: 9.50,
-    description: "BERC rate softening scenario. Netso tariff automatically floats down to protect your P&L.",
+    label: "Tariff Softening Scenario",
+    badge: "Downside Protection",
+    gridStatus: "Utility Rate Softens",
+    netsoStatus: "Floats Down Automatically",
+    offtakerBenefit: "Zero Balance-Sheet Risk",
+    description: "Rigid fixed-tariff PPAs leave factories trapped paying above-market prices if grid rates soften. Netso automatically floats downward, ensuring you never pay more than 70% of grid power.",
+    cashImpact: "100% regulatory downside hedge. You are contractually guaranteed to pay below grid under every economic condition.",
   },
 ];
 
@@ -38,9 +54,6 @@ export function FloatingSimulationChart({
 
   const currentScenario =
     SCENARIOS.find((s) => s.id === selectedScenarioId) || SCENARIOS[0];
-  const gridRate = currentScenario.gridTariff;
-  const netsoRate = +(gridRate * 0.70).toFixed(2);
-  const spreadSavings = +(gridRate - netsoRate).toFixed(2);
 
   return (
     <section className="relative w-full bg-[#08140F] py-20 px-6 sm:px-10 border-t border-gold/15">
@@ -60,7 +73,7 @@ export function FloatingSimulationChart({
             </h2>
             <p className="mt-4 font-sans text-sm sm:text-base text-cream/70 leading-relaxed">
               Conventional solar developers lock factories into rigid, 20-year fixed tariffs. When grid prices shift or currency fluctuates, fixed PPAs create balance sheet tension. Netso indexes strictly:{" "}
-              <strong className="text-cream">Netso Rate = PDB Rate × 0.70</strong>. You are guaranteed a 30% discount forever.
+              <strong className="text-cream">Netso Cost = Utility Bill × 0.70</strong>. You are guaranteed a 30% discount forever.
             </p>
           </div>
 
@@ -85,10 +98,10 @@ export function FloatingSimulationChart({
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-white/10">
               <div>
                 <span className="font-mono text-xs text-cream/50 uppercase tracking-widest">
-                  25-Year Projection Simulation
+                  25-Year Long-Term Contract Horizon
                 </span>
                 <div className="text-sm font-medium text-cream mt-0.5">
-                  PDB MT-2 Utility Curve vs. Netso ×0.70 Index
+                  Utility Power Bill vs. Netso Guaranteed 30% Discount Floor
                 </div>
               </div>
 
@@ -96,11 +109,11 @@ export function FloatingSimulationChart({
               <div className="flex items-center gap-5 font-mono text-xs">
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-4 rounded-full bg-white/40" />
-                  <span className="text-cream/60">PDB Grid Rate</span>
+                  <span className="text-cream/60">Utility Grid Bill (100%)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-4 rounded-full bg-gold" />
-                  <span className="text-gold font-bold">Netso Rate (–30%)</span>
+                  <span className="text-gold font-bold">Netso Solar (–30%)</span>
                 </div>
               </div>
             </div>
@@ -135,7 +148,7 @@ export function FloatingSimulationChart({
                   fill="url(#savingsFill)"
                 />
 
-                {/* PDB Grid Line (Upper) */}
+                {/* Grid Billing Line (Upper) */}
                 <polyline
                   fill="none"
                   stroke="#E8E4D9"
@@ -155,19 +168,19 @@ export function FloatingSimulationChart({
                   points="50,200 140,190 230,180 320,165 410,150 500,135 570,115"
                 />
 
-                {/* Endpoint Pin for Netso */}
+                {/* Endpoint Pins */}
                 <circle cx="570" cy="115" r="4.5" fill="#C6A15B" />
                 <circle cx="570" cy="40" r="4.5" fill="#E8E4D9" />
 
-                {/* Annotation Badges */}
-                <rect x="420" y="32" width="130" height="20" rx="4" fill="#18231e" stroke="#E8E4D9" strokeWidth="0.75" />
-                <text x="485" y="46" fill="#E8E4D9" fontSize="9" fontFamily="monospace" textAnchor="middle">
-                  PDB 2050: ৳24.80
+                {/* Annotation Badges (ZERO PER-UNIT RATES) */}
+                <rect x="400" y="32" width="160" height="20" rx="4" fill="#18231e" stroke="#E8E4D9" strokeWidth="0.75" />
+                <text x="480" y="46" fill="#E8E4D9" fontSize="9" fontFamily="monospace" textAnchor="middle">
+                  Utility Grid: 100% Unhedged
                 </text>
 
-                <rect x="420" y="107" width="130" height="20" rx="4" fill="#18231e" stroke="#C6A15B" strokeWidth="0.75" />
-                <text x="485" y="121" fill="#C6A15B" fontSize="9" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
-                  NETSO 2050: ৳17.36
+                <rect x="385" y="107" width="175" height="20" rx="4" fill="#18231e" stroke="#C6A15B" strokeWidth="0.75" />
+                <text x="472" y="121" fill="#C6A15B" fontSize="9" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
+                  Netso Guarantee: –30% Locked
                 </text>
 
                 {/* Center Spread Watermark */}
@@ -176,20 +189,20 @@ export function FloatingSimulationChart({
                 </text>
               </svg>
 
-              {/* X-Axis Years */}
+              {/* X-Axis Horizon */}
               <div className="flex justify-between font-mono text-[10px] text-cream/40 pt-2 border-t border-white/5">
-                <span>2026 (Y1)</span>
-                <span>2030 (Y5)</span>
-                <span>2035 (Y10)</span>
-                <span>2040 (Y15)</span>
-                <span>2045 (Y20)</span>
-                <span>2050 (Y25)</span>
+                <span>Year 1 (Commissioning)</span>
+                <span>Year 5</span>
+                <span>Year 10</span>
+                <span>Year 15</span>
+                <span>Year 20</span>
+                <span>Year 25</span>
               </div>
             </div>
 
             {/* Bottom Buffer Tag */}
             <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 font-mono text-[11px] text-cream/50 bg-white/[0.02] p-3 rounded-lg border border-white/5">
-              <span>BERC TARIFF RISK: 0% ABSORBED BY OFFTAKER</span>
+              <span>REGULATORY TARIFF RISK: 0% ABSORBED BY OFFTAKER</span>
               <span className="text-gold font-bold">100% REGULATORY DOWNSIDE HEDGE</span>
             </div>
           </div>
@@ -202,9 +215,6 @@ export function FloatingSimulationChart({
 
             {SCENARIOS.map((scenario) => {
               const active = scenario.id === selectedScenarioId;
-              const sGrid = scenario.gridTariff;
-              const sNetso = +(sGrid * 0.70).toFixed(2);
-              const sSavings = +(sGrid - sNetso).toFixed(2);
 
               return (
                 <button
@@ -221,7 +231,13 @@ export function FloatingSimulationChart({
                     <span className={`font-mono text-xs font-bold ${active ? "text-gold" : "text-cream"}`}>
                       {scenario.label}
                     </span>
-                    {active && <ShieldCheck className="h-4 w-4 text-gold" />}
+                    {active ? (
+                      <ShieldCheck className="h-4 w-4 text-gold" />
+                    ) : (
+                      <span className="font-mono text-[10px] text-cream/40 uppercase tracking-wider">
+                        {scenario.badge}
+                      </span>
+                    )}
                   </div>
 
                   <p className="mt-1 text-xs text-cream/60 leading-relaxed font-sans">
@@ -230,16 +246,16 @@ export function FloatingSimulationChart({
 
                   <div className="mt-3 grid grid-cols-3 gap-2 pt-3 border-t border-white/10 font-mono text-[11px]">
                     <div>
-                      <div className="text-cream/40 text-[9px] uppercase">Grid</div>
-                      <div className="font-bold text-cream">৳{sGrid.toFixed(2)}</div>
+                      <div className="text-cream/40 text-[9px] uppercase">Utility Status</div>
+                      <div className="font-bold text-cream text-[11px]">{scenario.gridStatus}</div>
                     </div>
                     <div>
-                      <div className="text-gold/70 text-[9px] uppercase">Netso</div>
-                      <div className="font-bold text-gold">৳{sNetso.toFixed(2)}</div>
+                      <div className="text-gold/70 text-[9px] uppercase">Netso Power</div>
+                      <div className="font-bold text-gold text-[11px]">{scenario.netsoStatus}</div>
                     </div>
                     <div>
-                      <div className="text-emerald-400 text-[9px] uppercase">You Save</div>
-                      <div className="font-bold text-emerald-400">৳{sSavings.toFixed(2)}/u</div>
+                      <div className="text-emerald-400 text-[9px] uppercase">Your Position</div>
+                      <div className="font-bold text-emerald-400 text-[11px]">{scenario.offtakerBenefit}</div>
                     </div>
                   </div>
                 </button>
@@ -249,20 +265,23 @@ export function FloatingSimulationChart({
             {/* Live Delta Summary Card */}
             <div className="mt-2 rounded-xl border border-gold/30 bg-gold/[0.08] p-5">
               <div className="flex items-center justify-between text-xs font-mono text-cream/70 mb-2">
-                <span>Monthly Tariff Spread</span>
-                <span className="text-gold font-bold">30.0% Guaranteed</span>
+                <span>Contractual Spread Guarantee</span>
+                <span className="text-gold font-bold flex items-center gap-1">
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  30.0% Guaranteed
+                </span>
               </div>
-              <div className="font-display text-3xl font-bold text-cream">
-                ৳{spreadSavings.toFixed(2)}{" "}
-                <span className="text-xs font-mono text-cream/60 font-normal">BDT saved / kWh</span>
+              <div className="font-display text-3xl font-bold text-cream flex items-baseline gap-2">
+                <span>30% Savings</span>
+                <span className="text-xs font-mono text-gold font-normal">Below Utility Tariff</span>
               </div>
-              <p className="mt-2 text-xs text-cream/60 leading-relaxed">
-                For a 1 MWp installation generating 110,000 kWh/month, this yields{" "}
-                <strong className="text-gold font-mono">
-                  BDT {(110000 * spreadSavings).toLocaleString()} / month
-                </strong>{" "}
-                direct P&L expansion from Month 1 with zero capital deployed.
+              <p className="mt-2 text-xs text-cream/70 leading-relaxed">
+                {currentScenario.cashImpact}
               </p>
+              <div className="mt-3 pt-3 border-t border-gold/15 flex items-center gap-2 font-mono text-[11px] text-cream/60">
+                <TrendingUp className="h-3.5 w-3.5 text-gold shrink-0" />
+                <span>Zero capital outlay • 100% turnkey O&M included</span>
+              </div>
             </div>
           </div>
         </div>
