@@ -26,10 +26,10 @@ const ARTICLES: Article[] = [
     readTime: "5 min read",
     title: "BERC June 2026 Industrial Tariff Hike: What It Means for Factory EBITDA",
     summary:
-      "The latest BERC tariff order bumped industrial MT-2/HT-3 grid power to ৳15.36–18.43/kWh, adding up to 16.7% in unhedged utility expenses. We analyze why fixed-tariff PPAs fail and why floating discount structures preserve operational margins.",
+      "The latest BERC tariff order bumped industrial MT-2/HT-3 grid power tariffs by up to 16.7% in unhedged utility expenses. We analyze why fixed-tariff PPAs fail and why floating discount structures preserve operational margins.",
     takeaway: "Floating solar PPAs at 30% discount turn grid tariff volatility into expanding cash savings.",
     metrics: [
-      { label: "BERC Grid Peak", val: "৳15.36–18.43" },
+      { label: "Utility Grid Hike", val: "+16.7%" },
       { label: "Netso Offtaker Hedge", val: "30% Guaranteed" },
       { label: "Tariff Exposure", val: "Zero" },
     ],
