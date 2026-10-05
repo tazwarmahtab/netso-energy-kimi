@@ -1,5 +1,5 @@
 import { useState, useId } from "react";
-import { Calculator, TrendingUp, ShieldCheck, Zap, Sparkles } from "lucide-react";
+import { Calculator, TrendingUp, ShieldCheck, Zap, Sparkles, Copy, Check, FileSpreadsheet, Building2, Factory, Landmark } from "lucide-react";
 import { LiquidMetalButton } from "./ui/liquid-metal-button";
 import { WhatsAppIcon, getNetsoWhatsAppUrl } from "./ui/WhatsAppIcon";
 
@@ -7,14 +7,26 @@ interface SavingsCalculatorProps {
   onOpenAssessment?: () => void;
 }
 
+const FACILITY_TYPES = [
+  { id: "rmg", label: "RMG & Textile Mill", icon: Factory, note: "Peak daytime matching (98%)" },
+  { id: "pharma", label: "Pharma & Chemical", icon: Building2, note: "Clean room climate offset" },
+  { id: "commercial", label: "Institutional Campus", icon: Landmark, note: "Daytime academic & admin load" },
+];
+
 export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculatorProps) {
   const billSliderId = useId();
   const roofSliderId = useId();
 
+  // State: Facility type
+  const [facilityType, setFacilityType] = useState(FACILITY_TYPES[0].id);
   // State: Monthly bill in BDT (range: 150k to 3M, step 25k)
   const [monthlyBill, setMonthlyBill] = useState(650000);
   // State: Rooftop area in sq ft (range: 3000 to 40000)
   const [roofArea, setRoofArea] = useState(10000);
+  // State: Copy feedback
+  const [copied, setCopied] = useState(false);
+  // State: Preview memo toggle
+  const [showMemoPreview, setShowMemoPreview] = useState(false);
 
   // Constants grounded in MASTER-CONTEXT.md
   const GRID_PEAK_TARIFF = 15.36; // BDT/kWh BERC peak benchmark
@@ -27,8 +39,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
   // 20-year cumulative savings with conservative 2% average annual grid escalation
   const twentyYearSavings = Math.round(annualSavings * 24.3);
 
-  // System sizing estimation
-  // ~100 sq ft per kWp of architectural solar pergola with bifacial modules
+  // System sizing estimation (~100 sq ft per kWp of architectural solar pergola with bifacial modules)
   const estimatedCapacityKwp = Math.round(roofArea / 100);
   const annualGenerationKwh = Math.round(estimatedCapacityKwp * 1350); // 1,350 kWh/kWp specific yield in BD
   const co2AvoidedTonnes = Math.round((annualGenerationKwh * 0.62) / 1000);
@@ -41,6 +52,43 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
       return `৳${(amount / 100000).toFixed(1)} Lakh`;
     }
     return `৳${amount.toLocaleString("en-US")}`;
+  };
+
+  const selectedFacilityLabel = FACILITY_TYPES.find((f) => f.id === facilityType)?.label || "Industrial Facility";
+
+  // Pre-formatted board-ready memo text
+  const boardMemoText =
+    `*NETSO ENERGY — 20-YEAR SOLAR PPA BOARD MEMO*\n` +
+    `────────────────────────────────────────\n` +
+    `🏢 *Facility Sector:* ${selectedFacilityLabel}\n` +
+    `📐 *Usable Rooftop Area:* ${roofArea.toLocaleString("en-US")} sq ft\n` +
+    `⚡ *Estimated Solar Array:* ${estimatedCapacityKwp} kWp (Bifacial Pergola)\n` +
+    `📊 *Current Monthly Grid Spend:* ৳${monthlyBill.toLocaleString("en-US")} (PDB Peak MT-2)\n\n` +
+    `💰 *COMMERCIAL PPA STRUCTURE (ZERO CAPEX):*\n` +
+    `• Netso Contracted Tariff: ৳10.00 / kWh\n` +
+    `• BERC Utility Peak Tariff: ৳15.36 / kWh\n` +
+    `• Net Unit Savings Spread: +৳5.36 / kWh (35% Direct Reduction)\n` +
+    `• Upfront Investment: ৳0.00 (100% Financed by Netso / IDCOL)\n\n` +
+    `📈 *PROJECTED CASH SAVINGS:*\n` +
+    `• Estimated Monthly Savings: ${formatBDT(monthlySavings)} / month\n` +
+    `• Estimated Annual Savings: ${formatBDT(annualSavings)} / year\n` +
+    `• 20-Year Cumulative Savings: ${formatBDT(twentyYearSavings)} (Hedged)\n\n` +
+    `🌱 *ESG & BUYER COMPLIANCE (EU CBAM & HIGG):*\n` +
+    `• Annual Clean Generation: ${(annualGenerationKwh / 1000).toFixed(0)} MWh\n` +
+    `• Avoided Carbon Emissions: ${co2AvoidedTonnes} tonnes CO₂ / year\n` +
+    `────────────────────────────────────────\n` +
+    `Tazwar, please share the formal IDCOL-compliant PPA term sheet and dispatch satellite shadow profiling for our facility.`;
+
+  const handleCopyMemo = async () => {
+    try {
+      await navigator.clipboard.writeText(boardMemoText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      // Fallback
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
   };
 
   return (
@@ -70,65 +118,95 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
         {/* Calculator Grid */}
         <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           {/* Controls Column (Left, 5 cols) */}
-          <div className="rounded-3xl border border-warm/10 bg-forest/80 p-8 shadow-2xl backdrop-blur-xl lg:col-span-5">
-            <h3 className="font-display text-xl font-bold text-warm">
-              Facility Parameters
-            </h3>
-            <p className="mt-1 text-xs text-sage">
-              Adjust your current monthly electricity spend and estimated rooftop space.
-            </p>
+          <div className="rounded-3xl border border-warm/10 bg-forest/80 p-8 shadow-2xl backdrop-blur-xl lg:col-span-5 flex flex-col justify-between">
+            <div>
+              <h3 className="font-display text-xl font-bold text-warm">
+                Facility Parameters
+              </h3>
+              <p className="mt-1 text-xs text-sage">
+                Select your industrial profile and calibrate your monthly utility spend.
+              </p>
 
-            {/* Slider 1: Monthly Bill */}
-            <div className="mt-8">
-              <div className="flex items-center justify-between">
-                <label htmlFor={billSliderId} className="font-mono text-xs uppercase tracking-wider text-warm/80">
-                  Current Monthly Grid Bill
+              {/* Facility Sector Toggle */}
+              <div className="mt-6">
+                <label className="font-mono text-xs uppercase tracking-wider text-warm/80">
+                  Facility Sector
                 </label>
-                <span className="font-mono text-base font-bold tabular-nums text-gold">
-                  {formatBDT(monthlyBill)}
-                </span>
+                <div className="mt-2.5 grid grid-cols-3 gap-2">
+                  {FACILITY_TYPES.map((f) => {
+                    const Icon = f.icon;
+                    const active = facilityType === f.id;
+                    return (
+                      <button
+                        key={f.id}
+                        type="button"
+                        onClick={() => setFacilityType(f.id)}
+                        className={`flex flex-col items-center justify-center rounded-2xl border p-3 text-center transition-all duration-300 ${
+                          active
+                            ? "border-gold bg-gold/15 text-gold shadow-sm shadow-gold/20"
+                            : "border-warm/10 bg-black/20 text-warm/60 hover:border-warm/25 hover:text-warm"
+                        }`}
+                      >
+                        <Icon className="h-5 w-5 mb-1.5" />
+                        <span className="font-mono text-[11px] font-semibold leading-tight">{f.label.split(" ")[0]}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-              <input
-                id={billSliderId}
-                type="range"
-                min={150000}
-                max={3000000}
-                step={25000}
-                value={monthlyBill}
-                onChange={(e) => setMonthlyBill(Number(e.target.value))}
-                className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-lg bg-warm/15 accent-gold"
-              />
-              <div className="mt-1 flex justify-between font-mono text-[10px] text-warm/40">
-                <span>৳1.5 Lakh</span>
-                <span>৳15 Lakh</span>
-                <span>৳30 Lakh</span>
-              </div>
-            </div>
 
-            {/* Slider 2: Rooftop Area */}
-            <div className="mt-8">
-              <div className="flex items-center justify-between">
-                <label htmlFor={roofSliderId} className="font-mono text-xs uppercase tracking-wider text-warm/80">
-                  Estimated Usable Roof Area
-                </label>
-                <span className="font-mono text-base font-bold tabular-nums text-warm">
-                  {roofArea.toLocaleString("en-US")} <span className="text-xs text-warm/60">sq ft</span>
-                </span>
+              {/* Slider 1: Monthly Bill */}
+              <div className="mt-8">
+                <div className="flex items-center justify-between">
+                  <label htmlFor={billSliderId} className="font-mono text-xs uppercase tracking-wider text-warm/80">
+                    Current Monthly Grid Bill
+                  </label>
+                  <span className="font-mono text-base font-bold tabular-nums text-gold">
+                    {formatBDT(monthlyBill)}
+                  </span>
+                </div>
+                <input
+                  id={billSliderId}
+                  type="range"
+                  min={150000}
+                  max={3000000}
+                  step={25000}
+                  value={monthlyBill}
+                  onChange={(e) => setMonthlyBill(Number(e.target.value))}
+                  className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-lg bg-warm/15 accent-gold"
+                />
+                <div className="mt-1 flex justify-between font-mono text-[10px] text-warm/40">
+                  <span>৳1.5 Lakh</span>
+                  <span>৳15 Lakh</span>
+                  <span>৳30 Lakh</span>
+                </div>
               </div>
-              <input
-                id={roofSliderId}
-                type="range"
-                min={3000}
-                max={40000}
-                step={500}
-                value={roofArea}
-                onChange={(e) => setRoofArea(Number(e.target.value))}
-                className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-lg bg-warm/15 accent-gold"
-              />
-              <div className="mt-1 flex justify-between font-mono text-[10px] text-warm/40">
-                <span>3,000 sq ft</span>
-                <span>20,000 sq ft</span>
-                <span>40,000 sq ft</span>
+
+              {/* Slider 2: Rooftop Area */}
+              <div className="mt-8">
+                <div className="flex items-center justify-between">
+                  <label htmlFor={roofSliderId} className="font-mono text-xs uppercase tracking-wider text-warm/80">
+                    Estimated Usable Roof Area
+                  </label>
+                  <span className="font-mono text-base font-bold tabular-nums text-warm">
+                    {roofArea.toLocaleString("en-US")} <span className="text-xs text-warm/60">sq ft</span>
+                  </span>
+                </div>
+                <input
+                  id={roofSliderId}
+                  type="range"
+                  min={3000}
+                  max={40000}
+                  step={500}
+                  value={roofArea}
+                  onChange={(e) => setRoofArea(Number(e.target.value))}
+                  className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-lg bg-warm/15 accent-gold"
+                />
+                <div className="mt-1 flex justify-between font-mono text-[10px] text-warm/40">
+                  <span>3,000 sq ft</span>
+                  <span>20,000 sq ft</span>
+                  <span>40,000 sq ft</span>
+                </div>
               </div>
             </div>
 
@@ -224,32 +302,75 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
               </div>
             </div>
 
+            {/* Board Memo Live Preview Container */}
+            {showMemoPreview && (
+              <div className="mt-6 rounded-2xl border border-gold/30 bg-black/60 p-4 font-mono text-[11px] leading-relaxed text-warm/90">
+                <div className="flex items-center justify-between border-b border-warm/15 pb-2 mb-2 text-gold">
+                  <span className="font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                    <FileSpreadsheet className="h-3.5 w-3.5" />
+                    <span>Executive Board Memo Preview</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setShowMemoPreview(false)}
+                    className="text-warm/50 hover:text-warm text-xs"
+                  >
+                    Close [×]
+                  </button>
+                </div>
+                <pre className="whitespace-pre-wrap font-mono text-[10px] sm:text-[11px] text-warm/80 max-h-48 overflow-y-auto pr-2">
+                  {boardMemoText}
+                </pre>
+              </div>
+            )}
+
             {/* Action Bar */}
             <div className="mt-8 border-t border-warm/10 pt-6 flex flex-wrap items-center justify-between gap-4">
               <div>
-                <p className="text-xs text-warm/60">Want an exact shadow-profiled audit for your building?</p>
-                <p className="font-mono text-xs font-semibold text-gold">Free site engineering review within 48 hours</p>
+                <p className="text-xs text-warm/60">Prepared for executive review & CFO approval:</p>
+                <button
+                  type="button"
+                  onClick={() => setShowMemoPreview(!showMemoPreview)}
+                  className="font-mono text-xs font-semibold text-gold underline underline-offset-4 hover:text-amber-300 transition-colors"
+                >
+                  {showMemoPreview ? "Hide Board Memo Preview" : "Preview Pre-Formatted Board Memo"}
+                </button>
               </div>
+
               <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href={getNetsoWhatsAppUrl(
-                    `*NETSO ENERGY — 20-YEAR PPA YIELD ESTIMATE*\n\n` +
-                    `• Facility Roof: ${roofArea.toLocaleString()} sq ft\n` +
-                    `• Monthly Utility Bill: ৳${monthlyBill.toLocaleString()} (PDB MT-2)\n` +
-                    `• Estimated Solar Array: ${(roofArea / 100).toFixed(0)} kWp\n` +
-                    `• Netso Floating Rate: ৳10.00/kWh (30% Discount below Utility)\n` +
-                    `• Estimated Annual Savings: ৳${annualSavings.toLocaleString()}\n` +
-                    `• 20-Year Cumulative Savings: ৳${twentyYearSavings.toLocaleString()}\n\n` +
-                    `Tazwar, please share the formal IDCOL-compliant term sheet for our facility.`
+                {/* 1. Copy CFO Board Memo Button */}
+                <button
+                  type="button"
+                  onClick={handleCopyMemo}
+                  className="inline-flex items-center gap-2 rounded-full border border-warm/20 bg-warm/5 px-4 py-3 font-mono text-xs font-semibold text-warm hover:bg-warm/15 transition-all active:scale-95"
+                  title="Copy pre-formatted board memo text to clipboard"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="h-4 w-4 text-emerald-400" />
+                      <span className="text-emerald-400 font-bold">Memo Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4 text-warm/70" />
+                      <span>Copy Board Memo</span>
+                    </>
                   )}
+                </button>
+
+                {/* 2. Direct Pre-Filled WhatsApp Forward Button */}
+                <a
+                  href={getNetsoWhatsAppUrl(boardMemoText)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 font-mono text-xs font-bold text-emerald-400 hover:bg-emerald-500/20 transition-all hover:scale-[1.02] shadow-sm"
+                  className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/50 bg-emerald-500/15 px-4 py-3 font-mono text-xs font-bold text-emerald-300 hover:bg-emerald-500/25 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-sm shadow-emerald-500/20"
                   title="Forward this verified calculation to Tazwar Mahtab on WhatsApp"
                 >
                   <WhatsAppIcon className="h-4 w-4 shrink-0" />
-                  <span>Forward Board Estimate</span>
+                  <span>Forward to WhatsApp</span>
                 </a>
+
+                {/* 3. Primary Liquid Metal Assessment CTA */}
                 <LiquidMetalButton
                   label="Lock In ৳10.00 Rate"
                   onClick={onOpenAssessment}
