@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Wordmark } from "./Wordmark";
 import { WhatsAppIcon, getNetsoWhatsAppUrl } from "./ui/WhatsAppIcon";
@@ -24,12 +24,20 @@ export default function Nav({
   const location = useLocation();
   const dark = theme === "dark";
 
+  // Top reading scroll progress line
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 28,
+    restDelta: 0.001,
+  });
+
   useEffect(() => {
     let ticking = false;
     const onScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          const isPast = window.scrollY > 24;
+          const isPast = window.scrollY > 30;
           setScrolled((prev) => (prev !== isPast ? isPast : prev));
           ticking = false;
         });
@@ -54,29 +62,59 @@ export default function Nav({
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? dark
-              ? "bg-forest/80 backdrop-blur-xl border-b border-warm/10"
-              : "bg-cream/80 backdrop-blur-xl border-b border-ink/8"
-            : "bg-transparent border-b border-transparent"
-        } ${fg}`}
-        style={{ paddingTop: "env(safe-area-inset-top)" }}
+      {/* 1. Golden Scroll Progress Bar (scaleX driven) */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 z-[60] h-[2.5px] origin-left bg-gradient-to-r from-gold via-amber-300 to-gold pointer-events-none shadow-sm shadow-gold/30"
+        style={{ scaleX }}
+      />
+
+      {/* 2. Hero & Scroll-Craft Floating Capsule Navbar */}
+      <motion.header
+        initial={{ y: -18, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+        className={`fixed inset-x-0 top-0 z-50 flex justify-center pointer-events-none transition-all duration-500 ease-out ${
+          scrolled ? "pt-3 md:pt-4 px-4 sm:px-6" : "pt-0 px-0"
+        }`}
+        style={{ paddingTop: scrolled ? undefined : "env(safe-area-inset-top)" }}
       >
-        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-5 md:h-[76px] md:px-10">
-          <Link to="/" aria-label="Netso Energy home" className="relative z-50 flex items-center text-[15px]">
+        <div
+          className={`pointer-events-auto flex items-center justify-between transition-all duration-500 ${
+            scrolled
+              ? dark
+                ? "w-full max-w-5xl h-14 md:h-16 rounded-full bg-forest/85 backdrop-blur-2xl border border-warm/20 shadow-2xl shadow-black/50 px-5 md:px-7"
+                : "w-full max-w-5xl h-14 md:h-16 rounded-full bg-cream/90 backdrop-blur-2xl border border-ink/10 shadow-xl shadow-ink/10 px-5 md:px-7"
+              : "w-full max-w-[1440px] h-16 md:h-[76px] px-5 md:px-10 bg-transparent border-b border-transparent"
+          } ${fg}`}
+          style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
+        >
+          {/* Brand Mark */}
+          <Link
+            to="/"
+            aria-label="Netso Energy home"
+            className="relative z-50 flex items-center text-[15px] transition-transform duration-300 hover:opacity-90 active:scale-98"
+          >
             <Wordmark dark={!dark} />
           </Link>
 
-          <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex" aria-label="Primary">
+          {/* Center Nav Links */}
+          <nav
+            className={`hidden items-center transition-all duration-300 lg:flex ${
+              scrolled ? "gap-7 text-[14px]" : "gap-8 text-[15px]"
+            }`}
+            aria-label="Primary"
+          >
             {LINKS.map((l) => (
               <NavLink
                 key={l.to}
                 to={l.to}
                 className={({ isActive }) =>
-                  `link-underline text-[15px] font-medium tracking-[-0.01em] transition-opacity ${
-                    isActive ? "opacity-100" : dark ? "opacity-70 hover:opacity-100" : "opacity-70 hover:opacity-100"
+                  `link-underline font-medium tracking-[-0.01em] transition-opacity ${
+                    isActive
+                      ? "opacity-100 text-gold"
+                      : dark
+                      ? "opacity-75 hover:opacity-100"
+                      : "opacity-75 hover:opacity-100"
                   }`
                 }
               >
@@ -85,19 +123,21 @@ export default function Nav({
             ))}
           </nav>
 
+          {/* Right Action Capsule */}
           <div className="relative z-50 flex items-center gap-3">
             {/* Direct WhatsApp Speed-Dial Capsule */}
             <a
               href={getNetsoWhatsAppUrl("Hello Netso Energy team, I am interested in exploring a commercial solar PPA for our industrial facility.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden h-10 w-10 items-center justify-center rounded-full border border-warm/20 bg-forest/80 backdrop-blur-md transition-all duration-300 hover:border-emerald-400 hover:bg-emerald-950/60 hover:scale-105 active:scale-95 sm:inline-flex shadow-sm"
+              className="hidden h-10 w-10 items-center justify-center rounded-full border border-warm/25 bg-forest/90 backdrop-blur-md transition-all duration-300 hover:border-emerald-400 hover:bg-emerald-950/60 hover:scale-105 active:scale-95 sm:inline-flex shadow-sm"
               title="Direct WhatsApp line to Netso Origination Desk"
               aria-label="Direct WhatsApp line to Netso Origination Desk"
             >
               <WhatsAppIcon className="h-5 w-5 shrink-0" />
             </a>
 
+            {/* Mobile Menu Trigger */}
             <button
               className="flex h-11 w-11 items-center justify-center rounded-full lg:hidden"
               onClick={() => setOpen(!open)}
@@ -108,7 +148,7 @@ export default function Nav({
             </button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       <AnimatePresence>
         {open && (
