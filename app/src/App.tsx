@@ -7,6 +7,7 @@ import About from "./pages/About";
 import Brand from "./pages/Brand";
 import Licenses from "./pages/Licenses";
 import Legal from "./pages/Legal";
+import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
 
 function ScrollManager() {
   const { pathname, hash } = useLocation();
@@ -38,6 +39,7 @@ export default function App() {
         <Route path="/legal/terms-of-service" element={<Legal kind="terms" />} />
         <Route path="*" element={<Home />} />
       </Routes>
+      <FloatingWhatsApp />
     </>
   );
 }

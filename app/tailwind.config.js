@@ -10,6 +10,11 @@ module.exports = {
         mono: ["'Space Mono'", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       colors: {
+        forest: "#0b1e17",
+        "forest-dark": "#07140f",
+        gold: "#c6a15b",
+        warm: "#f4eee1",
+        sage: "#93a89c",
         ink: "#111111",
         coal: "#1C1C1C",
         soot: "#2D2A26",

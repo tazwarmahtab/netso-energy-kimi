@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "skills": {
+    "autoplan": {
+      "source": "garrytan/gstack",
+      "sourceType": "github",
+      "skillPath": "autoplan/SKILL.md",
+      "computedHash": "e10781236b421c56446b766a8b1e719e9aa1446c4a7b4d116efe6763f37b3fa0"
+    },
+    "dev-orchestrator": {
+      "source": "eddiearc/dev-orchestrator-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "d3ac1378854d650f7008c02b2f0f596182656b95b29cb6a1de272f6b58a47481"
+    },
+    "refero-design": {
+      "source": "referodesign/refero_skill",
+      "sourceType": "github",
+      "skillPath": "skills/refero-design/SKILL.md",
+      "computedHash": "b39b8c1f87664b1b63c50f5e2bbe7586b08790101920c96d9bbf75fc3a2d5a61"
+    },
+    "scroll-craft": {
+      "source": "nateherkai/scroll-craft",
+      "sourceType": "github",
+      "skillPath": "plugins/nateherk-design/skills/scroll-craft/SKILL.md",
+      "computedHash": "b78387f42dd6ecc70b28c4623919bf3037e4e2dda1f021bdac7346d7b9b83bca"
+    },
+    "skill-orchestrator": {
+      "source": "wahidzzz/antigravity-skill-orchestrator",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "47c49bfd05c416ab34afbff124cf83774971e8d5bbb067c79cd25691663b5e99"
+    },
+    "skill-vetter": {
+      "source": "UseAI-pro/openclaw-skills-security",
+      "sourceType": "github",
+      "skillPath": "skills/skill-vetter/SKILL.md",
+      "computedHash": "5172ac6d437a5f41b5fa8be0def458a48b0e73c6b901c3f4e5e792434c4dc133"
+    }
+  }
+}

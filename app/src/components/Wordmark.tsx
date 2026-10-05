@@ -29,15 +29,33 @@ export function SunMark({
   );
 }
 
-export function Wordmark({ className = "", dark = false }: { className?: string; dark?: boolean }) {
+export function Wordmark({
+  className = "",
+  dark = false,
+  showTagline = false,
+}: {
+  className?: string;
+  dark?: boolean;
+  showTagline?: boolean;
+}) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <SunMark variant={dark ? "ink" : "yellow"} className="h-[1.15em] w-[1.15em] shrink-0" />
-      <span
-        className={`font-display leading-none ${dark ? "text-ink" : ""}`}
-        style={{ fontSize: "1.35em", fontWeight: 620, letterSpacing: "-0.02em" }}
-      >
-        Netso<span className={dark ? "text-ink/45" : "opacity-45"}>&nbsp;Energy</span>
+      <span className="inline-flex flex-col">
+        <span
+          className={`font-display leading-none tracking-[-0.02em] ${dark ? "text-ink" : "text-cream"}`}
+          style={{ fontSize: "1.3em", fontWeight: 700 }}
+        >
+          NETSO<span className="text-gold font-bold ml-0.5">°</span>
+          <span className={`text-[0.8em] font-normal tracking-[0.05em] ml-1.5 ${dark ? "text-ink/60" : "text-cream/60"}`}>
+            ENERGY
+          </span>
+        </span>
+        {showTagline && (
+          <span className={`font-mono text-[8px] tracking-[0.2em] uppercase mt-0.5 ${dark ? "text-ink/40" : "text-cream/40"}`}>
+            Rooftop Utility
+          </span>
+        )}
       </span>
     </span>
   );

@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { SunMark } from "./Wordmark";
+import { WhatsAppIcon, getNetsoWhatsAppUrl } from "./ui/WhatsAppIcon";
 
 const SITE = [
   { label: "Product", to: "/product" },
@@ -46,8 +47,9 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-2.5 text-cream">
             <SunMark className="h-7 w-7" />
-            <span className="font-display text-2xl" style={{ fontWeight: 620 }}>
-              Netso Energy
+            <span className="font-display text-2xl font-bold tracking-tight">
+              NETSO<span className="text-gold ml-0.5">°</span>
+              <span className="text-cream/60 font-normal tracking-wide text-lg ml-2">ENERGY</span>
             </span>
           </div>
           <p className="mt-5 max-w-xs text-[15px] leading-relaxed text-cream/60">
@@ -110,6 +112,25 @@ export default function Footer() {
             <br />
             Dhaka, Bangladesh
           </p>
+          <a
+            href={getNetsoWhatsAppUrl(
+              "Hello Netso Energy, I would like to schedule a preliminary on-site rooftop audit for our industrial facility."
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 font-mono text-xs font-semibold text-emerald-400 hover:bg-emerald-500/20 transition-all hover:scale-[1.02]"
+            title="Direct line to Netso Origination Desk on WhatsApp"
+          >
+            <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
+            <span>+880 1791-222777</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Monumental Ghost Watermark */}
+      <div className="pointer-events-none relative w-full overflow-hidden select-none -mb-[3vw] pt-4">
+        <div className="font-display font-bold text-[22vw] leading-none tracking-[-0.05em] text-cream/[0.03] text-center whitespace-nowrap">
+          NETSO<span className="text-gold/[0.05]">°</span>
         </div>
       </div>
 
@@ -119,7 +140,7 @@ export default function Footer() {
       >
         <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-5 py-6 text-[13px] text-cream/40 md:flex-row md:items-center md:justify-between md:px-10">
           <span>© {new Date().getFullYear()} Netso Energy Limited. All rights reserved.</span>
-          <span className="eyebrow">netso</span>
+          <span className="font-mono text-xs tracking-widest text-gold/70 uppercase">NETSO° • DHAKA — GAZIPUR</span>
         </div>
       </div>
     </footer>

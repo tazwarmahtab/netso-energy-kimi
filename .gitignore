@@ -1,0 +1,17 @@
+node_modules
+dist
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+app/dist
+app/node_modules
+
+# Loose media files at root
+/*.MP4
+/*.mp4
+/*.JPG
+/*.jpg
+/*.PNG
+/*.png

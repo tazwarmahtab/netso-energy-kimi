@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Wordmark } from "./Wordmark";
+import { WhatsAppIcon, getNetsoWhatsAppUrl } from "./ui/WhatsAppIcon";
 
 const LINKS = [
   { to: "/product", label: "Product" },
@@ -11,7 +12,13 @@ const LINKS = [
   { to: "/brand", label: "Brand" },
 ];
 
-export default function Nav({ theme = "dark" }: { theme?: "dark" | "light" }) {
+export default function Nav({
+  theme = "dark",
+  onOpenAssessment,
+}: {
+  theme?: "dark" | "light";
+  onOpenAssessment?: () => void;
+}) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -41,7 +48,7 @@ export default function Nav({ theme = "dark" }: { theme?: "dark" | "light" }) {
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
           scrolled
             ? dark
-              ? "bg-ink/72 backdrop-blur-xl border-b border-cream/10"
+              ? "bg-forest/80 backdrop-blur-xl border-b border-warm/10"
               : "bg-cream/80 backdrop-blur-xl border-b border-ink/8"
             : "bg-transparent border-b border-transparent"
         } ${fg}`}
@@ -68,19 +75,49 @@ export default function Nav({ theme = "dark" }: { theme?: "dark" | "light" }) {
             ))}
           </nav>
 
-          <div className="relative z-50 flex items-center gap-3 md:gap-5">
-            <span
-              className={`hidden cursor-pointer text-[15px] font-medium sm:inline ${dark ? "opacity-80 hover:opacity-100" : "opacity-80 hover:opacity-100"} transition-opacity`}
-              title="Client portal"
-            >
-              Client login
-            </span>
+          <div className="relative z-50 flex items-center gap-3">
+            {/* Minimalist Icon-Only WhatsApp Capsule */}
             <a
-              href="/#get-started"
-              className="hidden h-11 items-center rounded-full bg-orange px-5 text-[15px] font-semibold text-cream transition-transform duration-300 hover:scale-[1.04] active:scale-[0.98] sm:inline-flex"
+              href={getNetsoWhatsAppUrl("Hello Netso Energy team, I am interested in exploring a commercial solar PPA for our industrial facility.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden h-10 w-10 items-center justify-center rounded-full border border-warm/20 bg-forest/70 backdrop-blur-md transition-all duration-300 hover:border-emerald-400/80 hover:bg-emerald-950/40 hover:scale-105 active:scale-95 sm:inline-flex shadow-sm"
+              title="Direct WhatsApp line to Netso Origination Desk"
+              aria-label="Direct WhatsApp line to Netso Origination Desk"
             >
-              Get started
+              <WhatsAppIcon className="h-4.5 w-4.5 shrink-0" />
             </a>
+
+            {/* Scroll-Gated Assessment CTA: Hidden at top of hero to avoid viewport duplication, animated in when scrolled */}
+            <AnimatePresence>
+              {(location.pathname !== "/" || scrolled) && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, x: 8 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, x: 8 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  className="hidden sm:inline-flex"
+                >
+                  {onOpenAssessment ? (
+                    <button
+                      type="button"
+                      onClick={onOpenAssessment}
+                      className="h-10 items-center rounded-full bg-gold px-5 text-sm font-semibold text-forest transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98] shadow-md shadow-gold/20"
+                    >
+                      Get roof assessment
+                    </button>
+                  ) : (
+                    <a
+                      href="/#get-started"
+                      className="h-10 items-center rounded-full bg-gold px-5 text-sm font-semibold text-forest transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
+                    >
+                      Get roof assessment
+                    </a>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <button
               className="flex h-11 w-11 items-center justify-center rounded-full lg:hidden"
               onClick={() => setOpen(!open)}
@@ -124,13 +161,38 @@ export default function Nav({ theme = "dark" }: { theme?: "dark" | "light" }) {
               transition={{ delay: 0.4 }}
               style={{ paddingBottom: "calc(3rem + env(safe-area-inset-bottom))" }}
             >
-              <a
-                href="/#get-started"
-                className="flex h-14 w-full items-center justify-center rounded-full bg-orange text-[17px] font-semibold text-cream"
-              >
-                Get started
-              </a>
-              <p className="eyebrow text-center text-cream/50">The sky is already working</p>
+              <div className="flex flex-col gap-3">
+                {onOpenAssessment ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpen(false);
+                      onOpenAssessment();
+                    }}
+                    className="flex h-13 w-full items-center justify-center rounded-full bg-gold text-base font-semibold text-forest shadow-lg shadow-gold/20"
+                  >
+                    Get roof assessment
+                  </button>
+                ) : (
+                  <a
+                    href="/#get-started"
+                    onClick={() => setOpen(false)}
+                    className="flex h-13 w-full items-center justify-center rounded-full bg-gold text-base font-semibold text-forest shadow-lg shadow-gold/20"
+                  >
+                    Get roof assessment
+                  </a>
+                )}
+                <a
+                  href={getNetsoWhatsAppUrl("Hello Netso Energy team, I am interested in exploring a commercial solar PPA for our industrial facility.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-12 w-full items-center justify-center gap-2.5 rounded-full border border-warm/20 bg-forest/80 text-sm font-semibold text-warm"
+                >
+                  <WhatsAppIcon className="h-5 w-5 shrink-0" />
+                  <span>WhatsApp Direct</span>
+                </a>
+              </div>
+              <p className="eyebrow text-center text-cream/50 pt-2">The sky is already working</p>
             </motion.div>
           </motion.div>
         )}
