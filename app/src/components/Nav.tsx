@@ -83,9 +83,9 @@ export default function Nav({
           className={`pointer-events-auto flex items-center justify-between transition-all duration-500 ${
             scrolled
               ? dark
-                ? "w-full max-w-5xl h-14 md:h-16 rounded-full bg-forest/85 backdrop-blur-2xl border border-warm/20 shadow-2xl shadow-black/50 px-5 md:px-7"
-                : "w-full max-w-5xl h-14 md:h-16 rounded-full bg-cream/90 backdrop-blur-2xl border border-ink/10 shadow-xl shadow-ink/10 px-5 md:px-7"
-              : "w-full max-w-[1440px] h-16 md:h-[76px] px-5 md:px-10 bg-transparent border-b border-transparent"
+                ? "w-full max-w-3xl md:max-w-4xl h-13 md:h-14 rounded-full bg-[#06120D]/40 backdrop-blur-2xl border border-white/[0.12] shadow-[0_12px_40px_-8px_rgba(0,0,0,0.55)] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] px-6 md:px-7"
+                : "w-full max-w-3xl md:max-w-4xl h-13 md:h-14 rounded-full bg-white/50 backdrop-blur-2xl border border-black/[0.08] shadow-[0_12px_40px_-8px_rgba(0,0,0,0.1)] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.7)] px-6 md:px-7"
+              : "w-full max-w-[1440px] h-16 md:h-20 px-6 md:px-12 bg-transparent border-b border-transparent"
           } ${fg}`}
           style={{ transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)" }}
         >
@@ -93,7 +93,7 @@ export default function Nav({
           <Link
             to="/"
             aria-label="Netso Energy home"
-            className="relative z-50 flex items-center text-[15px] transition-transform duration-300 hover:opacity-90 active:scale-98"
+            className="relative z-50 flex items-center text-[15px] transition-transform duration-300 hover:opacity-90 active:scale-98 shrink-0"
           >
             <Wordmark dark={!dark} />
           </Link>
@@ -101,7 +101,7 @@ export default function Nav({
           {/* Center Nav Links */}
           <nav
             className={`hidden items-center transition-all duration-300 lg:flex ${
-              scrolled ? "gap-7 text-[14px]" : "gap-8 text-[15px]"
+              scrolled ? "gap-6 text-[13px]" : "gap-8 text-[14px]"
             }`}
             aria-label="Primary"
           >
@@ -110,12 +110,12 @@ export default function Nav({
                 key={l.to}
                 to={l.to}
                 className={({ isActive }) =>
-                  `link-underline font-medium tracking-[-0.01em] transition-opacity ${
+                  `link-underline font-medium tracking-tight transition-colors ${
                     isActive
-                      ? "opacity-100 text-gold"
+                      ? "text-gold font-semibold"
                       : dark
-                      ? "opacity-75 hover:opacity-100"
-                      : "opacity-75 hover:opacity-100"
+                      ? "text-cream/80 hover:text-cream"
+                      : "text-ink/80 hover:text-ink"
                   }`
                 }
               >
@@ -124,16 +124,15 @@ export default function Nav({
             ))}
           </nav>
 
-          {/* Right Action Capsule / Mobile Menu Trigger */}
-          <div className="relative z-50 flex items-center">
-            {/* Mobile Menu Trigger */}
+          {/* Mobile Menu Trigger */}
+          <div className="relative z-50 flex items-center lg:hidden">
             <button
-              className="flex h-11 w-11 items-center justify-center rounded-full lg:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-warm hover:text-gold transition-colors"
               onClick={() => setOpen(!open)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
             >
-              {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>

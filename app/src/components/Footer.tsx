@@ -46,11 +46,9 @@ export default function Footer() {
 
       <div className="mx-auto grid max-w-[1440px] gap-12 px-5 py-14 md:grid-cols-[1.4fr_1fr_1fr_auto] md:px-10 md:py-20">
         <div>
-          <div className="flex items-center gap-2.5 text-cream">
-            <SunMark className="h-7 w-7" />
-            <span className="font-display text-2xl font-bold tracking-tight">
-              NETSO<span className="text-gold ml-0.5">°</span>
-              <span className="text-cream/60 font-normal tracking-wide text-lg ml-2">ENERGY</span>
+          <div className="flex items-center text-cream">
+            <span className="font-display text-2xl font-extrabold tracking-tight">
+              NETSO<span className="text-gold">°</span>ENERGY
             </span>
           </div>
           <p className="mt-5 max-w-xs text-[15px] leading-relaxed text-cream/60">
