@@ -93,7 +93,7 @@ export default function Legal({ kind }: { kind: "privacy" | "terms" }) {
       <Nav theme="light" />
       <main id="content" className="mx-auto max-w-[860px] px-5 pb-28 pt-28 md:px-10 md:pt-40">
         <FadeUp>
-          <p className="eyebrow text-orange">Legal · Netso Energy Limited</p>
+          <p className="eyebrow text-gold">Legal · Netso Energy Limited</p>
         </FadeUp>
         <h1 className="font-display mt-5 text-5xl md:text-7xl">
           <Words text={isPrivacy ? "Privacy Policy" : "Terms of Service"} accent={isPrivacy ? 1 : 2} />

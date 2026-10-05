@@ -7,7 +7,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 export function Words({
   text,
   accent = 0,
-  accentClassName = "text-orange",
+  accentClassName = "text-gold",
   className = "",
   delay = 0,
   once = true,

@@ -56,7 +56,7 @@ export default function Footer() {
             A new kind of energy company. Rooftop solar for Bangladeshi industry — financed, built, owned
             and operated by Netso. ৳0 upfront, a lower power bill every month.
           </p>
-          <p className="eyebrow mt-8 text-orange">The sky is already working</p>
+          <p className="eyebrow mt-8 text-gold">The sky is already working</p>
         </div>
 
         <nav aria-label="Site">

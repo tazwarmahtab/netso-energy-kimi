@@ -17,7 +17,7 @@ export default function Licenses() {
       <Nav theme="light" />
       <main id="content" className="mx-auto max-w-[1100px] px-5 pb-28 pt-28 md:px-10 md:pt-40">
         <FadeUp>
-          <p className="eyebrow text-orange">Compliance</p>
+          <p className="eyebrow text-gold">Compliance</p>
         </FadeUp>
         <h1 className="font-display mt-5 text-6xl md:text-8xl">
           <Words text="Regulatory & Filings" accent={1} />
@@ -48,7 +48,7 @@ export default function Licenses() {
                   <span className="text-[15px] font-semibold text-ink md:p-5">{l.entity}</span>
                   <span className="text-[14px] text-ink/70 md:p-5">{l.authority}</span>
                   <span className="text-[14px] text-ink/70 md:p-5">{l.item}</span>
-                  <span className="font-mono text-[13.5px] font-bold text-orange md:p-5">{l.ref}</span>
+                  <span className="font-mono text-[13.5px] font-bold text-forest md:p-5">{l.ref}</span>
                 </div>
               </StaggerItem>
             ))}

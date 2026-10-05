@@ -108,7 +108,7 @@ function Benefits() {
                 <p className="mt-6 max-w-md text-[16.5px] leading-relaxed text-ink/70">{tab.copy}</p>
                 <a
                   href="#how-it-works"
-                  className="mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-orange link-underline"
+                  className="mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-forest hover:text-gold transition-colors link-underline"
                 >
                   See how <ChevronRight className="h-4 w-4" />
                 </a>
@@ -191,7 +191,7 @@ function StepVisual({ kind }: { kind: string }) {
           </div>
           <div className="flex items-center justify-between gap-10">
             <span className="text-[13px] font-semibold text-ink">Netso PPA</span>
-            <span className="font-mono text-[15px] font-bold text-orange">৳10.00</span>
+            <span className="font-mono text-[15px] font-bold text-forest">৳10.00</span>
           </div>
           <div className="h-px bg-ink/10" />
           <div className="flex items-center justify-between gap-10">
@@ -209,7 +209,7 @@ function HowItWorks() {
     <section id="how-it-works" className="bg-parchment py-24 md:py-36">
       <div className="mx-auto max-w-[1440px] px-5 md:px-10">
         <FadeUp>
-          <p className="eyebrow text-orange">How Netso Works</p>
+          <p className="eyebrow text-gold">How Netso Works</p>
         </FadeUp>
         <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:items-end">
           <h2 className="font-display text-5xl text-ink md:text-7xl">
@@ -222,7 +222,7 @@ function HowItWorks() {
             </p>
             <a
               href="#get-started"
-              className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold text-orange link-underline"
+              className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold text-forest hover:text-gold transition-colors link-underline"
             >
               See if your roof qualifies <ChevronRight className="h-4 w-4" />
             </a>
@@ -241,7 +241,7 @@ function HowItWorks() {
                 <div className="flex flex-1 flex-col p-6 md:p-7">
                   <p className="eyebrow text-ink/45">{s.n}</p>
                   <h3 className="font-display mt-3 text-3xl text-ink">{s.title}</h3>
-                  <p className="mt-1 text-[15px] font-semibold text-orange">{s.head}</p>
+                  <p className="mt-1 text-[15px] font-semibold text-forest">{s.head}</p>
                   <p className="mt-3 text-[14.5px] leading-relaxed text-ink/65">{s.copy}</p>
                   {s.cta && (
                     <a
@@ -292,7 +292,7 @@ function Why() {
             {RISKS.map((r) => (
               <StaggerItem key={r.big}>
                 <div className="group grid items-center gap-4 py-8 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1.5fr)_minmax(0,1fr)] md:gap-8 md:py-10">
-                  <p className="font-display text-5xl text-sun transition-colors duration-500 group-hover:text-orange md:text-7xl">
+                  <p className="font-display text-5xl text-sun transition-colors duration-500 group-hover:text-gold md:text-7xl">
                     {r.big}
                   </p>
                   <p className="max-w-xl text-xl font-medium leading-snug text-cream md:text-2xl">{r.label}</p>
@@ -321,7 +321,7 @@ function Network() {
         <div className="grid gap-10 lg:grid-cols-2 lg:items-end">
           <div>
             <FadeUp>
-              <p className="eyebrow text-orange">One roof at a time</p>
+              <p className="eyebrow text-gold">One roof at a time</p>
             </FadeUp>
             <h2 className="font-display mt-6 max-w-xl text-4xl text-ink md:text-6xl">
               <Words
@@ -342,7 +342,7 @@ function Network() {
             </p>
             <a
               href="#get-started"
-              className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold text-orange link-underline"
+              className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold text-forest hover:text-gold transition-colors link-underline"
             >
               See if your roof qualifies <ChevronRight className="h-4 w-4" />
             </a>
