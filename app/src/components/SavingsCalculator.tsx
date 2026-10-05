@@ -28,13 +28,11 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
   // State: Preview memo toggle
   const [showMemoPreview, setShowMemoPreview] = useState(false);
 
-  // Constants grounded in MASTER-CONTEXT.md
-  const GRID_PEAK_TARIFF = 15.36; // BDT/kWh BERC peak benchmark
-  const NETSO_PPA_TARIFF = 10.00; // BDT/kWh CGS executed benchmark
-  const TARIFF_SAVINGS_PERCENT = ((GRID_PEAK_TARIFF - NETSO_PPA_TARIFF) / GRID_PEAK_TARIFF); // ~34.9%
+  // Commercial model: 30% contractually guaranteed savings below utility grid tariff
+  const GUARANTEED_SAVINGS_PERCENT = 0.30; // 30% guaranteed discount
 
   // Calculations
-  const monthlySavings = Math.round(monthlyBill * TARIFF_SAVINGS_PERCENT);
+  const monthlySavings = Math.round(monthlyBill * GUARANTEED_SAVINGS_PERCENT);
   const annualSavings = monthlySavings * 12;
   // 20-year cumulative savings with conservative 2% average annual grid escalation
   const twentyYearSavings = Math.round(annualSavings * 24.3);
@@ -63,12 +61,11 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
     `🏢 *Facility Sector:* ${selectedFacilityLabel}\n` +
     `📐 *Usable Rooftop Area:* ${roofArea.toLocaleString("en-US")} sq ft\n` +
     `⚡ *Estimated Solar Array:* ${estimatedCapacityKwp} kWp (Bifacial Pergola)\n` +
-    `📊 *Current Monthly Grid Spend:* ৳${monthlyBill.toLocaleString("en-US")} (PDB Peak MT-2)\n\n` +
+    `📊 *Current Monthly Grid Spend:* ৳${monthlyBill.toLocaleString("en-US")}\n\n` +
     `💰 *COMMERCIAL PPA STRUCTURE (ZERO CAPEX):*\n` +
-    `• Netso Contracted Tariff: ৳10.00 / kWh\n` +
-    `• BERC Utility Peak Tariff: ৳15.36 / kWh\n` +
-    `• Net Unit Savings Spread: +৳5.36 / kWh (35% Direct Reduction)\n` +
-    `• Upfront Investment: ৳0.00 (100% Financed by Netso / IDCOL)\n\n` +
+    `• Netso Contracted Savings: 30% Guaranteed Discount vs Utility Grid Peak\n` +
+    `• Tariff Protection: Floats with BERC schedules (Guaranteed margin hedge)\n` +
+    `• Upfront Investment: ৳0.00 (100% Financed & Maintained by Netso)\n\n` +
     `📈 *PROJECTED CASH SAVINGS:*\n` +
     `• Estimated Monthly Savings: ${formatBDT(monthlySavings)} / month\n` +
     `• Estimated Annual Savings: ${formatBDT(annualSavings)} / year\n` +
@@ -111,7 +108,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
             See what your roof saves.
           </h2>
           <p className="mt-4 text-base text-sage md:text-lg">
-            Based on executed 20-year IDCOL PPA terms: <span className="font-semibold text-warm">৳0 upfront CAPEX</span>, Netso maintenance, and a locked <span className="font-semibold text-gold">৳10.00/kWh flat rate</span> vs. ৳15.36 BERC grid peak.
+            Based on executed 20-year IDCOL PPA terms: <span className="font-semibold text-warm">৳0 upfront CAPEX</span>, full Netso operational maintenance, and a contractually locked <span className="font-semibold text-gold">30% guaranteed savings</span> below your utility grid tariff.
           </p>
         </div>
 
@@ -210,19 +207,19 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
               </div>
             </div>
 
-            {/* Benchmark Comparison Card */}
+            {/* Commercial Structure Card */}
             <div className="mt-8 rounded-2xl border border-gold/20 bg-black/30 p-5">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-warm/70">BERC Grid Peak Tariff:</span>
-                <span className="font-mono font-bold text-red-400">৳15.36 / kWh</span>
+                <span className="text-warm/70">Grid Power Vulnerability:</span>
+                <span className="font-mono font-bold text-red-400">Rising BERC Tariffs</span>
               </div>
               <div className="mt-2 flex items-center justify-between text-xs">
-                <span className="text-warm/70">Netso Contracted PPA:</span>
-                <span className="font-mono font-bold text-emerald-400">৳10.00 / kWh</span>
+                <span className="text-warm/70">Netso Commercial Guarantee:</span>
+                <span className="font-mono font-bold text-emerald-400">30% Below Utility Tariff</span>
               </div>
               <div className="mt-3 border-t border-warm/10 pt-2.5 flex items-center justify-between text-xs font-semibold">
-                <span className="text-gold">Contracted Unit Spread:</span>
-                <span className="font-mono text-gold">+৳5.36 / kWh saved</span>
+                <span className="text-gold">Contractual Spread:</span>
+                <span className="font-mono text-gold">30% Guaranteed Hedged Savings</span>
               </div>
             </div>
           </div>
@@ -239,7 +236,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
                 </div>
                 <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-bold text-emerald-400">
                   <Sparkles className="h-3.5 w-3.5" />
-                  <span>35% Instant Bill Cut</span>
+                  <span>30% Guaranteed Reduction</span>
                 </div>
               </div>
 
@@ -372,7 +369,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
 
                 {/* 3. Primary Liquid Metal Assessment CTA */}
                 <LiquidMetalButton
-                  label="Lock In ৳10.00 Rate"
+                  label="Lock In 30% Savings"
                   onClick={onOpenAssessment}
                 />
               </div>

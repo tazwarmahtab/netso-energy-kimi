@@ -52,7 +52,7 @@ export async function syncLeadToNotion(lead: FeasibilityLead): Promise<SyncResul
   const leadWithTime: FeasibilityLead = {
     ...lead,
     timestamp,
-    estimatedTariff: lead.estimatedTariff || "৳10.00 / kWh (CGS Benchmark PPA)",
+    estimatedTariff: lead.estimatedTariff || "30% Guaranteed Savings vs Grid Peak",
   };
 
   // 1. Always record in client-side queue
@@ -103,7 +103,7 @@ export async function syncLeadToNotion(lead: FeasibilityLead): Promise<SyncResul
             {
               type: "text",
               text: {
-                content: `\n• Facility Type: ${lead.facilityType.toUpperCase()}\n• Roof Area: ${Number(lead.roofArea).toLocaleString()} sq ft\n• Current Monthly Grid Spend: ৳${Number(lead.monthlySpend).toLocaleString()}\n• Target PPA Tariff: ৳10.00/kWh (35% BERC peak discount)\n• Email: ${lead.email}\n• Phone / WhatsApp: ${lead.phone}\n• Dispatched At: ${new Date().toLocaleString("en-GB", { timeZone: "Asia/Dhaka" })} BST`,
+                content: `\n• Facility Type: ${lead.facilityType.toUpperCase()}\n• Roof Area: ${Number(lead.roofArea).toLocaleString()} sq ft\n• Current Monthly Grid Spend: ৳${Number(lead.monthlySpend).toLocaleString()}\n• PPA Savings Guarantee: 30% Guaranteed Discount vs BERC Peak Grid Tariff\n• Email: ${lead.email}\n• Phone / WhatsApp: ${lead.phone}\n• Dispatched At: ${new Date().toLocaleString("en-GB", { timeZone: "Asia/Dhaka" })} BST`,
               },
             },
           ],

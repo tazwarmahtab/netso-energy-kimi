@@ -97,8 +97,8 @@ const FLOW = [
   {
     n: "02",
     t: "Direct Daylight Consumption",
-    c: "Clean solar power routes straight into your facility's Main Distribution Board (MDB), covering 75–85% of daytime manufacturing loads at a fixed ৳10.00/kWh tariff.",
-    tag: "৳10.00 / kWh",
+    c: "Clean solar power routes straight into your facility's Main Distribution Board (MDB), covering 75–85% of daytime manufacturing loads at a guaranteed 30% discount to grid tariffs.",
+    tag: "30% Guaranteed Savings",
   },
   {
     n: "03",
@@ -220,8 +220,8 @@ function NeosTelemetryTerminal() {
             <ShieldCheck className="h-3.5 w-3.5 text-gold" />
             <span className="font-mono text-[11px] uppercase tracking-wider">Grid Displacement</span>
           </div>
-          <p className="font-display mt-2 text-2xl font-bold text-emerald-400 md:text-3xl">-35.0%</p>
-          <span className="font-mono text-[10px] text-warm/60">৳10.00 vs ৳15.36 Peak</span>
+          <p className="font-display mt-2 text-2xl font-bold text-emerald-400 md:text-3xl">-30.0%</p>
+          <span className="font-mono text-[10px] text-warm/60">Guaranteed Below Grid Peak</span>
         </div>
 
         <div className="rounded-xl border border-warm/10 bg-forest/60 p-4">
@@ -452,7 +452,7 @@ function Network() {
 /* --------------------------- Compare table --------------------------- */
 const ROWS = [
   { k: "Upfront Capital Expenditure", cash: "৳45,000–60,000/kWp from cash reserves", dl: "৳0 — 100% financed by Netso via senior debt" },
-  { k: "Contractual Tariff", cash: "Unpredictable ROI dependent on execution", dl: "Locked at ৳10.00/kWh (35% below peak grid rate)" },
+  { k: "Contractual Tariff", cash: "Unpredictable ROI dependent on execution", dl: "Locked at 30% guaranteed savings below utility grid peak" },
   { k: "Technical & Generation Risk", cash: "Borne 100% by your facility", dl: "Netso bears 100% performance & degradation risk" },
   { k: "Operations & Maintenance (O&M)", cash: "Your internal staff, inverter replacement costs", dl: "20-year comprehensive O&M, washing & spares included" },
   { k: "SREDA & Interconnection Approvals", cash: "Complex utility bureaucracy handled in-house", dl: "Handled end-to-end by Netso's origination team" },
@@ -533,7 +533,7 @@ export default function Product() {
         <CTASection
           title="The sky is already working"
           heading="Your roof is an institutional asset."
-          copy="Ready to eliminate grid peak vulnerability? ৳0 upfront CAPEX, an institutional ৳10.00/kWh tariff, and full 20-year operations handled by Netso."
+          copy="Ready to eliminate grid peak vulnerability? ৳0 upfront CAPEX, guaranteed 30% tariff savings, and full 20-year operations handled by Netso."
           cta="Request Rooftop Assessment"
         />
       </main>

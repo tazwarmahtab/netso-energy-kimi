@@ -3,7 +3,7 @@ import { Gauge, Sun, Zap } from "lucide-react";
 
 const chips = [
   { icon: Sun, label: "Solar yield", value: "1,445 kWh/kWp/yr", pos: "left-[4%] top-[24%]", delay: 0.9, hide: "hidden md:flex" },
-  { icon: Zap, label: "PPA rate", value: "৳10.00/kWh", pos: "right-[5%] top-[30%]", delay: 1.1, hide: "hidden md:flex" },
+  { icon: Zap, label: "Guaranteed Savings", value: "30% vs Grid", pos: "right-[5%] top-[30%]", delay: 1.1, hide: "hidden md:flex" },
   { icon: Gauge, label: "Self-consumption", value: "78%", pos: "right-[10%] bottom-[24%]", delay: 1.3, hide: "hidden lg:flex" },
 ];
 

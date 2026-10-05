@@ -100,7 +100,7 @@ function Hero({ onOpenModal }: { onOpenModal: () => void }) {
 const METRICS = [
   { val: "80%", unit: "LTV", label: "Senior Debt Facility", sub: "IDCOL 5.0%–5.5% concessionary facility" },
   { val: "1.25×", unit: "Min", label: "DSCR Covenant", sub: "Ring-fenced take-or-pay cash flow coverage" },
-  { val: "৳10.00", unit: "/kWh", label: "Contracted PPA Tariff", sub: "CGS benchmark vs ৳15.36 BERC peak" },
+  { val: "30%", unit: "Margin", label: "Guaranteed Offtaker Savings", sub: "Locked discount below BERC peak grid tariff" },
   { val: "৳60k", unit: "/kWp", label: "CAPEX Benchmark Ceiling", sub: "Strict engineering discipline under IDCOL rules" },
 ];
 

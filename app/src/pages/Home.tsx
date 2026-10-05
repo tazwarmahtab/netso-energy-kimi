@@ -29,18 +29,18 @@ const TABS = [
   {
     id: "save",
     eyebrow: "save",
-    title: "Cut your electricity cost by 28–35%",
+    title: "Cut your electricity cost by 30% guaranteed",
     accent: 0,
-    copy: "A Netso PPA rate of ৳10.00/kWh replaces grid power that now peaks at ৳18.43/kWh. One predictable monthly bill — below the utility tariff from day one.",
+    copy: "A guaranteed 30% discount below utility tariffs replaces volatile peak grid billing. One predictable monthly bill — locked at 30% savings from day one.",
     img: solarRoof,
     alt: "A pergola-style solar canopy on a factory rooftop at dusk, warm sky visible between the panels",
   },
   {
     id: "protect",
     eyebrow: "protect",
-    title: "Lock your tariff for 20 years",
+    title: "Lock your tariff hedge for 20 years",
     accent: 0,
-    copy: "Grid tariffs jumped 16.7% in a single BERC order. Your PPA rate doesn't move. Budget certainty for two decades, whatever the grid does next.",
+    copy: "Grid tariffs jumped 16.7% in a single BERC order. Netso contractually guarantees your 30% discount margin. Budget certainty for two decades, whatever the grid does next.",
     img: batteryWall,
     alt: "Smart inverters and electrical cabinets inside a factory electrical room",
   },
@@ -186,17 +186,17 @@ function StepVisual({ kind }: { kind: string }) {
         <p className="eyebrow !text-[10px] text-ink/50">Your power rate</p>
         <div className="mt-3 space-y-2.5">
           <div className="flex items-center justify-between gap-10">
-            <span className="text-[13px] font-medium text-ink/70">Grid tariff</span>
-            <span className="font-mono text-[15px] font-bold text-ink/40 line-through">৳15.36</span>
+            <span className="text-[13px] font-medium text-ink/70">Grid power</span>
+            <span className="font-mono text-[13px] font-bold text-red-600/70">Unhedged Peak</span>
           </div>
           <div className="flex items-center justify-between gap-10">
             <span className="text-[13px] font-semibold text-ink">Netso PPA</span>
-            <span className="font-mono text-[15px] font-bold text-forest">৳10.00</span>
+            <span className="font-mono text-[13px] font-bold text-forest">30% Below Grid</span>
           </div>
           <div className="h-px bg-ink/10" />
           <div className="flex items-center justify-between gap-10">
-            <span className="eyebrow !text-[10px] text-ink/50">You save</span>
-            <span className="font-mono text-[15px] font-bold text-ink">35%</span>
+            <span className="eyebrow !text-[10px] text-ink/50">Guaranteed</span>
+            <span className="font-mono text-[15px] font-bold text-forest">30% Savings</span>
           </div>
         </div>
       </div>

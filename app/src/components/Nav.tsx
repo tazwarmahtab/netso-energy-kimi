@@ -123,20 +123,8 @@ export default function Nav({
             ))}
           </nav>
 
-          {/* Right Action Capsule */}
-          <div className="relative z-50 flex items-center gap-3">
-            {/* Direct WhatsApp Speed-Dial Capsule */}
-            <a
-              href={getNetsoWhatsAppUrl("Hello Netso Energy team, I am interested in exploring a commercial solar PPA for our industrial facility.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden h-10 w-10 items-center justify-center rounded-full border border-warm/25 bg-forest/90 backdrop-blur-md transition-all duration-300 hover:border-emerald-400 hover:bg-emerald-950/60 hover:scale-105 active:scale-95 sm:inline-flex shadow-sm"
-              title="Direct WhatsApp line to Netso Origination Desk"
-              aria-label="Direct WhatsApp line to Netso Origination Desk"
-            >
-              <WhatsAppIcon className="h-5 w-5 shrink-0" />
-            </a>
-
+          {/* Right Action Capsule / Mobile Menu Trigger */}
+          <div className="relative z-50 flex items-center">
             {/* Mobile Menu Trigger */}
             <button
               className="flex h-11 w-11 items-center justify-center rounded-full lg:hidden"

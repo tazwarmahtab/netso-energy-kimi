@@ -288,10 +288,10 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                 <span className="font-mono text-xs font-semibold uppercase tracking-wider text-gold/80">Tariff Hedge</span>
               </div>
               <p className="font-display text-3xl font-bold tracking-tight text-warm md:text-4xl">
-                ৳10.00 / kWh
+                30% Savings
               </p>
               <p className="mt-2 text-sm leading-relaxed text-sage">
-                Contracted flat rate vs. ৳15.36 BERC grid peak — locking in immediate 35% operational savings for your institution.
+                Contractually guaranteed 30% discount below the utility grid tariff — shielding your bottom line from future BERC rate hikes.
               </p>
             </div>
           </div>

@@ -48,8 +48,8 @@ export function FloatingWhatsApp() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
             </span>
-            <WhatsAppIcon className="h-4.5 w-4.5 shrink-0" />
-            <span className="hidden sm:inline font-mono tracking-tight text-[11px] text-cream/90 group-hover:text-emerald-300">
+            <WhatsAppIcon className="h-5 w-5 shrink-0" />
+            <span className="font-mono tracking-tight text-[11px] text-cream/90 group-hover:text-emerald-300">
               Chat on WhatsApp
             </span>
           </a>
