@@ -4,6 +4,7 @@ import { WhatsAppIcon, getNetsoWhatsAppUrl } from "./ui/WhatsAppIcon";
 
 const SITE = [
   { label: "Product", to: "/product" },
+  { label: "Financial Calculator", to: "/calculator" },
   { label: "Partners", to: "/partners" },
   { label: "About", to: "/about" },
   { label: "Brand Kit", to: "/brand" },
@@ -11,9 +12,9 @@ const SITE = [
 ];
 
 const RESOURCES = [
-  { label: "Insights", href: "#" },
-  { label: "Careers", href: "#" },
-  { label: "Support", href: "#" },
+  { label: "Insights", to: "/insights" },
+  { label: "Careers", to: "/careers" },
+  { label: "Contact & Desk", to: "/contact" },
   { label: "Terms of Service", to: "/legal/terms-of-service" },
   { label: "Privacy Policy", to: "/legal/privacy-policy" },
 ];

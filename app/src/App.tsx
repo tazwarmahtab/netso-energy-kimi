@@ -2,9 +2,13 @@ import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
+import CalculatorPage from "./pages/Calculator";
 import Partners from "./pages/Partners";
 import About from "./pages/About";
 import Brand from "./pages/Brand";
+import InsightsPage from "./pages/Insights";
+import CareersPage from "./pages/Careers";
+import ContactPage from "./pages/Contact";
 import Licenses from "./pages/Licenses";
 import Legal from "./pages/Legal";
 import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
@@ -31,9 +35,14 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product" element={<Product />} />
+        <Route path="/calculator" element={<CalculatorPage />} />
         <Route path="/partners" element={<Partners />} />
         <Route path="/about" element={<About />} />
         <Route path="/brand" element={<Brand />} />
+        <Route path="/insights" element={<InsightsPage />} />
+        <Route path="/careers" element={<CareersPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/support" element={<ContactPage />} />
         <Route path="/licenses" element={<Licenses />} />
         <Route path="/legal/privacy-policy" element={<Legal kind="privacy" />} />
         <Route path="/legal/terms-of-service" element={<Legal kind="terms" />} />

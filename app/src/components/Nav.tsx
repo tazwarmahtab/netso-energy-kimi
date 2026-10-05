@@ -7,6 +7,7 @@ import { WhatsAppIcon, getNetsoWhatsAppUrl } from "./ui/WhatsAppIcon";
 
 const LINKS = [
   { to: "/product", label: "Product" },
+  { to: "/calculator", label: "Calculator" },
   { to: "/partners", label: "Partners" },
   { to: "/about", label: "About" },
   { to: "/brand", label: "Brand" },

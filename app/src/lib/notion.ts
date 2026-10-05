@@ -14,6 +14,7 @@ export interface FeasibilityLead {
   orgName: string;
   email: string;
   phone: string;
+  notes?: string;
   estimatedTariff?: string;
   timestamp?: string;
 }
@@ -103,7 +104,7 @@ export async function syncLeadToNotion(lead: FeasibilityLead): Promise<SyncResul
             {
               type: "text",
               text: {
-                content: `\n• Facility Type: ${lead.facilityType.toUpperCase()}\n• Roof Area: ${Number(lead.roofArea).toLocaleString()} sq ft\n• Current Monthly Grid Spend: ৳${Number(lead.monthlySpend).toLocaleString()}\n• PPA Savings Guarantee: 30% Guaranteed Discount vs BERC Peak Grid Tariff\n• Email: ${lead.email}\n• Phone / WhatsApp: ${lead.phone}\n• Dispatched At: ${new Date().toLocaleString("en-GB", { timeZone: "Asia/Dhaka" })} BST`,
+                content: `\n• Facility Type: ${lead.facilityType.toUpperCase()}\n• Roof Area: ${Number(lead.roofArea).toLocaleString()} sq ft\n• Current Monthly Grid Spend: ৳${Number(lead.monthlySpend).toLocaleString()}\n• PPA Savings Guarantee: 30% Guaranteed Discount vs BERC Peak Grid Tariff\n• Email: ${lead.email}\n• Phone / WhatsApp: ${lead.phone}${lead.notes ? `\n• Notes: ${lead.notes}` : ""}\n• Dispatched At: ${new Date().toLocaleString("en-GB", { timeZone: "Asia/Dhaka" })} BST`,
               },
             },
           ],

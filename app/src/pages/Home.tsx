@@ -8,7 +8,7 @@ import AppMock from "../components/AppMock";
 import CTASection from "../components/CTASection";
 import { FadeUp, Stagger, StaggerItem, Words } from "../components/Reveal";
 import CanvasHero from "../components/CanvasHero";
-import SavingsCalculator from "../components/SavingsCalculator";
+import CalculatorTeaser from "../components/CalculatorTeaser";
 import SolarPergola3D from "../components/SolarPergola3D";
 import FeasibilityModal from "../components/FeasibilityModal";
 import { CinematicIntro } from "../components/CinematicIntro";
@@ -383,7 +383,7 @@ export default function Home() {
       <main id="content">
         <CanvasHero onOpenAssessment={() => setIsModalOpen(true)} />
         <MarqueeTicker />
-        <SavingsCalculator onOpenAssessment={() => setIsModalOpen(true)} />
+        <CalculatorTeaser onOpenAssessment={() => setIsModalOpen(true)} />
         <FloatingSimulationChart onOpenFeasibility={() => setIsModalOpen(true)} />
         <RMGEdgeSection onOpenFeasibility={() => setIsModalOpen(true)} />
         <section id="pergola-twin" className="relative bg-forest-dark py-24 md:py-36 text-warm border-t border-warm/10">
