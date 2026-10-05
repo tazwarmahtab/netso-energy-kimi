@@ -95,38 +95,26 @@ export default function Nav({
               title="Direct WhatsApp line to Netso Origination Desk"
               aria-label="Direct WhatsApp line to Netso Origination Desk"
             >
-              <WhatsAppIcon className="h-4.5 w-4.5 shrink-0" />
+              <WhatsAppIcon className="h-5.5 w-5.5 shrink-0" />
             </a>
 
-            {/* Scroll-Gated Assessment CTA: Hidden at top of hero to avoid viewport duplication, animated in when scrolled */}
-            <AnimatePresence>
-              {(location.pathname !== "/" || scrolled) && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9, x: 8 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, x: 8 }}
-                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                  className="hidden sm:inline-flex"
-                >
-                  {onOpenAssessment ? (
-                    <button
-                      type="button"
-                      onClick={onOpenAssessment}
-                      className="h-10 items-center rounded-full bg-gold px-5 text-sm font-semibold text-forest transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98] shadow-md shadow-gold/20"
-                    >
-                      Get roof assessment
-                    </button>
-                  ) : (
-                    <a
-                      href="/#get-started"
-                      className="h-10 items-center rounded-full bg-gold px-5 text-sm font-semibold text-forest transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
-                    >
-                      Get roof assessment
-                    </a>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Permanent Assessment CTA across all scroll positions */}
+            {onOpenAssessment ? (
+              <button
+                type="button"
+                onClick={onOpenAssessment}
+                className="hidden sm:inline-flex h-10 items-center rounded-full bg-gold px-5 text-sm font-semibold text-forest transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98] shadow-md shadow-gold/20"
+              >
+                Get roof assessment
+              </button>
+            ) : (
+              <a
+                href="/#get-started"
+                className="hidden sm:inline-flex h-10 items-center rounded-full bg-gold px-5 text-sm font-semibold text-forest transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
+              >
+                Get roof assessment
+              </a>
+            )}
 
             <button
               className="flex h-11 w-11 items-center justify-center rounded-full lg:hidden"
