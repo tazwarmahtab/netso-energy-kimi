@@ -1,4 +1,4 @@
-# NETSO° ENERGY
+# NETSO°ENERGY
 
 > **Your roof. Now an energy asset.**  
 > Institutional C&I rooftop solar infrastructure for Bangladesh's industrial textile and manufacturing corridors.
