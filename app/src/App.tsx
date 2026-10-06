@@ -11,6 +11,7 @@ import CareersPage from "./pages/Careers";
 import ContactPage from "./pages/Contact";
 import Licenses from "./pages/Licenses";
 import Legal from "./pages/Legal";
+import NotFound from "./pages/NotFound";
 import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
 
 function ScrollManager() {
@@ -46,7 +47,7 @@ export default function App() {
         <Route path="/licenses" element={<Licenses />} />
         <Route path="/legal/privacy-policy" element={<Legal kind="privacy" />} />
         <Route path="/legal/terms-of-service" element={<Legal kind="terms" />} />
-        <Route path="*" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <FloatingWhatsApp />
     </>
