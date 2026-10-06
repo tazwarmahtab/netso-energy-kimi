@@ -392,17 +392,18 @@ export default function Home() {
         <OperationsScroller onOpenAssessment={() => setIsModalOpen(true)} />
         <SectionBridge from="dark" to="dark" />
         <RMGEdgeSection onOpenFeasibility={() => setIsModalOpen(true)} />
+        <SectionBridge from="dark" to="dark" />
         <section id="pergola-twin" className="relative bg-forest-dark py-24 md:py-36 text-warm border-t border-warm/10">
           <div className="mx-auto max-w-[1440px] px-5 md:px-10">
             <div className="mb-12 max-w-3xl">
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-                Architectural Engineering & Digital Twin
+                Architectural Engineering & Reference Model
               </p>
               <h2 className="font-display mt-4 text-4xl font-bold tracking-tight text-warm sm:text-5xl md:text-6xl">
-                A canopy designed to outlast the monsoon.
+                A reference canopy designed for Bangladesh conditions.
               </h2>
               <p className="mt-4 text-base leading-relaxed text-sage md:text-lg">
-                Engineered with high-tensile hot-dip galvanized steel, bifacial dual-glass solar modules, and integrated under-canopy linear LEDs that transform your roof into an illuminated executive terrace.
+                A conceptual structural configuration showing how steel, bifacial modules and optional lighting can be combined. Final engineering is site-specific.
               </p>
             </div>
             <SolarPergola3D />
