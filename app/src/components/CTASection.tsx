@@ -8,7 +8,7 @@ export default function CTASection({
   title = "The sky is already working",
   accent = 2,
   heading = "Your roof is an asset",
-  copy = "Ready to put your roof to work? ৳0 upfront CAPEX, a below-grid tariff locked for 20 years, and full operations handled by Netso.",
+  copy = "Ready to put your roof to work? Explore a rooftop PPA with no customer asset purchase where the project structure supports it, with design, construction and operating services handled by Netso.",
   cta = "Request a rooftop assessment",
 }: {
   title?: string;
