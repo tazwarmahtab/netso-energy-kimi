@@ -56,7 +56,7 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
   ];
 
   return (
-    <section className="relative w-full bg-[#050D0A] py-24 px-6 sm:px-10 border-t border-gold/15">
+    <section className="relative w-full bg-forest-dark py-24 px-6 sm:px-10 border-t border-gold/15">
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
