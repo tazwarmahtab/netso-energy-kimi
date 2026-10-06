@@ -26,21 +26,21 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
               <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1 mb-4">
                 <Sparkles className="h-3.5 w-3.5 text-gold" />
                 <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">
-                  Architectural Solar Pergola • Dhaka Benchmark
+                  Netso Reference Architecture • Bangladesh C&I
                 </span>
               </div>
             </FadeUp>
 
             <FadeUp delay={0.1}>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-cream">
-                Utility infrastructure. <br />
-                <span className="text-gold italic font-serif">Engineered to elevate your architecture.</span>
+                Rooftop energy infrastructure. <br />
+                <span className="text-gold italic font-serif">Designed to work with the building.</span>
               </h2>
             </FadeUp>
 
             <FadeUp delay={0.2}>
               <p className="mt-4 text-base text-sage/85 leading-relaxed font-sans">
-                Conventional developers mount ugly blue industrial racks on tin sheds. Netso constructs permanent architectural pergolas with high-tensile steel, dual-glass bifacial modules, and integrated 3000K warm LED lighting — turning non-performing roofs into executive landmarks.
+                This reference configuration shows how rooftop solar can be integrated into industrial architecture using elevated steel structure, bifacial modules and optional under-canopy lighting. Final geometry, structure and finishes are site-specific.
               </p>
             </FadeUp>
           </div>
@@ -104,7 +104,7 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
             {/* Top Left Floating Spec Capsule */}
             <div className="absolute top-5 left-5 z-10 hidden sm:flex items-center gap-2.5 rounded-full border border-white/15 bg-black/60 px-4 py-2 backdrop-blur-xl font-mono text-[11px] text-warm/90">
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Dhaka Industrialist Corporate HQ Prototype</span>
+              <span>REFERENCE CONFIGURATION • NOT A DEPLOYED ASSET</span>
             </div>
 
             {/* Bottom HUD Bar */}
@@ -117,15 +117,15 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
                   </div>
                   <div>
                     <span className="text-warm/50 text-[10px] uppercase block tracking-wider">Wind Load Rating</span>
-                    <span className="font-bold text-emerald-400">160 km/h Cyclone Certified</span>
+                    <span className="font-bold text-emerald-400">Site-specific wind design</span>
                   </div>
                   <div>
                     <span className="text-warm/50 text-[10px] uppercase block tracking-wider">Module Technology</span>
-                    <span className="font-bold text-gold">Dual-Glass Bifacial TOPCon</span>
+                    <span className="font-bold text-gold">Bifacial module configuration</span>
                   </div>
                   <div>
                     <span className="text-warm/50 text-[10px] uppercase block tracking-wider">Architectural Lighting</span>
-                    <span className="font-bold text-warm">Integrated 3000K Linear LED</span>
+                    <span className="font-bold text-warm">Optional 3000K lighting</span>
                   </div>
                 </div>
 
@@ -151,7 +151,7 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
             <div>
               <p className="font-bold text-cream text-sm">Non-Penetrative Rooftop Clamping</p>
               <p className="mt-1 text-sage/75 leading-relaxed">
-                Zero roof punctures on standing-seam roofs. Certified watertight civil anchoring for concrete slabs with 25-year structural warranties.
+                Standing-seam attachment can use non-penetrative systems where permitted by the roof and clamp design. Concrete-roof anchoring is engineered site by site.
               </p>
             </div>
           </div>
@@ -163,7 +163,7 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
             <div>
               <p className="font-bold text-cream text-sm">Usable Rooftop Terrace Amenity</p>
               <p className="mt-1 text-sage/75 leading-relaxed">
-                Unlike ground-mount or low-profile racking that ruins roof access, Netso pergolas preserve full walking height for executive lounges and greenery.
+                Elevated layouts can preserve access corridors and create covered space where the structural design permits.
               </p>
             </div>
           </div>
@@ -173,9 +173,9 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
               <Sparkles className="h-4 w-4" />
             </div>
             <div>
-              <p className="font-bold text-cream text-sm">30-Year Bifacial Generation</p>
+              <p className="font-bold text-cream text-sm">Long-life module architecture</p>
               <p className="mt-1 text-sage/75 leading-relaxed">
-                Dual-glass bifacial architecture harvests reflected albedo sunlight from the terrace floor, generating up to 25% higher yield per square foot.
+                Bifacial modules can capture rear-side irradiance. Actual yield depends on geometry, albedo, shading, module characteristics and site conditions.
               </p>
             </div>
           </div>
