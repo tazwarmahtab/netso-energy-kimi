@@ -43,8 +43,8 @@ const TABS = [
     title: "Structure a long-term energy cost hedge",
     accent: 0,
     copy: "A long-term PPA can replace part of your exposure to future grid-price movements with a contractually defined solar energy price structure.",
-    img: batteryWall,
-    alt: "Smart inverters and electrical cabinets inside a factory electrical room",
+    img: null,
+    alt: "",
   },
   {
     id: "control",
@@ -128,11 +128,38 @@ function Benefits() {
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ type: "spring", stiffness: 340, damping: 30 }}
               >
-                {tab.img ? (
-                  <img src={tab.img} alt={tab.alt} className="h-full w-full object-cover" />
-                ) : (
+                {tab.id === "protect" ? (
+                  <div className="flex h-full flex-col justify-center bg-ink p-8">
+                    <div className="flex items-center justify-between border-b border-warm/10 pb-4">
+                      <span className="eyebrow text-warm/50">Illustrative tariff scenario</span>
+                      <span className="font-mono text-[10px] text-gold">INDEXED PPA</span>
+                    </div>
+                    <div className="mt-8">
+                      <svg viewBox="0 0 560 260" className="h-auto w-full" role="img" aria-label="Illustrative utility tariff and PPA cost curves">
+                        <line x1="52" y1="220" x2="525" y2="220" stroke="rgba(255,247,233,0.12)" />
+                        <line x1="52" y1="34" x2="52" y2="220" stroke="rgba(255,247,233,0.12)" />
+                        <polyline points="52,190 145,166 238,140 331,104 424,70 520,38" fill="none" stroke="#E8E4D9" strokeWidth="4" strokeLinecap="round" />
+                        <polyline points="52,190 145,176 238,162 331,148 424,134 520,121" fill="none" stroke="#C6A15B" strokeWidth="4" strokeLinecap="round" />
+                        <text x="400" y="62" fill="#E8E4D9" fontSize="12" fontFamily="monospace">Utility</text>
+                        <text x="400" y="116" fill="#C6A15B" fontSize="12" fontFamily="monospace">Illustrative PPA</text>
+                        <text x="52" y="244" fill="rgba(255,247,233,0.38)" fontSize="10" fontFamily="monospace">TIME →</text>
+                      </svg>
+                    </div>
+                    <p className="mt-5 text-sm leading-relaxed text-warm/65">
+                      The contract can define how the solar energy price moves relative to applicable grid costs. This visual is illustrative, not a quoted tariff.
+                    </p>
+                  </div>
+                ) : tab.id === "control" ? (
                   <div className="flex h-full items-center justify-center bg-ink py-10">
                     <AppMock />
+                  </div>
+                ) : (
+                  <div className="relative h-full w-full">
+                    <img src={tab.img!} alt={tab.alt} className="h-full w-full object-cover" />
+                    <div className="absolute inset-x-4 bottom-4 rounded-xl border border-white/15 bg-black/55 px-4 py-3 backdrop-blur-xl">
+                      <p className="eyebrow text-gold">Reference asset</p>
+                      <p className="mt-1 text-xs text-warm/80">Solar infrastructure on the roof. Commercial economics follow the executed PPA.</p>
+                    </div>
                   </div>
                 )}
               </motion.div>
