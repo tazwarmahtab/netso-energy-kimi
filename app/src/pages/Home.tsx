@@ -444,7 +444,7 @@ export default function Home() {
         <SectionBridge from="dark" to="light" />
         <Network />
         <SectionBridge from="light" to="light" />
-        <CTASection />
+        <CTASection onOpenAssessment={() => setIsModalOpen(true)} />
       </main>
       <Footer />
       <CookieBanner />
