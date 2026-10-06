@@ -333,7 +333,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-display text-lg font-bold text-warm">Below-grid target</span>
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">Guaranteed</span>
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">Illustrative</span>
                   </div>
                   <p className="text-xs text-sage/80 line-clamp-1">
                     Commercial terms defined per executed PPA
