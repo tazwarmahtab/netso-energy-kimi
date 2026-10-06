@@ -358,11 +358,11 @@ export default function SolarPergola3D() {
           <div className="flex items-center gap-2">
             <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
             <h3 className="font-display text-xl font-bold text-warm md:text-2xl">
-              Architectural Solar Pergola Digital Twin
+              Interactive Reference Architecture
             </h3>
           </div>
           <p className="mt-1 font-mono text-xs text-sage">
-            Real-time WebGL structural model · Drag to orbit 360° · Test sun shadows
+            Interactive WebGL structural concept · Drag to orbit 360° · Explore daylight and lighting
           </p>
         </div>
 
@@ -400,11 +400,11 @@ export default function SolarPergola3D() {
         <div className="pointer-events-none absolute top-4 left-4 z-10 flex flex-col gap-2">
           <div className="flex items-center gap-2 rounded-lg border border-gold/40 bg-forest/80 px-3 py-1 text-xs text-warm backdrop-blur-md">
             <Layers className="h-3.5 w-3.5 text-gold" />
-            <span>Tier-1 Bi-facial Glass Modules (PR ≥ 81%)</span>
+            <span>Indicative bifacial module layout</span>
           </div>
           <div className="flex items-center gap-2 rounded-lg border border-gold/40 bg-forest/80 px-3 py-1 text-xs text-warm backdrop-blur-md">
             <ShieldCheck className="h-3.5 w-3.5 text-gold" />
-            <span>Hot-Dip Galvanized Structural Steel (140mph wind certified)</span>
+            <span>Site-specific structural and wind design required</span>
           </div>
         </div>
 
@@ -434,10 +434,10 @@ export default function SolarPergola3D() {
       <div className="mt-4 rounded-2xl border border-warm/10 bg-black/30 p-4">
         <div className="flex items-center justify-between text-xs">
           <span className="font-mono uppercase tracking-wider text-warm/70">
-            Simulate Solar Position & Shadow Casting
+            Explore Solar Position & Shadow Concept
           </span>
           <span className="font-mono font-bold text-gold">
-            {timeOfDay >= 18 ? "Night Living Space (Canopy LEDs Active)" : "Daylight Solar Harvesting"}
+            {timeOfDay >= 18 ? "Night lighting concept active" : "Daylight generation concept"}
           </span>
         </div>
         <input
