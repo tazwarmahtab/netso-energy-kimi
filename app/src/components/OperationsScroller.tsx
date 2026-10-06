@@ -236,7 +236,7 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
   return (
     <section
       ref={containerRef}
-      className="relative h-[320vh] bg-[#050D0A] text-cream"
+      className="relative h-[320vh] bg-forest-dark text-cream"
       aria-label="Reference operating and engineering sequence"
     >
       {/* Sticky Viewport Stage */}
