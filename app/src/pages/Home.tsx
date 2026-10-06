@@ -16,6 +16,7 @@ import FeasibilityModal from "../components/FeasibilityModal";
 import { CinematicIntro } from "../components/CinematicIntro";
 import { MarqueeTicker } from "../components/MarqueeTicker";
 import { RMGEdgeSection } from "../components/RMGEdgeSection";
+import { SectionBridge } from "../components/SectionBridge";
 import solarRoof from "../assets/solar-roof-dusk.jpg";
 import batteryWall from "../assets/battery-wall.jpg";
 import panels from "../assets/panels-closeup.jpg";
@@ -30,27 +31,27 @@ const TABS = [
   {
     id: "save",
     eyebrow: "save",
-    title: "Cut your electricity cost by 30% guaranteed",
+    title: "Lower the cost of power without buying the asset",
     accent: 0,
-    copy: "A guaranteed 30% discount below utility tariffs replaces volatile peak grid billing. One predictable monthly bill — locked at 30% savings from day one.",
+    copy: "Netso structures rooftop PPAs to target a lower energy cost than applicable grid electricity. Final savings depend on the facility, tariff structure, system output and executed agreement.",
     img: solarRoof,
     alt: "A pergola-style solar canopy on a factory rooftop at dusk, warm sky visible between the panels",
   },
   {
     id: "protect",
     eyebrow: "protect",
-    title: "Lock your tariff hedge for 20 years",
+    title: "Structure a long-term energy cost hedge",
     accent: 0,
-    copy: "Grid tariffs jumped 16.7% in a single BERC order. Netso contractually guarantees your 30% discount margin. Budget certainty for two decades, whatever the grid does next.",
+    copy: "A long-term PPA can replace part of your exposure to future grid-price movements with a contractually defined solar energy price structure.",
     img: batteryWall,
     alt: "Smart inverters and electrical cabinets inside a factory electrical room",
   },
   {
     id: "control",
     eyebrow: "control",
-    title: "Track every kWh in NEOS",
+    title: "Track generation and settlement",
     accent: 0,
-    copy: "Generation, savings, automated PPA invoicing and I-REC certificates — metered to class 0.2s accuracy, in real time, from anywhere.",
+    copy: "The operating model is designed to connect generation data, maintenance activity and commercial settlement. Live telemetry appears only for commissioned assets.",
     img: null,
     alt: "",
   },
@@ -148,8 +149,8 @@ const STEPS = [
   {
     n: "step 1",
     title: "Sign a PPA",
-    head: "A lower bill from day one",
-    copy: "A 20-year power purchase agreement at ৳0 upfront CAPEX. You pay only for the solar electricity your roof delivers — at a rate below your grid tariff.",
+    head: "A lower energy cost from the outset",
+    copy: "A long-term power purchase agreement can be structured with zero customer CAPEX, subject to project financing, site feasibility and executed commercial terms.",
     cta: "Get your assessment",
     visual: "card",
   },
@@ -165,7 +166,7 @@ const STEPS = [
     n: "step 3",
     title: "Power on",
     head: "Power you control",
-    copy: "Your rooftop system goes live. Your energy cost drops. NEOS telemetry tracks every kilowatt-hour generated and every taka saved.",
+    copy: "Once commissioned, the system generates power on site and the operating layer tracks generation, maintenance and commercial settlement.",
     cta: null,
     visual: "app",
   },
@@ -196,8 +197,8 @@ function StepVisual({ kind }: { kind: string }) {
           </div>
           <div className="h-px bg-ink/10" />
           <div className="flex items-center justify-between gap-10">
-            <span className="eyebrow !text-[10px] text-ink/50">Guaranteed</span>
-            <span className="font-mono text-[15px] font-bold text-forest">30% Savings</span>
+            <span className="eyebrow !text-[10px] text-ink/50">Illustrative structure</span>
+            <span className="font-mono text-[15px] font-bold text-forest">Below-grid target</span>
           </div>
         </div>
       </div>
@@ -218,8 +219,7 @@ function HowItWorks() {
           </h2>
           <FadeUp delay={0.15}>
             <p className="max-w-md text-[16.5px] leading-relaxed text-ink/70 lg:ml-auto">
-              With Netso, your rooftop becomes a power plant we finance, build, own and operate. You simply
-              buy the electricity it produces — below the grid tariff, with zero capital expenditure.
+              Netso develops, finances, builds and operates rooftop solar assets. Customers buy the electricity produced under a long-term PPA, with commercial terms set project by project.
             </p>
             <a
               href="#get-started"
@@ -384,9 +384,13 @@ export default function Home() {
       <main id="content">
         <CanvasHero onOpenAssessment={() => setIsModalOpen(true)} />
         <MarqueeTicker />
-        <InstitutionalEconomics onOpenAssessment={() => setIsModalOpen(true)} />
+        <SectionBridge from="dark" to="dark" />
         <ArchitecturalTransformation onOpenAssessment={() => setIsModalOpen(true)} />
+        <SectionBridge from="dark" to="dark" />
+        <InstitutionalEconomics onOpenAssessment={() => setIsModalOpen(true)} />
+        <SectionBridge from="dark" to="dark" />
         <OperationsScroller onOpenAssessment={() => setIsModalOpen(true)} />
+        <SectionBridge from="dark" to="dark" />
         <RMGEdgeSection onOpenFeasibility={() => setIsModalOpen(true)} />
         <section id="pergola-twin" className="relative bg-forest-dark py-24 md:py-36 text-warm border-t border-warm/10">
           <div className="mx-auto max-w-[1440px] px-5 md:px-10">
@@ -404,10 +408,14 @@ export default function Home() {
             <SolarPergola3D />
           </div>
         </section>
+        <SectionBridge from="dark" to="dark" />
         <Benefits />
         <HowItWorks />
+        <SectionBridge from="light" to="dark" />
         <Why />
+        <SectionBridge from="dark" to="light" />
         <Network />
+        <SectionBridge from="light" to="light" />
         <CTASection />
       </main>
       <Footer />
