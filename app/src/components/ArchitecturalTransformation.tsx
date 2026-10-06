@@ -12,7 +12,7 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
   const [mode, setMode] = useState<"day" | "dusk">("dusk");
 
   return (
-    <section className="relative w-full bg-[#050E0A] py-24 px-6 sm:px-12 border-t border-white/10 overflow-hidden text-cream">
+    <section className="relative w-full bg-forest-dark py-24 px-6 sm:px-12 border-t border-white/10 overflow-hidden text-cream">
       {/* Background ambient lighting */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <div className="absolute top-1/2 left-1/4 h-[500px] w-[700px] -translate-y-1/2 rounded-full bg-gold/[0.04] blur-[150px]" />
