@@ -213,7 +213,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
     <section
       ref={containerRef}
       className="relative h-[380vh] bg-forest text-warm"
-      aria-label="Introduction"
+      aria-label="Roof to energy asset introduction"
     >
       {/* Sticky Viewport Stage */}
       <div className="sticky top-0 h-[100vh] h-[100svh] w-full overflow-hidden">
@@ -241,13 +241,13 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           <div className="hero-meta-elem mb-3 flex items-center gap-3">
             <span className="h-px w-8 bg-gold/60" />
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-              Netso Energy · Architectural Solar, Zero CAPEX
+              Netso Energy · Rooftop Energy Infrastructure
             </p>
           </div>
 
           <h1
             className="font-display font-bold leading-[1.05] tracking-[-0.035em] text-warm text-[clamp(34px,4.8vw,68px)]"
-            aria-label="your roof, generating revenue."
+            aria-label="your roof, now an energy asset."
           >
             <span className="block overflow-hidden pt-1 pb-3">
               <span className="line-reveal-inner block">
@@ -267,7 +267,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           </h1>
 
           <p className="hero-meta-elem mt-4 max-w-xl text-sm leading-relaxed text-warm/85 md:text-base">
-            We finance, design, and construct luxury architectural solar pergolas for institutional buildings. You pay zero upfront and buy clean power at a guaranteed <span className="font-semibold text-warm">30% discount below your utility grid tariff</span>.
+            We finance, design, and operate rooftop solar assets for commercial and industrial facilities. Customers buy the power produced under a long-term PPA, with final commercial terms set for each site.
           </p>
 
           <div className="hero-meta-elem mt-6 flex flex-wrap items-center gap-4">
@@ -304,7 +304,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                     <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">CAPEX Free</span>
                   </div>
                   <p className="text-xs text-sage/80 line-clamp-1">
-                    100% financed under 20-year IDCOL senior debt
+                    Financing pathway under evaluation
                   </p>
                 </div>
               </div>
@@ -320,7 +320,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                     <span className="font-mono text-[9px] uppercase tracking-wider text-emerald-400 font-semibold bg-emerald-500/10 px-1.5 py-0.5 rounded">Turnkey O&M</span>
                   </div>
                   <p className="text-xs text-sage/80 line-clamp-1">
-                    24/7 automated IoT monitoring & daily cleaning
+                    Monitoring and scheduled operating service
                   </p>
                 </div>
               </div>
@@ -332,11 +332,11 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-display text-lg font-bold text-warm">30% Savings</span>
+                    <span className="font-display text-lg font-bold text-warm">Below-grid target</span>
                     <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">Guaranteed</span>
                   </div>
                   <p className="text-xs text-sage/80 line-clamp-1">
-                    Floating discount indexed below utility grid tariffs
+                    Commercial terms defined per executed PPA
                   </p>
                 </div>
               </div>
@@ -357,32 +357,32 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
                 </span>
                 <span className="font-mono text-xs font-medium uppercase tracking-wider text-warm/90">
-                  Pergola Telemetry
+                  Example Asset View
                 </span>
               </div>
               <span className="rounded bg-gold/15 px-2 py-0.5 font-mono text-[10px] font-semibold text-gold">
-                LIVE
+                REFERENCE
               </span>
             </div>
 
             <div className="mt-4 grid grid-cols-2 gap-3">
               <div>
-                <p className="font-mono text-[11px] text-warm/60">Live Output</p>
+                <p className="font-mono text-[11px] text-warm/60">Example Output</p>
                 <p className="font-display text-2xl font-bold tabular-nums text-warm">
-                  64.2 <span className="text-sm font-normal text-gold">kW</span>
+                  <span className="text-sm font-normal text-warm/60">Reference</span>
                 </p>
               </div>
               <div>
-                <p className="font-mono text-[11px] text-warm/60">Offtaker Savings</p>
+                <p className="font-mono text-[11px] text-warm/60">Commercial Structure</p>
                 <p className="font-display text-2xl font-bold tabular-nums text-emerald-400">
-                  30% <span className="text-xs font-normal text-warm/60">Guaranteed</span>
+                  <span className="text-sm font-normal text-warm/60">Illustrative</span>
                 </p>
               </div>
             </div>
 
             <div className="mt-4 rounded-lg bg-black/40 p-2.5">
               <div className="flex items-center justify-between text-xs text-warm/75">
-                <span>Performance Ratio</span>
+                <span>Example Performance Ratio</span>
                 <span className="font-mono font-bold text-gold">81.4% (PR)</span>
               </div>
               <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-warm/15">
