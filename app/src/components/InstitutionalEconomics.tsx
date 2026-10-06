@@ -157,7 +157,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
   return (
     <section
       ref={containerRef}
-      className="relative w-full bg-[#06120D] text-cream lg:h-[220vh]"
+      className="relative w-full bg-forest-dark text-cream lg:h-[220vh]"
       aria-label="Institutional economics and illustrative savings model"
     >
       {/* Sticky Stage Container */}
