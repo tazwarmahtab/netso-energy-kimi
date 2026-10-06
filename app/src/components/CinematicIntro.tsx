@@ -123,7 +123,7 @@ export function CinematicIntro() {
         </div>
 
         <div className="max-w-[320px] font-mono text-[10px] sm:text-[11px] tracking-[0.12em] text-cream/50 sm:text-right leading-relaxed">
-          FLOATING 30% DISCOUNT PPA • ZERO CAPEX • SREDA NEM 2025 ASSET READY
+          ROOFTOP PPA • CUSTOMER CAPEX CAN BE ZERO* • NEM-READY DESIGN
         </div>
       </div>
     </div>
