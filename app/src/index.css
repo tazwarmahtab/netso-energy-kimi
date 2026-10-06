@@ -234,13 +234,13 @@
 .section-bridge--dark-to-dark {
   background:
     radial-gradient(ellipse at 50% 0%, rgba(198,161,91,0.055), transparent 58%),
-    linear-gradient(to bottom, #050D0A 0%, #06120D 100%);
+    linear-gradient(to bottom, #07140f 0%, #07140f 100%);
 }
 .section-bridge--light-to-dark {
-  background: linear-gradient(to bottom, #FFF7E9 0%, #0B1E17 100%);
+  background: linear-gradient(to bottom, #FFF7E9 0%, #07140f 100%);
 }
 .section-bridge--dark-to-light {
-  background: linear-gradient(to bottom, #0B1E17 0%, #FFF7E9 100%);
+  background: linear-gradient(to bottom, #07140f 0%, #FFF7E9 100%);
 }
 .section-bridge--light-to-light {
   background: #FFF7E9;
