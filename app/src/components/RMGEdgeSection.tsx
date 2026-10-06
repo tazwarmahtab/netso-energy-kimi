@@ -197,7 +197,6 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
             </div>
           </div>
         </div>
-        </div>
       </div>
     </section>
   );
