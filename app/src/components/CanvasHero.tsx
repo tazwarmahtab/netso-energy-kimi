@@ -276,7 +276,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
               onClick={onOpenAssessment}
             />
             <a
-              href="#calculator"
+              href="/calculator"
               className="inline-flex items-center gap-2 rounded-full border border-warm/25 bg-warm/5 px-6 py-3.5 text-sm font-semibold text-warm backdrop-blur-sm transition-all hover:border-warm/50 hover:bg-warm/15 hover:-translate-y-0.5"
             >
               <span>Estimate Institutional ROI</span>
