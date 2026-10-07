@@ -5,12 +5,14 @@ import { SunMark } from "./Wordmark";
 
 /** "The sky is already working" — full-bleed sunrise spectrum closer. */
 export default function CTASection({
+  onOpenAssessment,
   title = "The sky is already working",
   accent = 2,
   heading = "Your roof is an asset",
-  copy = "Ready to put your roof to work? ৳0 upfront CAPEX, a below-grid tariff locked for 20 years, and full operations handled by Netso.",
+  copy = "Ready to put your roof to work? Explore a rooftop PPA with no customer asset purchase where the project structure supports it, with design, construction and operating services handled by Netso.",
   cta = "Request a rooftop assessment",
 }: {
+  onOpenAssessment?: () => void;
   title?: string;
   accent?: number;
   heading?: string;
@@ -55,8 +57,13 @@ export default function CTASection({
           {copy}
         </motion.p>
         <motion.a
-          href="#get-started"
-          onClick={(e) => e.preventDefault()}
+          href={onOpenAssessment ? undefined : "#get-started"}
+          onClick={(e) => {
+            if (onOpenAssessment) {
+              e.preventDefault();
+              onOpenAssessment();
+            }
+          }}
           className="mt-10 inline-flex h-14 items-center rounded-full bg-ink px-9 text-[16px] font-semibold text-cream shadow-xl transition-transform duration-300 hover:scale-[1.05] active:scale-[0.97]"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

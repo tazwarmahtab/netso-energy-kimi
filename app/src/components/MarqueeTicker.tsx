@@ -13,7 +13,7 @@ export function MarqueeTicker() {
   ];
 
   return (
-    <div className="relative w-full border-y border-gold/20 bg-[#06100c] py-3 overflow-hidden select-none">
+    <div className="relative w-full border-y border-gold/20 bg-forest-dark py-3 overflow-hidden select-none">
       <style>{`
         @keyframes marqueeScroll {
           0% { transform: translateX(0); }
