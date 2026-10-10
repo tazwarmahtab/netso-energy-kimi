@@ -18,7 +18,6 @@ import { MarqueeTicker } from "../components/MarqueeTicker";
 import { RMGEdgeSection } from "../components/RMGEdgeSection";
 import { SectionBridge } from "../components/SectionBridge";
 import solarRoof from "../assets/solar-roof-dusk.jpg";
-import batteryWall from "../assets/battery-wall.jpg";
 import panels from "../assets/panels-closeup.jpg";
 import aerial from "../assets/neighborhood-aerial.jpg";
 

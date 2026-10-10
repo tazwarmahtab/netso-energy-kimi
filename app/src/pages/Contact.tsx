@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import FeasibilityModal from "../components/FeasibilityModal";
 import { FadeUp } from "../components/Reveal";
 import { WhatsAppIcon, getNetsoWhatsAppUrl } from "../components/ui/WhatsAppIcon";
-import { syncLeadToNotion } from "../lib/notion";
+import { recordLeadForDispatch } from "../lib/notion";
 
 export default function ContactPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -22,7 +22,7 @@ export default function ContactPage() {
     setLoading(true);
 
     try {
-      await syncLeadToNotion({
+      await recordLeadForDispatch({
         contactName: name,
         orgName: orgName || "Contact Inquiry",
         email,

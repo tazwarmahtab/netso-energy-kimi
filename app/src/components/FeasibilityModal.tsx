@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle2, Building2, School, Hospital, Factory, ArrowRight, ShieldCheck, Loader2 } from "lucide-react";
-import { syncLeadToNotion } from "../lib/notion";
+import { recordLeadForDispatch } from "../lib/notion";
 import { WhatsAppIcon, getNetsoWhatsAppUrl } from "./ui/WhatsAppIcon";
 
 interface FeasibilityModalProps {
@@ -58,7 +58,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const res = await syncLeadToNotion({
+      const res = await recordLeadForDispatch({
         facilityType,
         roofArea,
         monthlySpend,
@@ -69,7 +69,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
       });
       setSyncFeedback(
         res.syncedToNotion
-          ? "Synchronized with Netso Notion Offtaker CRM"
+          ? "Ready for Netso dispatch"
           : "Logged to Netso Dispatch Ledger"
       );
     } catch {
@@ -304,7 +304,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                           {isSubmitting ? (
                             <>
                               <Loader2 className="h-4 w-4 animate-spin" />
-                              <span>Dispatching to Notion Pipeline...</span>
+                              <span>Preparing secure dispatch...</span>
                             </>
                           ) : (
                             <>

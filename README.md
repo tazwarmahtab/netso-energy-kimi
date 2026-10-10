@@ -44,9 +44,9 @@ Netso Energy finances, constructs, and operates utility-grade architectural sola
 ### 4. NEOS Utility SCADA Telemetry Terminal
 - Bankable operational telemetry interface displaying real-time power generation (64.8 kW active), Performance Ratio (81.4% PR), Class 0.2s bidirectional meter accuracy, and automated I-REC carbon certification.
 
-### 5. Resilient Dual-Write Notion CRM Lead Dispatch
-- Live intake gateway (`app/src/lib/notion.ts`) syncing directly with Tazwar Mahtab's Notion workspace (`Top 20 RMG & Textile Offtaker Lead Database`).
-- Dual-write architecture: instantaneous client-side persistence in local browser storage + async dispatch through Vite API proxy with retry boundaries.
+### 5. Safe WhatsApp-First Lead Dispatch
+- Lead intake gateway (`app/src/lib/notion.ts`) records a local dispatch ledger and hands the prospect to the WhatsApp-first origination flow.
+- No private CRM credential is bundled into the browser. A future CRM adapter must run server-side with runtime-only credentials.
 
 ### 6. 7-Touchpoint WhatsApp Commercial Funnel
 - Minimalist, non-blocking WhatsApp acquisition architecture powered by official **Streamline multi-gradient SVGs** (`#1FAF38` → `#60D669`) with collision-free `useId()` gradients.
@@ -85,7 +85,7 @@ netso-energy-kimi/
 │   │   │       ├── WhatsAppIcon.tsx        # Streamline multi-gradient SVG
 │   │   │       └── liquid-metal-button.tsx # WebGL fragment shader button
 │   │   ├── lib/
-│   │   │   └── notion.ts                   # Notion CRM dispatch gateway
+│   │   │   └── notion.ts                   # Safe local dispatch ledger
 │   │   └── pages/
 │   │       ├── Home.tsx                    # Flagship commercial landing
 │   │       ├── Product.tsx                 # Pergola engineering & NEOS SCADA
@@ -93,7 +93,7 @@ netso-energy-kimi/
 │   │       ├── About.tsx                   # Institutional ethos & chronology
 │   │       └── Brand.tsx                   # Design tokens & diurnal system
 │   ├── tailwind.config.js                  # Netso Gold & Forest color tokens
-│   └── vite.config.ts                      # Notion API reverse proxy
+│   └── vite.config.ts                      # Vite development configuration
 ├── ROADMAP.md                              # Complete 13-phase audit ledger
 └── README.md                               # Platform documentation
 ```
@@ -117,17 +117,12 @@ npm install
 ```
 
 ### Environment Configuration
-Copy the template and configure your Notion integration credentials:
+Copy the template if you need the documented environment shape. Do not place private CRM credentials in `VITE_*` variables; browser variables are public:
 ```bash
 cp .env.example .env
 ```
 
-```env
-# app/.env
-VITE_NOTION_API_KEY=ntn_your_notion_api_token
-VITE_NOTION_PAGE_ID=3c80b349-1030-8197-b135-ecf6f359b1de
-VITE_NOTION_WORKSPACE_ID=ec2703dc-2ab2-4080-b2b7-912be9184ec3
-```
+The current browser build uses local dispatch persistence plus direct WhatsApp follow-up. If server-side CRM synchronization is added, keep the token in the server runtime environment and expose only a validated same-origin endpoint to the browser.
 
 ### Local Development
 ```bash
