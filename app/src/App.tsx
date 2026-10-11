@@ -13,6 +13,7 @@ import Licenses from "./pages/Licenses";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
 import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
+import V2 from "./pages/V2";
 
 function ScrollManager() {
   const { pathname, hash } = useLocation();
@@ -30,11 +31,14 @@ function ScrollManager() {
 }
 
 export default function App() {
+  const { pathname } = useLocation();
+
   return (
     <>
       <ScrollManager />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/v2" element={<V2 />} />
         <Route path="/product" element={<Product />} />
         <Route path="/calculator" element={<CalculatorPage />} />
         <Route path="/partners" element={<Partners />} />
@@ -49,7 +53,7 @@ export default function App() {
         <Route path="/legal/terms-of-service" element={<Legal kind="terms" />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <FloatingWhatsApp />
+      {pathname !== "/v2" && <FloatingWhatsApp />}
     </>
   );
 }

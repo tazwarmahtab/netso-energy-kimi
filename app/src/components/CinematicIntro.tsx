@@ -1,29 +1,26 @@
 import { useEffect, useState } from "react";
 import { SunMark } from "./Wordmark";
 
-export function CinematicIntro() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [hasCheckedSession, setHasCheckedSession] = useState(false);
-
-  useEffect(() => {
-    // Check if intro has already been shown in this session or bypassed via query parameter
-    try {
-      if (window.location.search.includes("nointro")) {
-        setHasCheckedSession(true);
-        return;
-      }
-      const alreadySeen = sessionStorage.getItem("netso_intro_seen");
-      if (alreadySeen === "true") {
-        setHasCheckedSession(true);
-        return;
-      }
-    } catch {
-      // Ignore storage errors in restricted contexts
+function shouldShowIntro() {
+  try {
+    if (window.location.search.includes("nointro")) {
+      return false;
     }
 
-    setIsVisible(true);
-    setHasCheckedSession(true);
+    return sessionStorage.getItem("netso_intro_seen") !== "true";
+  } catch {
+    // Show the intro when storage is unavailable in a restricted context.
+    return true;
+  }
+}
+
+export function CinematicIntro() {
+  const [shouldRender] = useState(shouldShowIntro);
+  const [isVisible, setIsVisible] = useState(shouldRender);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if (!shouldRender) return;
 
     let current = 0;
     const interval = setInterval(() => {
@@ -51,7 +48,7 @@ export function CinematicIntro() {
       clearInterval(interval);
       clearTimeout(exitTimer);
     };
-  }, []);
+  }, [shouldRender]);
 
   const handleDismiss = () => {
     setIsVisible(false);
@@ -62,7 +59,7 @@ export function CinematicIntro() {
     }
   };
 
-  if (!hasCheckedSession) return null;
+  if (!shouldRender) return null;
 
   return (
     <div

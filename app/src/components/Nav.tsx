@@ -50,7 +50,10 @@ export default function Nav({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => setOpen(false), [location.pathname]);
+  useEffect(() => {
+    const resetTimer = window.setTimeout(() => setOpen(false), 0);
+    return () => window.clearTimeout(resetTimer);
+  }, [location.pathname]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
