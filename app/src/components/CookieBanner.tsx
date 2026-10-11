@@ -4,20 +4,32 @@ import { Link } from "react-router";
 
 const KEY = "netso-cookie-consent";
 
+function canReadCookieConsent() {
+  try {
+    localStorage.getItem(KEY);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export default function CookieBanner() {
-  const [visible, setVisible] = useState(false);
+  const [storageAvailable] = useState(canReadCookieConsent);
+  const [visible, setVisible] = useState(() => !storageAvailable);
   const [customize, setCustomize] = useState(false);
 
   useEffect(() => {
+    if (!storageAvailable) return;
+
     try {
       if (!localStorage.getItem(KEY)) {
         const t = setTimeout(() => setVisible(true), 1200);
         return () => clearTimeout(t);
       }
     } catch {
-      setVisible(true);
+      // The lazy initial state handles storage-unavailable browsers.
     }
-  }, []);
+  }, [storageAvailable]);
 
   const choose = (v: string) => {
     try {

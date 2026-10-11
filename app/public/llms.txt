@@ -1,0 +1,6 @@
+# Netso Energy
+
+Netso Energy designs, finances, operates, and maintains rooftop solar infrastructure for commercial buildings in Bangladesh.
+
+- [Home](/)
+- [Cinematic rooftop solar story](/v2)
