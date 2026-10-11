@@ -133,7 +133,23 @@ VITE_NOTION_WORKSPACE_ID=ec2703dc-2ab2-4080-b2b7-912be9184ec3
 ```bash
 npm run dev
 ```
-Preview the application at: `http://localhost:3001/`
+Preview the application at: `http://localhost:3000/` (the cinematic `/v2` route is at `http://localhost:3000/v2`)
+
+### Cinematic `/v2` master
+
+The `/v2` page uses one generated, provenance-checked master frame sequence. From
+`app/`, regenerate or verify it with:
+
+```bash
+npm run film:master
+npm run film:master:verify
+npm run test:film:master
+```
+
+The page master is written to `app/public/assets/v2/master/`: `master.mp4`, a
+contiguous `frames/` sequence, and a public provenance receipt. The interactive
+finance chapter remains HTML/SVG and the assessment form is a local-only preview;
+neither is baked into the video frames.
 
 ### Production Build
 ```bash
