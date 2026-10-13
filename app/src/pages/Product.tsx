@@ -174,7 +174,7 @@ function NeosTelemetryTerminal() {
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
           </div>
           <span className="font-mono text-xs font-semibold tracking-wider text-warm/70">
-            NEOS Utility Telemetry · Node CGS-01
+            NEOS Telemetry Concept · Illustrative — not live project data
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -182,7 +182,7 @@ function NeosTelemetryTerminal() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
           </span>
-          <span className="font-mono text-[11px] font-semibold text-emerald-400">CLASS 0.2S LIVE</span>
+          <span className="font-mono text-[11px] font-semibold text-emerald-400">CLASS 0.2S-CAPABLE (ILLUSTRATIVE)</span>
         </div>
       </div>
 
@@ -203,7 +203,7 @@ function NeosTelemetryTerminal() {
             <span className="font-mono text-[11px] uppercase tracking-wider">Performance Ratio</span>
           </div>
           <p className="font-display mt-2 text-2xl font-bold text-warm md:text-3xl">81.4%</p>
-          <span className="font-mono text-[10px] text-gold font-medium">Exceeds 78% Guarantee</span>
+          <span className="font-mono text-[10px] text-gold font-medium">Illustrative figure</span>
         </div>
 
         <div className="rounded-xl border border-warm/10 bg-forest/60 p-4">
@@ -248,6 +248,10 @@ function NeosTelemetryTerminal() {
         <span>SREDA Net Metering Sync: 100% Validated</span>
         <span className="text-gold font-semibold">Automated PPA Invoicing · Daily 24:00 UTC+6</span>
       </div>
+      <p className="mt-3 text-[11px] leading-relaxed text-warm/50">
+        Concept visual with illustrative figures. Live generation, performance-ratio and settlement data
+        appear only after commissioning.
+      </p>
 
       {/* Touchpoint 6: Technical SCADA & SLD WhatsApp Line */}
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-warm/10 bg-forest/80 p-3.5">

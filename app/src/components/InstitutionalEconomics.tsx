@@ -418,15 +418,15 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2">
                     <span className="text-warm/60">Estimated Monthly Savings:</span>
-                    <span className="benchmark-highlight font-bold text-emerald-400">৳4.6 Lakh / month</span>
+                    <span className="benchmark-highlight font-bold text-emerald-400">Illustrative</span>
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2">
-                    <span className="text-warm/60">20-Year Retained Cash Flow:</span>
-                    <span className="benchmark-highlight font-bold text-gold text-sm">৳13.2+ Crore</span>
+                    <span className="text-warm/60">Long-Term Retained Cash Flow:</span>
+                    <span className="benchmark-highlight font-bold text-gold text-sm">Set in your PPA</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-warm/60">Illustrative avoided emissions:</span>
-                    <span className="font-bold text-warm">~168 Tonnes CO₂ / yr</span>
+                    <span className="font-bold text-warm">Site-specific</span>
                   </div>
                 </div>
               </div>

@@ -283,6 +283,12 @@ export function FloatingSimulationChart({
                 <span>Zero capital outlay • 100% turnkey O&M included</span>
               </div>
             </div>
+            <p className="mt-4 text-[11px] leading-relaxed text-cream/45">
+              How the 30% is measured: your Netso PPA rate vs the utility billing the same consumption
+              would have incurred in the same billing month, for your connection’s tariff class. Shown
+              curves are illustrative and subject to site survey; the binding rate and savings basis are
+              set only in the executed PPA.
+            </p>
           </div>
         </div>
       </div>

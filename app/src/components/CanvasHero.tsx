@@ -383,7 +383,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
             <div className="mt-4 rounded-lg bg-black/40 p-2.5">
               <div className="flex items-center justify-between text-xs text-warm/75">
                 <span>Example Performance Ratio</span>
-                <span className="font-mono font-bold text-gold">81.4% (PR)</span>
+                <span className="font-mono font-bold text-gold" aria-label="Illustrative performance-ratio concept">81.4% (PR, illustrative)</span>
               </div>
               <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-warm/15">
                 <div className="h-full rounded-full bg-gradient-to-r from-gold to-emerald-400" style={{ width: "81.4%" }} />

@@ -148,7 +148,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                       <label className="text-xs text-warm/70">Select your institutional or commercial property type:</label>
                       <div className="grid grid-cols-2 gap-3">
                         {[
-                          { id: "school", label: "School / Campus", icon: School, desc: "CGS 80kWp Model" },
+                          { id: "school", label: "School / Campus", icon: School, desc: "Campus rooftop model" },
                           { id: "commercial", label: "Corporate HQ", icon: Building2, desc: "Commercial Offices" },
                           { id: "hospital", label: "Hospital / Healthcare", icon: Hospital, desc: "24/7 Critical Load" },
                           { id: "factory", label: "Industrial Factory", icon: Factory, desc: "Heavy Power Spikes" },
@@ -376,6 +376,11 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
 
                 <p className="mt-4 text-xs text-warm/60">
                   Our engineering team will contact you via WhatsApp at <strong className="text-warm">{phone}</strong> with your 3D solar model within 48 hours.
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-warm/45">
+                  The 30% figure compares your Netso PPA rate against the utility billing the same
+                  consumption would incur in the same billing month. Estimates are subject to site
+                  survey; binding terms are set only in the executed PPA.
                 </p>
 
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
