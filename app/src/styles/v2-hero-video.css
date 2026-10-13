@@ -1,0 +1,152 @@
+/* Sky-first video hero: sky -> tilt down to roof on the same scroll playhead.
+   Static fallback (reduced motion / <=900px): poster composition, no video. */
+
+.v2-hero-video {
+  --hero-video-progress: 0;
+  position: relative;
+  height: 220vh;
+  background: #101a24;
+}
+
+.v2-hero-video__sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 560px;
+  overflow: clip;
+}
+
+.v2-hero-video__media,
+.v2-hero-video__static,
+.v2-hero-video__veil {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.v2-hero-video__media {
+  object-fit: cover;
+  display: block;
+}
+
+.v2-hero-video__static {
+  object-fit: cover;
+  display: none;
+}
+
+.v2-hero-video__veil {
+  background: linear-gradient(180deg, rgba(10, 18, 28, 0.22), rgba(10, 18, 28, 0) 34%, rgba(10, 18, 28, 0) 62%, rgba(10, 18, 28, 0.42));
+}
+
+.v2-hero-video__copy {
+  position: absolute;
+  left: max(24px, 6vw);
+  max-width: min(640px, 88vw);
+  color: #f5efe2;
+  transition: opacity 0.25s linear;
+}
+
+.v2-hero-video__copy--hero {
+  top: max(var(--story-header-clearance, 96px), 22%);
+}
+
+.v2-hero-video__copy--roof {
+  bottom: 12%;
+}
+
+.v2-hero-video[data-hero-hero-active="true"] .v2-hero-video__copy--hero,
+.v2-hero-video[data-hero-roof-active="true"] .v2-hero-video__copy--roof {
+  opacity: 1;
+}
+
+.v2-hero-video[data-hero-hero-active="false"] .v2-hero-video__copy--hero,
+.v2-hero-video[data-hero-roof-active="false"] .v2-hero-video__copy--roof {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.v2-hero-video__copy h1,
+.v2-hero-video__copy h2 {
+  font-size: clamp(2.4rem, 5.2vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0.35em 0 0.3em;
+}
+
+.v2-hero-video__copy h1 span,
+.v2-hero-video__copy h2 span {
+  color: #e8b64c;
+}
+
+.v2-hero-video__cue {
+  position: absolute;
+  left: max(24px, 6vw);
+  bottom: 26px;
+}
+
+.v2-hero-video[data-hero-roof-active="true"] .v2-hero-video__cue {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.v2-hero-video__handoff {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Static / reduced-motion: intentional poster composition, reachable CTA. */
+@media (prefers-reduced-motion: reduce), (max-width: 900px) {
+  .v2-hero-video {
+    height: auto;
+  }
+
+  .v2-hero-video__sticky {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    display: grid;
+  }
+
+  .v2-hero-video__media {
+    display: none;
+  }
+
+  .v2-hero-video__static {
+    display: block;
+    position: relative;
+    aspect-ratio: 16 / 10;
+    height: auto;
+  }
+
+  .v2-hero-video__copy {
+    position: relative;
+    left: auto;
+    padding: 20px 24px 0;
+  }
+
+  .v2-hero-video__copy--roof {
+    padding-bottom: 8px;
+  }
+
+  .v2-hero-video[data-hero-hero-active="false"] .v2-hero-video__copy--hero,
+  .v2-hero-video[data-hero-roof-active="false"] .v2-hero-video__copy--roof {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .v2-hero-video__cue {
+    position: relative;
+    left: auto;
+    margin: 12px 24px 24px;
+    bottom: auto;
+  }
+
+  .v2-hero-video[data-hero-roof-active="true"] .v2-hero-video__cue {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
