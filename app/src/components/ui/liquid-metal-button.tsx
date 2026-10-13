@@ -31,16 +31,6 @@ export function LiquidMetalButton({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const rippleId = useRef(0);
 
-  const [fontLoaded, setFontLoaded] = useState(false);
-
-  useEffect(() => {
-    if (typeof document !== "undefined" && document.fonts) {
-      document.fonts.ready.then(() => {
-        setFontLoaded(true);
-      });
-    }
-  }, []);
-
   const dimensions = useMemo(() => {
     const btnHeight = height || 48;
     if (viewMode === "icon") {
@@ -84,7 +74,7 @@ export function LiquidMetalButton({
       shaderWidth: calculatedWidth,
       shaderHeight: btnHeight,
     };
-  }, [viewMode, label, width, height, fontLoaded]);
+  }, [viewMode, label, width, height]);
 
   useEffect(() => {
     const styleId = "shader-canvas-style-exploded";
