@@ -44,7 +44,7 @@ function Hero({ onOpenModal }: { onOpenModal: () => void }) {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
           </span>
           <span className="font-mono text-xs font-medium tracking-wide text-gold">
-            IDCOL 80% Senior Debt · 1.25× DSCR Covenant · Non-Recourse SPVs
+            Institutional Project Financing · Non-Recourse SPVs
           </span>
         </div>
       </div>
@@ -68,7 +68,7 @@ function Hero({ onOpenModal }: { onOpenModal: () => void }) {
           transition={{ delay: 0.8, duration: 0.8, ease: EASE }}
         >
           Netso structures bankable 20-year take-or-pay distributed rooftop solar assets. Powered by
-          concessionary senior debt financing, ring-fenced project SPVs, and standardized milestone
+          institutional project financing, ring-fenced project SPVs, and standardized milestone
           disbursements for top-tier EPC contractors.
         </motion.p>
 
@@ -98,10 +98,10 @@ function Hero({ onOpenModal }: { onOpenModal: () => void }) {
 
 /* ----------------------- Institutional Metrics Strip ----------------------- */
 const METRICS = [
-  { val: "80%", unit: "LTV", label: "Senior Debt Facility", sub: "IDCOL 5.0%–5.5% concessionary facility" },
-  { val: "1.25×", unit: "Min", label: "DSCR Covenant", sub: "Ring-fenced take-or-pay cash flow coverage" },
+  { val: "Per-project", unit: "terms", label: "Institutional Financing", sub: "Project debt arranged at financial close — no rates disclosed" },
+  { val: "SPV", unit: "model", label: "Ring-Fenced Assets", sub: "Non-recourse vehicles with audited escrow waterfall" },
   { val: "30%", unit: "Margin", label: "Guaranteed Offtaker Savings", sub: "Locked discount below BERC peak grid tariff" },
-  { val: "৳60k", unit: "/kWp", label: "CAPEX Benchmark Ceiling", sub: "Strict engineering discipline under IDCOL rules" },
+  { val: "Lifetime", unit: "O&M", label: "Netso Operates", sub: "Maintenance, monitoring and performance risk stay with Netso" },
 ];
 
 function MetricsStrip() {
@@ -146,7 +146,7 @@ function CapitalStack() {
           <FadeUp delay={0.15}>
             <p className="max-w-md text-sm text-warm/70 leading-relaxed">
               Every rooftop asset is ring-fenced in a special purpose bankruptcy-remote vehicle, backed by
-              tri-partite escrow accounts, bank guarantees, and creditworthy Tier-1 industrial offtakers.
+              tri-partite escrow accounts, lender security arrangements, and creditworthy Tier-1 industrial offtakers.
             </p>
           </FadeUp>
         </div>
@@ -171,13 +171,13 @@ function CapitalStack() {
                 <div className="rounded-2xl border border-gold/40 bg-gold/10 p-5 transition-colors hover:border-gold">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs font-semibold text-gold uppercase tracking-wider">
-                      Senior Concessionary Debt
+                      Senior Project Debt
                     </span>
-                    <span className="font-display text-2xl font-bold text-warm">80%</span>
+                    <span className="font-display text-2xl font-bold text-warm">Per project</span>
                   </div>
                   <p className="mt-2 text-xs text-warm/75 leading-relaxed">
-                    IDCOL Renewable Energy Credit Facility @ <strong>5.0%–5.5%</strong> interest rate. 10-year
-                    tenure including 1-year construction grace period.
+                    Institutional term debt arranged per project at financial close. Terms are set in
+                    project documents — no rates are disclosed on this site.
                   </p>
                 </div>
 
@@ -216,19 +216,19 @@ function CapitalStack() {
           <div className="grid gap-5 sm:grid-cols-2 lg:col-span-7">
             <div className="rounded-3xl border border-warm/15 bg-forest-light/40 p-7 transition-all hover:border-gold/30">
               <Landmark className="h-8 w-8 text-gold" />
-              <h3 className="font-display mt-5 text-2xl text-warm">IDCOL Senior Facility</h3>
+              <h3 className="font-display mt-5 text-2xl text-warm">Institutional Project Debt</h3>
               <p className="mt-2 text-sm text-warm/70 leading-relaxed">
-                Eligible under IDCOL’s concessionary green fund. Structured with 50%–75% bank guarantee backing to
-                unlock the lowest 5.0% rate tiers, capped well below commercial lending benchmarks.
+                Project debt is arranged per project at financial close through institutional lenders.
+                Terms are set in project documents — no rates are disclosed on this site.
               </p>
             </div>
 
             <div className="rounded-3xl border border-warm/15 bg-forest-light/40 p-7 transition-all hover:border-gold/30">
               <Scale className="h-8 w-8 text-gold" />
-              <h3 className="font-display mt-5 text-2xl text-warm">1.25× DSCR Floor</h3>
+              <h3 className="font-display mt-5 text-2xl text-warm">Lender-Ready Covenants</h3>
               <p className="mt-2 text-sm text-warm/70 leading-relaxed">
-                Debt service is tested across conservative P90 insolation modeling. Net generation cash flows
-                provide substantial buffer over debt service requirements across all economic seasons.
+                Debt service is tested against conservative generation modeling, with cash-flow buffers
+                sized per project across all economic seasons.
               </p>
             </div>
 
@@ -277,7 +277,7 @@ const EPC_WHY = [
     icon: Award,
     t: "Certified Milestone Escrow",
     h: "No 120-day client receivables",
-    c: "Disbursements occur in escrow against certified progress: 30% mobilization, 40% mechanical completion, and 30% COD grid sync.",
+    c: "Disbursements occur in escrow against certified progress, phased across mobilization, mechanical completion, and COD grid sync.",
   },
 ];
 
@@ -372,7 +372,7 @@ function Compare() {
           ))}
           <div className="grid grid-cols-2 border-t border-warm/15 bg-forest-light p-5 md:p-7">
             <p className="font-mono text-xs uppercase tracking-wider text-warm/50">Partner Outcome</p>
-            <p className="font-display text-2xl text-gold md:text-3xl">Guaranteed cash flow & zero sales drag.</p>
+            <p className="font-display text-2xl text-gold md:text-3xl">Predictable cash flow & zero sales drag.</p>
           </div>
         </FadeUp>
       </div>
@@ -451,7 +451,7 @@ function PartnerForm() {
                   </legend>
                   <div className="grid gap-3 sm:grid-cols-3">
                     {[
-                      { id: "lender", label: "Senior Lender / DFI", desc: "IDCOL facility, commercial co-financing, or green debt" },
+                      { id: "lender", label: "Senior Lender / DFI", desc: "Institutional project debt or green financing" },
                       { id: "epc", label: "Tier-1 EPC Contractor", desc: "Turnkey electrical & solar pergola installation" },
                       { id: "origination", label: "Commercial Origination", desc: "Industrial park or factory roof portfolio sourcing" },
                     ].map((t) => (
@@ -539,7 +539,7 @@ function PartnerForm() {
                   </button>
                   <a
                     href={getNetsoWhatsAppUrl(
-                      "Hello Tazwar, reaching out from [Bank/Investment Institution] regarding Netso's IDCOL concessionary debt co-financing facility and 20-year PPA portfolio financial models."
+                      "Hello Tazwar, reaching out from [Bank/Investment Institution] regarding Netso's project financing and long-term PPA portfolio models."
                     )}
                     target="_blank"
                     rel="noopener noreferrer"

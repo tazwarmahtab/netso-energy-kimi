@@ -30,7 +30,7 @@ const MOMENTS = [
 ];
 
 const COLORS = [
-  { name: "Netso Gold", hex: "#C6A15B", ink: true, note: "Primary action & metric signal. The CGS benchmark, institutional certainty." },
+  { name: "Netso Gold", hex: "#C6A15B", ink: true, note: "Primary action & metric signal. Institutional certainty." },
   { name: "Deep Forest", hex: "#08140F", ink: false, note: "The utility foundation. Deep glass, industrial authority, grounding." },
   { name: "Cream", hex: "#FFF7E9", ink: true, note: "The page. Warm architectural paper." },
   { name: "Netso Yellow", hex: "#FCCC3C", ink: true, note: "The energy signal. Telemetry, irradiance highlights, the sun mark." },
@@ -118,7 +118,7 @@ const TYPE_ROWS = [
   },
   {
     role: "Labels / Mono / Data",
-    sample: "[ CGS 80kWp Reference ] · 30% Grid Tariff Discount · Class 0.2s Bidirectional · SREDA NEM 2025",
+    sample: "[ Reference Site ] · 30% Grid Tariff Discount · Class 0.2s Bidirectional · SREDA NEM 2025",
     spec: "Space Mono · 12px or 14px only · 400 · 135% LH · 4% LS · Uppercase only when contextual",
     cls: "font-mono text-[12px] uppercase tracking-[0.1em] text-forest font-medium",
     accent: "",
@@ -136,7 +136,7 @@ const TAGLINES = [
 
 const PRINCIPLES = [
   { n: "01", t: "Direct & Grounded", d: "We write for C-suite industrial executives and plant engineers. Short sentences, bankable numbers, zero marketing fluff." },
-  { n: "02", t: "Contractually Precise", d: "All figures cite exact benchmarks: 30% guaranteed grid discount, ৳0 customer CAPEX, 80% IDCOL debt, 1.25× DSCR." },
+  { n: "02", t: "Contractually Precise", d: "Every figure carries a source: the 30% PPA savings basis is set in the executed agreement; all model outputs are labeled estimates subject to survey." },
   { n: "03", t: "Institutional Authority", d: "Calm, architectural, and legally sound. Designed to withstand scrutiny from senior lenders, credit committees, and international buyers." },
   { n: "04", t: "Engineering Truth", d: "Dual-glass bifacial TOPCon modules, certified 160 km/h wind load pergolas, and Class 0.2s utility meters with daily billing settlement." },
 ];
@@ -466,7 +466,7 @@ export default function Brand() {
                       Assess Facility Feasibility
                     </button>
                     <span className="inline-flex h-12 cursor-pointer items-center rounded-full bg-forest px-7 text-sm font-semibold text-warm">
-                      CGS 80kWp Reference
+                      Reference Site
                     </span>
                     <span className="inline-flex h-12 cursor-pointer items-center rounded-full border border-ink/25 px-7 text-sm font-semibold text-forest hover:bg-ink/5">
                       Review Capital Stack
@@ -480,10 +480,10 @@ export default function Brand() {
                       SREDA NEM 2025 Synchronized
                     </span>
                     <span className="rounded-full border border-ink/20 px-4 py-2 font-mono text-xs font-medium text-forest">
-                      IDCOL Senior Debt 80% LTV
+                      Institutional Project Financing
                     </span>
                     <span className="rounded-full bg-gold/20 border border-gold/40 px-4 py-2 font-mono text-xs font-semibold text-forest">
-                      1.25× DSCR Floor
+                      Lender-Ready Covenants
                     </span>
                   </div>
                 </div>

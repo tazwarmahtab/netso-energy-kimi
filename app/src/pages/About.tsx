@@ -216,8 +216,8 @@ function Thesis() {
           </div>
           <FadeUp delay={0.15}>
             <p className="max-w-md text-base leading-relaxed text-warm/75 md:text-lg lg:ml-auto">
-              Every megawatt Netso deploys is financed through ring-fenced project SPVs, supported by 80% IDCOL
-              concessionary senior facilities and Tier-1 banking covenants. It is an infrastructure platform engineered
+              Every megawatt Netso deploys is financed through ring-fenced project SPVs, supported by
+              institutional project debt arranged per project and Tier-1 banking relationships. It is an infrastructure platform engineered
               to deploy billions of Taka in institutional climate capital.
             </p>
           </FadeUp>
@@ -270,8 +270,6 @@ function Founder() {
                 Founder & Managing Director · Netso Energy Ltd
               </p>
               <div className="mt-4 flex flex-wrap gap-2 text-xs font-mono text-ink/50">
-                <span className="rounded-md border border-ink/10 bg-cream px-2.5 py-1">CGS 80kWp Reference</span>
-                <span className="rounded-md border border-ink/10 bg-cream px-2.5 py-1">IDCOL Senior Facility</span>
                 <span className="rounded-md border border-ink/10 bg-cream px-2.5 py-1">SREDA NEM 2025</span>
               </div>
             </div>
