@@ -36,8 +36,7 @@ export default function CalculatorTeaser({ onOpenAssessment }: CalculatorTeaserP
 
             <FadeUp delay={0.2}>
               <p className="mt-4 text-base text-sage leading-relaxed max-w-xl">
-                A typical 20,000 sq ft industrial facility in Gazipur or Narayanganj recovers over{" "}
-                <strong className="text-warm font-semibold">৳4.6 Lakh / month</strong> directly to EBITDA. Use our institutional calculator to model custom sector savings, 20-year cumulative cash flow, and export a pre-formatted board memo directly to WhatsApp.
+                Industrial facilities of similar scale cut grid power spend from month one with zero capital outlay. Use our institutional calculator to model custom sector savings, long-term cumulative cash flow, and export a pre-formatted board memo directly to WhatsApp.
               </p>
             </FadeUp>
 
@@ -90,18 +89,18 @@ export default function CalculatorTeaser({ onOpenAssessment }: CalculatorTeaserP
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2.5">
                     <span className="text-warm/60">Estimated Monthly Savings:</span>
-                    <span className="font-bold text-emerald-400">৳4.6 Lakh / mo</span>
+                    <span className="font-bold text-emerald-400">Illustrative</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-warm/60">20-Year Hedged Savings:</span>
-                    <span className="font-bold text-gold text-sm">৳13.2+ Crore</span>
+                    <span className="text-warm/60">Long-Term Hedged Savings:</span>
+                    <span className="font-bold text-gold text-sm">Set in your PPA</span>
                   </div>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-warm/10 flex items-center justify-between text-[11px] font-mono text-warm/50">
                   <span className="flex items-center gap-1.5">
                     <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-                    <span>IDCOL Senior Debt Backed</span>
+                    <span>Institutional Financing Structured</span>
                   </span>
                   <Link to="/calculator" className="text-gold font-semibold hover:underline">
                     Customize Facility →

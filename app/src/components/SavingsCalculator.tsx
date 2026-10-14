@@ -74,7 +74,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
     `• Annual Clean Generation: ${(annualGenerationKwh / 1000).toFixed(0)} MWh\n` +
     `• Avoided Carbon Emissions: ${co2AvoidedTonnes} tonnes CO₂ / year\n` +
     `────────────────────────────────────────\n` +
-    `Tazwar, please share the formal IDCOL-compliant PPA term sheet and dispatch satellite shadow profiling for our facility.`;
+    `Tazwar, please share the formal PPA term sheet and dispatch satellite shadow profiling for our facility.`;
 
   const handleCopyMemo = async () => {
     try {
@@ -108,7 +108,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
             See what your roof saves.
           </h2>
           <p className="mt-4 text-base text-sage md:text-lg">
-            Based on executed 20-year IDCOL PPA terms: <span className="font-semibold text-warm">৳0 upfront CAPEX</span>, full Netso operational maintenance, and a contractually locked <span className="font-semibold text-gold">30% guaranteed savings</span> below your utility grid tariff.
+            Based on long-term PPA terms: <span className="font-semibold text-warm">৳0 upfront CAPEX</span>, full Netso operational maintenance, and a contractually locked <span className="font-semibold text-gold">30% guaranteed savings</span> below your utility grid tariff.
           </p>
         </div>
 
@@ -297,6 +297,14 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
                   <span><strong>Turnkey O&M:</strong> Daily cleaning, inverter monitoring, and replacement costs handled by Netso.</span>
                 </div>
               </div>
+
+              {/* Methodology footnote */}
+              <p className="mt-4 text-[11px] leading-relaxed text-warm/50">
+                How the 30% is measured: your Netso PPA rate vs the utility billing the same consumption
+                would have incurred in the same billing month, for your connection’s tariff class. Shown
+                figures are estimates from the details you enter and are subject to site survey; the binding
+                rate and savings basis are set only in the executed PPA.
+              </p>
             </div>
 
             {/* Board Memo Live Preview Container */}
