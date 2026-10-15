@@ -44,7 +44,7 @@ function Hero({ onOpenModal }: { onOpenModal: () => void }) {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
           </span>
           <span className="font-mono text-xs font-medium tracking-wide text-gold">
-            IDCOL 80% Senior Debt · 1.25× DSCR Covenant · Non-Recourse SPVs
+            Institutional Project Financing · Project-specific DSCR Covenant · Non-Recourse SPVs
           </span>
         </div>
       </div>
@@ -98,8 +98,8 @@ function Hero({ onOpenModal }: { onOpenModal: () => void }) {
 
 /* ----------------------- Institutional Metrics Strip ----------------------- */
 const METRICS = [
-  { val: "80%", unit: "LTV", label: "Senior Debt Facility", sub: "IDCOL 5.0%–5.5% concessionary facility" },
-  { val: "1.25×", unit: "Min", label: "DSCR Covenant", sub: "Ring-fenced take-or-pay cash flow coverage" },
+  { val: "80%", unit: "LTV", label: "Senior Debt Facility", sub: "Project-specific financing terms" },
+  { val: "Project-specific", unit: "terms", label: "DSCR Covenant", sub: "Ring-fenced cash-flow coverage set during underwriting" },
   { val: "30%", unit: "Margin", label: "Guaranteed Offtaker Savings", sub: "Locked discount below BERC peak grid tariff" },
   { val: "৳60k", unit: "/kWp", label: "CAPEX Benchmark Ceiling", sub: "Strict engineering discipline under IDCOL rules" },
 ];
@@ -225,7 +225,7 @@ function CapitalStack() {
 
             <div className="rounded-3xl border border-warm/15 bg-forest-light/40 p-7 transition-all hover:border-gold/30">
               <Scale className="h-8 w-8 text-gold" />
-              <h3 className="font-display mt-5 text-2xl text-warm">1.25× DSCR Floor</h3>
+              <h3 className="font-display mt-5 text-2xl text-warm">Project-specific DSCR Floor</h3>
               <p className="mt-2 text-sm text-warm/70 leading-relaxed">
                 Debt service is tested across conservative P90 insolation modeling. Net generation cash flows
                 provide substantial buffer over debt service requirements across all economic seasons.
@@ -372,7 +372,7 @@ function Compare() {
           ))}
           <div className="grid grid-cols-2 border-t border-warm/15 bg-forest-light p-5 md:p-7">
             <p className="font-mono text-xs uppercase tracking-wider text-warm/50">Partner Outcome</p>
-            <p className="font-display text-2xl text-gold md:text-3xl">Guaranteed cash flow & zero sales drag.</p>
+            <p className="font-display text-2xl text-gold md:text-3xl">Modeled cash-flow visibility; commercial outcomes vary.</p>
           </div>
         </FadeUp>
       </div>

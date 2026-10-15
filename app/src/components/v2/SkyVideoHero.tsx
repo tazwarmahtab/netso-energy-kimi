@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
 import { ArrowDown, ArrowRight } from "lucide-react";
+import { buildAssetUrl } from "../../lib/mediaUrl";
 
-const POSTER_SKY = "/assets/v2/frames/00-roof-transform/f001.jpg";
-const POSTER_ROOF = "/assets/v2/frames/00-roof-transform/f120.jpg";
-const VIDEO_SRC = "/assets/v2/hero-sky-roof.mp4";
+const POSTER_SKY = buildAssetUrl("/assets/v2/frames/00-roof-transform/f001.jpg");
+const POSTER_ROOF = buildAssetUrl("/assets/v2/frames/00-roof-transform/f120.jpg");
+const VIDEO_SRC = buildAssetUrl("/assets/v2/hero-sky-roof.mp4");
 
 const HERO_COPY_END = 0.3;
 const ROOF_COPY_START = 0.34;

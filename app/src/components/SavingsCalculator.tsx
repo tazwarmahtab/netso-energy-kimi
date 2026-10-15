@@ -28,8 +28,8 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
   // State: Preview memo toggle
   const [showMemoPreview, setShowMemoPreview] = useState(false);
 
-  // Commercial model: 30% contractually guaranteed savings below utility grid tariff
-  const GUARANTEED_SAVINGS_PERCENT = 0.30; // 30% guaranteed discount
+  // Commercial model: 30% defined in the executed agreement savings below utility grid tariff
+  const GUARANTEED_SAVINGS_PERCENT = 0.30; // illustrative discount scenario
 
   // Calculations
   const monthlySavings = Math.round(monthlyBill * GUARANTEED_SAVINGS_PERCENT);
@@ -63,14 +63,14 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
     `⚡ *Estimated Solar Array:* ${estimatedCapacityKwp} kWp (Bifacial Pergola)\n` +
     `📊 *Current Monthly Grid Spend:* ৳${monthlyBill.toLocaleString("en-US")}\n\n` +
     `💰 *COMMERCIAL PPA STRUCTURE (ZERO CAPEX):*\n` +
-    `• Netso Contracted Savings: 30% Guaranteed Discount vs Utility Grid Peak\n` +
-    `• Tariff Protection: Floats with BERC schedules (Guaranteed margin hedge)\n` +
+    `• Netso Contracted Savings: Illustrative Discount Scenario vs Utility Grid Peak\n` +
+    `• Tariff Protection: Floats with BERC schedules (Modeled margin hedge)\n` +
     `• Upfront Investment: ৳0.00 (100% Financed & Maintained by Netso)\n\n` +
     `📈 *PROJECTED CASH SAVINGS:*\n` +
     `• Estimated Monthly Savings: ${formatBDT(monthlySavings)} / month\n` +
     `• Estimated Annual Savings: ${formatBDT(annualSavings)} / year\n` +
     `• 20-Year Cumulative Savings: ${formatBDT(twentyYearSavings)} (Hedged)\n\n` +
-    `🌱 *ESG & BUYER COMPLIANCE (EU CBAM & HIGG):*\n` +
+    `🌱 *ESG & BUYER COMPLIANCE (CBAM & HIGG readiness):*\n` +
     `• Annual Clean Generation: ${(annualGenerationKwh / 1000).toFixed(0)} MWh\n` +
     `• Avoided Carbon Emissions: ${co2AvoidedTonnes} tonnes CO₂ / year\n` +
     `────────────────────────────────────────\n` +
@@ -108,7 +108,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
             See what your roof saves.
           </h2>
           <p className="mt-4 text-base text-sage md:text-lg">
-            Based on executed 20-year IDCOL PPA terms: <span className="font-semibold text-warm">৳0 upfront CAPEX</span>, full Netso operational maintenance, and a contractually locked <span className="font-semibold text-gold">30% guaranteed savings</span> below your utility grid tariff.
+            Illustrative long-term PPA scenario: <span className="font-semibold text-warm">No upfront customer CAPEX where project terms allow</span>, operational maintenance as defined in the executed agreement, and a a modeled <span className="font-semibold text-gold">illustrative savings scenario</span> below your utility grid tariff.
           </p>
         </div>
 
@@ -219,7 +219,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
               </div>
               <div className="mt-3 border-t border-warm/10 pt-2.5 flex items-center justify-between text-xs font-semibold">
                 <span className="text-gold">Contractual Spread:</span>
-                <span className="font-mono text-gold">30% Guaranteed Hedged Savings</span>
+                <span className="font-mono text-gold">Illustrative Hedged Savings</span>
               </div>
             </div>
           </div>
@@ -236,7 +236,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
                 </div>
                 <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-bold text-emerald-400">
                   <Sparkles className="h-3.5 w-3.5" />
-                  <span>30% Guaranteed Reduction</span>
+                  <span>Illustrative Reduction Scenario</span>
                 </div>
               </div>
 
@@ -290,7 +290,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
               <div className="mt-6 space-y-2 text-xs text-sage">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-gold" />
-                  <span><strong>৳0 Upfront Capital:</strong> Netso funds 100% of equipment, installation, and civil works.</span>
+                  <span><strong>৳0 Upfront Capital:</strong> Netso may finance eligible equipment, installation, and civil works subject to approval.</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Zap className="h-4 w-4 text-gold" />
@@ -369,7 +369,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
 
                 {/* 3. Primary Liquid Metal Assessment CTA */}
                 <LiquidMetalButton
-                  label="Lock In 30% Savings"
+                  label="Lock In Illustrative savings"
                   onClick={onOpenAssessment}
                 />
               </div>

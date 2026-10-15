@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { getRuntimeFrameUrl } from "../../film/runtimeManifest";
+import { buildAssetUrl } from "../../lib/mediaUrl";
 import {
   clampMasterFrame,
   getMasterScrollMap,
@@ -105,7 +106,7 @@ const getNearestLoadedIndex = (
 };
 
 const getFrameUrl = (manifest: MasterManifest, frame: number, assetTag?: string): string => {
-  const url = getRuntimeFrameUrl(manifest.runtimePath, frame);
+  const url = buildAssetUrl(getRuntimeFrameUrl(manifest.runtimePath, frame));
   return assetTag ? `${url}?${encodeURIComponent(assetTag)}` : url;
 };
 
@@ -584,7 +585,7 @@ export default function FrameSequence({
       <div className={`v2-master-sequence__stage ${isLegacy ? "v2-sequence__stage v2-media-scene__stage" : ""}`}>
         <img
           className={`v2-master-sequence__poster ${isLegacy ? "v2-sequence__poster v2-media-scene__poster" : ""}`}
-          src={runtimeManifest.poster}
+          src={buildAssetUrl(runtimeManifest.poster)}
           alt={fallbackMode ? posterAlt : ""}
           aria-hidden="true"
           width={runtimeManifest.frameWidth}

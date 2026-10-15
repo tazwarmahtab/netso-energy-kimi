@@ -8,6 +8,12 @@ dist
 app/dist
 app/node_modules
 
+# V2 cinematic media is served from VITE_NETSO_ASSET_BASE_URL in production.
+# Keep local copies for development, but do not commit generated media blobs.
+app/public/assets/v2/**/*.mp4
+app/public/assets/v2/**/*.jpg
+app/public/assets/v2/**/*.png
+
 # Loose media files at root
 /*.MP4
 /*.mp4

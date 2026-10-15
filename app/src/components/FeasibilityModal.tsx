@@ -200,7 +200,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                           placeholder="e.g. 10000"
                           className="mt-1.5 w-full rounded-xl border border-warm/20 bg-forest/80 px-4 py-3 font-mono text-sm text-warm placeholder-warm/30 focus:border-gold focus:outline-none"
                         />
-                        <span className="text-[11px] text-warm/50">Minimum 3,000 sq ft for Netso ৳0 CAPEX qualification</span>
+                        <span className="text-[11px] text-warm/50">Minimum 3,000 sq ft for preliminary qualification; financing and commercial terms remain site-specific</span>
                       </div>
 
                       <div>
@@ -214,7 +214,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                           placeholder="e.g. 600000"
                           className="mt-1.5 w-full rounded-xl border border-warm/20 bg-forest/80 px-4 py-3 font-mono text-sm text-warm placeholder-warm/30 focus:border-gold focus:outline-none"
                         />
-                        <span className="text-[11px] text-warm/50">Used to model your 30% guaranteed tariff savings against BERC peak rates</span>
+                        <span className="text-[11px] text-warm/50">Used to model an illustrative tariff-saving scenario against applicable peak rates</span>
                       </div>
 
                       <div className="flex gap-3 pt-3">
@@ -370,7 +370,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                   </div>
                   <div className="flex justify-between py-1.5">
                     <span className="text-warm/60">PPA Savings Guarantee:</span>
-                    <span className="font-bold text-emerald-400">30% Guaranteed Reduction</span>
+                    <span className="font-bold text-emerald-400">Illustrative Reduction Scenario</span>
                   </div>
                 </div>
 

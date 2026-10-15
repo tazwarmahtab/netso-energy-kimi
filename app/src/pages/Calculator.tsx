@@ -41,7 +41,7 @@ export default function CalculatorPage() {
             <FadeUp delay={0.2}>
               <p className="mt-5 text-base sm:text-lg text-sage max-w-3xl mx-auto leading-relaxed">
                 Calibrate your facility’s 20-year cash flow. Powered by the Beth Doctrine:{" "}
-                <strong className="text-warm font-medium">zero capital expenditure</strong>, zero technical risk, and a contractually guaranteed{" "}
+                <strong className="text-warm font-medium">no upfront customer capital where project terms allow</strong>, zero technical risk, and a defined in the executed agreement{" "}
                 <strong className="text-emerald-400 font-medium">30% discount below the utility grid peak tariff</strong>.
               </p>
             </FadeUp>
@@ -51,7 +51,7 @@ export default function CalculatorPage() {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-6 font-mono text-xs text-warm/75">
                 <div className="flex items-center gap-2 rounded-full border border-warm/15 bg-black/30 px-3.5 py-1.5 backdrop-blur-sm">
                   <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                  <span>IDCOL 80% Senior Debt Structured</span>
+                  <span>Institutional Project Financing Structured</span>
                 </div>
                 <div className="flex items-center gap-2 rounded-full border border-warm/15 bg-black/30 px-3.5 py-1.5 backdrop-blur-sm">
                   <FileSpreadsheet className="h-4 w-4 text-gold" />
@@ -87,7 +87,7 @@ export default function CalculatorPage() {
                 Investment Committee FAQ
               </span>
               <h2 className="font-display mt-3 text-3xl font-bold text-cream sm:text-4xl">
-                How Netso Structures 30% Savings.
+                How Netso Models Savings.
               </h2>
             </div>
 
@@ -97,7 +97,7 @@ export default function CalculatorPage() {
                   How is the 30% savings contractually protected against grid tariff changes?
                 </h3>
                 <p className="mt-2 text-sm text-sage leading-relaxed font-sans">
-                  Under the Beth Doctrine, Netso indexes your PPA rate directly to the approved Bangladesh Energy Regulatory Commission (BERC) industrial tariff schedule: <strong className="text-warm">Netso PPA Tariff = Grid Tariff × 0.70</strong>. When the utility raises power rates (such as the recent 16.7% BERC tariff hike), your 30% discount margin is preserved and your absolute cash savings expand automatically.
+                  Under the Beth Doctrine, Netso indexes your PPA rate directly to the approved Bangladesh Energy Regulatory Commission (BERC) industrial tariff schedule: <strong className="text-warm">Netso PPA Tariff = Grid Tariff × 0.70</strong>. When the utility raises power rates (such as recent tariff-schedule changes), your illustrative discount margin is preserved and your absolute cash savings expand automatically.
                 </p>
               </div>
 

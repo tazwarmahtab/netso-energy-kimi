@@ -37,7 +37,7 @@ export default function CalculatorTeaser({ onOpenAssessment }: CalculatorTeaserP
             <FadeUp delay={0.2}>
               <p className="mt-4 text-base text-sage leading-relaxed max-w-xl">
                 A typical 20,000 sq ft industrial facility in Gazipur or Narayanganj recovers over{" "}
-                <strong className="text-warm font-semibold">৳4.6 Lakh / month</strong> directly to EBITDA. Use our institutional calculator to model custom sector savings, 20-year cumulative cash flow, and export a pre-formatted board memo directly to WhatsApp.
+                <strong className="text-warm font-semibold">Illustrative monthly outcome</strong> directly to EBITDA. Use our institutional calculator to model custom sector savings, 20-year cumulative cash flow, and export a pre-formatted board memo directly to WhatsApp.
               </p>
             </FadeUp>
 
@@ -75,7 +75,7 @@ export default function CalculatorTeaser({ onOpenAssessment }: CalculatorTeaserP
                   </div>
                   <div className="flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-emerald-400">
                     <Sparkles className="h-3 w-3" />
-                    <span>30% Guaranteed</span>
+                    <span>Illustrative Scenario</span>
                   </div>
                 </div>
 
@@ -86,15 +86,15 @@ export default function CalculatorTeaser({ onOpenAssessment }: CalculatorTeaserP
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2.5">
                     <span className="text-warm/60">Customer Capital Expenditure:</span>
-                    <span className="font-bold text-emerald-400">৳0.00 (Zero CAPEX)</span>
+                    <span className="font-bold text-emerald-400">৳0.00 (No upfront customer CAPEX where project terms allow)</span>
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2.5">
                     <span className="text-warm/60">Estimated Monthly Savings:</span>
-                    <span className="font-bold text-emerald-400">৳4.6 Lakh / mo</span>
+                    <span className="font-bold text-emerald-400">Illustrative monthly outcome</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-warm/60">20-Year Hedged Savings:</span>
-                    <span className="font-bold text-gold text-sm">৳13.2+ Crore</span>
+                    <span className="font-bold text-gold text-sm">Set in executed PPA</span>
                   </div>
                 </div>
 

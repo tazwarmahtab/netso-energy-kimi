@@ -7,6 +7,15 @@ export const MAX_INITIAL_FRAME_RETRIES = 1;
 
 export const shouldRetryInitialFrame = (retryCount: number): boolean => retryCount < MAX_INITIAL_FRAME_RETRIES;
 
+export function shouldUseStaticMode(input: {
+  reducedMotion: boolean;
+  reducedData: boolean;
+  saveData: boolean;
+  viewportWidth: number;
+}): boolean {
+  return input.reducedMotion || input.reducedData || input.saveData || input.viewportWidth <= 900;
+}
+
 /**
  * Keep decoded canvas dimensions bounded while preserving enough source
  * resolution for a narrow-to-wide resize without reallocating on every draw.

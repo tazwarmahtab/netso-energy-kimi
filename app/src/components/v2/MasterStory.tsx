@@ -2,6 +2,7 @@ import { ArrowDown, ArrowRight } from "lucide-react";
 import type { MouseEvent, ReactNode } from "react";
 import { getMasterSegment, type MasterManifest, type MasterSegment } from "./masterStoryHelper";
 import FinanceChapter from "./FinanceChapter";
+import { buildAssetUrl } from "../../lib/mediaUrl";
 
 interface MasterStoryProps {
   manifest: MasterManifest;
@@ -23,7 +24,7 @@ function Evidence({ segment }: { segment: MasterSegment }) {
 }
 
 function Poster({ segment }: { segment: MasterSegment }) {
-  return <img className="master-story__poster" src={segment.poster} alt="" aria-hidden="true" width="1280" height="720" loading="lazy" />;
+  return <img className="master-story__poster" src={buildAssetUrl(segment.poster)} alt="" aria-hidden="true" width="1280" height="720" loading="lazy" />;
 }
 
 function Scene({ segment, children, labelledBy, staticHidden = false }: { segment: MasterSegment; children: ReactNode; labelledBy?: string; staticHidden?: boolean }) {

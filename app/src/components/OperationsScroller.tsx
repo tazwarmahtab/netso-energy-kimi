@@ -325,11 +325,11 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
             </div>
             <h3 className="font-display text-2xl font-bold text-warm">String Voltage Calibration</h3>
             <p className="mt-2 text-xs sm:text-sm text-sage/85 leading-relaxed font-sans">
-              Zero tolerance for degradation. Every DC string, junction box, and inverter circuit undergoes continuous calibrated electrical audits to guarantee contractually promised generation.
+              Zero tolerance for degradation. Every DC string, junction box, and inverter circuit undergoes continuous calibrated electrical audits to support generation commitments defined in the executed agreement.
             </p>
             <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-emerald-400">
               <span>Performance Ratio (PR) Floor</span>
-              <span className="font-bold text-gold">≥ 80.0% Guaranteed</span>
+              <span className="font-bold text-gold">≥ 80.0% Illustrative</span>
             </div>
           </div>
         </div>
@@ -349,7 +349,7 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
                 Round-The-Clock Utility Security
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-sage/85 leading-relaxed font-sans">
-                When the factory sleeps, Netso's SCADA engineers conduct nocturnal thermography and structural health scans under Dhaka's skyline. 4-hour emergency dispatch guaranteed.
+                When the factory sleeps, Netso's SCADA engineers conduct nocturnal thermography and structural health scans under Dhaka's skyline. 4-hour emergency dispatch target, subject to service terms.
               </p>
             </div>
 

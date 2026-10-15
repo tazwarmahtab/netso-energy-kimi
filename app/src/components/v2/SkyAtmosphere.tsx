@@ -6,6 +6,7 @@ import {
 } from "@paper-design/shaders";
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { roofDuskFragmentShader } from "./roof-dusk-shader";
+import { buildAssetUrl } from "../../lib/mediaUrl";
 
 export const SKY_VARIANTS = {
   "harbor-dawn": {
@@ -42,8 +43,7 @@ export const SKY_VARIANTS = {
     label: "Roof dusk",
     descriptor: "slate / peach / amber",
     colors: ["#405565", "#c8a58c", "#d2ad88"],
-    fallback:
-      '#405565 url("/assets/v2/frames/00-roof-transform/f001.jpg") center / cover no-repeat',
+    fallback: `#405565 url("${buildAssetUrl("/assets/v2/frames/00-roof-transform/f001.jpg")}") center / cover no-repeat`,
     speed: 0.08,
     distortion: 0,
     swirl: 0,

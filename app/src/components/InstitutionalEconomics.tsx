@@ -158,7 +158,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
     <section
       ref={containerRef}
       className="relative w-full bg-[#06120D] text-cream lg:h-[220vh]"
-      aria-label="Institutional Economics & Guaranteed Savings"
+      aria-label="Institutional Economics & Modeled Savings"
     >
       {/* Sticky Stage Container */}
       <div
@@ -177,7 +177,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1 mb-3.5 backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
               <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-gold">
-                Zero Effort • Zero CAPEX
+                Zero Effort • No upfront customer CAPEX where project terms allow
               </span>
             </div>
 
@@ -187,7 +187,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
             </h2>
 
             <p className="mt-3 text-xs sm:text-sm md:text-base text-sage/85 leading-relaxed font-sans max-w-2xl">
-              We fund, engineer, construct, and operate a luxury architectural solar pergola on your idle roof. You deploy <strong className="text-cream font-semibold">৳0 capital</strong>, take zero operational risk, and simply pay <strong className="text-gold font-semibold">30% less than your utility electricity bill</strong> every month.
+              We fund, engineer, construct, and operate a luxury architectural solar pergola on your idle roof. You deploy <strong className="text-cream font-semibold">No upfront customer capital where project terms allow</strong>, shift defined operating responsibilities to Netso under the executed agreement, and simply pay <strong className="text-gold font-semibold">30% less than your utility electricity bill</strong> every month.
             </p>
           </div>
 
@@ -207,7 +207,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                     Zero Investment
                   </span>
                 </div>
-                <h3 className="font-display text-xl font-bold text-cream">৳0 Customer CAPEX</h3>
+                <h3 className="font-display text-xl font-bold text-cream">No upfront customer CAPEX where project terms allow</h3>
                 <p className="mt-1.5 text-xs text-sage/80 leading-relaxed font-sans">
                   Netso finances 100% of equipment, structural steel pergolas, and civil works through 20-year IDCOL concessionary debt. Zero loans or liabilities on your company ledger.
                 </p>
@@ -232,7 +232,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                     Floating Guarantee
                   </span>
                 </div>
-                <h3 className="font-display text-xl font-bold text-cream">30% Guaranteed Savings</h3>
+                <h3 className="font-display text-xl font-bold text-cream">Illustrative Savings Scenario</h3>
                 <p className="mt-1.5 text-xs text-sage/80 leading-relaxed font-sans">
                   Contractually indexed strictly below utility tariffs: <strong className="text-cream">Netso Cost = Utility Bill × 0.70</strong>. If the utility increases rates, your retained cash expands. If rates soften, Netso floats down automatically.
                 </p>
@@ -320,7 +320,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                       />
                     ))}
 
-                    {/* Shaded 30% Savings Area */}
+                    {/* Shaded Illustrative savings Area */}
                     <polygon
                       ref={svgCorridorRef}
                       points="50,160 140,140 230,125 320,105 410,85 500,60 570,40 570,115 500,135 410,150 320,165 230,180 140,190 50,200"
@@ -359,7 +359,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
 
                     <rect x="375" y="107" width="185" height="20" rx="4" fill="#141E1A" stroke="#C6A15B" strokeWidth="0.75" />
                     <text x="467" y="121" fill="#C6A15B" fontSize="9" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
-                      Netso Guarantee: –30% Below Grid
+                      Netso Guarantee: –Illustrative below-grid scenario
                     </text>
 
                     {/* Central Spread Callout */}
@@ -383,7 +383,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
               {/* Bottom Insight Tag */}
               <div className="mt-3 flex items-center justify-between text-[11px] font-mono text-cream/70 bg-white/[0.03] p-2.5 rounded-lg border border-white/5">
                 <span>When utility tariffs escalate:</span>
-                <span className="text-gold font-bold">Your 30% discount margin is protected</span>
+                <span className="text-gold font-bold">Your illustrative discount margin is protected</span>
               </div>
             </div>
 
@@ -402,7 +402,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                   </div>
                   <div className="flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-400 border border-emerald-500/20">
                     <Sparkles className="h-3 w-3" />
-                    <span>30% Guaranteed</span>
+                    <span>Illustrative Scenario</span>
                   </div>
                 </div>
 
@@ -410,7 +410,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                 <div className="mt-4 space-y-2.5 font-mono text-[11px] sm:text-xs">
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2">
                     <span className="text-warm/60">Customer Upfront Cost:</span>
-                    <span className="font-bold text-emerald-400">৳0.00 (Zero CAPEX)</span>
+                    <span className="font-bold text-emerald-400">৳0.00 (No upfront customer CAPEX where project terms allow)</span>
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2">
                     <span className="text-warm/60">Estimated Solar Capacity:</span>
@@ -418,15 +418,15 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2">
                     <span className="text-warm/60">Estimated Monthly Savings:</span>
-                    <span className="benchmark-highlight font-bold text-emerald-400">৳4.6 Lakh / month</span>
+                    <span className="benchmark-highlight font-bold text-emerald-400">Illustrative monthly outcome</span>
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2">
                     <span className="text-warm/60">20-Year Retained Cash Flow:</span>
-                    <span className="benchmark-highlight font-bold text-gold text-sm">৳13.2+ Crore</span>
+                    <span className="benchmark-highlight font-bold text-gold text-sm">Set in executed PPA</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-warm/60">EU CBAM Carbon Abatement:</span>
-                    <span className="font-bold text-warm">~168 Tonnes CO₂ / yr</span>
+                    <span className="font-bold text-warm">Site-specific emissions estimate</span>
                   </div>
                 </div>
               </div>

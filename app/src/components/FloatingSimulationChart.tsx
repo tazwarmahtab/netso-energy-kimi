@@ -18,7 +18,7 @@ const SCENARIOS: Scenario[] = [
     label: "Current Baseline",
     badge: "Active Utility Tariff",
     gridStatus: "100% Unhedged",
-    netsoStatus: "30% Guaranteed Discount",
+    netsoStatus: "Illustrative Discount Scenario",
     offtakerBenefit: "30% Net Savings",
     description: "Standard industrial utility power bill. Netso delivers immediate 30% cash reduction across all daytime solar generation.",
     cashImpact: "Delivers immediate 6-figure monthly cash flow expansion directly to operational EBITDA from Month 1.",
@@ -30,7 +30,7 @@ const SCENARIOS: Scenario[] = [
     gridStatus: "+35% Escalation",
     netsoStatus: "Protected 30% Spread",
     offtakerBenefit: "+35% Cash Retained",
-    description: "When the utility increases tariffs, conventional fixed-rate developers capture the windfall. Under Netso, your 30% discount margin is preserved — expanding your total cash savings automatically.",
+    description: "When the utility increases tariffs, conventional fixed-rate developers capture the windfall. Under Netso, your illustrative discount margin is preserved — expanding your total cash savings automatically.",
     cashImpact: "Your absolute cash savings expand in lockstep with utility hikes. Zero margin compression.",
   },
   {
@@ -41,7 +41,7 @@ const SCENARIOS: Scenario[] = [
     netsoStatus: "Floats Down Automatically",
     offtakerBenefit: "Zero Balance-Sheet Risk",
     description: "Rigid fixed-tariff PPAs leave factories trapped paying above-market prices if grid rates soften. Netso automatically floats downward, ensuring you never pay more than 70% of grid power.",
-    cashImpact: "100% regulatory downside hedge. You are contractually guaranteed to pay below grid under every economic condition.",
+    cashImpact: "100% regulatory downside hedge. You are defined in the executed agreement to pay below grid under every economic condition.",
   },
 ];
 
@@ -73,7 +73,7 @@ export function FloatingSimulationChart({
             </h2>
             <p className="mt-4 font-sans text-sm sm:text-base text-cream/70 leading-relaxed">
               Conventional solar developers lock factories into rigid, 20-year fixed tariffs. When grid prices shift or currency fluctuates, fixed PPAs create balance sheet tension. Netso indexes strictly:{" "}
-              <strong className="text-cream">Netso Cost = Utility Bill × 0.70</strong>. You are guaranteed a 30% discount forever.
+              <strong className="text-cream">Netso Cost = Utility Bill × 0.70</strong>. The modeled scenario uses a 30% discount; actual terms depend on the executed agreement.
             </p>
           </div>
 
@@ -101,7 +101,7 @@ export function FloatingSimulationChart({
                   25-Year Long-Term Contract Horizon
                 </span>
                 <div className="text-sm font-medium text-cream mt-0.5">
-                  Utility Power Bill vs. Netso Guaranteed 30% Discount Floor
+                  Utility Power Bill vs. Illustrative 30% Discount Scenario
                 </div>
               </div>
 
@@ -180,7 +180,7 @@ export function FloatingSimulationChart({
 
                 <rect x="385" y="107" width="175" height="20" rx="4" fill="#18231e" stroke="#C6A15B" strokeWidth="0.75" />
                 <text x="472" y="121" fill="#C6A15B" fontSize="9" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
-                  Netso Guarantee: –30% Locked
+                  Netso Illustrative: –30% scenario
                 </text>
 
                 {/* Center Spread Watermark */}
@@ -268,11 +268,11 @@ export function FloatingSimulationChart({
                 <span>Contractual Spread Guarantee</span>
                 <span className="text-gold font-bold flex items-center gap-1">
                   <CheckCircle2 className="h-3.5 w-3.5" />
-                  30.0% Guaranteed
+                  30.0% Illustrative
                 </span>
               </div>
               <div className="font-display text-3xl font-bold text-cream flex items-baseline gap-2">
-                <span>30% Savings</span>
+                <span>Illustrative savings</span>
                 <span className="text-xs font-mono text-gold font-normal">Below Utility Tariff</span>
               </div>
               <p className="mt-2 text-xs text-cream/70 leading-relaxed">

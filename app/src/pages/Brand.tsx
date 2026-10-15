@@ -129,14 +129,14 @@ const TYPE_ROWS = [
 const TAGLINES = [
   { k: "Primary", v: "The Sky Is Already Working.", d: "The core manifesto. The sun generates irradiance continuously — Netso builds the asset infrastructure to harvest it." },
   { k: "Asset framing", v: "Your roof. Now an energy asset.", d: "The core commercial proposition: converting non-performing factory roof slabs into long-term cash flow and tariff reduction." },
-  { k: "Product", v: "Solar as a Service (RESCO / BOO)", d: "The customer model: ৳0 customer CAPEX, 20-year take-or-pay PPA with 30% guaranteed savings vs grid peak, full turnkey utility operation included." },
+  { k: "Product", v: "Solar as a Service (RESCO / BOO)", d: "The customer model: ৳0 customer CAPEX, 20-year take-or-pay PPA with illustrative savings scenario vs grid peak, full turnkey utility operation included." },
   { k: "Institutional sign-off", v: "Power on", d: "The executive sign-off. Grounded, determined, forward-moving." },
   { k: "Discipline", v: "Evidence over adjectives", d: "Every commercial claim distinguishes audited fact from estimate. Zero phantom savings, zero killed tariff numbers." },
 ];
 
 const PRINCIPLES = [
   { n: "01", t: "Direct & Grounded", d: "We write for C-suite industrial executives and plant engineers. Short sentences, bankable numbers, zero marketing fluff." },
-  { n: "02", t: "Contractually Precise", d: "All figures cite exact benchmarks: 30% guaranteed grid discount, ৳0 customer CAPEX, 80% IDCOL debt, 1.25× DSCR." },
+  { n: "02", t: "Contractually Precise", d: "All figures cite exact benchmarks: an illustrative grid-discount scenario, ৳0 customer CAPEX, institutional project financing debt, Project-specific DSCR." },
   { n: "03", t: "Institutional Authority", d: "Calm, architectural, and legally sound. Designed to withstand scrutiny from senior lenders, credit committees, and international buyers." },
   { n: "04", t: "Engineering Truth", d: "Dual-glass bifacial TOPCon modules, certified 160 km/h wind load pergolas, and Class 0.2s utility meters with daily billing settlement." },
 ];
@@ -483,7 +483,7 @@ export default function Brand() {
                       IDCOL Senior Debt 80% LTV
                     </span>
                     <span className="rounded-full bg-gold/20 border border-gold/40 px-4 py-2 font-mono text-xs font-semibold text-forest">
-                      1.25× DSCR Floor
+                      Project-specific DSCR Floor
                     </span>
                   </div>
                 </div>
@@ -492,7 +492,7 @@ export default function Brand() {
                   <div className="flex flex-wrap gap-4">
                     <span className="rounded-2xl border border-ink/10 bg-cream p-4">
                       <span className="font-mono text-[10px] text-ink/50 uppercase block">PPA Savings Guarantee</span>
-                      <span className="font-mono text-base font-bold text-forest">30% Below Grid</span>
+                      <span className="font-mono text-base font-bold text-forest">Illustrative below-grid scenario</span>
                     </span>
                     <span className="rounded-2xl border border-ink/10 bg-cream p-4">
                       <span className="font-mono text-[10px] text-ink/50 uppercase block">BERC Tariff Hedge</span>

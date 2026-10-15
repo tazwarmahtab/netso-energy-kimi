@@ -71,7 +71,8 @@ export default function V2() {
   const handleDrawnFrame = (frame: number) => {
     if (staticMode) return;
     const segment = MASTER_MANIFEST.segments.find((candidate) => frame >= candidate.startFrame && frame < candidate.endFrame);
-    if (isV2ChapterId(segment?.chapter)) setActiveChapter(segment.chapter);
+    const chapter = segment?.chapter;
+    if (isV2ChapterId(chapter)) setActiveChapter(chapter);
   };
 
   return (
@@ -86,7 +87,7 @@ export default function V2() {
         </FrameSequence>
         <FinalCTA />
       </main>
-      <Footer v2 />
+      <Footer />
       <a className="v2-whatsapp-pill" aria-label={`${WHATSAPP_PILL_LABEL} — Netso Energy desk`} href={getNetsoWhatsAppUrl(WHATSAPP_MESSAGE)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon width="17" height="17" /> <span>{WHATSAPP_PILL_LABEL}</span></a>
     </div>
   );

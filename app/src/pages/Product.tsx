@@ -58,7 +58,7 @@ function Hero({ onOpenAssessment }: { onOpenAssessment: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8, ease: EASE }}
         >
-          An elevated pergola-style solar canopy transforms idle commercial rooftops into high-yield, utility-grade generating assets. Netso finances, constructs, and maintains the entire plant — you simply purchase clean power at a guaranteed <span className="font-semibold text-warm">30% discount below utility grid tariffs</span>.
+          An elevated pergola-style solar canopy transforms idle commercial rooftops into high-yield, utility-grade generating assets. Netso finances, constructs, and maintains the entire plant — you simply purchase clean power at an illustrative <span className="font-semibold text-warm">30% discount below applicable utility tariffs</span>.
         </motion.p>
 
         <motion.div
@@ -92,13 +92,13 @@ const FLOW = [
     n: "01",
     t: "Zero-CAPEX Construction",
     c: "Elevated structural steel pergola canopy installed without roof membrane penetration. Netso capitalizes 100% of civil engineering, Tier-1 modules, and installation.",
-    tag: "CAPEX ৳0",
+    tag: "No upfront customer CAPEX where project terms allow",
   },
   {
     n: "02",
     t: "Direct Daylight Consumption",
-    c: "Clean solar power routes straight into your facility's Main Distribution Board (MDB), covering 75–85% of daytime manufacturing loads at a guaranteed 30% discount to grid tariffs.",
-    tag: "30% Guaranteed Savings",
+    c: "Clean solar power routes straight into your facility's Main Distribution Board (MDB), covering 75–85% of daytime manufacturing loads at a illustrative 30% discount to grid tariffs.",
+    tag: "Illustrative Savings Scenario",
   },
   {
     n: "03",
@@ -193,7 +193,7 @@ function NeosTelemetryTerminal() {
             <Activity className="h-3.5 w-3.5 text-gold" />
             <span className="font-mono text-[11px] uppercase tracking-wider">Active Generation</span>
           </div>
-          <p className="font-display mt-2 text-2xl font-bold text-warm md:text-3xl">64.8 kW</p>
+          <p className="font-display mt-2 text-2xl font-bold text-warm md:text-3xl">Illustrative output</p>
           <span className="font-mono text-[10px] text-emerald-400 font-medium">81.0% Peak Output</span>
         </div>
 
@@ -202,7 +202,7 @@ function NeosTelemetryTerminal() {
             <Gauge className="h-3.5 w-3.5 text-gold" />
             <span className="font-mono text-[11px] uppercase tracking-wider">Performance Ratio</span>
           </div>
-          <p className="font-display mt-2 text-2xl font-bold text-warm md:text-3xl">81.4%</p>
+          <p className="font-display mt-2 text-2xl font-bold text-warm md:text-3xl">Illustrative PR</p>
           <span className="font-mono text-[10px] text-gold font-medium">Exceeds 78% Guarantee</span>
         </div>
 
@@ -221,7 +221,7 @@ function NeosTelemetryTerminal() {
             <span className="font-mono text-[11px] uppercase tracking-wider">Grid Displacement</span>
           </div>
           <p className="font-display mt-2 text-2xl font-bold text-emerald-400 md:text-3xl">-30.0%</p>
-          <span className="font-mono text-[10px] text-warm/60">Guaranteed Below Grid Peak</span>
+          <span className="font-mono text-[10px] text-warm/60">Illustrative below-grid scenario</span>
         </div>
 
         <div className="rounded-xl border border-warm/10 bg-forest/60 p-4">
@@ -276,7 +276,7 @@ const HW = [
   {
     icon: PanelsTopLeft,
     t: "Tier-1 Architectural Solar Pergola",
-    c: "Elevated dual-glass TOPCon 585Wp+ bifacial modules mounted on an engineered architectural steel pergola. Netso owns, insures, and maintains the entire array — zero capital or maintenance expense for your organization.",
+    c: "Elevated dual-glass TOPCon 585Wp+ bifacial modules mounted on an engineered architectural steel pergola. Netso owns, insures, and maintains the entire array — no upfront customer capital or maintenance responsibility where the executed agreement provides for it.",
     points: [
       "BNBC 2020 cyclone-engineered up to 260 km/h wind loads",
       "Non-penetrating chemical anchor base plates preserve roof waterproofing",
@@ -451,8 +451,8 @@ function Network() {
 
 /* --------------------------- Compare table --------------------------- */
 const ROWS = [
-  { k: "Upfront Capital Expenditure", cash: "Millions in capital deployed from corporate reserves", dl: "৳0 — 100% financed by Netso via senior debt" },
-  { k: "Contractual Tariff", cash: "Unpredictable ROI dependent on execution", dl: "Locked at 30% guaranteed savings below utility grid peak" },
+  { k: "Upfront Capital Expenditure", cash: "Millions in capital deployed from corporate reserves", dl: "Subject to approved project financing" },
+  { k: "Contractual Tariff", cash: "Unpredictable ROI dependent on execution", dl: "Locked at illustrative savings scenario below utility grid peak" },
   { k: "Technical & Generation Risk", cash: "Borne 100% by your facility", dl: "Netso bears 100% performance & degradation risk" },
   { k: "Operations & Maintenance (O&M)", cash: "Your internal staff, inverter replacement costs", dl: "20-year comprehensive O&M, washing & spares included" },
   { k: "SREDA & Interconnection Approvals", cash: "Complex utility bureaucracy handled in-house", dl: "Handled end-to-end by Netso's origination team" },
@@ -510,7 +510,7 @@ function Compare() {
         <FadeUp className="mt-12 max-w-2xl">
           <h3 className="font-display text-2xl font-bold text-ink">Why institutional clients choose the Netso PPA</h3>
           <p className="mt-3 text-base leading-relaxed text-ink/75">
-            Unless energy generation is your core competency, deploying millions in corporate capital into solar hardware, ongoing string maintenance, and utility grid compliance is inefficient. Netso delivers the same high-efficiency solar energy on your roof — zero capital outlay, guaranteed uptime, and an immediate 30% tariff reduction on day one.
+            Unless energy generation is your core competency, deploying millions in corporate capital into solar hardware, ongoing string maintenance, and utility grid compliance is inefficient. Netso delivers the same high-efficiency solar energy on your roof — no upfront customer capital where project terms allow, operating support subject to the executed agreement, and an immediate 30% tariff reduction on day one.
           </p>
         </FadeUp>
       </div>
@@ -533,7 +533,7 @@ export default function Product() {
         <CTASection
           title="The sky is already working"
           heading="Your roof is an institutional asset."
-          copy="Ready to eliminate grid peak vulnerability? ৳0 upfront CAPEX, guaranteed 30% tariff savings, and full 20-year operations handled by Netso."
+          copy="Ready to eliminate grid peak vulnerability? No upfront customer CAPEX where project terms allow, an illustrative 30% tariff-saving scenario, and full 20-year operations handled by Netso."
           cta="Request Rooftop Assessment"
         />
       </main>

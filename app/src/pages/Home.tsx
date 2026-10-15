@@ -30,9 +30,9 @@ const TABS = [
   {
     id: "save",
     eyebrow: "save",
-    title: "Cut your electricity cost by 30% guaranteed",
+    title: "Model a potential 30% electricity-cost reduction",
     accent: 0,
-    copy: "A guaranteed 30% discount below utility tariffs replaces volatile peak grid billing. One predictable monthly bill — locked at 30% savings from day one.",
+    copy: "A illustrative 30% discount below utility tariffs replaces volatile peak grid billing. One predictable monthly bill — locked at 30% savings from day one.",
     img: solarRoof,
     alt: "A pergola-style solar canopy on a factory rooftop at dusk, warm sky visible between the panels",
   },
@@ -41,7 +41,7 @@ const TABS = [
     eyebrow: "protect",
     title: "Lock your tariff hedge for 20 years",
     accent: 0,
-    copy: "Grid tariffs jumped 16.7% in a single BERC order. Netso contractually guarantees your 30% discount margin. Budget certainty for two decades, whatever the grid does next.",
+    copy: "Grid tariffs jumped recent tariff movement in a single BERC order. Netso contractually guarantees your illustrative discount margin. Budget certainty for two decades, whatever the grid does next.",
     img: batteryWall,
     alt: "Smart inverters and electrical cabinets inside a factory electrical room",
   },
@@ -149,7 +149,7 @@ const STEPS = [
     n: "step 1",
     title: "Sign a PPA",
     head: "A lower bill from day one",
-    copy: "A 20-year power purchase agreement at ৳0 upfront CAPEX. You pay only for the solar electricity your roof delivers — at a rate below your grid tariff.",
+    copy: "A 20-year power purchase agreement at No upfront customer CAPEX where project terms allow. You pay only for the solar electricity your roof delivers — at a rate below your grid tariff.",
     cta: "Get your assessment",
     visual: "card",
   },
@@ -192,12 +192,12 @@ function StepVisual({ kind }: { kind: string }) {
           </div>
           <div className="flex items-center justify-between gap-10">
             <span className="text-[13px] font-semibold text-ink">Netso PPA</span>
-            <span className="font-mono text-[13px] font-bold text-forest">30% Below Grid</span>
+            <span className="font-mono text-[13px] font-bold text-forest">Illustrative below-grid scenario</span>
           </div>
           <div className="h-px bg-ink/10" />
           <div className="flex items-center justify-between gap-10">
-            <span className="eyebrow !text-[10px] text-ink/50">Guaranteed</span>
-            <span className="font-mono text-[15px] font-bold text-forest">30% Savings</span>
+            <span className="eyebrow !text-[10px] text-ink/50">Illustrative</span>
+            <span className="font-mono text-[15px] font-bold text-forest">Illustrative savings</span>
           </div>
         </div>
       </div>
@@ -219,7 +219,7 @@ function HowItWorks() {
           <FadeUp delay={0.15}>
             <p className="max-w-md text-[16.5px] leading-relaxed text-ink/70 lg:ml-auto">
               With Netso, your rooftop becomes a power plant we finance, build, own and operate. You simply
-              buy the electricity it produces — below the grid tariff, with zero capital expenditure.
+              buy the electricity it produces — below the grid tariff, with no upfront customer capital where project terms allow.
             </p>
             <a
               href="#get-started"
@@ -264,8 +264,8 @@ function HowItWorks() {
 
 /* --------------------------- Why netso --------------------------- */
 const RISKS = [
-  { big: "+16.7%", label: "Industrial tariffs jumped 16.7% in one BERC order", note: "The latest BERC escalation exposed factory operating budgets with no ceiling in sight." },
-  { big: "30%", label: "Guaranteed floating discount margin against utility rate hikes", note: "Energy transitions from an unhedged operational risk into contractually guaranteed savings." },
+  { big: "Recent tariff movement", label: "Industrial tariffs can move as schedules change", note: "The latest BERC escalation exposed factory operating budgets with no ceiling in sight." },
+  { big: "30%", label: "Illustrative floating discount margin against utility rate changes", note: "Energy transitions from an unhedged operational risk into defined in the executed agreement savings." },
   { big: "3,600 MWp", label: "Bangladesh's industrial rooftops could host 3,600 MWp", note: "A $2.1B market sitting idle above the buildings that need it most." },
 ];
 

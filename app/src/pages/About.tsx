@@ -21,12 +21,12 @@ const MEANS = [
   {
     title: "Every idle roof converted into a productive utility asset",
     desc: "Hundreds of thousands of square meters of reinforced concrete industrial roofs sit idle in Chattogram and Gazipur. We turn them into clean revenue-producing power plants.",
-    stat: "৳0 Upfront CAPEX",
+    stat: "No upfront customer CAPEX where project terms allow",
   },
   {
     title: "Clean power for the economy the world buys from",
     desc: "Global apparel brands, European buyers, and ESG supply chain covenants mandate decarbonization. Netso delivers auditable I-RECs and zero-carbon grid offsets.",
-    stat: "100% Audited I-RECs",
+    stat: "I-REC workflow context",
   },
 ];
 
@@ -216,7 +216,7 @@ function Thesis() {
           </div>
           <FadeUp delay={0.15}>
             <p className="max-w-md text-base leading-relaxed text-warm/75 md:text-lg lg:ml-auto">
-              Every megawatt Netso deploys is financed through ring-fenced project SPVs, supported by 80% IDCOL
+              Every megawatt Netso deploys is financed through ring-fenced project SPVs, supported by institutional project financing
               concessionary senior facilities and Tier-1 banking covenants. It is an infrastructure platform engineered
               to deploy billions of Taka in institutional climate capital.
             </p>
@@ -296,7 +296,7 @@ export default function About() {
         <CTASection
           title="The Sky Is Already Working"
           heading="Turn your roof into an operating energy asset"
-          copy="Zero capital expenditure. Guaranteed lower kilowatt-hour costs. Full utility-grade operations for twenty years."
+          copy="No upfront customer capital where project terms allow. Lower modeled kilowatt-hour costs. Full utility-grade operations for twenty years."
           cta="Request Rooftop Feasibility"
         />
       </main>

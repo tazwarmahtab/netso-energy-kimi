@@ -241,7 +241,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           <div className="hero-meta-elem mb-3 flex items-center gap-3">
             <span className="h-px w-8 bg-gold/60" />
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-              Netso Energy · Architectural Solar, Zero CAPEX
+              Netso Energy · Architectural Solar, No upfront customer CAPEX where project terms allow
             </p>
           </div>
 
@@ -267,7 +267,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           </h1>
 
           <p className="hero-meta-elem mt-4 max-w-xl text-sm leading-relaxed text-warm/85 md:text-base">
-            We finance, design, and construct luxury architectural solar pergolas for institutional buildings. You pay zero upfront and buy clean power at a guaranteed <span className="font-semibold text-warm">30% discount below your utility grid tariff</span>.
+            We finance, design, and construct luxury architectural solar pergolas for institutional buildings. You pay no upfront customer capital where project terms allow and buy clean power under an illustrative <span className="font-semibold text-warm">30% discount scenario against the applicable utility tariff</span>.
           </p>
 
           <div className="hero-meta-elem mt-6 flex flex-wrap items-center gap-4">
@@ -332,8 +332,8 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-display text-lg font-bold text-warm">30% Savings</span>
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">Guaranteed</span>
+                    <span className="font-display text-lg font-bold text-warm">Illustrative savings</span>
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">Illustrative</span>
                   </div>
                   <p className="text-xs text-sage/80 line-clamp-1">
                     Floating discount indexed below utility grid tariffs
@@ -375,7 +375,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
               <div>
                 <p className="font-mono text-[11px] text-warm/60">Offtaker Savings</p>
                 <p className="font-display text-2xl font-bold tabular-nums text-emerald-400">
-                  30% <span className="text-xs font-normal text-warm/60">Guaranteed</span>
+                  30% <span className="text-xs font-normal text-warm/60">Illustrative</span>
                 </p>
               </div>
             </div>
@@ -383,7 +383,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
             <div className="mt-4 rounded-lg bg-black/40 p-2.5">
               <div className="flex items-center justify-between text-xs text-warm/75">
                 <span>Performance Ratio</span>
-                <span className="font-mono font-bold text-gold">81.4% (PR)</span>
+                <span className="font-mono font-bold text-gold">Illustrative PR</span>
               </div>
               <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-warm/15">
                 <div className="h-full rounded-full bg-gradient-to-r from-gold to-emerald-400" style={{ width: "81.4%" }} />

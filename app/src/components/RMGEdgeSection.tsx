@@ -37,7 +37,7 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
     },
     {
       icon: Award,
-      title: "EU CBAM & Buyer Code Ready",
+      title: "CBAM & Buyer Code readiness context",
       description:
         "Immediate scope-2 decarbonization evidence for H&M, Inditex, Marks & Spencer, and Target audits. Full compliance certification provided for Higg FEM and LEED verification.",
     },
@@ -73,7 +73,7 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
           </h2>
 
           <p className="mt-4 font-sans text-sm sm:text-base text-cream/70 leading-relaxed">
-            Over 4,200 RMG factories in Gazipur, Ashulia, Savar, and Narayanganj burn diesel while their tin sheds radiate relentless heat into sewing lines, forcing HVAC systems to overwork. Under our Build-Own-Operate (BOO) model, Netso shades your roof, absorbs the solar radiation, and sells you power 30% below grid with zero capital expenditure.
+            Over 4,200 RMG factories in Gazipur, Ashulia, Savar, and Narayanganj burn diesel while their tin sheds radiate relentless heat into sewing lines, forcing HVAC systems to overwork. Under our Build-Own-Operate (BOO) model, Netso shades your roof, absorbs the solar radiation, and sells you power 30% below grid with no upfront customer capital where project terms allow.
           </p>
         </div>
 
