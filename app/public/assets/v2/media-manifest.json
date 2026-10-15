@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "baseEnv": "VITE_NETSO_ASSET_BASE_URL",
+  "description": "Large V2 cinematic media is served from an object-storage/CDN origin. Keep the path structure below the configured base URL.",
+  "requiredPaths": [
+    "/assets/v2/frames/",
+    "/assets/v2/master/frames/",
+    "/assets/v2/hero-sky-roof.mp4"
+  ]
+}
