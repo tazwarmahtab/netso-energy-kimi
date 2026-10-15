@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check, Copy, Download } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import FeasibilityModal from "../components/FeasibilityModal";
@@ -38,8 +38,8 @@ const COLORS = [
   { name: "Beige", hex: "#F0E5CF", ink: true, note: "Quiet structural surfaces, card backgrounds, and dividers." },
   { name: "Sand", hex: "#DACAB6", ink: true, note: "Photography overlays and muted architectural containers." },
   { name: "Taupe", hex: "#A09B93", ink: false, note: "Captions, legal metadata, and secondary telemetry." },
-  { name: "Sky", hex: "#8ED5FF", ink: true, note: "Secondary electrical indicator. SREDA net-metering grid sync." },
-  { name: "Royal", hex: "#1D3E86", ink: false, note: "Technical SCADA depth. High-voltage utility telemetry." },
+  { name: "Sky", hex: "#8ED5FF", ink: true, note: "A clear signal for energy, air and utility context." },
+  { name: "Royal", hex: "#1D3E86", ink: false, note: "Technical depth for infrastructure and operating information." },
   { name: "Parchment", hex: "#F8F3EA", ink: true, note: "Elevated card substrates and interactive panels." },
   { name: "Charcoal", hex: "#1E1E1E", ink: false, note: "Structural steel and anodized pergola framing." },
 ];
@@ -110,7 +110,7 @@ const TYPE_ROWS = [
   {
     role: "Body / Subtitles",
     sample:
-      "Netso finances, builds, owns and operates distributed solar systems: high-yield bifacial hardware, real-time SCADA telemetry, and non-recourse senior debt capital.",
+     "Netso can finance, build, own and operate suitable rooftop solar systems, with project monitoring, reporting and commercial terms agreed for each facility.",
     spec: "General Sans Regular · 15–17px · 400 · 140% LH · -1% LS",
     cls: "max-w-xl text-[16px] leading-[1.5] text-ink/75",
     accent: "",
@@ -118,7 +118,7 @@ const TYPE_ROWS = [
   },
   {
     role: "Labels / Mono / Data",
-    sample: "[ CGS 80kWp Reference ] · 30% Grid Tariff Discount · Class 0.2s Bidirectional · SREDA NEM 2025",
+     sample: "[ Project reference ] · Below-grid price target · Metering per connection · Utility review per site",
     spec: "Space Mono · 12px or 14px only · 400 · 135% LH · 4% LS · Uppercase only when contextual",
     cls: "font-mono text-[12px] uppercase tracking-[0.1em] text-forest font-medium",
     accent: "",
@@ -129,22 +129,22 @@ const TYPE_ROWS = [
 const TAGLINES = [
   { k: "Primary", v: "The Sky Is Already Working.", d: "The core manifesto. The sun generates irradiance continuously — Netso builds the asset infrastructure to harvest it." },
   { k: "Asset framing", v: "Your roof. Now an energy asset.", d: "The core commercial proposition: converting non-performing factory roof slabs into long-term cash flow and tariff reduction." },
-  { k: "Product", v: "Solar as a Service (RESCO / BOO)", d: "The customer model: ৳0 customer CAPEX, 20-year take-or-pay PPA with 30% guaranteed savings vs grid peak, full turnkey utility operation included." },
-  { k: "Institutional sign-off", v: "Power on", d: "The executive sign-off. Grounded, determined, forward-moving." },
-  { k: "Discipline", v: "Evidence over adjectives", d: "Every commercial claim distinguishes audited fact from estimate. Zero phantom savings, zero killed tariff numbers." },
+  { k: "Product", v: "Rooftop solar under a long-term agreement", d: "The customer model: Netso can finance, build and operate a suitable system, with price, metering and responsibilities agreed per project." },
+  { k: "Institutional sign-off", v: "Power on", d: "A grounded, forward-looking close that keeps the focus on useful energy." },
+  { k: "Discipline", v: "Evidence over adjectives", d: "Every commercial claim distinguishes a verified fact, an estimate and a question that still needs site data." },
 ];
 
 const PRINCIPLES = [
-  { n: "01", t: "Direct & Grounded", d: "We write for C-suite industrial executives and plant engineers. Short sentences, bankable numbers, zero marketing fluff." },
-  { n: "02", t: "Contractually Precise", d: "All figures cite exact benchmarks: 30% guaranteed grid discount, ৳0 customer CAPEX, 80% IDCOL debt, 1.25× DSCR." },
-  { n: "03", t: "Institutional Authority", d: "Calm, architectural, and legally sound. Designed to withstand scrutiny from senior lenders, credit committees, and international buyers." },
-  { n: "04", t: "Engineering Truth", d: "Dual-glass bifacial TOPCon modules, certified 160 km/h wind load pergolas, and Class 0.2s utility meters with daily billing settlement." },
+  { n: "01", t: "Direct & Grounded", d: "We write for owners, operators, lenders and engineers. Short sentences, useful numbers and no marketing theatre." },
+  { n: "02", t: "Contractually Precise", d: "Explain the price, term, metering, responsibilities and assumptions before asking anyone to commit." },
+  { n: "03", t: "Institutional Authority", d: "Calm, architectural and clear enough for owners, lenders, engineers and buyers to scrutinise." },
+  { n: "04", t: "Engineering Truth", d: "Show the roof, the system boundary, the operating plan and the evidence behind every technical claim." },
 ];
 
 const PHOTOS = [
   { img: heroHouse, t: "Rooftops at dusk", d: "Industrial facilities in Chattogram, under-canopy LEDs glowing softly after golden hour." },
   { img: solarRoof, t: "Architectural Pergolas", d: "Structural steel canopies that preserve 100% roof usability while generating clean energy." },
-  { img: inverters, t: "Telemetry Hardware", d: "Utility-grade string inverters with Class 0.2s bidirectional metering." },
+  { img: inverters, t: "Project equipment", d: "Inverters, protection and metering selected for the approved design." },
   { img: aerial, t: "The Distributed Grid", d: "Industrial corridors in Gazipur and Narayanganj transforming into localized micro-utilities." },
   { img: panels, t: "Bifacial Architecture", d: "Dual-glass TOPCon cells capturing direct sky irradiance and rooftop albedo reflection." },
 ];
@@ -195,8 +195,7 @@ export default function Brand() {
             </h1>
             <FadeUp delay={0.15}>
               <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                The institutional identity of Bangladesh's C&I rooftop solar utility. Engineered for boardrooms,
-                senior lenders, industrial factory owners, and top-tier EPC contractors.
+                 The public identity of Netso Energy: clear, measured and built for the people who make industrial energy decisions.
               </p>
             </FadeUp>
           </div>
@@ -208,7 +207,7 @@ export default function Brand() {
               Assess Facility Feasibility
             </button>
             <span className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full border border-ink/20 px-5 text-sm font-semibold text-ink transition-colors hover:bg-ink/5">
-              <Download className="h-4 w-4" /> Brand Assets
+               <span>Brand guidelines</span>
             </span>
           </FadeUp>
         </div>
@@ -247,12 +246,10 @@ export default function Brand() {
                 </h2>
                 <div className="mt-6 space-y-4 max-w-3xl text-[16px] leading-relaxed text-ink/75">
                   <p>
-                    Netso does not market residential gadgets or consumer novelty. We build 20-year infrastructure
-                    assets for heavy textile mills, garment exporters, and manufacturing facilities across Bangladesh.
+                     Netso serves commercial and industrial facilities, including manufacturers, exporters, campuses and other organisations with meaningful daytime power demand.
                   </p>
                   <p>
-                    Our visual and verbal system reflects that mandate: institutional authority, architectural quietude,
-                    contractual precision, and mathematical honesty.
+                     The brand should feel calm, useful and credible. It explains the commercial model without hiding behind hype or technical theatre.
                   </p>
                 </div>
               </FadeUp>
@@ -293,8 +290,7 @@ export default function Brand() {
                   Anchored in Netso Gold & Deep Utility Forest
                 </h2>
                 <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                  Tap any swatch to copy its hex value. Netso Gold highlights key financial metrics; Deep Forest
-                  provides utility gravity; Netso Yellow indicates live telemetry; Cream provides an editorial paper ground.
+                   The palette separates action, information and context. Netso Gold marks important decisions; Deep Forest creates authority; Cream keeps long-form information easy to read.
                 </p>
               </FadeUp>
               <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
@@ -328,8 +324,7 @@ export default function Brand() {
                 <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">03 — Typography</p>
                 <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">Three Typefaces, Three Strict Disciplines</h2>
                 <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                  Archivo Condensed Grotesque for monumental statements, General Sans for high-legibility legal and
-                  technical copy, and Space Mono for tabular telemetry and contract constants.
+                   The type system pairs a distinctive display face with a clear reading face and a compact data style. Use the display face for ideas, the reading face for explanations and the data style for labels and measurements.
                 </p>
               </FadeUp>
               <div className="mt-10 divide-y divide-ink/10 border-y border-ink/10">
@@ -362,8 +357,7 @@ export default function Brand() {
                 <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">04 — Verbal Architecture</p>
                 <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">Evidenced, Calm, Institutional</h2>
                 <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                  Netso speaks with the authority of an asset owner. We never speak in generic green platitudes; we speak
-                  in tariffs, coverage ratios, bankable covenants, and audited kilowatt-hours.
+                   Netso speaks like a responsible project owner: specific when the evidence is available, direct about what remains to be confirmed, and respectful of the reader's attention.
                 </p>
               </FadeUp>
               <div className="mt-10 divide-y divide-ink/10 border-y border-ink/10">
@@ -396,8 +390,7 @@ export default function Brand() {
                 <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">05 — Photography</p>
                 <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">Authentic Industrial Reality</h2>
                 <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                  Captured across real factory rooftops in Bangladesh. Golden hour sun on dual-glass TOPCon bifacial modules,
-                  heavy structural steel pergola joints, and digital Class 0.2s utility meters.
+                   Show the roofs, people, equipment and operating context that make the project real. Do not present illustrative imagery or estimates as installed assets or verified results.
                 </p>
               </FadeUp>
               <div className="mt-10 columns-1 gap-4 sm:columns-2 xl:columns-3 [&>*]:mb-4">
@@ -422,23 +415,22 @@ export default function Brand() {
             {/* 06 Motion */}
             <section id="motion" className="scroll-mt-28">
               <FadeUp>
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">06 — Motion & Physics</p>
-                <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">Natural Solar Kinematics</h2>
+                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">06 — Motion</p>
+                <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">Calm, useful movement</h2>
                 <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                  Editorial at rest, cinematic when navigated. Every animation mimics the slow, certain arc of the sun:
-                  fluid spring settling, zero abrupt pop-ups, and smooth scrubbed WebGL canvas scrubbers.
+                  Motion should help people understand the project. Prefer calm transitions, readable state changes and reduced motion for people who request it.
                 </p>
               </FadeUp>
               <FadeUp className="mt-10 overflow-hidden rounded-3xl bg-forest p-8 text-warm md:p-12 border border-warm/15">
-                <p className="font-mono text-xs uppercase tracking-wider text-gold">Live Specimen — Smooth Spring Settling</p>
+                <p className="font-mono text-xs uppercase tracking-wider text-gold">Public interaction standard</p>
                 <p className="font-display mt-6 text-3xl sm:text-5xl text-warm">
-                  <Words text="Every kilowatt-hour arrives in its own time" accent={3} once={false} />
+                  <Words text="Every project earns trust one clear answer at a time" accent={3} once={false} />
                 </p>
                 <div className="mt-10 grid gap-4 border-t border-warm/15 pt-6 sm:grid-cols-3">
                   {[
-                    { k: "Kinematic Easing", v: "cubic-bezier(0.16, 1, 0.3, 1)" },
-                    { k: "Headline Stagger", v: "55ms sequential reveal" },
-                    { k: "Spring Dampening", v: "Mass 1.0 · Stiffness 120 · Damping 14" },
+                     { k: "Motion", v: "Calm and purposeful" },
+                     { k: "Hierarchy", v: "One clear idea at a time" },
+                     { k: "Accessibility", v: "Readable with motion reduced" },
                   ].map((s) => (
                     <div key={s.k}>
                       <p className="font-mono text-[10px] uppercase tracking-wider text-warm/40">{s.k}</p>
@@ -457,7 +449,7 @@ export default function Brand() {
               </FadeUp>
               <FadeUp className="mt-10 space-y-10 rounded-3xl border border-ink/10 bg-parchment p-8 md:p-12">
                 <div>
-                  <p className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/50 mb-4">Button Variants</p>
+                 <p className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/50 mb-4">Action patterns</p>
                   <div className="flex flex-wrap gap-4">
                     <button
                       onClick={() => setIsModalOpen(true)}
@@ -466,41 +458,41 @@ export default function Brand() {
                       Assess Facility Feasibility
                     </button>
                     <span className="inline-flex h-12 cursor-pointer items-center rounded-full bg-forest px-7 text-sm font-semibold text-warm">
-                      CGS 80kWp Reference
+                       View project approach
                     </span>
                     <span className="inline-flex h-12 cursor-pointer items-center rounded-full border border-ink/25 px-7 text-sm font-semibold text-forest hover:bg-ink/5">
-                      Review Capital Stack
+                       Discuss a partnership
                     </span>
                   </div>
                 </div>
                 <div>
-                  <p className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/50 mb-4">Institutional Status Badges</p>
+                   <p className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/50 mb-4">Trust signals</p>
                   <div className="flex flex-wrap gap-3">
                     <span className="rounded-full bg-forest px-4 py-2 font-mono text-xs font-medium text-gold">
-                      SREDA NEM 2025 Synchronized
+                       Utility process reviewed per site
                     </span>
                     <span className="rounded-full border border-ink/20 px-4 py-2 font-mono text-xs font-medium text-forest">
-                      IDCOL Senior Debt 80% LTV
+                       Project finance assessed per site
                     </span>
                     <span className="rounded-full bg-gold/20 border border-gold/40 px-4 py-2 font-mono text-xs font-semibold text-forest">
-                      1.25× DSCR Floor
+                       Commercial terms documented
                     </span>
                   </div>
                 </div>
                 <div>
-                  <p className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/50 mb-4">Verified Financial Constants</p>
+                   <p className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/50 mb-4">Public commercial language</p>
                   <div className="flex flex-wrap gap-4">
                     <span className="rounded-2xl border border-ink/10 bg-cream p-4">
-                      <span className="font-mono text-[10px] text-ink/50 uppercase block">PPA Savings Guarantee</span>
-                      <span className="font-mono text-base font-bold text-forest">30% Below Grid</span>
+                       <span className="font-mono text-[10px] text-ink/50 uppercase block">Power price</span>
+                       <span className="font-mono text-base font-bold text-forest">Agreed per project</span>
                     </span>
                     <span className="rounded-2xl border border-ink/10 bg-cream p-4">
-                      <span className="font-mono text-[10px] text-ink/50 uppercase block">BERC Tariff Hedge</span>
-                      <span className="font-mono text-base font-bold text-forest">Floating Discount</span>
+                       <span className="font-mono text-[10px] text-ink/50 uppercase block">Utility settlement</span>
+                       <span className="font-mono text-base font-bold text-forest">Reviewed per site</span>
                     </span>
                     <span className="rounded-2xl border border-ink/10 bg-cream p-4">
-                      <span className="font-mono text-[10px] text-ink/50 uppercase block">Customer CAPEX</span>
-                      <span className="font-mono text-base font-bold text-gold">৳0.00 (Zero)</span>
+                       <span className="font-mono text-[10px] text-ink/50 uppercase block">Plant funding</span>
+                       <span className="font-mono text-base font-bold text-gold">Structure dependent</span>
                     </span>
                   </div>
                 </div>

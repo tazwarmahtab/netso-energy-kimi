@@ -22,22 +22,21 @@ export default function CalculatorTeaser({ onOpenAssessment }: CalculatorTeaserP
               <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1 mb-4">
                 <CalcIcon className="h-4 w-4 text-gold" />
                 <span className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">
-                  Institutional Economics
+                   Preliminary project economics
                 </span>
               </div>
             </FadeUp>
 
             <FadeUp delay={0.1}>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-cream">
-                See what your roof saves. <br />
-                <span className="text-gold italic font-serif">Zero capital required.</span>
+                 See what your roof could do. <br />
+                 <span className="text-gold italic font-serif">Then verify the numbers.</span>
               </h2>
             </FadeUp>
 
             <FadeUp delay={0.2}>
               <p className="mt-4 text-base text-sage leading-relaxed max-w-xl">
-                A typical 20,000 sq ft industrial facility in Gazipur or Narayanganj recovers over{" "}
-                <strong className="text-warm font-semibold">৳4.6 Lakh / month</strong> directly to EBITDA. Use our institutional calculator to model custom sector savings, 20-year cumulative cash flow, and export a pre-formatted board memo directly to WhatsApp.
+                 Enter a rough bill and usable roof area to create a screening estimate. The calculator shows an illustrative price assumption and must be replaced by a site-specific technical and commercial model before any decision.
               </p>
             </FadeUp>
 
@@ -75,7 +74,7 @@ export default function CalculatorTeaser({ onOpenAssessment }: CalculatorTeaserP
                   </div>
                   <div className="flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-emerald-400">
                     <Sparkles className="h-3 w-3" />
-                    <span>30% Guaranteed</span>
+                   <span>Illustrative assumption</span>
                   </div>
                 </div>
 
@@ -85,23 +84,23 @@ export default function CalculatorTeaser({ onOpenAssessment }: CalculatorTeaserP
                     <span className="font-bold text-warm">200 kWp (Bifacial)</span>
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2.5">
-                    <span className="text-warm/60">Customer Capital Expenditure:</span>
-                    <span className="font-bold text-emerald-400">৳0.00 (Zero CAPEX)</span>
+                     <span className="text-warm/60">Plant funding upfront:</span>
+                     <span className="font-bold text-emerald-400">May be available</span>
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2.5">
-                    <span className="text-warm/60">Estimated Monthly Savings:</span>
-                    <span className="font-bold text-emerald-400">৳4.6 Lakh / mo</span>
+                     <span className="text-warm/60">Illustrative monthly saving:</span>
+                     <span className="font-bold text-emerald-400">Site-specific estimate</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-warm/60">20-Year Hedged Savings:</span>
-                    <span className="font-bold text-gold text-sm">৳13.2+ Crore</span>
+                     <span className="text-warm/60">Illustrative long-term value:</span>
+                     <span className="font-bold text-gold text-sm">Screening estimate</span>
                   </div>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-warm/10 flex items-center justify-between text-[11px] font-mono text-warm/50">
                   <span className="flex items-center gap-1.5">
                     <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-                    <span>IDCOL Senior Debt Backed</span>
+                     <span>Funding assessed per project</span>
                   </span>
                   <Link to="/calculator" className="text-gold font-semibold hover:underline">
                     Customize Facility →

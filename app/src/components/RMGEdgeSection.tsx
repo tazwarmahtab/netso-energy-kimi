@@ -19,39 +19,39 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
   const edgePillars = [
     {
       icon: Sun,
-      title: "Daytime Load Match (98%)",
+      title: "Daytime load alignment",
       description:
-        "Sewing lines operate 8:00 AM – 6:00 PM, aligning directly with peak solar irradiance. 98% of generation is consumed on-site behind the meter, completely eliminating expensive battery storage.",
+        "Many manufacturing loads run during daylight hours, which can improve on-site solar use. The actual match depends on your operating schedule, sanctioned load and final system design.",
     },
     {
       icon: ShieldCheck,
-      title: "Non-Penetrative Standing Seam Clamps",
+      title: "Roof-sensitive mounting",
       description:
-        "Engineered specifically for tin sheds. We use seam-gripping anodized aluminum clamps—zero drilling through purlins, zero structural puncture, and 100% monsoon leak immunity.",
+        "Standing-seam roofs may support clamp-based mounting, while other roof types require a structural and waterproofing review. The approved method is confirmed for each facility.",
     },
     {
       icon: Clock,
-      title: "Zero Production Stoppage",
+      title: "Installation planned around production",
       description:
-        "Mechanical installation runs during active factory shifts without floor interference. Inverter synchronization and busbar tie-ins occur exclusively during Friday scheduled shutoffs.",
+        "Netso works with the facility team to plan access, tie-ins and any required shutdowns. The installation method and outage plan are agreed before construction.",
     },
     {
       icon: Award,
-      title: "EU CBAM & Buyer Code Ready",
+      title: "Evidence for buyer reporting",
       description:
-        "Immediate scope-2 decarbonization evidence for H&M, Inditex, Marks & Spencer, and Target audits. Full compliance certification provided for Higg FEM and LEED verification.",
+        "On-site generation data and environmental attributes can support customer reporting. Any buyer, I-REC, Higg or LEED requirements should be confirmed against the relevant programme and project documentation.",
     },
     {
       icon: Zap,
-      title: "SREDA NEM 2025 Bi-Directional Settlement",
+      title: "Utility export and settlement",
       description:
-        "Friday and holiday surplus power flows automatically into the national grid via bi-directional utility metering, earning 1:1 bill credits under the latest 2025 net metering policy.",
+        "Where approved by the utility and applicable programme rules, surplus generation can flow through a bidirectional meter. Credit treatment and settlement depend on the connection, tariff and current rules.",
     },
     {
       icon: Wrench,
-      title: "Dedicated Bangla O&M (4-Hour SLA)",
+      title: "Local operations support",
       description:
-        "Stationed directly in Gazipur, Savar, and Narayanganj. Local Netso engineering teams conduct thermal drone sweeps, automated panel washing, and rapid response maintenance.",
+        "Netso can coordinate local inspection, cleaning, monitoring and maintenance support. Response times and service coverage are set out in the project agreement.",
     },
   ];
 
@@ -63,17 +63,17 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
           <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1 mb-4">
             <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
             <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">
-              04.2 GW Stranded Asset • Bangladesh RMG Belt
+               Rooftop solar for Bangladesh's manufacturing belt
             </span>
           </div>
 
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-cream">
-            Your rooftop is baking at 62°C. <br />
-            <span className="text-gold italic font-serif">We turn that heat into rent.</span>
+             Your roof already receives the sunlight. <br />
+             <span className="text-gold italic font-serif">Use it to make the factory more resilient.</span>
           </h2>
 
           <p className="mt-4 font-sans text-sm sm:text-base text-cream/70 leading-relaxed">
-            Over 4,200 RMG factories in Gazipur, Ashulia, Savar, and Narayanganj burn diesel while their tin sheds radiate relentless heat into sewing lines, forcing HVAC systems to overwork. Under our Build-Own-Operate (BOO) model, Netso shades your roof, absorbs the solar radiation, and sells you power 30% below grid with zero capital expenditure.
+             Manufacturing facilities often carry high daytime electricity demand and limited roof use. Netso assesses the roof, load profile and utility connection, then can structure, build and operate a solar project under a long-term power purchase agreement.
           </p>
         </div>
 
@@ -117,7 +117,7 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-emerald-400 mb-3">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Live Operational Benchmark • Ashulia Industrial Zone</span>
+                 <span>Illustrative project profile • Ashulia industrial zone</span>
               </div>
 
               <h3 className="font-display text-2xl sm:text-3xl font-bold text-cream">
@@ -125,18 +125,18 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
               </h3>
 
               <p className="mt-2 text-sm text-cream/70 leading-relaxed font-sans max-w-xl">
-                Elevated solar pergola structure engineered across a 22m purlin span. Fitted with perimeter edge fall-arrest lifelines and permanent inspection walkways. Factory passed international brand ESG audits on first inspection visit.
+                 A project profile can show how roof structure, safe access, maintenance routes and reporting requirements fit together. Site dimensions, performance and audit outcomes must be verified against the relevant project records.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-4 text-xs font-mono text-cream/80">
                 <span className="flex items-center gap-1.5 text-gold">
-                  <CheckCircle2 className="h-4 w-4" /> Real Generation vs. P50: 104%
+                   <CheckCircle2 className="h-4 w-4" /> Generation: confirm after commissioning
                 </span>
                 <span className="flex items-center gap-1.5 text-gold">
-                  <CheckCircle2 className="h-4 w-4" /> Zero Production Downtime
+                   <CheckCircle2 className="h-4 w-4" /> Outage plan agreed with facility
                 </span>
                 <span className="flex items-center gap-1.5 text-gold">
-                  <CheckCircle2 className="h-4 w-4" /> 100% Monsoon Leak-Free
+                   <CheckCircle2 className="h-4 w-4" /> Waterproofing reviewed by design
                 </span>
               </div>
             </div>
@@ -155,10 +155,10 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
 
               <div className="p-4 rounded-xl border border-gold/25 bg-gold/[0.05]">
                 <div className="font-mono text-[10px] text-gold/70 uppercase tracking-widest">
-                  Annual P&L Savings
+                   Illustrative annual saving
                 </div>
                 <div className="font-display text-2xl font-bold text-gold mt-1">
-                  ৳3.4 <span className="text-sm font-mono text-gold font-normal">Million</span>
+                   Site-specific <span className="text-sm font-mono text-gold font-normal">estimate</span>
                 </div>
                 <div className="text-[11px] font-sans text-cream/50 mt-0.5">Direct tariff spread</div>
               </div>
@@ -168,7 +168,7 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
                   Structural Load
                 </div>
                 <div className="font-display text-2xl font-bold text-cream mt-1">
-                  0 <span className="text-sm font-mono text-emerald-400 font-normal">kg net</span>
+                   Confirmed <span className="text-sm font-mono text-emerald-400 font-normal">by structural study</span>
                 </div>
                 <div className="text-[11px] font-sans text-cream/50 mt-0.5">Weight compensated</div>
               </div>
@@ -178,9 +178,9 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
                   Contract Term
                 </div>
                 <div className="font-display text-2xl font-bold text-cream mt-1">
-                  20 <span className="text-sm font-mono text-cream/70 font-normal">Years</span>
+                   Long-term <span className="text-sm font-mono text-cream/70 font-normal">PPA</span>
                 </div>
-                <div className="text-[11px] font-sans text-cream/50 mt-0.5">BOO zero investment</div>
+                   <div className="text-[11px] font-sans text-cream/50 mt-0.5">Subject to agreement</div>
               </div>
             </div>
           </div>
@@ -208,7 +208,7 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
                   onClick={onOpenFeasibility}
                   className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-2.5 font-mono text-xs font-bold text-forest transition-all hover:bg-gold/90 hover:scale-[1.02] cursor-pointer shadow-md shadow-gold/20"
                 >
-                  <span>Request Facility Satellite Survey</span>
+                   <span>Request a preliminary site review</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               )}

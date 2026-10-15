@@ -3,13 +3,13 @@ import { useRef } from "react";
 import { Words } from "./Reveal";
 import { SunMark } from "./Wordmark";
 
-/** "The sky is already working" — full-bleed sunrise spectrum closer. */
+/** Shared closing call to action for commercial solar enquiries. */
 export default function CTASection({
   title = "The sky is already working",
   accent = 2,
   heading = "Your roof is an asset",
-  copy = "Ready to put your roof to work? ৳0 upfront CAPEX, a below-grid tariff locked for 20 years, and full operations handled by Netso.",
-  cta = "Request a rooftop assessment",
+  copy = "Tell us about your facility. We will review the roof, load profile, utility connection and commercial fit before recommending a next step.",
+  cta = "Request a roof assessment",
 }: {
   title?: string;
   accent?: number;
@@ -55,8 +55,7 @@ export default function CTASection({
           {copy}
         </motion.p>
         <motion.a
-          href="#get-started"
-          onClick={(e) => e.preventDefault()}
+          href="/contact"
           className="mt-10 inline-flex h-14 items-center rounded-full bg-ink px-9 text-[16px] font-semibold text-cream shadow-xl transition-transform duration-300 hover:scale-[1.05] active:scale-[0.97]"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

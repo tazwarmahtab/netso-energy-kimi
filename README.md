@@ -44,9 +44,9 @@ Netso Energy finances, constructs, and operates utility-grade architectural sola
 ### 4. NEOS Utility SCADA Telemetry Terminal
 - Bankable operational telemetry interface displaying real-time power generation (64.8 kW active), Performance Ratio (81.4% PR), Class 0.2s bidirectional meter accuracy, and automated I-REC carbon certification.
 
-### 5. Resilient Dual-Write Notion CRM Lead Dispatch
-- Live intake gateway (`app/src/lib/notion.ts`) syncing directly with Tazwar Mahtab's Notion workspace (`Top 20 RMG & Textile Offtaker Lead Database`).
-- Dual-write architecture: instantaneous client-side persistence in local browser storage + async dispatch through Vite API proxy with retry boundaries.
+### 5. Provider-Neutral Lead Intake
+- Typed intake client (`app/src/lib/lead-intake.ts`) validates and normalizes Contact, Feasibility, and Partner payloads before submission.
+- The browser reports `accepted`, `unavailable`, or `error` explicitly. It never treats local browser storage as delivery and shows an unavailable state until `VITE_LEAD_INTAKE_ENDPOINT` points to a real backend.
 
 ### 6. 7-Touchpoint WhatsApp Commercial Funnel
 - Minimalist, non-blocking WhatsApp acquisition architecture powered by official **Streamline multi-gradient SVGs** (`#1FAF38` → `#60D669`) with collision-free `useId()` gradients.
@@ -85,7 +85,7 @@ netso-energy-kimi/
 │   │   │       ├── WhatsAppIcon.tsx        # Streamline multi-gradient SVG
 │   │   │       └── liquid-metal-button.tsx # WebGL fragment shader button
 │   │   ├── lib/
-│   │   │   └── notion.ts                   # Notion CRM dispatch gateway
+│   │   │   └── lead-intake.ts              # Provider-neutral lead intake client
 │   │   └── pages/
 │   │       ├── Home.tsx                    # Flagship commercial landing
 │   │       ├── Product.tsx                 # Pergola engineering & NEOS SCADA
@@ -93,7 +93,7 @@ netso-energy-kimi/
 │   │       ├── About.tsx                   # Institutional ethos & chronology
 │   │       └── Brand.tsx                   # Design tokens & diurnal system
 │   ├── tailwind.config.js                  # Netso Gold & Forest color tokens
-│   └── vite.config.ts                      # Notion API reverse proxy
+│   └── vite.config.ts                      # Vite application configuration
 ├── ROADMAP.md                              # Complete 13-phase audit ledger
 └── README.md                               # Platform documentation
 ```
@@ -117,17 +117,17 @@ npm install
 ```
 
 ### Environment Configuration
-Copy the template and configure your Notion integration credentials:
+Copy the template and configure a provider-neutral lead intake endpoint when one is available:
 ```bash
 cp .env.example .env
 ```
 
 ```env
 # app/.env
-VITE_NOTION_API_KEY=ntn_your_notion_api_token
-VITE_NOTION_PAGE_ID=3c80b349-1030-8197-b135-ecf6f359b1de
-VITE_NOTION_WORKSPACE_ID=ec2703dc-2ab2-4080-b2b7-912be9184ec3
+VITE_LEAD_INTAKE_ENDPOINT=https://your-backend.example.com/api/leads
 ```
+
+If the endpoint is unset, lead forms remain usable but report that submission is unavailable; no lead is saved in the browser and no durable delivery is claimed.
 
 ### Local Development
 ```bash

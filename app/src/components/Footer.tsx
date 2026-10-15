@@ -52,8 +52,7 @@ export default function Footer() {
             </span>
           </div>
           <p className="mt-5 max-w-xs text-[15px] leading-relaxed text-cream/60">
-            A new kind of energy company. Rooftop solar for Bangladeshi industry — financed, built, owned
-            and operated by Netso. ৳0 upfront, a lower power bill every month.
+            A rooftop solar partner for Bangladeshi industry. Netso can finance, build, own and operate suitable systems under long-term power agreements.
           </p>
           <p className="eyebrow mt-8 text-gold">The sky is already working</p>
         </div>

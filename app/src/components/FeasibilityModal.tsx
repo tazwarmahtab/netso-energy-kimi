@@ -1,7 +1,7 @@
-import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { X, CheckCircle2, Building2, School, Hospital, Factory, ArrowRight, ShieldCheck, Loader2 } from "lucide-react";
-import { syncLeadToNotion } from "../lib/notion";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { createLeadIdempotencyKey, submitLead, type LeadIntakeResult } from "../lib/lead-intake";
 import { WhatsAppIcon, getNetsoWhatsAppUrl } from "./ui/WhatsAppIcon";
 
 interface FeasibilityModalProps {
@@ -19,120 +19,166 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [syncFeedback, setSyncFeedback] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionResult, setSubmissionResult] = useState<LeadIntakeResult | null>(null);
+  const [metricError, setMetricError] = useState("");
 
-  const modalRef = useRef<HTMLDivElement>(null);
+  const submissionKeyRef = useRef<{ signature: string; key: string } | null>(null);
+  const submitInFlightRef = useRef(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const requestVersionRef = useRef(0);
+  const mountedRef = useRef(true);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
-  // Close on Escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
-
-  // Lock body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      previouslyFocusedRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     } else {
-      document.body.style.overflow = "unset";
-      // Reset state on close
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setIsSubmitting(false);
-        setSyncFeedback("");
-        setStep(1);
-      }, 300);
+      requestVersionRef.current += 1;
+      abortControllerRef.current?.abort();
+      abortControllerRef.current = null;
+      submitInFlightRef.current = false;
     }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
   }, [isOpen]);
+
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+      requestVersionRef.current += 1;
+      abortControllerRef.current?.abort();
+      abortControllerRef.current = null;
+    };
+  }, []);
+
+  const closeModal = () => {
+    requestVersionRef.current += 1;
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = null;
+    submitInFlightRef.current = false;
+    setIsSubmitting(false);
+    onClose();
+  };
+
+  const startAnotherInquiry = () => {
+    submissionKeyRef.current = null;
+    setSubmissionResult(null);
+    setMetricError("");
+    setStep(1);
+  };
+
+  const advanceToContactDetails = () => {
+    const roof = Number(roofArea.replace(/,/g, "").trim());
+    const spend = Number(monthlySpend.replace(/,/g, "").trim());
+    if (!Number.isFinite(roof) || roof < 3000 || roof > 10_000_000) {
+      setMetricError("Enter a rooftop area between 3,000 and 10,000,000 sq ft.");
+      return;
+    }
+    if (!Number.isFinite(spend) || spend <= 0 || spend > 1_000_000_000) {
+      setMetricError("Enter a valid monthly electricity bill.");
+      return;
+    }
+    setMetricError("");
+    setStep(3);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (step !== 3) {
+      if (step === 2) advanceToContactDetails();
+      return;
+    }
+    if (submitInFlightRef.current) return;
+
+    const input = {
+      source: "feasibility" as const,
+      facilityType,
+      roofAreaSqFt: roofArea,
+      monthlySpendBdt: monthlySpend,
+      contactName,
+      organization: orgName,
+      email,
+      phone,
+    };
+    const signature = JSON.stringify(input);
+    const keyState =
+      submissionKeyRef.current?.signature === signature
+        ? submissionKeyRef.current
+        : { signature, key: createLeadIdempotencyKey() };
+    submissionKeyRef.current = keyState;
+
+    const requestVersion = ++requestVersionRef.current;
+    const controller = new AbortController();
+    submitInFlightRef.current = true;
+    abortControllerRef.current = controller;
     setIsSubmitting(true);
+    setSubmissionResult(null);
     try {
-      const res = await syncLeadToNotion({
-        facilityType,
-        roofArea,
-        monthlySpend,
-        contactName,
-        orgName,
-        email,
-        phone,
-      });
-      setSyncFeedback(
-        res.syncedToNotion
-          ? "Synchronized with Netso Notion Offtaker CRM"
-          : "Logged to Netso Dispatch Ledger"
-      );
+      const result = await submitLead({ ...input, idempotencyKey: keyState.key }, { signal: controller.signal });
+      if (!mountedRef.current || controller.signal.aborted || requestVersion !== requestVersionRef.current) return;
+      setSubmissionResult(result);
     } catch {
-      setSyncFeedback("Logged to Netso Dispatch Ledger");
+      if (!mountedRef.current || controller.signal.aborted || requestVersion !== requestVersionRef.current) return;
+      setSubmissionResult({
+        status: "error",
+        message: "We could not confirm whether the request was received. Please try again or contact Netso directly.",
+      });
     } finally {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
+      if (requestVersion === requestVersionRef.current) {
+        submitInFlightRef.current = false;
+        abortControllerRef.current = null;
+        setIsSubmitting(false);
+      }
     }
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+    <DialogPrimitive.Root
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) closeModal();
+      }}
+    >
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+        <DialogPrimitive.Content
+          aria-describedby="feasibility-dialog-description"
+          onCloseAutoFocus={(event) => {
+            const target = previouslyFocusedRef.current;
+            if (target?.isConnected) {
+              event.preventDefault();
+              target.focus();
+            }
+          }}
+          className="fixed left-1/2 top-1/2 z-50 max-h-[calc(100svh-2rem)] w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-3xl border border-gold/30 bg-forest-dark p-6 text-warm shadow-2xl outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 md:p-8"
         >
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md"
-          />
-
-          {/* Modal Container */}
-          <motion.div
-            ref={modalRef}
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: "spring", stiffness: 350, damping: 30 }}
-            className="relative w-full max-w-xl overflow-hidden rounded-3xl border border-gold/30 bg-forest-dark p-6 text-warm shadow-2xl md:p-8"
-          >
             {/* Close Button */}
-            <button
-              onClick={onClose}
-              aria-label="Close dialog"
-              className="absolute top-5 right-5 rounded-full border border-warm/15 p-2 text-warm/60 transition-colors hover:border-warm/40 hover:text-warm"
-            >
-              <X className="h-5 w-5" />
-            </button>
+            <DialogPrimitive.Close asChild>
+              <button
+                type="button"
+                onClick={closeModal}
+                aria-label="Close dialog"
+                className="absolute top-5 right-5 rounded-full border border-warm/15 p-2 text-warm/60 transition-colors hover:border-warm/40 hover:text-warm"
+              >
+                <X className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </DialogPrimitive.Close>
 
-            {!isSubmitted ? (
+            {submissionResult?.status !== "accepted" ? (
               <div>
                 {/* Modal Header */}
                 <div className="flex items-center gap-2 text-gold">
                   <ShieldCheck className="h-4 w-4" />
                   <span className="font-mono text-xs font-semibold uppercase tracking-wider">
-                    Institutional Feasibility Audit
+                   Preliminary roof assessment
                   </span>
                 </div>
-                <h2 id="modal-title" className="mt-2 font-display text-2xl font-bold text-warm md:text-3xl">
+                <DialogPrimitive.Title id="feasibility-dialog-title" className="mt-2 font-display text-2xl font-bold text-warm md:text-3xl">
                   {step === 1 && "Select Facility Category"}
                   {step === 2 && "Rooftop & Power Usage"}
                   {step === 3 && "Where should we send the audit?"}
-                </h2>
-                <p className="mt-1 text-xs text-sage">
-                  Netso engineering conducts instant satellite shadow profiling at zero cost.
-                </p>
+                </DialogPrimitive.Title>
+                <DialogPrimitive.Description id="feasibility-dialog-description" className="mt-1 text-xs text-sage">
+                   Netso starts with a preliminary review of the roof, load profile and utility connection. Any feasibility view is subject to site verification.
+                </DialogPrimitive.Description>
 
                 {/* Step Indicator */}
                 <div className="mt-5 flex items-center gap-2">
@@ -142,7 +188,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                 </div>
 
                 {/* Form Content */}
-                <form onSubmit={handleSubmit} className="mt-6">
+                <form onSubmit={handleSubmit} aria-busy={isSubmitting} className="mt-6">
                   {step === 1 && (
                     <div className="space-y-3">
                       <label className="text-xs text-warm/70">Select your institutional or commercial property type:</label>
@@ -160,6 +206,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                               key={t.id}
                               type="button"
                               onClick={() => setFacilityType(t.id)}
+                              aria-pressed={selected}
                               className={`flex flex-col items-start rounded-2xl border p-4 text-left transition-all ${
                                 selected
                                   ? "border-gold bg-gold/15 text-warm shadow-lg shadow-gold/10"
@@ -190,31 +237,53 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                   {step === 2 && (
                     <div className="space-y-4">
                       <div>
-                        <label className="block font-mono text-xs uppercase text-warm/80">
+                        <label htmlFor="feasibility-roof-area" className="block font-mono text-xs uppercase text-warm/80">
                           Estimated Rooftop Area (Sq Ft)
                         </label>
                         <input
+                          id="feasibility-roof-area"
+                          name="roofAreaSqFt"
+                          autoComplete="off"
                           type="number"
+                          required
+                          min={3000}
+                          max={10000000}
                           value={roofArea}
-                          onChange={(e) => setRoofArea(e.target.value)}
+                          aria-invalid={Boolean(metricError)}
+                          aria-describedby="feasibility-roof-area-help feasibility-metric-error"
+                          onChange={(e) => {
+                            setRoofArea(e.target.value);
+                            setMetricError("");
+                          }}
                           placeholder="e.g. 10000"
                           className="mt-1.5 w-full rounded-xl border border-warm/20 bg-forest/80 px-4 py-3 font-mono text-sm text-warm placeholder-warm/30 focus:border-gold focus:outline-none"
                         />
-                        <span className="text-[11px] text-warm/50">Minimum 3,000 sq ft for Netso ৳0 CAPEX qualification</span>
+                        <span id="feasibility-roof-area-help" className="text-[11px] text-warm/50">Used for an initial screening estimate. Final sizing follows the site review.</span>
                       </div>
 
                       <div>
-                        <label className="block font-mono text-xs uppercase text-warm/80">
+                        <label htmlFor="feasibility-monthly-spend" className="block font-mono text-xs uppercase text-warm/80">
                           Current Monthly Grid Electricity Bill (BDT)
                         </label>
                         <input
+                          id="feasibility-monthly-spend"
+                          name="monthlySpendBdt"
+                          autoComplete="off"
                           type="number"
+                          required
+                          min={1}
+                          max={1000000000}
                           value={monthlySpend}
-                          onChange={(e) => setMonthlySpend(e.target.value)}
+                          aria-invalid={Boolean(metricError)}
+                          aria-describedby="feasibility-monthly-spend-help feasibility-metric-error"
+                          onChange={(e) => {
+                            setMonthlySpend(e.target.value);
+                            setMetricError("");
+                          }}
                           placeholder="e.g. 600000"
                           className="mt-1.5 w-full rounded-xl border border-warm/20 bg-forest/80 px-4 py-3 font-mono text-sm text-warm placeholder-warm/30 focus:border-gold focus:outline-none"
                         />
-                        <span className="text-[11px] text-warm/50">Used to model your 30% guaranteed tariff savings against BERC peak rates</span>
+                        <span id="feasibility-monthly-spend-help" className="text-[11px] text-warm/50">Used to compare a preliminary rooftop power estimate with your current bill.</span>
                       </div>
 
                       <div className="flex gap-3 pt-3">
@@ -227,22 +296,45 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                         </button>
                         <button
                           type="button"
-                          onClick={() => setStep(3)}
+                          onClick={advanceToContactDetails}
                           className="flex flex-1 items-center justify-center gap-2 rounded-full bg-gold py-3.5 text-sm font-bold text-forest hover:scale-[1.01]"
                         >
                           <span>Next: Contact Details</span>
                           <ArrowRight className="h-4 w-4" />
                         </button>
                       </div>
+                      {metricError && (
+                        <p id="feasibility-metric-error" role="alert" aria-live="polite" className="text-xs text-red-200">{metricError}</p>
+                      )}
                     </div>
                   )}
 
                   {step === 3 && (
                     <div className="space-y-3.5">
+                      {submissionResult && (
+                        <div
+                          role="alert"
+                          className={`rounded-2xl border p-4 text-sm ${
+                            submissionResult.status === "unavailable"
+                              ? "border-gold/30 bg-gold/10 text-gold"
+                              : "border-red-300/30 bg-red-300/10 text-red-100"
+                          }`}
+                        >
+                          <p className="font-semibold">
+                            {submissionResult.status === "unavailable"
+                              ? "Lead intake unavailable"
+                              : "Submission status"}
+                          </p>
+                          <p className="mt-1 text-xs opacity-85">{submissionResult.message}</p>
+                        </div>
+                      )}
                       <div>
-                        <label className="block text-xs font-medium text-warm/80">Full Name</label>
-                        <input
-                          type="text"
+                         <label htmlFor="feasibility-contact-name" className="block text-xs font-medium text-warm/80">Full Name</label>
+                         <input
+                           id="feasibility-contact-name"
+                           name="contactName"
+                           autoComplete="name"
+                           type="text"
                           required
                           value={contactName}
                           onChange={(e) => setContactName(e.target.value)}
@@ -252,9 +344,12 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                       </div>
 
                       <div>
-                        <label className="block text-xs font-medium text-warm/80">Institution / Company Name</label>
-                        <input
-                          type="text"
+                         <label htmlFor="feasibility-organization" className="block text-xs font-medium text-warm/80">Institution / Company Name</label>
+                         <input
+                           id="feasibility-organization"
+                           name="organization"
+                           autoComplete="organization"
+                           type="text"
                           required
                           value={orgName}
                           onChange={(e) => setOrgName(e.target.value)}
@@ -265,9 +360,12 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
 
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="block text-xs font-medium text-warm/80">Official Email</label>
-                          <input
-                            type="email"
+                           <label htmlFor="feasibility-email" className="block text-xs font-medium text-warm/80">Official Email</label>
+                           <input
+                             id="feasibility-email"
+                             name="email"
+                             autoComplete="email"
+                             type="email"
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -276,9 +374,12 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-medium text-warm/80">Phone / WhatsApp</label>
-                          <input
-                            type="tel"
+                           <label htmlFor="feasibility-phone" className="block text-xs font-medium text-warm/80">Phone / WhatsApp</label>
+                           <input
+                             id="feasibility-phone"
+                             name="phone"
+                             autoComplete="tel"
+                             type="tel"
                             required
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
@@ -304,11 +405,11 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                           {isSubmitting ? (
                             <>
                               <Loader2 className="h-4 w-4 animate-spin" />
-                              <span>Dispatching to Notion Pipeline...</span>
+                              <span>Submitting Lead Request...</span>
                             </>
                           ) : (
                             <>
-                              <span>Dispatch Satellite Feasibility Audit</span>
+                               <span>Request a preliminary site review</span>
                               <CheckCircle2 className="h-4 w-4" />
                             </>
                           )}
@@ -341,22 +442,26 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                 </form>
               </div>
             ) : (
-              /* Submission Success State */
+              /* Accepted submission state */
               <div className="py-8 text-center">
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
                   <CheckCircle2 className="h-9 w-9" />
                 </div>
-                <h3 className="mt-4 font-display text-2xl font-bold text-warm">
-                  Feasibility Request Dispatched
-                </h3>
-                {syncFeedback && (
-                  <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 font-mono text-[11px] text-gold">
-                    <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
-                    <span>{syncFeedback}</span>
-                  </div>
-                )}
+                 <DialogPrimitive.Title id="feasibility-dialog-title" className="mt-4 font-display text-2xl font-bold text-warm">
+                   Feasibility Request Accepted
+                 </DialogPrimitive.Title>
+                 <DialogPrimitive.Description id="feasibility-dialog-description" className="sr-only">
+                   Your feasibility request was accepted for follow-up by Netso.
+                 </DialogPrimitive.Description>
+                <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 font-mono text-[11px] text-gold">
+                  <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
+                   <span>{submissionResult.message}</span>
+                 </div>
+                 {submissionResult.requestId && (
+                   <p className="mt-3 font-mono text-xs text-gold">Request ID: {submissionResult.requestId}</p>
+                 )}
                 <p className="mt-3 text-sm text-sage">
-                  Thank you, <strong className="text-warm">{contactName}</strong>. Netso’s engineering team has initiated satellite shadow and azimuth profiling for <strong className="text-warm">{orgName}</strong>.
+                  Thank you, <strong className="text-warm">{contactName}</strong>. Your details for <strong className="text-warm">{orgName}</strong> were accepted for follow-up by Netso.
                 </p>
 
                 <div className="mt-6 rounded-2xl border border-gold/30 bg-forest/80 p-4 text-left font-mono text-xs">
@@ -369,13 +474,13 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                     <span className="font-bold text-warm">{Number(roofArea).toLocaleString()} sq ft</span>
                   </div>
                   <div className="flex justify-between py-1.5">
-                    <span className="text-warm/60">PPA Savings Guarantee:</span>
-                    <span className="font-bold text-emerald-400">30% Guaranteed Reduction</span>
+                     <span className="text-warm/60">Commercial price target:</span>
+                           <span className="font-bold text-emerald-400">Illustrative below-grid target</span>
                   </div>
                 </div>
 
                 <p className="mt-4 text-xs text-warm/60">
-                  Our engineering team will contact you via WhatsApp at <strong className="text-warm">{phone}</strong> with your 3D solar model within 48 hours.
+                  Netso can use WhatsApp at <strong className="text-warm">{phone}</strong> for the next step in your feasibility review.
                 </p>
 
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
@@ -391,7 +496,15 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                     <span>WhatsApp Tazwar for Priority Review</span>
                   </a>
                   <button
-                    onClick={onClose}
+                    type="button"
+                    onClick={startAnotherInquiry}
+                    className="rounded-full border border-warm/20 px-6 py-3 text-xs font-semibold text-warm hover:border-warm/40"
+                  >
+                    Start another inquiry
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeModal}
                     className="rounded-full bg-warm/10 px-6 py-3 text-xs font-semibold text-warm hover:bg-warm/20"
                   >
                     Close
@@ -399,9 +512,8 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                 </div>
               </div>
             )}
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
   );
 }

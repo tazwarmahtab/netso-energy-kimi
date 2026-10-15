@@ -62,7 +62,7 @@ const TERMS: Section[] = [
   {
     h: "3. Savings",
     body: [
-      "Savings figures — including '28–35%' — are estimates based on current BERC tariff schedules and modeled system performance. Actual savings vary with weather, consumption, and utility pricing, and are guaranteed only where expressly stated in your agreement.",
+       "Any savings figures shown on this site are illustrative estimates based on stated assumptions. Actual results vary with weather, consumption, system design, utility pricing, settlement rules and the final agreement. A savings commitment applies only where the signed agreement expressly says so.",
     ],
   },
   {

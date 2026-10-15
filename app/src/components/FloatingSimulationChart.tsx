@@ -18,30 +18,30 @@ const SCENARIOS: Scenario[] = [
     label: "Current Baseline",
     badge: "Active Utility Tariff",
     gridStatus: "100% Unhedged",
-    netsoStatus: "30% Guaranteed Discount",
-    offtakerBenefit: "30% Net Savings",
-    description: "Standard industrial utility power bill. Netso delivers immediate 30% cash reduction across all daytime solar generation.",
-    cashImpact: "Delivers immediate 6-figure monthly cash flow expansion directly to operational EBITDA from Month 1.",
+   netsoStatus: "Illustrative below-grid target",
+   offtakerBenefit: "Preliminary estimate",
+   description: "This scenario compares a current grid bill with an illustrative rooftop power price. Your project model replaces these assumptions with site data.",
+   cashImpact: "The actual outcome depends on load, generation, tariff, settlement, financing and the final agreement.",
   },
   {
     id: "hike",
-    label: "Grid Tariff Hike (+35%)",
+   label: "Grid price increases",
     badge: "Escalation Shock",
-    gridStatus: "+35% Escalation",
-    netsoStatus: "Protected 30% Spread",
-    offtakerBenefit: "+35% Cash Retained",
-    description: "When the utility increases tariffs, conventional fixed-rate developers capture the windfall. Under Netso, your 30% discount margin is preserved — expanding your total cash savings automatically.",
-    cashImpact: "Your absolute cash savings expand in lockstep with utility hikes. Zero margin compression.",
+   gridStatus: "Higher utility cost",
+   netsoStatus: "Review contracted formula",
+   offtakerBenefit: "Compare the exposure",
+   description: "A long-term agreement can make part of the power price easier to plan, but the indexation and settlement formula must be reviewed in the contract.",
+   cashImpact: "Model the scenario using your tariff schedule and the agreed price formula.",
   },
   {
     id: "dip",
     label: "Tariff Softening Scenario",
     badge: "Downside Protection",
-    gridStatus: "Utility Rate Softens",
-    netsoStatus: "Floats Down Automatically",
-    offtakerBenefit: "Zero Balance-Sheet Risk",
-    description: "Rigid fixed-tariff PPAs leave factories trapped paying above-market prices if grid rates soften. Netso automatically floats downward, ensuring you never pay more than 70% of grid power.",
-    cashImpact: "100% regulatory downside hedge. You are contractually guaranteed to pay below grid under every economic condition.",
+   gridStatus: "Lower utility cost",
+   netsoStatus: "Review price floor and formula",
+   offtakerBenefit: "Compare the alternatives",
+   description: "If grid prices change, the project should make clear how the contracted price changes, where floors apply and how settlement works.",
+   cashImpact: "The final agreement should explain the downside case rather than rely on a blanket guarantee.",
   },
 ];
 
@@ -64,16 +64,15 @@ export function FloatingSimulationChart({
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1 mb-4">
               <span className="h-1.5 w-1.5 rounded-full bg-gold" />
               <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">
-                The Beth Doctrine • Floating Tariff Index
+                 Commercial pricing scenarios
               </span>
             </div>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-cream">
-              Fixed tariffs die. <br />
-              <span className="text-gold italic font-serif">Floating discounts don't.</span>
+               Energy prices change. <br />
+               <span className="text-gold italic font-serif">Your agreement should explain what happens next.</span>
             </h2>
             <p className="mt-4 font-sans text-sm sm:text-base text-cream/70 leading-relaxed">
-              Conventional solar developers lock factories into rigid, 20-year fixed tariffs. When grid prices shift or currency fluctuates, fixed PPAs create balance sheet tension. Netso indexes strictly:{" "}
-              <strong className="text-cream">Netso Cost = Utility Bill × 0.70</strong>. You are guaranteed a 30% discount forever.
+               Use the scenarios below to think through grid-price changes. They are illustrations, not a quote. Netso confirms the price formula, indexation, settlement, term and responsibilities after reviewing the facility.
             </p>
           </div>
 
@@ -101,7 +100,7 @@ export function FloatingSimulationChart({
                   25-Year Long-Term Contract Horizon
                 </span>
                 <div className="text-sm font-medium text-cream mt-0.5">
-                  Utility Power Bill vs. Netso Guaranteed 30% Discount Floor
+                   Utility power bill vs. illustrative rooftop price
                 </div>
               </div>
 
@@ -113,7 +112,7 @@ export function FloatingSimulationChart({
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-4 rounded-full bg-gold" />
-                  <span className="text-gold font-bold">Netso Solar (–30%)</span>
+                   <span className="text-gold font-bold">Netso Solar (illustrative)</span>
                 </div>
               </div>
             </div>
@@ -180,12 +179,12 @@ export function FloatingSimulationChart({
 
                 <rect x="385" y="107" width="175" height="20" rx="4" fill="#18231e" stroke="#C6A15B" strokeWidth="0.75" />
                 <text x="472" y="121" fill="#C6A15B" fontSize="9" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
-                  Netso Guarantee: –30% Locked
+                   Illustrative below-grid target
                 </text>
 
                 {/* Center Spread Watermark */}
                 <text x="280" y="145" fill="rgba(198,161,91,0.55)" fontSize="10" fontFamily="monospace" fontWeight="bold" letterSpacing="0.1em">
-                  30% PERMANENT SPREAD (CFO ALPHA)
+                   ILLUSTRATIVE PRICE DIFFERENCE
                 </text>
               </svg>
 
@@ -202,15 +201,15 @@ export function FloatingSimulationChart({
 
             {/* Bottom Buffer Tag */}
             <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 font-mono text-[11px] text-cream/50 bg-white/[0.02] p-3 rounded-lg border border-white/5">
-              <span>REGULATORY TARIFF RISK: 0% ABSORBED BY OFFTAKER</span>
-              <span className="text-gold font-bold">100% REGULATORY DOWNSIDE HEDGE</span>
+               <span>REGULATORY AND TARIFF TREATMENT: REVIEWED PER PROJECT</span>
+               <span className="text-gold font-bold">TERMS DOCUMENTED BEFORE COMMITMENT</span>
             </div>
           </div>
 
           {/* Interactive Scenario Selector Column */}
           <div className="lg:col-span-4 flex flex-col gap-4">
             <span className="font-mono text-xs uppercase tracking-widest text-cream/50">
-              Interactive BERC Stress Test
+               Interactive pricing scenarios
             </span>
 
             {SCENARIOS.map((scenario) => {
@@ -265,22 +264,22 @@ export function FloatingSimulationChart({
             {/* Live Delta Summary Card */}
             <div className="mt-2 rounded-xl border border-gold/30 bg-gold/[0.08] p-5">
               <div className="flex items-center justify-between text-xs font-mono text-cream/70 mb-2">
-                <span>Contractual Spread Guarantee</span>
+                 <span>Screening assumption</span>
                 <span className="text-gold font-bold flex items-center gap-1">
                   <CheckCircle2 className="h-3.5 w-3.5" />
-                  30.0% Guaranteed
+                   Below-grid target
                 </span>
               </div>
               <div className="font-display text-3xl font-bold text-cream flex items-baseline gap-2">
-                <span>30% Savings</span>
-                <span className="text-xs font-mono text-gold font-normal">Below Utility Tariff</span>
+                 <span>Preliminary estimate</span>
+                 <span className="text-xs font-mono text-gold font-normal">Subject to site review</span>
               </div>
               <p className="mt-2 text-xs text-cream/70 leading-relaxed">
                 {currentScenario.cashImpact}
               </p>
               <div className="mt-3 pt-3 border-t border-gold/15 flex items-center gap-2 font-mono text-[11px] text-cream/60">
                 <TrendingUp className="h-3.5 w-3.5 text-gold shrink-0" />
-                <span>Zero capital outlay • 100% turnkey O&M included</span>
+                 <span>Funding and O&M terms are agreed per project</span>
               </div>
             </div>
           </div>

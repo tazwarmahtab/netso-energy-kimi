@@ -237,7 +237,7 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
     <section
       ref={containerRef}
       className="relative h-[320vh] bg-[#050D0A] text-cream"
-      aria-label="Turnkey Operations & Engineering Truth"
+       aria-label="Operations and maintenance"
     >
       {/* Sticky Viewport Stage */}
       <div className="sticky top-0 h-[100vh] h-[100svh] w-full overflow-hidden">
@@ -262,12 +262,12 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
           <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-black/60 px-3.5 py-1 backdrop-blur-xl mb-3">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
             <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-gold">
-              Turnkey Asset Stewardship • 24/7 O&M
+               Asset operations • monitoring • maintenance
             </span>
           </div>
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-warm">
-            We don't just build. <br />
-            <span className="text-gold italic font-serif">We physically operate your roof.</span>
+             The project does not end at construction. <br />
+             <span className="text-gold italic font-serif">Netso stays accountable for the asset.</span>
           </h2>
         </div>
 
@@ -279,15 +279,15 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
           <div className="rounded-2xl border border-white/15 bg-black/70 p-6 backdrop-blur-2xl shadow-2xl">
             <div className="flex items-center gap-2 text-gold mb-2 font-mono text-xs uppercase tracking-wider font-semibold">
               <Eye className="h-4 w-4" />
-              <span>Act 01 • Physical Presence</span>
+               <span>01 • Site operations</span>
             </div>
-            <h3 className="font-display text-2xl font-bold text-warm">Daily On-Site Inspection</h3>
+             <h3 className="font-display text-2xl font-bold text-warm">Planned site inspections</h3>
             <p className="mt-2 text-xs sm:text-sm text-sage/85 leading-relaxed font-sans">
-              Unlike developers who vanish after commissioning, Netso employs dedicated, certified solar technicians who physically walk every roof array daily across our industrial client network.
+               Netso plans inspections, maintenance and response around the asset's operating requirements. The service schedule and response terms are set out in the project agreement.
             </p>
             <div className="mt-4 pt-3 border-t border-white/10 flex items-center gap-2 text-[11px] font-mono text-emerald-400">
               <CheckCircle2 className="h-3.5 w-3.5" />
-              <span>Full Netso uniform & safety certified</span>
+               <span>Site access and safety procedures agreed in advance</span>
             </div>
           </div>
         </div>
@@ -300,15 +300,15 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
           <div className="rounded-2xl border border-white/15 bg-black/70 p-6 backdrop-blur-2xl shadow-2xl">
             <div className="flex items-center gap-2 text-gold mb-2 font-mono text-xs uppercase tracking-wider font-semibold">
               <Activity className="h-4 w-4" />
-              <span>Act 02 • Optical Architecture</span>
+               <span>02 • Energy design</span>
             </div>
-            <h3 className="font-display text-2xl font-bold text-warm">Bifacial Daylight Absorption</h3>
+             <h3 className="font-display text-2xl font-bold text-warm">Designed around the daylight profile</h3>
             <p className="mt-2 text-xs sm:text-sm text-sage/85 leading-relaxed font-sans">
-              Precision-angled dual-glass modules capture direct sunlight plus ground-reflected albedo irradiance, harvesting up to 25% higher yield per square foot than legacy mono-facial panels.
+               Module choice, tilt, spacing and roof conditions shape the output. Netso models those variables before confirming the system design and expected generation.
             </p>
             <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-cream/60">
-              <span>Specific Yield Benchmark</span>
-              <span className="text-gold font-bold">1,350+ kWh/kWp/yr</span>
+               <span>Expected output</span>
+               <span className="text-gold font-bold">Confirmed after site study</span>
             </div>
           </div>
         </div>
@@ -321,15 +321,15 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
           <div className="rounded-2xl border border-gold/30 bg-black/70 p-6 backdrop-blur-2xl shadow-2xl">
             <div className="flex items-center gap-2 text-gold mb-2 font-mono text-xs uppercase tracking-wider font-semibold">
               <Wrench className="h-4 w-4" />
-              <span>Act 03 • Engineering Rigor</span>
+               <span>03 • Performance monitoring</span>
             </div>
-            <h3 className="font-display text-2xl font-bold text-warm">String Voltage Calibration</h3>
+             <h3 className="font-display text-2xl font-bold text-warm">String-level monitoring</h3>
             <p className="mt-2 text-xs sm:text-sm text-sage/85 leading-relaxed font-sans">
-              Zero tolerance for degradation. Every DC string, junction box, and inverter circuit undergoes continuous calibrated electrical audits to guarantee contractually promised generation.
+               Monitoring helps the operating team identify underperformance across strings, junction boxes and inverters. Any performance commitment is defined by the final agreement and measurement protocol.
             </p>
             <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-emerald-400">
-              <span>Performance Ratio (PR) Floor</span>
-              <span className="font-bold text-gold">≥ 80.0% Guaranteed</span>
+               <span>Performance measurement</span>
+               <span className="font-bold text-gold">Defined in the project agreement</span>
             </div>
           </div>
         </div>
@@ -343,13 +343,13 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
             <div className="max-w-xl">
               <div className="flex items-center gap-2 text-gold mb-2 font-mono text-xs uppercase tracking-wider font-semibold">
                 <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                <span>Act 04 • 24/7 Monitored Commitment</span>
+               <span>04 • Ongoing operations</span>
               </div>
               <h3 className="font-display text-2xl md:text-3xl font-bold text-warm">
-                Round-The-Clock Utility Security
+                 An operating partner after commissioning
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-sage/85 leading-relaxed font-sans">
-                When the factory sleeps, Netso's SCADA engineers conduct nocturnal thermography and structural health scans under Dhaka's skyline. 4-hour emergency dispatch guaranteed.
+                 Netso coordinates monitoring, planned maintenance and issue response through the operating term. Availability, response times and service boundaries are agreed for each project.
               </p>
             </div>
 
@@ -359,7 +359,7 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
                 onClick={onOpenAssessment}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3.5 font-mono text-xs font-bold text-forest transition-all hover:bg-gold/90 hover:scale-[1.02] shadow-xl shadow-gold/20 cursor-pointer"
               >
-                <span>Deploy Netso On Your Roof</span>
+                 <span>Discuss your roof</span>
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>
@@ -368,7 +368,7 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
 
         {/* Bottom Scroll Scrubber Track (Effortless Visual Progress) */}
         <div className="absolute bottom-6 inset-x-6 md:inset-x-12 z-20 flex items-center justify-between gap-4 font-mono text-[10px] text-cream/40 pointer-events-none">
-          <span>01 Daily Inspection</span>
+           <span>01 Site operations</span>
           <div className="h-1 flex-1 max-w-md rounded-full bg-white/10 overflow-hidden">
             <div
               ref={progressTrackRef}
@@ -376,7 +376,7 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
               style={{ width: "0%" }}
             />
           </div>
-          <span>04 24/7 Night SCADA</span>
+           <span>04 Ongoing maintenance</span>
         </div>
       </div>
     </section>

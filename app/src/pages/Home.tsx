@@ -30,27 +30,27 @@ const TABS = [
   {
     id: "save",
     eyebrow: "save",
-    title: "Cut your electricity cost by 30% guaranteed",
+    title: "A lower-cost power option for your facility",
     accent: 0,
-    copy: "A guaranteed 30% discount below utility tariffs replaces volatile peak grid billing. One predictable monthly bill — locked at 30% savings from day one.",
+    copy: "Netso can structure a contracted rooftop power price below the applicable grid tariff. The final rate, indexation and settlement terms are confirmed after the site and load review.",
     img: solarRoof,
     alt: "A pergola-style solar canopy on a factory rooftop at dusk, warm sky visible between the panels",
   },
   {
     id: "protect",
     eyebrow: "protect",
-    title: "Lock your tariff hedge for 20 years",
+    title: "Plan around a long-term power agreement",
     accent: 0,
-    copy: "Grid tariffs jumped 16.7% in a single BERC order. Netso contractually guarantees your 30% discount margin. Budget certainty for two decades, whatever the grid does next.",
+    copy: "A long-term PPA can make a portion of your energy cost easier to plan. Netso documents the price formula, term, metering and settlement mechanics before you commit.",
     img: batteryWall,
     alt: "Smart inverters and electrical cabinets inside a factory electrical room",
   },
   {
     id: "control",
     eyebrow: "control",
-    title: "Track every kWh in NEOS",
+    title: "See what the system is producing",
     accent: 0,
-    copy: "Generation, savings, automated PPA invoicing and I-REC certificates — metered to class 0.2s accuracy, in real time, from anywhere.",
+    copy: "Project reporting can bring generation, performance and billing data into one view, with the meter and reporting standard agreed for the project.",
     img: null,
     alt: "",
   },
@@ -149,7 +149,7 @@ const STEPS = [
     n: "step 1",
     title: "Sign a PPA",
     head: "A lower bill from day one",
-    copy: "A 20-year power purchase agreement at ৳0 upfront CAPEX. You pay only for the solar electricity your roof delivers — at a rate below your grid tariff.",
+    copy: "A long-term power purchase agreement can remove the need to fund the solar plant upfront. You pay for the electricity delivered under the agreed project terms.",
     cta: "Get your assessment",
     visual: "card",
   },
@@ -157,7 +157,7 @@ const STEPS = [
     n: "step 2",
     title: "We build",
     head: "Netso handles everything",
-    copy: "Design, engineering, SREDA net-metering filings, interconnection, procurement and installation — then full-service operations and maintenance for the life of the agreement.",
+    copy: "Netso coordinates design, engineering, utility approvals, procurement, installation and ongoing operations, with responsibilities documented before construction.",
     cta: null,
     visual: "image",
   },
@@ -165,7 +165,7 @@ const STEPS = [
     n: "step 3",
     title: "Power on",
     head: "Power you control",
-    copy: "Your rooftop system goes live. Your energy cost drops. NEOS telemetry tracks every kilowatt-hour generated and every taka saved.",
+    copy: "Once commissioned, the system supplies on-site power and the agreed reporting shows generation, performance and billing data over time.",
     cta: null,
     visual: "app",
   },
@@ -196,8 +196,8 @@ function StepVisual({ kind }: { kind: string }) {
           </div>
           <div className="h-px bg-ink/10" />
           <div className="flex items-center justify-between gap-10">
-            <span className="eyebrow !text-[10px] text-ink/50">Guaranteed</span>
-            <span className="font-mono text-[15px] font-bold text-forest">30% Savings</span>
+                            <span className="eyebrow !text-[10px] text-ink/50">Illustrative</span>
+                            <span className="font-mono text-[15px] font-bold text-forest">Below-grid target</span>
           </div>
         </div>
       </div>
@@ -218,8 +218,7 @@ function HowItWorks() {
           </h2>
           <FadeUp delay={0.15}>
             <p className="max-w-md text-[16.5px] leading-relaxed text-ink/70 lg:ml-auto">
-              With Netso, your rooftop becomes a power plant we finance, build, own and operate. You simply
-              buy the electricity it produces — below the grid tariff, with zero capital expenditure.
+              With Netso, a suitable rooftop can become a solar asset that we finance, build and operate. You buy the electricity it produces under a long-term agreement, with the commercial structure confirmed for your facility.
             </p>
             <a
               href="#get-started"
@@ -264,9 +263,9 @@ function HowItWorks() {
 
 /* --------------------------- Why netso --------------------------- */
 const RISKS = [
-  { big: "+16.7%", label: "Industrial tariffs jumped 16.7% in one BERC order", note: "The latest BERC escalation exposed factory operating budgets with no ceiling in sight." },
-  { big: "30%", label: "Guaranteed floating discount margin against utility rate hikes", note: "Energy transitions from an unhedged operational risk into contractually guaranteed savings." },
-  { big: "3,600 MWp", label: "Bangladesh's industrial rooftops could host 3,600 MWp", note: "A $2.1B market sitting idle above the buildings that need it most." },
+  { big: "Rising", label: "Grid prices can make daytime power harder to plan", note: "A rooftop system can reduce exposure to a portion of the grid bill, subject to design and contracted terms." },
+  { big: "One", label: "One accountable partner from assessment through operations", note: "Netso coordinates the commercial, engineering and operating work required to put a project into service." },
+  { big: "Idle", label: "Industrial roof area is an underused energy resource", note: "A site review shows whether structure, load, access and utility conditions support a viable project." },
 ];
 
 function Why() {
@@ -282,7 +281,7 @@ function Why() {
           <p className="eyebrow text-sun">why netso</p>
         </FadeUp>
         <h2 className="font-display mt-6 max-w-5xl text-[11.5vw] text-cream sm:text-7xl md:text-8xl">
-          <Words text="The grid can’t carry Bangladesh’s ambition" accent={0} />
+           <Words text="Industrial power should be easier to plan" accent={0} />
         </h2>
 
         <div className="mt-16 md:mt-24">
@@ -326,7 +325,7 @@ function Network() {
             </FadeUp>
             <h2 className="font-display mt-6 max-w-xl text-4xl text-ink md:text-6xl">
               <Words
-                text="Netso is building Bangladesh’s distributed energy network, one rooftop at a time"
+                 text="Netso is building a distributed energy platform for Bangladesh's industry"
                 accent={0}
               />
             </h2>
@@ -337,9 +336,7 @@ function Network() {
               Every roof makes the network stronger
             </h3>
             <p className="mt-4 max-w-md text-[16px] leading-relaxed text-ink/70">
-              Netso rooftops generate power exactly where it’s consumed. Together they form a distributed
-              network of owned energy assets across Chattogram, Gazipur and Narayanganj — engineered to
-              scale with every new installation.
+              Rooftop systems generate power close to the facilities that use it. Each project is assessed on its own roof, load profile, connection and commercial fit, with a model designed to scale across Bangladesh's industrial corridors.
             </p>
             <a
               href="#get-started"
@@ -392,13 +389,13 @@ export default function Home() {
           <div className="mx-auto max-w-[1440px] px-5 md:px-10">
             <div className="mb-12 max-w-3xl">
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-                Architectural Engineering & Digital Twin
+                 Architectural solar design
               </p>
               <h2 className="font-display mt-4 text-4xl font-bold tracking-tight text-warm sm:text-5xl md:text-6xl">
-                A canopy designed to outlast the monsoon.
+                 A solar structure designed for the roof beneath it.
               </h2>
               <p className="mt-4 text-base leading-relaxed text-sage md:text-lg">
-                Engineered with high-tensile hot-dip galvanized steel, bifacial dual-glass solar modules, and integrated under-canopy linear LEDs that transform your roof into an illuminated executive terrace.
+                 Netso can design elevated solar structures around the roof, access requirements and building use. Materials, module choice, structural loads and any lighting are confirmed in the project design rather than assumed from a standard template.
               </p>
             </div>
             <SolarPergola3D />

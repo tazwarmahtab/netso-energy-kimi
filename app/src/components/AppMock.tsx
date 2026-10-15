@@ -70,7 +70,7 @@ function useTicker(target: number, duration = 1600, decimals = 1) {
   return { text: v.toFixed(decimals), start: () => setStarted(true) };
 }
 
-/** NEOS — phone-framed live asset telemetry dashboard. */
+/** Illustrative phone-framed asset monitoring dashboard. */
 export default function AppMock({ className = "" }: { className?: string }) {
   const kwh = useTicker(318.4, 1800, 1);
   const pct = useTicker(78, 1800, 0);
@@ -89,14 +89,14 @@ export default function AppMock({ className = "" }: { className?: string }) {
     >
       {/* status bar */}
       <div className="flex items-center justify-between px-6 pt-4">
-        <span className="font-mono text-[12px] font-bold">NEOS v1</span>
+        <span className="font-mono text-[12px] font-bold">Netso monitoring</span>
         <div className="h-5 w-16 rounded-full bg-ink/80" />
         <BatteryFull className="h-4 w-4 text-cream/70" />
       </div>
 
       <div className="px-6 pb-7 pt-5">
         <p className="font-display text-[26px] leading-[0.95]">
-          Your roof,
+          Your system,
           <br />
           <span className="text-orange">live</span>
         </p>
@@ -149,7 +149,7 @@ export default function AppMock({ className = "" }: { className?: string }) {
           {[
             { icon: Sun, v: "254.1", l: "Solar" },
             { icon: Zap, v: "62.3", l: "Grid" },
-            { icon: Factory, v: "৳3,180", l: "Saved" },
+            { icon: Factory, v: "Estimate", l: "Savings" },
           ].map((s) => (
             <div key={s.l} className="rounded-xl bg-ink/50 px-2.5 py-2.5 text-center">
               <s.icon className="mx-auto h-3.5 w-3.5 text-orange" />

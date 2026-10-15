@@ -26,23 +26,21 @@ export default function CalculatorPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 backdrop-blur-md">
                 <CalcIcon className="h-4 w-4 text-gold" />
                 <span className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">
-                  CFO Financial Modeling Engine
+                   Illustrative project calculator
                 </span>
               </div>
             </FadeUp>
 
             <FadeUp delay={0.1}>
               <h1 className="font-display mt-6 text-4xl font-bold tracking-tight text-cream sm:text-5xl md:text-6xl">
-                Precision Economics for <br className="hidden sm:inline" />
-                <span className="text-gold italic font-serif">Industrial Rooftops.</span>
+                 See the commercial potential of your roof. <br className="hidden sm:inline" />
+                 <span className="text-gold italic font-serif">Then verify it with a site study.</span>
               </h1>
             </FadeUp>
 
             <FadeUp delay={0.2}>
               <p className="mt-5 text-base sm:text-lg text-sage max-w-3xl mx-auto leading-relaxed">
-                Calibrate your facility’s 20-year cash flow. Powered by the Beth Doctrine:{" "}
-                <strong className="text-warm font-medium">zero capital expenditure</strong>, zero technical risk, and a contractually guaranteed{" "}
-                <strong className="text-emerald-400 font-medium">30% discount below the utility grid peak tariff</strong>.
+                 Use your monthly bill and usable roof area to create a preliminary estimate. The model is illustrative: actual system size, savings, tariff treatment and commercial terms depend on the site, utility connection and definitive agreement.
               </p>
             </FadeUp>
 
@@ -51,7 +49,7 @@ export default function CalculatorPage() {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-6 font-mono text-xs text-warm/75">
                 <div className="flex items-center gap-2 rounded-full border border-warm/15 bg-black/30 px-3.5 py-1.5 backdrop-blur-sm">
                   <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                  <span>IDCOL 80% Senior Debt Structured</span>
+                   <span>Project funding assessed per site</span>
                 </div>
                 <div className="flex items-center gap-2 rounded-full border border-warm/15 bg-black/30 px-3.5 py-1.5 backdrop-blur-sm">
                   <FileSpreadsheet className="h-4 w-4 text-gold" />
@@ -59,7 +57,7 @@ export default function CalculatorPage() {
                 </div>
                 <div className="flex items-center gap-2 rounded-full border border-warm/15 bg-black/30 px-3.5 py-1.5 backdrop-blur-sm">
                   <Lock className="h-4 w-4 text-gold" />
-                  <span>Floating 30% Margin Hedge</span>
+                   <span>Below-grid pricing assessed per site</span>
                 </div>
               </div>
             </FadeUp>
@@ -84,38 +82,38 @@ export default function CalculatorPage() {
           <div className="mx-auto max-w-4xl">
             <div className="text-center mb-12">
               <span className="font-mono text-xs uppercase tracking-[0.2em] text-gold font-semibold">
-                Investment Committee FAQ
+                 Commercial model FAQ
               </span>
               <h2 className="font-display mt-3 text-3xl font-bold text-cream sm:text-4xl">
-                How Netso Structures 30% Savings.
+                 How Netso assesses rooftop power economics.
               </h2>
             </div>
 
             <div className="space-y-6">
               <div className="rounded-2xl border border-warm/10 bg-forest/40 p-6 backdrop-blur-sm">
                 <h3 className="font-display text-lg font-bold text-warm">
-                  How is the 30% savings contractually protected against grid tariff changes?
+                   How is the power price set?
                 </h3>
                 <p className="mt-2 text-sm text-sage leading-relaxed font-sans">
-                  Under the Beth Doctrine, Netso indexes your PPA rate directly to the approved Bangladesh Energy Regulatory Commission (BERC) industrial tariff schedule: <strong className="text-warm">Netso PPA Tariff = Grid Tariff × 0.70</strong>. When the utility raises power rates (such as the recent 16.7% BERC tariff hike), your 30% discount margin is preserved and your absolute cash savings expand automatically.
+                   Netso reviews the applicable tariff, load profile, system design, utility connection and project costs before proposing commercial terms. Any discount, indexation or settlement formula is written into the definitive agreement rather than assumed from this calculator.
                 </p>
               </div>
 
               <div className="rounded-2xl border border-warm/10 bg-forest/40 p-6 backdrop-blur-sm">
                 <h3 className="font-display text-lg font-bold text-warm">
-                  Why does Netso require zero customer CAPEX?
+                   Can Netso fund the project?
                 </h3>
                 <p className="mt-2 text-sm text-sage leading-relaxed font-sans">
-                  Netso functions as an Independent Power Producer (IPP). We fund 100% of equipment procurement, structural pergola engineering, dual-glass TOPCon bifacial modules, smart inverters, and SREDA grid synchronization through our balance sheet and senior concessionary debt from IDCOL. You simply purchase the clean electricity generated on your roof.
+                   For qualifying projects, Netso can fund the equipment, engineering and installation through its project structure. The final ownership, accounting, security and payment terms are confirmed during due diligence and documented in the agreement.
                 </p>
               </div>
 
               <div className="rounded-2xl border border-warm/10 bg-forest/40 p-6 backdrop-blur-sm">
                 <h3 className="font-display text-lg font-bold text-warm">
-                  What happens to operational maintenance and weather degradation?
+                   What happens after installation?
                 </h3>
                 <p className="mt-2 text-sm text-sage leading-relaxed font-sans">
-                  Netso assumes 100% of generation and degradation risk. Our engineering team conducts automated IoT string-level telemetry, bi-weekly robotic or high-pressure washing, and handles warranty replacements. If the array underperforms, you are never billed for phantom kilowatt-hours.
+                   Netso can coordinate monitoring, planned maintenance, cleaning, repairs and warranty administration. The service scope, measurement method and any performance commitments are set out in the project agreement.
                 </p>
               </div>
             </div>
@@ -125,8 +123,8 @@ export default function CalculatorPage() {
         <CTASection
           title="Turn your non-performing roof into an asset"
           heading="Ready to inspect your facility's 3D solar model?"
-          copy="Request a 48-hour preliminary feasibility dossier. Zero cost, zero commitment."
-          cta="Request Rooftop Assessment"
+           copy="Request a preliminary review of your roof, load profile and utility connection. There is no commitment to proceed."
+           cta="Request a rooftop assessment"
         />
       </main>
 

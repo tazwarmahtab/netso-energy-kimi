@@ -39,11 +39,11 @@ const OPENINGS: JobOpening[] = [
     location: "Gulshan-2, Dhaka",
     type: "Full-time",
     description:
-      "Drive 20-year take-or-pay solar PPA acquisitions across Tier-1 RMG, textile, and pharmaceutical manufacturers in Dhaka, Gazipur, and Chattogram. Work alongside CFOs and Managing Directors to present financial yield models.",
+       "Help develop rooftop solar projects with manufacturers across Dhaka, Gazipur, Chattogram and other industrial centres. Work with facility leaders to understand energy use, project constraints and commercial fit.",
     requirements: [
       "BBA/Finance or Engineering background with demonstrated B2B enterprise sales success",
-      "Clear understanding of BERC utility tariff structures, IDCOL senior debt covenants, and cash flows",
-      "Executive executive presence and high-conviction communication skills",
+       "Interest in industrial energy, commercial contracts and project economics",
+       "Clear communication with senior customers and technical teams",
     ],
   },
   {
@@ -53,7 +53,7 @@ const OPENINGS: JobOpening[] = [
     location: "Gazipur / Narayanganj",
     type: "Full-time",
     description:
-      "Direct on-site 11kV/33kV utility synchronization with BREB and BPDB distribution networks under SREDA Net Metering (NEM 2025) standards. Commission bidirectional Class 0.2s metering and SCADA telemetry.",
+       "Coordinate high-voltage interconnection work with utilities and project teams. Support the commissioning of metering, protection and monitoring systems for commercial rooftop solar.",
     requirements: [
       "B.Sc. in Electrical & Electronic Engineering (EEE)",
       "Hands-on experience with HT switchgear, transformer protection, and utility approvals",
@@ -67,7 +67,7 @@ const OPENINGS: JobOpening[] = [
     location: "Dhaka HQ",
     type: "Full-time",
     description:
-      "Build and maintain Netso’s proprietary Energy Operating System (NEOS). Manage string-level IoT sensors, RS485 Modbus RTU communication, automated inverter fault detection, and real-time generation dashboards.",
+       "Build and maintain the systems that help Netso monitor commercial rooftop solar projects. Work across sensors, inverter data, communications and generation reporting.",
     requirements: [
       "Experience with industrial IoT protocols (Modbus, MQTT, REST APIs)",
       "Familiarity with cloud data pipelines, Grafana, and solar monitoring software",
@@ -117,7 +117,7 @@ export default function CareersPage() {
               <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs font-mono text-warm/75">
                 <div className="flex items-center gap-2">
                   <Shield className="h-4 w-4 text-emerald-400" />
-                  <span>Zero-Phantom Truth Culture</span>
+                   <span>Evidence-led decision making</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Zap className="h-4 w-4 text-gold" />
@@ -218,8 +218,8 @@ export default function CareersPage() {
         <CTASection
           title="Don't see your specific discipline?"
           heading="We are always looking for exceptional engineers."
-          copy="Send your portfolio and engineering calculations to careers@netsoenergy.com."
-          cta="Request Rooftop Assessment"
+           copy="If you do not see the right role, send your experience and the kind of work you want to do to careers@netsoenergy.com."
+           cta="Explore Netso"
         />
       </main>
 

@@ -26,12 +26,12 @@ const ARTICLES: Article[] = [
     readTime: "5 min read",
     title: "BERC June 2026 Industrial Tariff Hike: What It Means for Factory EBITDA",
     summary:
-      "The latest BERC tariff order bumped industrial MT-2/HT-3 grid power tariffs by up to 16.7% in unhedged utility expenses. We analyze why fixed-tariff PPAs fail and why floating discount structures preserve operational margins.",
-    takeaway: "Floating solar PPAs at 30% discount turn grid tariff volatility into expanding cash savings.",
+       "Industrial customers need to understand how tariff changes affect operating costs. This briefing explains the questions to ask when comparing grid exposure with a rooftop power agreement.",
+     takeaway: "A well-structured rooftop PPA can make part of the power price easier to plan.",
     metrics: [
-      { label: "Utility Grid Hike", val: "+16.7%" },
-      { label: "Netso Offtaker Hedge", val: "30% Guaranteed" },
-      { label: "Tariff Exposure", val: "Zero" },
+       { label: "Primary question", val: "What changes?" },
+       { label: "Commercial response", val: "Assess a PPA" },
+       { label: "Decision input", val: "Your tariff data" },
     ],
   },
   {
@@ -39,14 +39,14 @@ const ARTICLES: Article[] = [
     category: "Export Compliance",
     date: "May 2026",
     readTime: "7 min read",
-    title: "EU CBAM & Decarbonization: How On-Site Solar Safeguards European Buyer Orders",
+     title: "Export decarbonisation: What rooftop solar can evidence for buyers",
     summary:
-      "Starting 2026, European Union Carbon Border Adjustment Mechanism (CBAM) audits require verified Scope 2 emission abatement. Dual-glass rooftop solar provides certified on-site generation data directly mapped into buyer Higg FEM scorecards.",
-    takeaway: "Every 1 MWp of on-site solar abates ~840 tonnes of CO₂ annually with audited I-REC certificates.",
+       "Export manufacturers increasingly need reliable energy and emissions data for customer and supply-chain reporting. This briefing separates what rooftop solar can evidence from what each buyer or programme still requires.",
+     takeaway: "Use project data as evidence, then match it to the buyer or reporting programme that applies.",
     metrics: [
-      { label: "Annual CO₂ Abated (1 MWp)", val: "840 Tonnes" },
-      { label: "Certification Standard", val: "I-REC Standard" },
-      { label: "Buyer Audit Status", val: "EU CBAM Compliant" },
+       { label: "Evidence source", val: "Metered generation" },
+       { label: "Environmental claim", val: "Verify per programme" },
+       { label: "Buyer status", val: "Confirm per customer" },
     ],
   },
   {
@@ -56,12 +56,12 @@ const ARTICLES: Article[] = [
     readTime: "6 min read",
     title: "SREDA Net Metering (NEM 2025) Guidelines: Interconnection & Credit Settlement",
     summary:
-      "A technical walkthrough of how 11kV and 33kV industrial feeders synchronize bi-directional Class 0.2s utility meters with BREB/BPDB distribution substations, enabling 90% net export billing credits without plant shutdown.",
-    takeaway: "Surplus Friday and holiday solar export automatically offsets subsequent weekday manufacturing bills.",
+       "A practical walkthrough of the information utilities and project teams need to review a rooftop solar connection, including load data, protection, metering, export and settlement.",
+     takeaway: "Export credit is a project and utility question, not an assumption to make before approval.",
     metrics: [
-      { label: "Utility Net Credit", val: "90% Exported Units" },
-      { label: "Meter Precision", val: "Class 0.2s Bidirectional" },
-      { label: "Interconnection Window", val: "45–60 Days" },
+       { label: "Export treatment", val: "Confirm per site" },
+       { label: "Metering", val: "Agree per connection" },
+       { label: "Approval timing", val: "Depends on utility" },
     ],
   },
 ];
@@ -99,7 +99,7 @@ export default function InsightsPage() {
 
             <FadeUp delay={0.2}>
               <p className="mt-5 text-base sm:text-lg text-sage max-w-2xl mx-auto leading-relaxed">
-                Objective analysis on BERC tariff schedules, SREDA net metering frameworks, and EU CBAM decarbonization requirements for Bangladesh's manufacturing backbone.
+                 Clear, practical briefings on industrial energy costs, rooftop solar, utility coordination and the reporting questions that matter to Bangladesh's manufacturers.
               </p>
             </FadeUp>
           </div>
@@ -158,7 +158,7 @@ export default function InsightsPage() {
                       rel="noopener noreferrer"
                       className="inline-flex shrink-0 items-center gap-1.5 font-mono text-xs font-semibold text-gold hover:text-warm transition-colors"
                     >
-                      <span>Request Full Dossier</span>
+                       <span>Discuss this topic</span>
                       <ArrowRight className="h-3.5 w-3.5" />
                     </a>
                   </div>
@@ -171,8 +171,8 @@ export default function InsightsPage() {
         <CTASection
           title="Stay ahead of the grid"
           heading="Have specific tariff questions for your plant?"
-          copy="Connect directly with our origination and regulatory compliance desk."
-          cta="Request Rooftop Assessment"
+           copy="Have a question about your facility's tariff, roof or utility connection? Start a conversation with the Netso team."
+           cta="Talk to Netso"
         />
       </main>
 

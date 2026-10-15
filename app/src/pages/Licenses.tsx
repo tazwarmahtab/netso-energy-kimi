@@ -4,11 +4,11 @@ import { FadeUp, Stagger, StaggerItem, Words } from "../components/Reveal";
 
 const FILINGS = [
   { entity: "Netso Energy Limited", authority: "RJSC", item: "Certificate of Incorporation", ref: "On file" },
-  { entity: "Netso Energy Limited", authority: "SREDA", item: "Net Metering (NEM) 2025 interconnection filings", ref: "Per site" },
-  { entity: "Netso Energy Limited", authority: "BERC", item: "Tariff & settlement compliance", ref: "Jun 2026 order" },
-  { entity: "Netso Energy Limited", authority: "IDCOL", item: "Concessionary project debt (SREUP window)", ref: "Under appraisal" },
-  { entity: "Netso Energy Limited", authority: "BIDA", item: "Tax holiday application", ref: "Dossier filed" },
-  { entity: "Netso Energy Limited", authority: "Evident I-TRACK", item: "I-REC registration & monetization", ref: "Workflow established" },
+  { entity: "Netso Energy Limited", authority: "SREDA / utility", item: "Net-metering and interconnection work", ref: "Reviewed per site" },
+  { entity: "Netso Energy Limited", authority: "BERC / utility", item: "Tariff and settlement review", ref: "Applied per project" },
+  { entity: "Netso Energy Limited", authority: "Financing partners", item: "Project finance diligence", ref: "Subject to appraisal" },
+  { entity: "Netso Energy Limited", authority: "Relevant authorities", item: "Corporate and project registrations", ref: "Verified per engagement" },
+  { entity: "Netso Energy Limited", authority: "Environmental programmes", item: "Attribute and reporting eligibility", ref: "Confirmed per project" },
 ];
 
 export default function Licenses() {
@@ -24,8 +24,7 @@ export default function Licenses() {
         </h1>
         <FadeUp delay={0.15}>
           <p className="mt-5 max-w-lg text-[16px] leading-relaxed text-ink/70">
-            Netso Energy Limited operates inside Bangladesh’s renewable-energy regulatory framework.
-            Current registrations, filings and programmes are listed below.
+             Netso works within the regulatory and utility processes that apply to each rooftop solar project in Bangladesh. The table below describes the workstreams we review; it is not a claim that every approval applies to every site.
           </p>
         </FadeUp>
 
@@ -57,7 +56,7 @@ export default function Licenses() {
 
         <FadeUp delay={0.1}>
           <p className="mt-8 text-[13.5px] leading-relaxed text-ink/50">
-            Filing status is provided for reference and changes as registrations are completed or renewed.
+             Status depends on the project, authority and current rules. We share supporting documents during the relevant diligence or customer engagement.
             Questions about our regulatory posture? Contact us at tazwar@netsoenergy.com.
           </p>
         </FadeUp>

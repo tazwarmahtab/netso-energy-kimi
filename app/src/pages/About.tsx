@@ -15,18 +15,18 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 const MEANS = [
   {
     title: "A factory's biggest cost, finally contained",
-    desc: "Energy is often 20%–35% of an industrial plant's operational expenditure. Netso locks in 20-year fixed tariffs below the grid peak.",
-    stat: "35% Instant Cut",
+     desc: "Energy is a material operating cost for many industrial facilities. Netso helps customers assess whether on-site solar can reduce part of that exposure.",
+     stat: "Lower-cost power",
   },
   {
     title: "Every idle roof converted into a productive utility asset",
-    desc: "Hundreds of thousands of square meters of reinforced concrete industrial roofs sit idle in Chattogram and Gazipur. We turn them into clean revenue-producing power plants.",
-    stat: "৳0 Upfront CAPEX",
+     desc: "Industrial roofs can support more than weather protection. Where structure, load and utility conditions align, they can host generation close to the facility that uses it.",
+     stat: "Underused roof area",
   },
   {
     title: "Clean power for the economy the world buys from",
-    desc: "Global apparel brands, European buyers, and ESG supply chain covenants mandate decarbonization. Netso delivers auditable I-RECs and zero-carbon grid offsets.",
-    stat: "100% Audited I-RECs",
+     desc: "On-site generation data can support customer reporting and decarbonisation work. Environmental attributes and programme eligibility are confirmed per project.",
+     stat: "Evidence when eligible",
   },
 ];
 
@@ -74,9 +74,7 @@ function Hero({ onOpenModal }: { onOpenModal: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0, duration: 0.8, ease: EASE }}
         >
-          Netso Energy is Bangladesh’s distributed renewable energy utility. We originate, finance,
-          construct, and operate commercial & industrial rooftop solar for the manufacturing exporters,
-          textile mills, and corporate institutions powering the nation’s economy.
+           Netso Energy develops and operates rooftop solar for Bangladesh's commercial and industrial facilities. We bring together site assessment, project finance, engineering, utility coordination and long-term operations so customers can evaluate solar as a practical energy decision.
         </motion.p>
         <motion.div
           className="mt-9 flex flex-wrap justify-center gap-4"
@@ -146,7 +144,7 @@ function Means() {
                   "Narayanganj Knitwear Hub",
                   "Dhaka EPZ",
                   "Mymensingh Industrial Zone",
-                  "SREDA NEM 2025 Synchronized",
+                   "Utility process reviewed per site",
                 ].map((w, i) => (
                   <span key={`${dup}-${i}`} className="flex items-center gap-14">
                     <span className="font-display text-2xl text-forest/40 md:text-3xl font-medium">{w}</span>
@@ -178,9 +176,7 @@ function Thesis() {
           </div>
           <FadeUp delay={0.15}>
             <p className="max-w-md text-base leading-relaxed text-warm/75 md:text-lg lg:ml-auto">
-              Centralized transmission losses, fossil-fuel imports, and unpredictable grid tariffs throttle factory
-              competitiveness. Generating clean kilowatt-hours directly on the plant roof eliminates transmission
-              drag, avoids expensive diesel genset cycling, and establishes direct price certainty.
+               Industrial customers need energy that fits the way their facilities operate. Generating power near the load can reduce reliance on the grid during suitable daylight hours, while a long-term agreement can make the commercial terms easier to plan.
             </p>
           </FadeUp>
         </div>
@@ -197,9 +193,7 @@ function Thesis() {
           </div>
           <FadeUp delay={0.15}>
             <p className="max-w-md text-base leading-relaxed text-warm/75 md:text-lg lg:ml-auto">
-              Netso does not dump panels on a roof and walk away. We own the assets, absorb 100% of equipment and
-              performance risks, manage SCADA telemetry 24/7/365, and sell power under transparent 20-year agreements.
-              If the system produces less, you pay less.
+               Netso stays involved beyond construction. We can own and operate qualifying systems, coordinate monitoring and maintenance, and document the responsibilities, metering and payment terms in a long-term agreement.
             </p>
           </FadeUp>
         </div>
@@ -211,14 +205,12 @@ function Thesis() {
               <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">Institutional Architecture</p>
             </FadeUp>
             <h2 className="font-display mt-4 text-4xl sm:text-6xl md:text-7xl text-warm">
-              <Words text="Structured for bankable institutional scale" accent={1} />
+              <Words text="Structured to earn institutional trust" accent={1} />
             </h2>
           </div>
           <FadeUp delay={0.15}>
             <p className="max-w-md text-base leading-relaxed text-warm/75 md:text-lg lg:ml-auto">
-              Every megawatt Netso deploys is financed through ring-fenced project SPVs, supported by 80% IDCOL
-              concessionary senior facilities and Tier-1 banking covenants. It is an infrastructure platform engineered
-              to deploy billions of Taka in institutional climate capital.
+               Each project needs a clear commercial and technical structure. Netso works with customers, capital providers and delivery partners to build that structure around verified site data rather than a generic financial promise.
             </p>
           </FadeUp>
         </div>
@@ -233,7 +225,7 @@ function Founder() {
       <div className="mx-auto grid max-w-[1440px] gap-12 px-5 md:px-10 lg:grid-cols-[1fr_1.4fr]">
         <div>
           <FadeUp>
-            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">Executive Leadership</p>
+             <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">From the founder</p>
           </FadeUp>
           <h2 className="font-display mt-4 text-4xl text-forest sm:text-6xl md:text-7xl">
             <Words text="The sky is already working" accent={1} />
@@ -255,14 +247,10 @@ function Founder() {
               under high-irradiance equatorial sun, completely unutilized.
             </p>
             <p>
-              The bottleneck was never solar technology. It was financial architecture. Industrialists should not have
-              to lock up core working capital in non-core power hardware or manage electrical maintenance. Netso was
-              created to remove both: we provide <strong>100% of the CAPEX</strong>, build utility-grade architectural
-              pergolas, manage digital SCADA telemetry, and deliver electricity below grid benchmarks for two decades.
+               The bottleneck is often the combination of capital, engineering and operations. Industrial owners should be able to evaluate solar without taking on a project before the roof, load and utility conditions are understood. Netso was created to coordinate those pieces and offer a funded, operated structure where the project supports it.
             </p>
             <p>
-              One factory roof stabilizes an industrial enterprise. A thousand roofs transform a national grid. The
-              sun is already shining — we are simply building the infrastructure to harvest it.
+               One roof can make a meaningful contribution to an industrial facility. A network of roofs can make local generation more practical across Bangladesh. The sun is already there; Netso is building the commercial and technical infrastructure to use it well.
             </p>
             <div className="pt-6 border-t border-ink/10">
               <p className="font-display text-2xl text-forest">Tazwar Mahtab</p>
@@ -270,9 +258,9 @@ function Founder() {
                 Founder & Managing Director · Netso Energy Ltd
               </p>
               <div className="mt-4 flex flex-wrap gap-2 text-xs font-mono text-ink/50">
-                <span className="rounded-md border border-ink/10 bg-cream px-2.5 py-1">CGS 80kWp Reference</span>
-                <span className="rounded-md border border-ink/10 bg-cream px-2.5 py-1">IDCOL Senior Facility</span>
-                <span className="rounded-md border border-ink/10 bg-cream px-2.5 py-1">SREDA NEM 2025</span>
+                 <span className="rounded-md border border-ink/10 bg-cream px-2.5 py-1">Commercial rooftop solar</span>
+                 <span className="rounded-md border border-ink/10 bg-cream px-2.5 py-1">Project finance</span>
+                 <span className="rounded-md border border-ink/10 bg-cream px-2.5 py-1">Utility coordination</span>
               </div>
             </div>
           </div>
@@ -296,8 +284,8 @@ export default function About() {
         <CTASection
           title="The Sky Is Already Working"
           heading="Turn your roof into an operating energy asset"
-          copy="Zero capital expenditure. Guaranteed lower kilowatt-hour costs. Full utility-grade operations for twenty years."
-          cta="Request Rooftop Feasibility"
+           copy="Start with the roof, the load profile and the utility connection. Netso will show you whether a long-term rooftop power project is a fit."
+           cta="Request a rooftop assessment"
         />
       </main>
       <Footer />

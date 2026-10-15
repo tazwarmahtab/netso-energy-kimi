@@ -26,21 +26,21 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
               <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1 mb-4">
                 <Sparkles className="h-3.5 w-3.5 text-gold" />
                 <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">
-                  Architectural Solar Pergola • Dhaka Benchmark
+                   Architectural solar for commercial rooftops
                 </span>
               </div>
             </FadeUp>
 
             <FadeUp delay={0.1}>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-cream">
-                Utility infrastructure. <br />
-                <span className="text-gold italic font-serif">Engineered to elevate your architecture.</span>
+                 Rooftop infrastructure. <br />
+                 <span className="text-gold italic font-serif">Designed around how your facility works.</span>
               </h2>
             </FadeUp>
 
             <FadeUp delay={0.2}>
               <p className="mt-4 text-base text-sage/85 leading-relaxed font-sans">
-                Conventional developers mount ugly blue industrial racks on tin sheds. Netso constructs permanent architectural pergolas with high-tensile steel, dual-glass bifacial modules, and integrated 3000K warm LED lighting — turning non-performing roofs into executive landmarks.
+                 Netso designs elevated solar structures that respect the building beneath them. Depending on the roof and use case, the system can combine engineered steel, bifacial modules, access paths and lighting so the roof remains useful as well as productive.
               </p>
             </FadeUp>
           </div>
@@ -104,7 +104,7 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
             {/* Top Left Floating Spec Capsule */}
             <div className="absolute top-5 left-5 z-10 hidden sm:flex items-center gap-2.5 rounded-full border border-white/15 bg-black/60 px-4 py-2 backdrop-blur-xl font-mono text-[11px] text-warm/90">
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Dhaka Industrialist Corporate HQ Prototype</span>
+               <span>Illustrative commercial rooftop concept</span>
             </div>
 
             {/* Bottom HUD Bar */}
@@ -117,7 +117,7 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
                   </div>
                   <div>
                     <span className="text-warm/50 text-[10px] uppercase block tracking-wider">Wind Load Rating</span>
-                    <span className="font-bold text-emerald-400">160 km/h Cyclone Certified</span>
+                   <span className="font-bold text-emerald-400">Wind design confirmed per site</span>
                   </div>
                   <div>
                     <span className="text-warm/50 text-[10px] uppercase block tracking-wider">Module Technology</span>
@@ -134,7 +134,7 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
                   onClick={onOpenAssessment}
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-gold px-5 py-2.5 font-mono text-xs font-bold text-forest transition-all hover:bg-gold/90 hover:scale-[1.02] shadow-lg shadow-gold/20 cursor-pointer shrink-0"
                 >
-                  <span>Inquire for Your Facility</span>
+                   <span>Discuss your facility</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -149,9 +149,9 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
               <Shield className="h-4 w-4" />
             </div>
             <div>
-              <p className="font-bold text-cream text-sm">Non-Penetrative Rooftop Clamping</p>
+               <p className="font-bold text-cream text-sm">Roof-sensitive mounting</p>
               <p className="mt-1 text-sage/75 leading-relaxed">
-                Zero roof punctures on standing-seam roofs. Certified watertight civil anchoring for concrete slabs with 25-year structural warranties.
+                 The mounting approach follows the roof type. Standing-seam roofs can use seam clamps; concrete and other roofs require a structural and waterproofing review before design approval.
               </p>
             </div>
           </div>
@@ -161,9 +161,9 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
               <Award className="h-4 w-4" />
             </div>
             <div>
-              <p className="font-bold text-cream text-sm">Usable Rooftop Terrace Amenity</p>
+               <p className="font-bold text-cream text-sm">A roof that stays useful</p>
               <p className="mt-1 text-sage/75 leading-relaxed">
-                Unlike ground-mount or low-profile racking that ruins roof access, Netso pergolas preserve full walking height for executive lounges and greenery.
+                 The layout can preserve planned access, maintenance routes and operational use where the roof structure allows it.
               </p>
             </div>
           </div>
@@ -173,9 +173,9 @@ export default function ArchitecturalTransformation({ onOpenAssessment }: Archit
               <Sparkles className="h-4 w-4" />
             </div>
             <div>
-              <p className="font-bold text-cream text-sm">30-Year Bifacial Generation</p>
+               <p className="font-bold text-cream text-sm">Designed for long service</p>
               <p className="mt-1 text-sage/75 leading-relaxed">
-                Dual-glass bifacial architecture harvests reflected albedo sunlight from the terrace floor, generating up to 25% higher yield per square foot.
+                 Bifacial modules can capture light from both sides. Expected output depends on module selection, spacing, roof surface, shading and local conditions.
               </p>
             </div>
           </div>

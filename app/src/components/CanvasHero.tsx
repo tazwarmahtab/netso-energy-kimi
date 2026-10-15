@@ -241,13 +241,13 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           <div className="hero-meta-elem mb-3 flex items-center gap-3">
             <span className="h-px w-8 bg-gold/60" />
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-              Netso Energy · Architectural Solar, Zero CAPEX
+              Netso Energy · Rooftop solar for Bangladesh's industry
             </p>
           </div>
 
           <h1
             className="font-display font-bold leading-[1.05] tracking-[-0.035em] text-warm text-[clamp(34px,4.8vw,68px)]"
-            aria-label="your roof, generating revenue."
+             aria-label="your roof, generating power."
           >
             <span className="block overflow-hidden pt-1 pb-3">
               <span className="line-reveal-inner block">
@@ -261,13 +261,13 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
             </span>
             <span className="block overflow-hidden pt-1 pb-3">
               <span className="line-reveal-inner block">
-                revenue<em className="not-italic text-gold">.</em>
+                 power<em className="not-italic text-gold">.</em>
               </span>
             </span>
           </h1>
 
           <p className="hero-meta-elem mt-4 max-w-xl text-sm leading-relaxed text-warm/85 md:text-base">
-            We finance, design, and construct luxury architectural solar pergolas for institutional buildings. You pay zero upfront and buy clean power at a guaranteed <span className="font-semibold text-warm">30% discount below your utility grid tariff</span>.
+            We finance, design, build and operate rooftop solar for commercial and industrial facilities. Where the site and agreement qualify, you can access on-site power without funding the plant upfront and buy electricity at a contracted rate designed to sit below the applicable grid tariff.
           </p>
 
           <div className="hero-meta-elem mt-6 flex flex-wrap items-center gap-4">
@@ -300,11 +300,11 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-display text-lg font-bold text-warm">৳0 Upfront</span>
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">CAPEX Free</span>
+                    <span className="font-display text-lg font-bold text-warm">No plant funding upfront</span>
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">Subject to agreement</span>
                   </div>
                   <p className="text-xs text-sage/80 line-clamp-1">
-                    100% financed under 20-year IDCOL senior debt
+                    Netso can fund, own and operate the system under a long-term PPA
                   </p>
                 </div>
               </div>
@@ -320,7 +320,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                     <span className="font-mono text-[9px] uppercase tracking-wider text-emerald-400 font-semibold bg-emerald-500/10 px-1.5 py-0.5 rounded">Turnkey O&M</span>
                   </div>
                   <p className="text-xs text-sage/80 line-clamp-1">
-                    24/7 automated IoT monitoring & daily cleaning
+                     Monitoring and maintenance planned for the project
                   </p>
                 </div>
               </div>
@@ -332,11 +332,11 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-display text-lg font-bold text-warm">30% Savings</span>
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">Guaranteed</span>
+                    <span className="font-display text-lg font-bold text-warm">Lower-cost power</span>
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-gold/90 font-semibold bg-gold/10 px-1.5 py-0.5 rounded">Contracted rate</span>
                   </div>
                   <p className="text-xs text-sage/80 line-clamp-1">
-                    Floating discount indexed below utility grid tariffs
+                    Commercial terms are confirmed after the site review
                   </p>
                 </div>
               </div>
@@ -373,9 +373,9 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
                 </p>
               </div>
               <div>
-                <p className="font-mono text-[11px] text-warm/60">Offtaker Savings</p>
+                 <p className="font-mono text-[11px] text-warm/60">Illustrative savings</p>
                 <p className="font-display text-2xl font-bold tabular-nums text-emerald-400">
-                  30% <span className="text-xs font-normal text-warm/60">Guaranteed</span>
+                   up to 30% <span className="text-xs font-normal text-warm/60">illustrative</span>
                 </p>
               </div>
             </div>
@@ -383,7 +383,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
             <div className="mt-4 rounded-lg bg-black/40 p-2.5">
               <div className="flex items-center justify-between text-xs text-warm/75">
                 <span>Performance Ratio</span>
-                <span className="font-mono font-bold text-gold">81.4% (PR)</span>
+                 <span className="font-mono font-bold text-gold">Illustrative PR</span>
               </div>
               <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-warm/15">
                 <div className="h-full rounded-full bg-gradient-to-r from-gold to-emerald-400" style={{ width: "81.4%" }} />

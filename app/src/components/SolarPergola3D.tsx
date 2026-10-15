@@ -358,7 +358,7 @@ export default function SolarPergola3D() {
           <div className="flex items-center gap-2">
             <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
             <h3 className="font-display text-xl font-bold text-warm md:text-2xl">
-              Architectural Solar Pergola Digital Twin
+              Illustrative rooftop structure
             </h3>
           </div>
           <p className="mt-1 font-mono text-xs text-sage">

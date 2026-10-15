@@ -28,11 +28,11 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
   // State: Preview memo toggle
   const [showMemoPreview, setShowMemoPreview] = useState(false);
 
-  // Commercial model: 30% contractually guaranteed savings below utility grid tariff
-  const GUARANTEED_SAVINGS_PERCENT = 0.30; // 30% guaranteed discount
+  // Illustrative screening assumption only. Final pricing is confirmed after site review.
+  const ILLUSTRATIVE_SAVINGS_PERCENT = 0.30;
 
   // Calculations
-  const monthlySavings = Math.round(monthlyBill * GUARANTEED_SAVINGS_PERCENT);
+  const monthlySavings = Math.round(monthlyBill * ILLUSTRATIVE_SAVINGS_PERCENT);
   const annualSavings = monthlySavings * 12;
   // 20-year cumulative savings with conservative 2% average annual grid escalation
   const twentyYearSavings = Math.round(annualSavings * 24.3);
@@ -62,19 +62,19 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
     `📐 *Usable Rooftop Area:* ${roofArea.toLocaleString("en-US")} sq ft\n` +
     `⚡ *Estimated Solar Array:* ${estimatedCapacityKwp} kWp (Bifacial Pergola)\n` +
     `📊 *Current Monthly Grid Spend:* ৳${monthlyBill.toLocaleString("en-US")}\n\n` +
-    `💰 *COMMERCIAL PPA STRUCTURE (ZERO CAPEX):*\n` +
-    `• Netso Contracted Savings: 30% Guaranteed Discount vs Utility Grid Peak\n` +
-    `• Tariff Protection: Floats with BERC schedules (Guaranteed margin hedge)\n` +
-    `• Upfront Investment: ৳0.00 (100% Financed & Maintained by Netso)\n\n` +
-    `📈 *PROJECTED CASH SAVINGS:*\n` +
-    `• Estimated Monthly Savings: ${formatBDT(monthlySavings)} / month\n` +
-    `• Estimated Annual Savings: ${formatBDT(annualSavings)} / year\n` +
-    `• 20-Year Cumulative Savings: ${formatBDT(twentyYearSavings)} (Hedged)\n\n` +
-    `🌱 *ESG & BUYER COMPLIANCE (EU CBAM & HIGG):*\n` +
+    `💰 *ILLUSTRATIVE COMMERCIAL STRUCTURE:*\n` +
+    `• Screening assumption: 30% below the applicable grid tariff\n` +
+    `• Price formula and settlement: confirmed during site review\n` +
+    `• Upfront plant funding: may be available for qualifying projects\n\n` +
+    `📈 *ILLUSTRATIVE VALUE:*\n` +
+    `• Illustrative Monthly Saving: ${formatBDT(monthlySavings)} / month\n` +
+    `• Illustrative Annual Saving: ${formatBDT(annualSavings)} / year\n` +
+    `• Illustrative 20-Year Value: ${formatBDT(twentyYearSavings)} (screening estimate)\n\n` +
+    `🌱 *ENVIRONMENTAL REPORTING:*\n` +
     `• Annual Clean Generation: ${(annualGenerationKwh / 1000).toFixed(0)} MWh\n` +
     `• Avoided Carbon Emissions: ${co2AvoidedTonnes} tonnes CO₂ / year\n` +
     `────────────────────────────────────────\n` +
-    `Tazwar, please share the formal IDCOL-compliant PPA term sheet and dispatch satellite shadow profiling for our facility.`;
+    `Netso team, please review this preliminary estimate and confirm whether a site assessment is appropriate for our facility.`;
 
   const handleCopyMemo = async () => {
     try {
@@ -101,14 +101,14 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
           <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 backdrop-blur-md">
             <Calculator className="h-4 w-4 text-gold" />
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">
-              Institutional Financial Model
+               Illustrative project calculator
             </span>
           </div>
           <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-warm md:text-5xl lg:text-6xl">
             See what your roof saves.
           </h2>
           <p className="mt-4 text-base text-sage md:text-lg">
-            Based on executed 20-year IDCOL PPA terms: <span className="font-semibold text-warm">৳0 upfront CAPEX</span>, full Netso operational maintenance, and a contractually locked <span className="font-semibold text-gold">30% guaranteed savings</span> below your utility grid tariff.
+             This screening model uses a 30% below-grid price assumption and a roof-area estimate. It is not a quote or a promise of savings. Netso confirms system size, tariff treatment, financing, maintenance and environmental reporting after the site and utility review.
           </p>
         </div>
 
@@ -121,7 +121,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
                 Facility Parameters
               </h3>
               <p className="mt-1 text-xs text-sage">
-                Select your industrial profile and calibrate your monthly utility spend.
+                 Choose a facility profile and enter two rough inputs for a preliminary estimate.
               </p>
 
               {/* Facility Sector Toggle */}
@@ -211,15 +211,15 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
             <div className="mt-8 rounded-2xl border border-gold/20 bg-black/30 p-5">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-warm/70">Grid Power Vulnerability:</span>
-                <span className="font-mono font-bold text-red-400">Rising BERC Tariffs</span>
+                 <span className="font-mono font-bold text-red-400">Grid price exposure</span>
               </div>
               <div className="mt-2 flex items-center justify-between text-xs">
-                <span className="text-warm/70">Netso Commercial Guarantee:</span>
-                <span className="font-mono font-bold text-emerald-400">30% Below Utility Tariff</span>
+                 <span className="text-warm/70">Netso commercial assumption:</span>
+                 <span className="font-mono font-bold text-emerald-400">30% below-grid assumption</span>
               </div>
               <div className="mt-3 border-t border-warm/10 pt-2.5 flex items-center justify-between text-xs font-semibold">
-                <span className="text-gold">Contractual Spread:</span>
-                <span className="font-mono text-gold">30% Guaranteed Hedged Savings</span>
+                 <span className="text-gold">Screening assumption:</span>
+                 <span className="font-mono text-gold">Subject to site and contract</span>
               </div>
             </div>
           </div>
@@ -236,30 +236,30 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
                 </div>
                 <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-bold text-emerald-400">
                   <Sparkles className="h-3.5 w-3.5" />
-                  <span>30% Guaranteed Reduction</span>
+                     <span>Illustrative 30% assumption</span>
                 </div>
               </div>
 
               {/* Big Stat Row */}
               <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div className="rounded-2xl border border-warm/10 bg-black/25 p-5">
-                  <p className="font-mono text-xs text-warm/60">Estimated Monthly Savings</p>
+                   <p className="font-mono text-xs text-warm/60">Illustrative monthly saving</p>
                   <p className="mt-1 font-display text-3xl font-bold tabular-nums text-emerald-400 md:text-4xl">
                     {formatBDT(monthlySavings)}
                     <span className="text-sm font-normal text-warm/60"> /mo</span>
                   </p>
                   <p className="mt-2 text-xs text-sage">
-                    Direct cash freed up from utility expenses every month.
+                     A screening estimate based on the inputs and the 30% assumption.
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-warm/10 bg-black/25 p-5">
-                  <p className="font-mono text-xs text-warm/60">20-Year Cumulative Savings</p>
+                   <p className="font-mono text-xs text-warm/60">Illustrative 20-year value</p>
                   <p className="mt-1 font-display text-3xl font-bold tabular-nums text-gold md:text-4xl">
                     {formatBDT(twentyYearSavings)}
                   </p>
                   <p className="mt-2 text-xs text-sage">
-                    Hedged against future utility tariff hikes over 20 years.
+                     Uses a simplified escalation assumption and should be replaced by a project model.
                   </p>
                 </div>
               </div>
@@ -290,22 +290,22 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
               <div className="mt-6 space-y-2 text-xs text-sage">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-gold" />
-                  <span><strong>৳0 Upfront Capital:</strong> Netso funds 100% of equipment, installation, and civil works.</span>
+                   <span><strong>No plant funding upfront:</strong> May be available for qualifying projects under the agreed structure.</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Zap className="h-4 w-4 text-gold" />
-                  <span><strong>Turnkey O&M:</strong> Daily cleaning, inverter monitoring, and replacement costs handled by Netso.</span>
+                   <span><strong>Operations support:</strong> Monitoring, maintenance and warranty responsibilities are agreed per project.</span>
                 </div>
               </div>
             </div>
 
-            {/* Board Memo Live Preview Container */}
+             {/* Illustrative estimate preview */}
             {showMemoPreview && (
               <div className="mt-6 rounded-2xl border border-gold/30 bg-black/60 p-4 font-mono text-[11px] leading-relaxed text-warm/90">
                 <div className="flex items-center justify-between border-b border-warm/15 pb-2 mb-2 text-gold">
                   <span className="font-semibold uppercase tracking-wider flex items-center gap-1.5">
                     <FileSpreadsheet className="h-3.5 w-3.5" />
-                    <span>Executive Board Memo Preview</span>
+                     <span>Illustrative estimate preview</span>
                   </span>
                   <button
                     type="button"
@@ -324,18 +324,18 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
             {/* Action Bar */}
             <div className="mt-8 border-t border-warm/10 pt-6 flex flex-wrap items-center justify-between gap-4">
               <div>
-                <p className="text-xs text-warm/60">Prepared for executive review & CFO approval:</p>
+                   <p className="text-xs text-warm/60">Prepared for preliminary internal discussion:</p>
                 <button
                   type="button"
                   onClick={() => setShowMemoPreview(!showMemoPreview)}
                   className="font-mono text-xs font-semibold text-gold underline underline-offset-4 hover:text-amber-300 transition-colors"
                 >
-                  {showMemoPreview ? "Hide Board Memo Preview" : "Preview Pre-Formatted Board Memo"}
+                   {showMemoPreview ? "Hide estimate preview" : "Preview estimate summary"}
                 </button>
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
-                {/* 1. Copy CFO Board Memo Button */}
+                 {/* 1. Copy estimate summary button */}
                 <button
                   type="button"
                   onClick={handleCopyMemo}
@@ -350,7 +350,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
                   ) : (
                     <>
                       <Copy className="h-4 w-4 text-warm/70" />
-                      <span>Copy Board Memo</span>
+                       <span>Copy estimate summary</span>
                     </>
                   )}
                 </button>
@@ -364,12 +364,12 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
                   title="Forward this verified calculation to Tazwar Mahtab on WhatsApp"
                 >
                   <WhatsAppIcon className="h-4 w-4 shrink-0" />
-                  <span>Forward to WhatsApp</span>
+                   <span>Share estimate</span>
                 </a>
 
                 {/* 3. Primary Liquid Metal Assessment CTA */}
                 <LiquidMetalButton
-                  label="Lock In 30% Savings"
+                   label="Request a site assessment"
                   onClick={onOpenAssessment}
                 />
               </div>
