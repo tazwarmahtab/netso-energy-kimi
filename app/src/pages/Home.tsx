@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { ChevronRight } from "lucide-react";
+import { useLocation } from "react-router";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import CookieBanner from "../components/CookieBanner";
@@ -12,6 +13,7 @@ import InstitutionalEconomics from "../components/InstitutionalEconomics";
 import ArchitecturalTransformation from "../components/ArchitecturalTransformation";
 import OperationsScroller from "../components/OperationsScroller";
 import SolarPergola3D from "../components/SolarPergola3D";
+import SiteStudyPoster from "../components/SiteStudyPoster";
 import FeasibilityModal from "../components/FeasibilityModal";
 import { CinematicIntro } from "../components/CinematicIntro";
 import { MarqueeTicker } from "../components/MarqueeTicker";
@@ -373,6 +375,8 @@ function Network() {
 /* ------------------------------ Page ------------------------------ */
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { pathname } = useLocation();
+  const isV2 = pathname === "/v2";
 
   return (
     <div className="bg-cream">
@@ -385,22 +389,26 @@ export default function Home() {
         <ArchitecturalTransformation onOpenAssessment={() => setIsModalOpen(true)} />
         <OperationsScroller onOpenAssessment={() => setIsModalOpen(true)} />
         <RMGEdgeSection onOpenFeasibility={() => setIsModalOpen(true)} />
-        <section id="pergola-twin" className="relative bg-forest-dark py-24 md:py-36 text-warm border-t border-warm/10">
-          <div className="mx-auto max-w-[1440px] px-5 md:px-10">
-            <div className="mb-12 max-w-3xl">
-              <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-                 Architectural solar design
-              </p>
-              <h2 className="font-display mt-4 text-4xl font-bold tracking-tight text-warm sm:text-5xl md:text-6xl">
-                 A solar structure designed for the roof beneath it.
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-sage md:text-lg">
-                 Netso can design elevated solar structures around the roof, access requirements and building use. Materials, module choice, structural loads and any lighting are confirmed in the project design rather than assumed from a standard template.
-              </p>
+        {isV2 ? (
+          <SiteStudyPoster onOpenAssessment={() => setIsModalOpen(true)} />
+        ) : (
+          <section id="pergola-twin" className="relative bg-forest-dark py-24 md:py-36 text-warm border-t border-warm/10">
+            <div className="mx-auto max-w-[1440px] px-5 md:px-10">
+              <div className="mb-12 max-w-3xl">
+                <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-gold">
+                   Architectural solar design
+                </p>
+                <h2 className="font-display mt-4 text-4xl font-bold tracking-tight text-warm sm:text-5xl md:text-6xl">
+                   A solar structure designed for the roof beneath it.
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-sage md:text-lg">
+                   Netso can design elevated solar structures around the roof, access requirements and building use. Materials, module choice, structural loads and any lighting are confirmed in the project design rather than assumed from a standard template.
+                </p>
+              </div>
+              <SolarPergola3D />
             </div>
-            <SolarPergola3D />
-          </div>
-        </section>
+          </section>
+        )}
         <Benefits />
         <HowItWorks />
         <Why />
