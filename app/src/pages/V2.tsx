@@ -10,9 +10,7 @@ import { shouldUseStaticMode } from "../components/v2/frameSequenceMath";
 import { MASTER_MANIFEST } from "../components/v2/masterManifestAdapter";
 import { isV2ChapterId, type V2ChapterId } from "../components/v2/v2Chapters";
 import { WHATSAPP_MESSAGE, WHATSAPP_PILL_LABEL } from "../components/v2/v2Actions";
-import SkyVideoHero from "../components/v2/SkyVideoHero";
 import "../styles/v2.css";
-import "../styles/v2-hero-video.css";
 import "../styles/v2-master.css";
 
 const MARKERS: FrameSequenceMarker[] = [
@@ -80,7 +78,6 @@ export default function V2() {
       <V2BrandNav activeChapter={activeChapter} />
       <V2ChapterRail activeChapter={activeChapter} onSelect={setActiveChapter} />
       <main>
-        <SkyVideoHero />
         <FrameSequence id="roof" label="Netso Energy master sequence" manifest={MASTER_MANIFEST} markers={MARKERS} onDrawnFrame={handleDrawnFrame}>
           <MasterStory manifest={MASTER_MANIFEST} />
         </FrameSequence>
