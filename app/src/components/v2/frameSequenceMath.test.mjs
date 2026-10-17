@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { getCanvasPixelSize, shouldRetryInitialFrame } from "./frameSequenceMath.ts";
+import {
+  getCanvasPixelSize,
+  shouldRetryInitialFrame,
+  shouldUseStaticMode,
+  STATIC_VIEWPORT_MAX_WIDTH,
+} from "./frameSequenceMath.ts";
 
 test("canvas dimensions recover source-sized pixels after a narrow to wide resize", () => {
   assert.deepEqual(getCanvasPixelSize(360, 640, 1280, 720, 2), { width: 405, height: 720 });
@@ -15,4 +20,13 @@ test("initial media retry is bounded after one recovery attempt", () => {
   assert.equal(shouldRetryInitialFrame(0), true);
   assert.equal(shouldRetryInitialFrame(1), false);
   assert.equal(shouldRetryInitialFrame(99), false);
+});
+
+test("static mode covers small screens and explicit motion/data-saving signals", () => {
+  assert.equal(shouldUseStaticMode({ viewportWidth: STATIC_VIEWPORT_MAX_WIDTH }), true);
+  assert.equal(shouldUseStaticMode({ viewportWidth: STATIC_VIEWPORT_MAX_WIDTH + 1 }), false);
+  assert.equal(shouldUseStaticMode({ reducedMotion: true, viewportWidth: 1440 }), true);
+  assert.equal(shouldUseStaticMode({ reducedData: true, viewportWidth: 1440 }), true);
+  assert.equal(shouldUseStaticMode({ saveData: true, viewportWidth: 1440 }), true);
+  assert.equal(shouldUseStaticMode({ viewportWidth: undefined }), false);
 });

@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { SunMark } from "./Wordmark";
 import { WhatsAppIcon, getNetsoWhatsAppUrl } from "./ui/WhatsAppIcon";
+import { WHATSAPP_MESSAGE } from "./v2/v2Actions";
 
 const SITE = [
   { label: "Product", to: "/product" },
@@ -25,9 +26,9 @@ const SOCIAL = [
   { label: "Instagram", href: "#", path: "M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8 0 3.2 0 3.6-.1 4.8-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1-3.2 0-3.6 0-4.8-.1-3.3-.1-4.8-1.7-4.9-4.9-.1-1.3-.1-1.6-.1-4.8 0-3.2 0-3.6.1-4.8.1-3.2 1.7-4.8 4.9-4.9 1.2-.1 1.6-.1 4.8-.1zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8.2a3.2 3.2 0 110-6.4 3.2 3.2 0 010 6.4zm5.2-9.6a1.2 1.2 0 100 2.4 1.2 1.2 0 000-2.4z" },
 ];
 
-export default function Footer() {
+export default function Footer({ v2 = false }: { v2?: boolean }) {
   return (
-    <footer className="relative overflow-hidden bg-ink text-cream">
+    <footer className={`relative overflow-hidden bg-ink text-cream${v2 ? " v2-footer" : ""}`}>
       {/* Marquee */}
       <div className="border-b border-cream/10 py-8 md:py-12" aria-hidden="true">
         <div className="flex w-max animate-marquee-slow items-center gap-10 whitespace-nowrap pr-10">
@@ -35,7 +36,9 @@ export default function Footer() {
             Array.from({ length: 3 }).map((_, i) => (
               <span key={`${dup}-${i}`} className="flex items-center gap-10">
                 <span className="font-display text-[9vw] leading-none text-cream/90 md:text-[6rem]">
-                  The Sky Is Already Working
+                  {/* /v2 opens on "The sky is already working.", so the marquee
+                      band carries the category line instead of restating it. */}
+                  {v2 ? "Architectural Energy Infrastructure" : "The Sky Is Already Working"}
                 </span>
                 <SunMark className="h-[6vw] w-[6vw] md:h-16 md:w-16" />
               </span>
@@ -52,13 +55,15 @@ export default function Footer() {
             </span>
           </div>
           <p className="mt-5 max-w-xs text-[15px] leading-relaxed text-cream/60">
-            A rooftop solar partner for Bangladeshi industry. Netso can finance, build, own and operate suitable systems under long-term power agreements.
+            {v2
+              ? "A new kind of energy company. Rooftop solar for Bangladeshi industry — financed, built, owned and operated by Netso. Where project structure supports it, customer asset purchase can be zero upfront."
+               : "A rooftop solar partner for Bangladeshi industry. Netso can finance, build, own and operate suitable systems under long-term power agreements."}
           </p>
           <p className="eyebrow mt-8 text-gold">The sky is already working</p>
         </div>
 
         <nav aria-label="Site">
-          <p className="eyebrow mb-5 text-cream/45">Site</p>
+          <p className="eyebrow mb-5 text-cream/60">Site</p>
           <ul className="space-y-3">
             {SITE.map((l) => (
               <li key={l.label}>
@@ -71,7 +76,7 @@ export default function Footer() {
         </nav>
 
         <nav aria-label="Resources">
-          <p className="eyebrow mb-5 text-cream/45">Resources</p>
+          <p className="eyebrow mb-5 text-cream/60">Resources</p>
           <ul className="space-y-3">
             {RESOURCES.map((l) => (
               <li key={l.label}>
@@ -90,7 +95,7 @@ export default function Footer() {
         </nav>
 
         <div>
-          <p className="eyebrow mb-5 text-cream/45">Follow</p>
+          <p className="eyebrow mb-5 text-cream/60">Follow</p>
           <div className="flex gap-3">
             {SOCIAL.map((s) => (
               <a
@@ -105,29 +110,31 @@ export default function Footer() {
               </a>
             ))}
           </div>
-          <p className="mt-6 text-[13px] text-cream/40">
+          {/* Contact details, not a call to action: the floating WhatsApp
+              affordance stays available over the footer, so the footer does not
+              repeat the same ask a fourth time. */}
+          <p className="mt-6 text-[13px] text-cream/60">
             <a href="mailto:tazwar@netsoenergy.com" className="link-underline">tazwar@netsoenergy.com</a>
+            <br />
+            <a
+              className="link-underline inline-flex items-center gap-1.5"
+              href={getNetsoWhatsAppUrl(WHATSAPP_MESSAGE)}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Direct line to the Netso origination desk on WhatsApp"
+            >
+              <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
+              <span>+880 1791-222777</span>
+            </a>
             <br />
             Dhaka, Bangladesh
           </p>
-          <a
-            href={getNetsoWhatsAppUrl(
-              "Hello Netso Energy, I would like to schedule a preliminary on-site rooftop audit for our industrial facility."
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 font-mono text-xs font-semibold text-emerald-400 hover:bg-emerald-500/20 transition-all hover:scale-[1.02]"
-            title="Direct line to Netso Origination Desk on WhatsApp"
-          >
-            <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
-            <span>+880 1791-222777</span>
-          </a>
         </div>
       </div>
 
       {/* Monumental Ghost Watermark */}
-      <div className="pointer-events-none relative w-full overflow-hidden select-none -mb-[3vw] pt-4">
-        <div className="font-display font-bold text-[22vw] leading-none tracking-[-0.05em] text-cream/[0.03] text-center whitespace-nowrap">
+      <div className="pointer-events-none relative w-full overflow-hidden select-none -mb-[3vw] pt-4" aria-hidden="true">
+        <div className={`${v2 ? "v2-footer__watermark" : ""} font-display font-bold text-[22vw] leading-none tracking-[-0.05em] text-cream/[0.03] text-center whitespace-nowrap`}>
           NETSO<span className="text-gold/[0.05]">°</span>
         </div>
       </div>
@@ -137,8 +144,8 @@ export default function Footer() {
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
         <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-5 py-6 text-[13px] text-cream/40 md:flex-row md:items-center md:justify-between md:px-10">
-          <span>© {new Date().getFullYear()} Netso Energy Limited. All rights reserved.</span>
-          <span className="font-mono text-xs tracking-widest text-gold/70 uppercase">NETSO° • DHAKA — GAZIPUR</span>
+          <span className="text-cream/60">© {new Date().getFullYear()} Netso Energy Limited. All rights reserved.</span>
+          <span className="font-mono text-xs tracking-widest text-gold uppercase">NETSO° • DHAKA — GAZIPUR</span>
         </div>
       </div>
     </footer>

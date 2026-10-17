@@ -7,12 +7,17 @@
   --v2-gold: #c6a15b;
   --v2-line: rgba(244, 238, 225, 0.18);
   --v2-muted: rgba(244, 238, 225, 0.64);
+  /* Right-edge clearance reserved for the fixed chapter rail; zero until the
+     rail shows, so only the right side of every surface pays for it. */
+  --v2-rail-gutter: 0px;
   min-height: 100vh;
   overflow: clip;
   background: var(--v2-forest);
   color: var(--v2-cream);
   font-family: "General Sans", system-ui, sans-serif;
 }
+
+.v2-footer .v2-footer__watermark { color: rgba(244, 238, 225, 0.4) !important; }
 
 .v2-page button,
 .v2-page a {
@@ -103,6 +108,8 @@
   border-radius: 12px;
   background: rgba(7, 17, 13, 0.98);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+  max-height: calc(100svh - 96px);
+  overflow-y: auto;
 }
 .v2-mobile-menu button { justify-content: flex-start; width: 100%; padding: 12px 0; font-size: 11px; }
 .v2-mobile-menu button span { width: 26px; color: var(--v2-gold); }
@@ -211,49 +218,60 @@
 .v2-architecture__specs b { color: var(--v2-gold); font-weight: 400; }
 .v2-architecture__caption { position: absolute; z-index: 2; right: 5vw; bottom: 35px; color: rgba(244, 238, 225, 0.45); font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; }
 
-.v2-finance { position: relative; min-height: 470vh; color: var(--v2-ink); background: var(--v2-paper); }
-.v2-finance__track { height: 470vh; }
-.v2-finance__stage { position: sticky; top: 0; display: grid; grid-template-columns: minmax(230px, 0.7fr) minmax(420px, 1.55fr) minmax(180px, 0.55fr); grid-template-rows: auto 1fr auto; align-items: center; gap: 3vw; height: 100svh; min-height: 680px; padding: 130px clamp(24px, 6vw, 100px) 56px; overflow: hidden; }
-.v2-finance__copy { align-self: center; max-width: 390px; }
+.v2-finance { position: relative; color: var(--v2-ink); background: var(--v2-paper); }
+.v2-finance__track { height: auto; }
+.v2-finance__stage { position: relative; display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(240px, 1fr); grid-template-areas: "copy copy" "bill evidence"; align-items: start; align-content: center; gap: 32px 40px; min-height: 100svh; padding: 144px max(clamp(24px, 6vw, 100px), var(--v2-rail-gutter)) 56px clamp(24px, 6vw, 100px); }
+.v2-finance__copy { grid-area: copy; min-width: 0; }
+.v2-finance__copy .v2-kicker { margin-bottom: 16px; }
 .v2-finance__copy .v2-kicker { color: #7b602b; }
 .v2-finance__copy .v2-kicker span { color: var(--v2-ink); }
-.v2-finance__copy h2 { font-size: clamp(54px, 6.7vw, 102px); }
-.v2-finance__copy h2 em { color: #ab7f34; }
-.v2-finance__copy > p:not(.v2-kicker) { margin: 28px 0 0; color: rgba(16, 25, 20, 0.68); font-size: 15px; line-height: 1.55; }
-.v2-finance__note { display: flex; align-items: center; gap: 8px; margin-top: 25px; color: #655d51; font-family: "Space Mono", monospace; font-size: 9px; line-height: 1.4; text-transform: uppercase; }
+.v2-finance__copy h2 { font-size: clamp(44px, 5.6vw, 76px); letter-spacing: -0.045em; line-height: 1.06; text-wrap: balance; }
 .v2-signal--gold { background: #b18434; box-shadow: 0 0 0 4px rgba(177, 132, 52, 0.12); }
-.v2-finance__visual { position: relative; grid-column: 2; min-width: 0; align-self: center; padding: 22px 0 28px; border-top: 1px solid rgba(16, 25, 20, 0.18); border-bottom: 1px solid rgba(16, 25, 20, 0.18); }
-.v2-finance__visual-head { display: flex; justify-content: space-between; color: #655d51; font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; }
-.v2-finance__chart { display: block; width: 100%; height: auto; margin-top: 12px; overflow: visible; }
-.v2-finance__grid line { stroke: rgba(16, 25, 20, 0.12); stroke-width: 1; }
-.v2-finance__axis text { fill: rgba(16, 25, 20, 0.44); font-family: "Space Mono", monospace; font-size: 10px; letter-spacing: 0.08em; }
-.v2-finance__curve { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.v2-finance__curve--grid { stroke: rgba(16, 25, 20, 0.44); }
-.v2-finance__curve--netso { stroke: #ad8237; }
-.v2-finance__dot--grid { fill: var(--v2-ink); }
-.v2-finance__dot--netso { fill: #ad8237; }
-.v2-finance__legend { display: flex; flex-wrap: wrap; gap: 14px 22px; color: rgba(16, 25, 20, 0.72); font-family: "Space Mono", monospace; font-size: 9px; text-transform: uppercase; }
-.v2-legend-dot { display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; }
-.v2-legend-dot--grid { background: var(--v2-ink); }
-.v2-legend-dot--netso { background: #ad8237; }
-.v2-finance__delta { position: absolute; right: 3%; bottom: 21%; display: flex; align-items: center; gap: 10px; color: #ad8237; }
-.v2-finance__delta strong { font-family: Archivo, sans-serif; font-size: clamp(40px, 5vw, 76px); font-weight: 500; letter-spacing: -0.08em; line-height: 0.8; }
-.v2-finance__delta span { color: #865e17; font-family: "Space Mono", monospace; font-size: 8px; line-height: 1.35; text-transform: uppercase; }
-.v2-finance__panel,
-.v2-finance__cumulative { display: flex; flex-direction: column; gap: 12px; color: rgba(16, 25, 20, 0.68); font-family: "Space Mono", monospace; font-size: 10px; line-height: 1.35; }
-.v2-finance__panel { grid-column: 3; align-self: end; }
-.v2-finance__panel span:not(.v2-finance__panel-label) { padding-top: 10px; border-top: 1px solid rgba(16, 25, 20, 0.16); }
-.v2-finance__panel b { display: block; margin-top: 3px; color: var(--v2-ink); font-size: 11px; font-weight: 700; }
-.v2-finance__panel-label { color: #8a641f; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; }
-.v2-finance__cumulative { grid-column: 2; align-self: end; padding-top: 18px; border-top: 1px solid rgba(16, 25, 20, 0.18); }
-.v2-finance__cumulative strong { color: var(--v2-ink); font-family: Archivo, sans-serif; font-size: clamp(33px, 3vw, 52px); font-weight: 500; letter-spacing: -0.07em; }
-.v2-finance__cumulative strong small { color: #59615a; font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: 0.04em; text-transform: uppercase; }
+.v2-finance__visual { grid-area: bill; min-width: 0; }
+.v2-finance__bars-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px 20px; margin-bottom: 20px; }
+.v2-finance__bars-caption { margin: 0; color: #655d51; font-family: "Space Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.1em; line-height: 1.4; text-transform: uppercase; }
+.v2-finance__bar { display: grid; grid-template-rows: auto 1fr; gap: 8px; padding: 12px 16px 10px; border: 1px solid rgba(16, 25, 20, 0.14); border-radius: 14px; background: rgba(255, 255, 255, 0.32); }
+.v2-finance__bar[data-bar="with-solar"] { border-color: rgba(16, 25, 20, 0.1); background: rgba(255, 255, 255, 0.22); }
+.v2-finance__bar + .v2-finance__bar { margin-top: 14px; }
+.v2-finance__bar-head { position: relative; display: flex; justify-content: space-between; align-items: baseline; min-height: 34px; gap: 12px; }
+.v2-finance__bar-name { color: #655d51; font-family: "Space Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.1em; line-height: 1.3; text-transform: uppercase; white-space: nowrap; }
+.v2-finance__bar-name span { letter-spacing: 0.06em; opacity: 0.7; }
+.v2-finance__bar-total { color: var(--v2-ink); font-family: Archivo, sans-serif; font-size: clamp(26px, 2.4vw, 34px); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; line-height: 1; text-align: right; white-space: nowrap; }
+.v2-finance__bar-total--solar { color: #76551d; }
+.v2-finance__bar-track { position: relative; display: flex; height: 26px; overflow: hidden; border-radius: 3px; background: rgba(16, 25, 20, 0.06); }
+.v2-finance__seg { display: block; height: 100%; }
+.v2-finance__seg--rest { background: rgba(16, 25, 20, 0.26); }
+.v2-finance__seg--portion { background: rgba(16, 25, 20, 0.52); }
+.v2-finance__seg--discount { background: #ad8237; }
+.v2-finance__bar-gap { position: absolute; top: 0; right: 0; bottom: 0; display: grid; place-items: center; padding: 0 3px; border-left: 1px dashed rgba(16, 25, 20, 0.42); color: #76551d; font-family: "Space Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.02em; white-space: nowrap; }
+.v2-finance__bar-gap-label { display: block; margin-top: 6px; color: #76551d; font-size: 11px; letter-spacing: 0.02em; text-transform: uppercase; }
+.v2-finance__bill { width: 100%; margin-top: 24px; border-collapse: collapse; table-layout: fixed; }
+.v2-finance__bill caption { padding-bottom: 10px; color: #655d51; font-size: 12px; line-height: 1.5; text-align: left; }
+.v2-finance__bill th, .v2-finance__bill td { padding: 11px 8px; border-bottom: 1px solid rgba(16, 25, 20, 0.14); text-align: right; }
+.v2-finance__bill th:first-child { width: 42%; padding-left: 0; text-align: left; }
+.v2-finance__bill th { color: #655d51; font-size: 13px; font-weight: 500; line-height: 1.4; }
+.v2-finance__bill thead th { padding-top: 0; padding-bottom: 10px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+.v2-finance__bill thead span { font-size: 10px; font-weight: 400; letter-spacing: 0.04em; }
+.v2-finance__bill td { color: var(--v2-ink); font-family: Archivo, sans-serif; font-size: clamp(19px, 1.9vw, 25px); font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: -0.025em; line-height: 1.15; white-space: nowrap; }
+.v2-finance__bill-solar th, .v2-finance__bill-solar td { background: rgba(198, 161, 91, 0.13); }
+.v2-finance__bill-solar td:last-child { color: #76551d; }
+.v2-finance__bill tfoot th, .v2-finance__bill tfoot td { border-bottom: 0; border-top: 1px solid rgba(16, 25, 20, 0.3); font-weight: 600; }
+.v2-finance__bill tfoot th { color: var(--v2-ink); }
+.v2-finance__result { display: flex; flex-direction: column; gap: 3px; margin: 18px 0 0; padding: 12px 16px; border-left: 2px solid #ad8237; background: rgba(198, 161, 91, 0.13); font-size: 15px; line-height: 1.5; text-wrap: pretty; }
+.v2-finance__result strong { color: var(--v2-ink); font-weight: 600; }
+.v2-finance__result span { color: #655d51; font-size: 13px; }
+.v2-finance__sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.v2-finance__evidence { grid-area: evidence; min-width: 0; padding-left: 28px; border-left: 1px solid rgba(16, 25, 20, 0.16); }
+.v2-finance__disclosure { margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(16, 25, 20, 0.16); color: #655d51; font-size: 12px; line-height: 1.55; letter-spacing: 0.01em; }
+.v2-finance__disclosure p { margin: 0 0 10px; }
+.v2-finance__disclosure p:last-child { margin-bottom: 0; }
+.v2-finance__note { color: var(--v2-ink); font-weight: 500; }
 
 .v2-proof-rail { right: clamp(24px, 5vw, 80px); bottom: 14%; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; color: rgba(244, 238, 225, 0.64); text-align: right; }
 .v2-proof-rail__label { color: var(--v2-gold); }
 .v2-proof-rail__muted { max-width: 240px; color: rgba(244, 238, 225, 0.42); line-height: 1.5; }
 
-.v2-final-cta { min-height: 100svh; padding: clamp(100px, 13vw, 180px) clamp(24px, 8vw, 136px) 28px; color: var(--v2-ink); background: var(--v2-paper); }
+.v2-final-cta { min-height: 100svh; padding: clamp(100px, 13vw, 180px) max(clamp(24px, 8vw, 136px), var(--v2-rail-gutter)) 28px clamp(24px, 8vw, 136px); color: var(--v2-ink); background: var(--v2-paper); }
 .v2-final-cta__inner { display: grid; grid-template-columns: minmax(260px, 0.9fr) minmax(360px, 0.7fr); align-items: center; gap: clamp(60px, 12vw, 220px); max-width: 1300px; min-height: calc(100svh - 100px); margin: 0 auto; }
 .v2-final-cta__copy .v2-kicker { color: #76551d; }
 .v2-final-cta__copy .v2-kicker span { color: var(--v2-ink); }
@@ -271,6 +289,7 @@
 .v2-form input[aria-invalid="true"] { border-color: #b64b3e; }
 .v2-form input[type="file"] { padding-top: 11px; font-size: 11px; }
 .v2-form label small { color: #5d625d; font-size: 8px; }
+.v2-form-field-error { color: #a54037; font-family: "General Sans", system-ui, sans-serif; font-size: 11px; letter-spacing: 0; line-height: 1.4; text-transform: none; }
 .v2-form .v2-button { width: 100%; margin-top: 8px; border: 0; cursor: pointer; }
 .v2-form > small { color: #5f635d; font-family: "Space Mono", monospace; font-size: 8px; line-height: 1.5; }
 .v2-form-status { min-height: 22px; color: #a54037; font-size: 12px; }
@@ -283,8 +302,19 @@
 .v2-form-success__actions button { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; color: #8e6c2c; background: transparent; cursor: pointer; font-family: "Space Mono", monospace; font-size: 9px; text-transform: uppercase; }
 .v2-form-success .v2-whatsapp-link { margin-top: 8px; }
 .v2-final-cta__footer { display: flex; justify-content: space-between; max-width: 1300px; margin: 0 auto; padding-top: 22px; border-top: 1px solid rgba(16, 25, 20, 0.16); color: #5e625d; font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; }
-.v2-whatsapp-pill { position: fixed; z-index: 40; right: 22px; bottom: 22px; display: inline-flex; align-items: center; gap: 8px; padding: 11px 14px; border: 1px solid rgba(198, 161, 91, 0.42); border-radius: 999px; color: var(--v2-cream); background: rgba(7, 17, 13, 0.88); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22); backdrop-filter: blur(14px); font-family: "Space Mono", monospace; font-size: 8px; letter-spacing: 0.04em; text-transform: uppercase; }
+/* The footer does not reserve the rail gutter, so it paints over the fixed
+   chapter rail instead of being overlapped by it; the WhatsApp pill stays
+   above both, and the mobile menu (55) stays above the pill. */
+.v2-footer { z-index: 46; }
+
+.v2-whatsapp-pill { position: fixed; z-index: 47; right: 22px; bottom: 22px; display: inline-flex; align-items: center; gap: 8px; padding: 11px 14px; border: 1px solid rgba(198, 161, 91, 0.42); border-radius: 999px; color: var(--v2-cream); background: rgba(7, 17, 13, 0.88); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22); backdrop-filter: blur(14px); font-family: "Space Mono", monospace; font-size: 8px; letter-spacing: 0.04em; text-transform: uppercase; }
 .v2-whatsapp-pill:hover { border-color: #52d797; }
+
+@media (min-width: 1024px) {
+  /* Clears the chapter rail: the rail measures ~147px in from the right edge,
+     so right-hand copy keeps this much room. */
+  .v2-page { --v2-rail-gutter: 168px; }
+}
 
 /* A low-opacity WebGL atmosphere keeps the media and fan stills as the proof point. */
 .v2-sky-layer {
@@ -304,8 +334,8 @@
 @media (max-width: 1100px) {
   .v2-rail { gap: 14px; }
   .v2-rail button span:last-child { display: none; }
-  .v2-finance__stage { grid-template-columns: minmax(220px, 0.65fr) minmax(380px, 1.4fr); }
-  .v2-finance__panel { display: none; }
+  .v2-finance__stage { gap: 28px; }
+  .v2-finance__evidence { padding-left: 20px; }
 }
 
 @media (max-width: 900px) {
@@ -329,18 +359,17 @@
   .v2-architecture__copy h2 { font-size: clamp(50px, 15vw, 82px); }
   .v2-architecture__specs { gap: 8px 14px; }
   .v2-architecture__caption { right: 22px; bottom: 27px; font-size: 8px; }
-  .v2-finance { min-height: auto; }
-  .v2-finance__track { height: auto; }
-  .v2-finance__stage { position: relative; grid-template-columns: 1fr; grid-template-rows: auto; align-items: start; gap: 28px; height: auto; min-height: 100svh; padding: 112px 22px 60px; }
-  .v2-finance__copy, .v2-finance__visual, .v2-finance__cumulative { grid-column: 1; }
-  .v2-finance__copy h2 { font-size: clamp(52px, 15vw, 82px); }
-  .v2-finance__copy > p:not(.v2-kicker) { margin-top: 22px; font-size: 14px; }
-  .v2-finance__visual { padding-top: 16px; }
-  .v2-finance__visual-head { gap: 10px; font-size: 8px; }
-  .v2-finance__visual-head span:last-child { text-align: right; }
-  .v2-finance__delta { right: 0; bottom: 19%; }
-  .v2-finance__delta strong { font-size: 50px; }
-  .v2-finance__cumulative { padding-top: 15px; }
+  .v2-finance__stage { grid-template-columns: minmax(0, 1fr); grid-template-areas: "copy" "bill" "evidence"; gap: 24px; align-content: start; padding: 112px 22px 48px; }
+  .v2-finance__copy h2 { font-size: clamp(32px, 8.8vw, 54px); }
+  .v2-finance__bill caption { padding-bottom: 12px; font-size: 12px; }
+  .v2-finance__bill th, .v2-finance__bill td { padding: 12px 8px; }
+  .v2-finance__bill th { font-size: 12px; }
+  .v2-finance__bill td { font-size: clamp(20px, 5.6vw, 30px); }
+.v2-finance__result { margin-top: 14px; padding: 11px 14px; font-size: 14px; }
+.v2-finance__bars-meta { margin-bottom: 16px; }
+.v2-finance__bar-track { height: 24px; }
+.v2-finance__bill { margin-top: 20px; }
+.v2-finance__evidence { display: block; padding: 0; border-left: 0; }
   .v2-proof-rail { right: 22px; bottom: 8%; max-width: 170px; font-size: 8px; }
   .v2-final-cta { min-height: auto; padding: 100px 22px 22px; }
   .v2-final-cta__inner { display: flex; flex-direction: column; align-items: stretch; gap: 50px; min-height: auto; }
@@ -356,10 +385,17 @@
   .v2-intro { padding: 22px; }
   .v2-intro__footer span:first-child { max-width: 150px; line-height: 1.5; }
   .v2-topbar__brand span { font-size: 14px; }
-  .v2-finance__curve { stroke-width: 4; }
-  .v2-finance__legend { font-size: 8px; }
-  .v2-finance__delta { position: relative; right: auto; bottom: auto; margin-top: -8px; }
-  .v2-finance__cumulative strong { font-size: 38px; }
+  .v2-finance__stage { gap: 20px; padding-top: 104px; padding-bottom: 32px; }
+  .v2-finance__copy .v2-kicker { margin-bottom: 12px; }
+  .v2-finance__bill caption { padding-bottom: 8px; }
+  .v2-finance__bill th, .v2-finance__bill td { padding-top: 10px; padding-bottom: 10px; }
+.v2-finance__bill thead th { padding-top: 0; padding-bottom: 8px; }
+.v2-finance__result { margin-top: 12px; }
+.v2-finance__bars-meta { gap: 6px 14px; }
+.v2-finance__bar + .v2-finance__bar { margin-top: 14px; }
+.v2-finance__bar-head { min-height: 30px; }
+.v2-finance__bar-track { height: 22px; }
+.v2-finance__bill { margin-top: 18px; }
   .v2-whatsapp-pill span { display: none; }
   .v2-whatsapp-pill { width: 42px; height: 42px; justify-content: center; padding: 0; }
 }
@@ -713,42 +749,6 @@
   .v2-sky-hero {
     height: auto;
     min-height: 100svh;
-  }
-
-  .v2-sky-hero .v2-media-scene__stage {
-    position: relative;
-    min-height: 100svh;
-  }
-
-  .v2-sky-hero .v2-sky-layer--hero {
-    display: none;
-  }
-
-  .v2-sky-hero__hero-copy {
-    opacity: 1;
-    transform: none;
-  }
-
-  .v2-sky-hero__roof-copy {
-    display: none;
-  }
-
-  .v2-sky-hero__static-roof {
-    display: block;
-    min-height: 104svh;
-    margin-top: -16svh;
-  }
-
-  .v2-sky-hero__static-roof-image {
-    mask-image: var(--static-roof-fade-mask);
-    -webkit-mask-image: var(--static-roof-fade-mask);
-  }
-
-  .v2-sky-hero__static-roof-copy { padding-top: 40svh; }
-
-  .v2-sky-hero__scroll-cue {
-    display: flex;
-    opacity: 1;
   }
 }
 

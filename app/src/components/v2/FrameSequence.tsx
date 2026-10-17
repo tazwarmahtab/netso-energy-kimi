@@ -13,7 +13,13 @@ import {
   restoreMasterPlayhead,
   type MasterManifest,
 } from "./masterStoryHelper";
-import { getCanvasPixelSize, shouldRetryInitialFrame } from "./frameSequenceMath";
+import {
+  getCanvasPixelSize,
+  REQUESTED_FRAME_FALLBACK_MS,
+  REQUESTED_FRAME_RETRY_DELAY_MS,
+  shouldRetryInitialFrame,
+  shouldUseStaticMode,
+} from "./frameSequenceMath";
 import {
   mediaFrameRuntime,
   type FrameLease,
@@ -68,12 +74,42 @@ type IdleWindow = Window & {
   cancelIdleCallback?: (handle: number) => void;
 };
 
+type ChangeSource = {
+  addEventListener?: (type: "change", listener: () => void) => void;
+  removeEventListener?: (type: "change", listener: () => void) => void;
+  addListener?: (listener: () => void) => void;
+  removeListener?: (listener: () => void) => void;
+};
+
+type NetworkInformationLike = ChangeSource & {
+  saveData?: boolean;
+};
+
 type InitialMediaStatus = "pending" | "ready" | "failed";
 
-const isStaticEnvironment = (isLegacy: boolean): boolean => {
+const isStaticEnvironment = (): boolean => {
   if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    || (isLegacy && window.matchMedia("(max-width: 900px)").matches);
+  const match = (query: string): MediaQueryList | undefined =>
+    typeof window.matchMedia === "function" ? window.matchMedia(query) : undefined;
+  const connection = typeof navigator !== "undefined"
+    ? (navigator as Navigator & { connection?: NetworkInformationLike }).connection
+    : undefined;
+  return shouldUseStaticMode({
+    reducedMotion: match("(prefers-reduced-motion: reduce)")?.matches,
+    reducedData: match("(prefers-reduced-data: reduce)")?.matches,
+    saveData: connection?.saveData === true,
+    viewportWidth: window.innerWidth,
+  });
+};
+
+const watchChange = (source: ChangeSource | undefined, listener: () => void): (() => void) => {
+  if (!source) return () => undefined;
+  if (source.addEventListener && source.removeEventListener) {
+    source.addEventListener("change", listener);
+    return () => source.removeEventListener?.("change", listener);
+  }
+  source.addListener?.(listener);
+  return () => source.removeListener?.(listener);
 };
 
 const mapLegacyProgress = (sceneProgress: number, playbackStart: number, holdEnd: number): number => {
@@ -109,6 +145,17 @@ const getFrameUrl = (manifest: MasterManifest, frame: number, assetTag?: string)
   return assetTag ? `${url}?${encodeURIComponent(assetTag)}` : url;
 };
 
+const getSegmentForFrame = (manifest: MasterManifest, frame: number) => {
+  const exact = manifest.segments.find((segment) => frame >= segment.startFrame && frame < segment.endFrame);
+  if (exact) return exact;
+  return manifest.segments.reduce<MasterManifest["segments"][number] | undefined>((nearest, segment) => {
+    if (!nearest) return segment;
+    const distance = Math.min(Math.abs(frame - segment.startFrame), Math.abs(frame - segment.endFrame));
+    const nearestDistance = Math.min(Math.abs(frame - nearest.startFrame), Math.abs(frame - nearest.endFrame));
+    return distance < nearestDistance ? segment : nearest;
+  }, undefined);
+};
+
 function setInteractiveStoryState(section: HTMLElement, manifest: MasterManifest, frame: number, staticMode: boolean): void {
   const elements = section.querySelectorAll<HTMLElement>("[data-story-segment-id]");
   if (staticMode) {
@@ -118,6 +165,7 @@ function setInteractiveStoryState(section: HTMLElement, manifest: MasterManifest
       element.setAttribute("aria-hidden", String(hiddenInStaticMode));
       element.inert = hiddenInStaticMode;
     });
+    section.dataset.masterSegment = "transition";
     return;
   }
 
@@ -167,6 +215,7 @@ export default function FrameSequence({
 }: FrameSequenceProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const posterRetryRef = useRef<number | null>(null);
   const callbacksRef = useRef({ onRequestedFrame, onDrawnFrame, onSceneProgress });
   const isLegacy = !manifest;
   const legacyEndFrame = Math.min(Math.max(0, totalFrames - 1), Math.max(startFrame, endFrame ?? totalFrames - 1));
@@ -182,7 +231,7 @@ export default function FrameSequence({
     excludedScenes: [],
   }), [evidenceLabel, legacyEndFrame, manifest, path, poster, startFrame, totalFrames]);
   const map = useMemo(() => getMasterScrollMap(runtimeManifest), [runtimeManifest]);
-  const [staticMode, setStaticMode] = useState(() => isStaticEnvironment(isLegacy));
+  const [staticMode, setStaticMode] = useState(isStaticEnvironment);
   const [mediaFallback, setMediaFallback] = useState(false);
   const maxFrame = Math.max(0, runtimeManifest.frameCount - 1);
   const legacyPlaybackStart = Math.max(0, Math.min(0.95, playbackStartProgress ?? 0));
@@ -197,25 +246,45 @@ export default function FrameSequence({
     callbacksRef.current = { onRequestedFrame, onDrawnFrame, onSceneProgress };
   }, [onDrawnFrame, onRequestedFrame, onSceneProgress]);
 
+  useEffect(() => () => {
+    if (posterRetryRef.current !== null) window.clearTimeout(posterRetryRef.current);
+    posterRetryRef.current = null;
+  }, []);
+
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const match = (query: string): MediaQueryList | undefined =>
+      typeof window.matchMedia === "function" ? window.matchMedia(query) : undefined;
+    const motionQuery = match("(prefers-reduced-motion: reduce)");
+    const dataQuery = match("(prefers-reduced-data: reduce)");
+    const widthQuery = match("(max-width: 900px)");
+    const connection = typeof navigator !== "undefined"
+      ? (navigator as Navigator & { connection?: NetworkInformationLike }).connection
+      : undefined;
     const updateMode = () => {
-      const nextMode = motionQuery.matches || (isLegacy && window.matchMedia("(max-width: 900px)").matches);
+      const nextMode = shouldUseStaticMode({
+        reducedMotion: motionQuery?.matches,
+        reducedData: dataQuery?.matches,
+        saveData: connection?.saveData === true,
+        viewportWidth: window.innerWidth,
+      });
       setStaticMode((currentMode) => {
         if (currentMode !== nextMode) setInitialMedia({ key: "", status: "pending" });
         return nextMode;
       });
     };
     updateMode();
-    motionQuery.addEventListener("change", updateMode);
-    const widthQuery = isLegacy ? window.matchMedia("(max-width: 900px)") : undefined;
-    widthQuery?.addEventListener("change", updateMode);
+    const unwatchMotion = watchChange(motionQuery, updateMode);
+    const unwatchData = watchChange(dataQuery, updateMode);
+    const unwatchWidth = watchChange(widthQuery, updateMode);
+    const unwatchConnection = watchChange(connection, updateMode);
     return () => {
-      motionQuery.removeEventListener("change", updateMode);
-      widthQuery?.removeEventListener("change", updateMode);
+      unwatchMotion();
+      unwatchData();
+      unwatchWidth();
+      unwatchConnection();
     };
-  }, [isLegacy]);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -269,13 +338,17 @@ export default function FrameSequence({
       let idleHandle: number | null = null;
       let idleTimeout: number | null = null;
       let retryTimeout: number | null = null;
+      let targetFallbackTimeout: number | null = null;
       let frameTween: gsap.core.Tween | null = null;
       let resizeObserver: ResizeObserver | null = null;
       let activationObserver: IntersectionObserver | null = null;
       let viewportObserver: IntersectionObserver | null = null;
       let initialGateOpen = true;
       let initialTarget = requestedFrame;
-      let retryCount = 0;
+      let pendingTarget: number | null = requestedFrame;
+      let targetRequestId = 0;
+      let targetRetryCount = 0;
+      let recoveryTarget: number | null = null;
       const frameLeases = new Map<number, FrameLease>();
       const subscriptions = new Map<number, () => void>();
 
@@ -329,16 +402,92 @@ export default function FrameSequence({
         lease.release();
       };
 
+      const hasUsableFrame = (index: number): boolean => {
+        const snapshot = getSnapshot(index);
+        return snapshot?.status === "loaded" && Boolean(snapshot.image?.naturalWidth);
+      };
+
+      const setPosterVisible = (visible: boolean) => {
+        const posterElement = section.querySelector<HTMLImageElement>(".v2-master-sequence__poster");
+        if (!posterElement) return;
+        posterElement.style.opacity = visible ? "1" : "";
+        canvas.style.opacity = visible ? "0" : "";
+      };
+
+      const showPosterForFrame = (frame: number) => {
+        const posterElement = section.querySelector<HTMLImageElement>(".v2-master-sequence__poster");
+        const segment = getSegmentForFrame(runtimeManifest, frame);
+        if (posterElement) posterElement.src = segment?.poster || runtimeManifest.poster;
+        setPosterVisible(true);
+        const storyFrame = segment
+          ? Math.max(segment.startFrame, Math.min(segment.endFrame - 1, frame))
+          : frame;
+        setInteractiveStoryState(section, runtimeManifest, storyFrame, false);
+      };
+
+      const cancelTargetRecovery = () => {
+        targetRequestId += 1;
+        if (retryTimeout !== null) window.clearTimeout(retryTimeout);
+        if (targetFallbackTimeout !== null) window.clearTimeout(targetFallbackTimeout);
+        retryTimeout = null;
+        targetFallbackTimeout = null;
+        recoveryTarget = null;
+      };
+
+      const startTargetRequest = (target: number, showPoster = true) => {
+        cancelTargetRecovery();
+        const requestId = targetRequestId;
+        pendingTarget = target;
+        recoveryTarget = target;
+        targetRetryCount = 0;
+        if (showPoster) showPosterForFrame(target);
+        if (hasUsableFrame(target)) {
+          scheduleRender();
+          return;
+        }
+        targetFallbackTimeout = window.setTimeout(() => {
+          targetFallbackTimeout = null;
+          if (disposed || requestId !== targetRequestId || pendingTarget !== target) return;
+          if (hasUsableFrame(target)) {
+            scheduleRender();
+            return;
+          }
+          if (initialGateOpen) setInitialStatus("failed");
+          setMediaFallback(true);
+        }, REQUESTED_FRAME_FALLBACK_MS);
+      };
+
+      const handleTargetError = (target: number) => {
+        if (recoveryTarget !== target || pendingTarget !== target) startTargetRequest(target);
+        if (initialGateOpen) setInitialStatus("failed");
+        if (shouldRetryInitialFrame(targetRetryCount) && retryTimeout === null) {
+          targetRetryCount += 1;
+          const requestId = targetRequestId;
+          retryTimeout = window.setTimeout(() => {
+            retryTimeout = null;
+            if (disposed || requestId !== targetRequestId || pendingTarget !== target) return;
+            dropFrame(target);
+            if (initialGateOpen) setInitialStatus("pending");
+            enqueue(target, 0);
+          }, REQUESTED_FRAME_RETRY_DELAY_MS);
+        }
+      };
+
       const scheduleRender = () => {
         if (renderRaf !== null || disposed) return;
         renderRaf = window.requestAnimationFrame(() => {
           renderRaf = null;
           if (disposed) return;
-          const nearestLoaded = initialGateOpen ? initialTarget : getNearestLoadedIndex(frameLeases, requestedFrame, maxFrame);
+          const nearestLoaded = pendingTarget !== null
+            ? pendingTarget
+            : getNearestLoadedIndex(frameLeases, requestedFrame, maxFrame);
           const retained = lastDrawnFrame === null ? undefined : getSnapshot(lastDrawnFrame);
-          const retainedIsBetter = lastDrawnFrame !== null && retained?.status === "loaded" && Boolean(retained.image?.naturalWidth)
+          const retainedIsBetter = pendingTarget === null
+            && lastDrawnFrame !== null
+            && retained?.status === "loaded"
+            && Boolean(retained.image?.naturalWidth)
             && nearestLoaded !== null && Math.abs(lastDrawnFrame - requestedFrame) <= Math.abs(nearestLoaded - requestedFrame) + FRAME_HYSTERESIS;
-          const drawIndex = initialGateOpen ? initialTarget : retainedIsBetter ? lastDrawnFrame : nearestLoaded;
+          const drawIndex = retainedIsBetter ? lastDrawnFrame : nearestLoaded;
           if (drawIndex === null || drawIndex === undefined) return;
           const snapshot = getSnapshot(drawIndex);
           if (snapshot?.status !== "loaded" || !snapshot.image) return;
@@ -348,6 +497,11 @@ export default function FrameSequence({
           section.dataset.drawnMasterFrame = String(drawIndex);
           setInteractiveStoryState(section, runtimeManifest, drawIndex, false);
           callbacksRef.current.onDrawnFrame?.(drawIndex);
+          if (pendingTarget !== null && drawIndex === pendingTarget) {
+            pendingTarget = null;
+            cancelTargetRecovery();
+            setPosterVisible(false);
+          }
           if (initialGateOpen && drawIndex === initialTarget) {
             initialGateOpen = false;
             setInitialStatus("ready");
@@ -361,37 +515,24 @@ export default function FrameSequence({
           scheduleRender();
           return;
         }
-        if (snapshot.status === "error" && initialGateOpen && index === initialTarget) {
-          if (shouldRetryInitialFrame(retryCount) && retryTimeout === null) {
-            retryCount += 1;
-            setInitialStatus("failed");
-            retryTimeout = window.setTimeout(() => {
-              retryTimeout = null;
-              if (disposed) return;
-              dropFrame(index);
-              initialGateOpen = true;
-              initialTarget = requestedFrame;
-              setInitialStatus("pending");
-              enqueue(initialTarget, 0);
-            }, 1200);
-          } else {
-            setInitialStatus("failed");
-            setMediaFallback(true);
-          }
+        if (snapshot.status === "error" && index === requestedFrame) {
+          handleTargetError(index);
         }
         if (snapshot.status === "evicted") {
           dropFrame(index);
-          if (nearViewport && (index === requestedFrame || index === initialTarget)) enqueue(index, 0);
+          if (nearViewport && (index === requestedFrame || index === pendingTarget)) enqueue(index, 0);
         }
       };
 
       const enqueue = (index: number, priority: number) => {
-          const safeIndex = clampMasterFrame(index, runtimeManifest);
+        const safeIndex = clampMasterFrame(index, runtimeManifest);
         let lease = frameLeases.get(safeIndex);
         if (!lease) {
           lease = mediaFrameRuntime.acquire(getFrameUrl(runtimeManifest, safeIndex, assetTag), priority);
           frameLeases.set(safeIndex, lease);
-          subscriptions.set(safeIndex, lease.subscribe((snapshot) => onFrameChange(safeIndex, snapshot)));
+          const unsubscribe = lease.subscribe((snapshot) => onFrameChange(safeIndex, snapshot));
+          if (frameLeases.get(safeIndex) === lease) subscriptions.set(safeIndex, unsubscribe);
+          else unsubscribe();
         } else {
           lease.request(priority);
         }
@@ -439,11 +580,23 @@ export default function FrameSequence({
         requestedFrame = next;
         section.dataset.requestedMasterFrame = String(next);
         callbacksRef.current.onRequestedFrame?.(next);
-        if (initialGateOpen) initialTarget = next;
+        const needsTargetGate = lastDrawnFrame === null || Math.abs(next - lastDrawnFrame) > NEARBY_FRAMES;
+        if (initialGateOpen) {
+          initialTarget = next;
+          setInitialStatus("pending");
+          startTargetRequest(next);
+        } else if (needsTargetGate) {
+          startTargetRequest(next);
+        } else {
+          cancelTargetRecovery();
+          pendingTarget = null;
+          setPosterVisible(false);
+        }
         if (next === 0 || next === maxFrame || Math.abs(next - windowCenter) >= FRAME_WINDOW_STEP) {
           windowCenter = next;
           syncWindow(next, NEARBY_FRAMES);
         }
+        if (pendingTarget === next && !hasUsableFrame(next)) enqueue(next, 0);
         scheduleRender();
         scheduleIdlePrefetch();
       };
@@ -464,6 +617,7 @@ export default function FrameSequence({
         if (disposed || activated) return;
         activated = true;
         nearViewport = true;
+        startTargetRequest(initialTarget);
         enqueue(initialTarget, 0);
         syncWindow(initialTarget, NEARBY_FRAMES);
         scheduleIdlePrefetch();
@@ -502,6 +656,7 @@ export default function FrameSequence({
           requestedFrame = frame;
           initialTarget = frame;
           windowCenter = frame;
+          startTargetRequest(frame);
           section.dataset.requestedMasterFrame = String(frame);
           callbacksRef.current.onRequestedFrame?.(frame);
           syncWindow(frame, NEARBY_FRAMES);
@@ -545,7 +700,7 @@ export default function FrameSequence({
         if (renderRaf !== null) window.cancelAnimationFrame(renderRaf);
         if (resizeRaf !== null) window.cancelAnimationFrame(resizeRaf);
         if (refreshTimeout !== null) window.clearTimeout(refreshTimeout);
-        if (retryTimeout !== null) window.clearTimeout(retryTimeout);
+        cancelTargetRecovery();
         cancelIdlePrefetch();
         releaseAllFrames();
         subscriptions.clear();
@@ -570,7 +725,7 @@ export default function FrameSequence({
       data-v2-chapter="roof"
       data-master-sequence="true"
       data-static-mode={fallbackMode ? "true" : "false"}
-      data-master-fallback={mediaFallback ? "true" : "false"}
+      data-master-fallback={fallbackMode ? "true" : "false"}
       data-sequence-ready={sequenceReady ? "true" : "false"}
       data-media-ready={sequenceReady ? "true" : "false"}
       data-media-terminal-error={initialFrameFailed ? "true" : "false"}
@@ -579,7 +734,7 @@ export default function FrameSequence({
       aria-label={label}
       aria-busy={!fallbackMode && !initialFrameLoaded && !initialFrameFailed ? "true" : undefined}
       style={sequenceStyle}
-      className={`${isLegacy ? "v2-sequence v2-media-scene" : ""} v2-master-sequence ${fallbackMode ? "v2-master-sequence--static" : ""} ${isLegacy && fallbackMode ? "v2-media-scene--static" : ""} ${mediaFallback ? "v2-master-sequence--fallback" : ""} ${className}`.trim()}
+      className={`${isLegacy ? "v2-sequence v2-media-scene" : ""} v2-master-sequence ${fallbackMode ? "v2-master-sequence--static v2-master-sequence--fallback" : ""} ${isLegacy && fallbackMode ? "v2-media-scene--static" : ""} ${mediaFallback ? "v2-master-sequence--fallback" : ""} ${className}`.trim()}
     >
       <div className={`v2-master-sequence__stage ${isLegacy ? "v2-sequence__stage v2-media-scene__stage" : ""}`}>
         <img
@@ -595,7 +750,8 @@ export default function FrameSequence({
             image.parentElement?.setAttribute("data-poster-failed", "true");
             if (image.dataset.retried !== "true") {
               image.dataset.retried = "true";
-              window.setTimeout(() => {
+              posterRetryRef.current = window.setTimeout(() => {
+                posterRetryRef.current = null;
                 image.src = `${runtimeManifest.poster}${runtimeManifest.poster.includes("?") ? "&" : "?"}retry=1`;
               }, 1200);
             }

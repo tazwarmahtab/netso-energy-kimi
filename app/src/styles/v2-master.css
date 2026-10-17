@@ -74,48 +74,108 @@
 .v2-master-sequence__canvas { z-index: 1; opacity: 0; object-fit: cover; transition: opacity 500ms ease; }
 .v2-master-sequence[data-sequence-ready="true"] .v2-master-sequence__poster { opacity: 0; }
 .v2-master-sequence[data-sequence-ready="true"] .v2-master-sequence__canvas { opacity: 1; }
-.v2-master-sequence__veil { z-index: 2; pointer-events: none; background: linear-gradient(90deg, rgba(16, 26, 36, 0.52), rgba(16, 26, 36, 0.1) 56%, rgba(16, 26, 36, 0.02)), linear-gradient(0deg, rgba(16, 26, 36, 0.54), transparent 43%); }
+.v2-master-sequence__veil { z-index: 2; pointer-events: none; background: linear-gradient(90deg, rgba(16, 26, 36, 0.38), rgba(16, 26, 36, 0.06) 52%, transparent 78%), linear-gradient(0deg, rgba(16, 26, 36, 0.28), transparent 38%); }
 .v2-master-sequence[data-master-segment="finance"] .v2-master-sequence__veil,
 .v2-master-sequence[data-master-segment="assessment"] .v2-master-sequence__veil { background: transparent; }
+.v2-master-sequence[data-master-segment="operations"] .v2-master-sequence__veil { background: linear-gradient(270deg, rgba(16, 26, 36, 0.56), transparent 54%); }
+.v2-master-sequence[data-master-segment="decision"] .v2-master-sequence__veil { background: linear-gradient(0deg, rgba(16, 26, 36, 0.5), transparent 52%); }
+/* The finished-system shot moves: the canopy sweeps down through the frame as
+   the camera settles, so no single anchor point keeps the type on clean sky at
+   every frame. This beat shades the left third — where its copy always lives —
+   and releases the veil before the payoff column and terrace, so contrast holds
+   for the whole shot instead of for one lucky frame. */
+.v2-master-sequence[data-master-segment="pergola-payoff"] .v2-master-sequence__veil { background: linear-gradient(90deg, rgba(16, 26, 36, 0.64), rgba(16, 26, 36, 0.3) 38%, rgba(16, 26, 36, 0.07) 66%, transparent 82%), linear-gradient(0deg, rgba(16, 26, 36, 0.32), transparent 44%); }
 
-.master-story { position: absolute; z-index: 3; inset: 0; }
+/* The rail lives on the right edge, so only the right side of the story pays for
+   its clearance; the left side keeps the composition's own air. */
+.master-story { --story-gutter: max(clamp(24px, 5.5vw, 88px), var(--v2-rail-gutter, 0px)); --story-gutter-start: clamp(24px, 5.5vw, 88px); --story-header-clearance: 144px; position: absolute; z-index: 3; inset: 0; }
 .master-story__scene { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 360ms ease; }
 .master-story__scene[data-story-active="true"] { opacity: 1; pointer-events: auto; }
-.master-story__copy { position: absolute; top: 25%; left: clamp(24px, 8vw, 136px); max-width: min(760px, 54vw); }
+.master-story__copy { position: absolute; top: max(var(--story-header-clearance), 22%); left: var(--story-gutter-start); max-width: min(690px, 51vw); }
+
+/* Copy enters with a short stagger when its scene takes over the stage. An
+   animation rather than a transition, so it cannot clobber the hover
+   transitions the copy children already own, and so there is no hidden state
+   to get stuck in: the base style is simply visible. The reduced-motion rule in
+   v2.css already forces animation-duration to ~0, and `both` still ends
+   visible, so reduced-motion users get the text with no movement. */
+.master-story__scene[data-story-active="true"] .master-story__copy > * {
+  animation: v2-copy-in 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.master-story__scene[data-story-active="true"] .master-story__copy > *:nth-child(1) { animation-delay: 0ms; }
+.master-story__scene[data-story-active="true"] .master-story__copy > *:nth-child(2) { animation-delay: 60ms; }
+.master-story__scene[data-story-active="true"] .master-story__copy > *:nth-child(3) { animation-delay: 120ms; }
+.master-story__scene[data-story-active="true"] .master-story__copy > *:nth-child(4) { animation-delay: 180ms; }
+.master-story__scene[data-story-active="true"] .master-story__copy > *:nth-child(5) { animation-delay: 240ms; }
+.master-story__scene[data-story-active="true"] .master-story__copy > *:nth-child(n + 6) { animation-delay: 300ms; }
+
+@keyframes v2-copy-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* The finance chapter fills the frame and owns its own reveal, so it stays out
+   of the stagger. */
+.master-story__scene--finance .master-story__copy > *,
+.master-story__scene--finance[data-story-active="true"] .master-story__copy > * {
+  animation: none;
+}
 .master-story h1,
-.master-story h2 { margin: 0; font-family: Archivo, sans-serif; font-size: clamp(64px, 8.2vw, 132px); font-weight: 500; letter-spacing: -0.085em; line-height: 0.86; text-wrap: balance; }
-.master-story h2 { font-size: clamp(58px, 7vw, 112px); }
+.master-story__scene:not(.master-story__scene--finance) h2 { margin: 0; font-family: Archivo, sans-serif; font-stretch: condensed; font-variation-settings: "wdth" 75; font-size: clamp(66px, 7.7vw, 112px); font-weight: 650; letter-spacing: -0.052em; line-height: 0.98; text-wrap: balance; text-shadow: 0 2px 22px rgba(9, 20, 28, 0.14); }
+.master-story__scene:not(.master-story__scene--finance) h2 { font-size: clamp(52px, 6vw, 86px); }
 .master-story h1 em,
-.master-story h2 em { color: var(--v2-gold); font-style: normal; }
-.master-story .v2-lede { max-width: 410px; margin: 30px 0 0; color: rgba(244, 238, 225, 0.76); font-size: clamp(15px, 1.2vw, 18px); line-height: 1.55; }
-.master-story__scene--assessment { color: var(--v2-ink); }
-.master-story__scene--assessment .v2-kicker { color: #76551d; }
-.master-story__scene--assessment .v2-kicker span,
-.master-story__scene--assessment .v2-lede { color: rgba(16, 25, 20, 0.68); }
-.master-story__scene--assessment h2 em { color: #ad8237; }
-.master-story__scene--assessment .master-story__evidence { color: rgba(16, 25, 20, 0.66); }
-.master-story__scene--finance .master-story__evidence { color: rgba(16, 25, 20, 0.66); }
+.master-story__scene:not(.master-story__scene--finance) h2 em { color: var(--v2-gold); font-style: normal; }
+.master-story .v2-kicker { margin-bottom: 18px; font-size: 9px; letter-spacing: 0.12em; }
+.master-story .v2-lede { max-width: 440px; margin: 24px 0 0; color: rgba(244, 238, 225, 0.94); font-size: clamp(15px, 1.15vw, 17px); line-height: 1.6; text-wrap: pretty; text-shadow: 0 1px 14px rgba(9, 20, 28, 0.25); }
+.master-story__scene--sky-opening .master-story__copy { top: max(var(--story-header-clearance), 23%); max-width: min(700px, 54vw); }
+/* Chapter 01 carries one quiet secondary action; the header pill already owns
+   the journey-level primary, so the chapters do not repeat it. */
+.master-story__text-action { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; margin-top: 22px; color: rgba(244, 238, 225, 0.92); font-size: 13px; font-weight: 600; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: rgba(244, 238, 225, 0.34); transition: text-decoration-color 180ms ease, color 180ms ease; }
+.master-story__text-action:hover { color: var(--v2-cream); text-decoration-color: currentColor; }
+.master-story__text-action svg { color: var(--v2-gold); transition: transform 180ms ease; }
+.master-story__text-action:hover svg { transform: translateX(3px); }
 .master-story__scene--roof-transform .master-story__copy,
-.master-story__scene--city-infrastructure .master-story__copy { top: 27%; }
-.master-story__scene--pergola-payoff .master-story__copy,
-.master-story__scene--decision .master-story__copy { top: auto; right: clamp(24px, 8vw, 136px); bottom: 18%; left: auto; }
+.master-story__scene--city-infrastructure .master-story__copy { top: max(var(--story-header-clearance), 20%); max-width: min(500px, 42vw); }
+/* The finished-system frame keeps its canopy across the top and its lit column
+   right of centre. Its copy sits left, a step lower than the other chapters, and
+   is deliberately smaller: on a payoff frame the picture is the subject and the
+   type is the caption, so the block stays one calm column instead of a wall. */
+.master-story__scene--pergola-payoff .master-story__copy { top: max(var(--story-header-clearance), 37%); right: auto; left: var(--story-gutter-start); max-width: min(470px, 36vw); }
+.master-story .master-story__scene--pergola-payoff h2 { font-size: clamp(46px, 4.9vw, 72px); }
+/* Specificity matches the base `.master-story .v2-lede` exactly so this wins by
+   source order at default desktop, but yields to every later media query — the
+   mobile and short-height breakpoints keep owning their own lede sizing. */
+.master-story__scene--pergola-payoff .v2-lede { max-width: 430px; font-size: clamp(14px, 1.05vw, 16px); line-height: 1.55; }
+.master-story__scene--decision .master-story__copy { top: auto; right: auto; bottom: 15%; left: var(--story-gutter-start); max-width: 480px; }
 .master-story__scene--finance > .master-story__copy { position: absolute; inset: 0; max-width: none; }
-.master-story__scene--operations .master-story__copy { top: 23%; right: clamp(24px, 8vw, 136px); left: auto; max-width: 500px; }
-.master-story__scene--dusk .master-story__copy { top: auto; bottom: 18%; max-width: 520px; }
-.master-story__scene--assessment .master-story__copy { top: auto; bottom: 18%; max-width: 520px; }
+.master-story__scene--operations .master-story__copy { top: max(var(--story-header-clearance), 19%); right: var(--story-gutter); left: auto; max-width: min(430px, 35vw); }
+.master-story__scene--dusk .master-story__copy { top: auto; bottom: 15%; max-width: 520px; }
 .master-story__scene > .master-story__poster { display: none; }
-.master-story__evidence { position: absolute; right: clamp(22px, 5vw, 80px); bottom: 11%; display: flex; align-items: center; gap: 9px; color: rgba(244, 238, 225, 0.68); font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; }
-.master-story__scroll-cue { bottom: 30px; left: 50%; }
-.master-story__scene--sky-opening .master-story__scroll-cue { position: fixed; }
-.master-story__specs { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 32px; color: rgba(244, 238, 225, 0.68); font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: 0.05em; text-transform: uppercase; }
+.master-story__evidence { position: relative; display: flex; align-items: baseline; gap: 7px; max-width: 440px; margin: 18px 0 0; color: rgba(244, 238, 225, 0.76); font-family: "Space Mono", monospace; font-size: 8px; line-height: 1.6; letter-spacing: 0.055em; text-transform: uppercase; }
+.master-story__evidence > span { width: 4px; height: 4px; flex: 0 0 4px; border-radius: 50%; background: currentColor; }
+.master-story__scroll-cue { position: relative; bottom: auto; left: auto; width: fit-content; min-height: 36px; margin-top: 18px; transform: none; color: rgba(244, 238, 225, 0.8); font-size: 8px; letter-spacing: 0.08em; }
+.master-story__specs { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 24px; color: rgba(244, 238, 225, 0.85); font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: 0.05em; text-transform: uppercase; }
 .master-story__specs span { display: flex; align-items: center; gap: 7px; }
 .master-story__specs b { color: var(--v2-gold); font-weight: 400; }
+.master-story__value-dock { position: absolute; right: var(--story-gutter); bottom: 10%; left: var(--story-gutter-start); display: none; width: min(calc(100% - var(--story-gutter) - var(--story-gutter-start)), 960px); margin: 0 auto; }
+/* The commercial model is introduced once, on the roof beat. The finished-system
+   beat is the payoff frame and carries only its own copy, so the image leads
+   there instead of competing with a second text block. */
+.v2-master-sequence[data-master-segment="roof-transform"] .master-story__value-dock { display: block; }
+.master-story__value-dock ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+.master-story__value-dock li { display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 64px; padding: 11px 17px; border: 1px solid rgba(255, 255, 255, 0.24); border-radius: 999px; background: rgba(16, 33, 41, 0.4); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 8px 24px rgba(9, 20, 28, 0.1); -webkit-backdrop-filter: blur(18px) saturate(1.1); backdrop-filter: blur(18px) saturate(1.1); }
+.master-story__value-icon { display: grid; flex: 0 0 26px; width: 26px; height: 26px; place-items: center; border: 1px solid rgba(198, 161, 91, 0.4); border-radius: 50%; color: #e9c789; }
+.master-story__value-copy { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.master-story__value-copy strong { font-size: 12px; font-weight: 600; line-height: 1.3; }
+.master-story__value-copy > span { color: rgba(244, 238, 225, 0.82); font-size: 9px; line-height: 1.45; }
+.master-story__value-dock > p { margin: 9px 17px 0; color: rgba(244, 238, 225, 0.78); font-size: 9px; line-height: 1.45; }
 .v2-master-sequence__marker { position: absolute; left: 0; width: 1px; height: 1px; scroll-margin-top: 0; }
 
 .v2-finance--embedded { height: 100%; min-height: 0; background: transparent; }
 .v2-finance--embedded .v2-finance__track { height: 100%; }
-.v2-finance--embedded .v2-finance__stage { position: absolute; inset: 0; height: 100%; min-height: 0; padding: 130px clamp(24px, 6vw, 100px) 56px; }
-.master-story__scene--finance > .master-story__evidence { display: none; }
+.v2-finance--embedded .v2-finance__stage { position: absolute; inset: 0; height: 100%; min-height: 0; padding: 144px max(clamp(24px, 6vw, 100px), var(--v2-rail-gutter, 0px)) 56px clamp(24px, 6vw, 100px); }
+.master-story__scene--finance > .master-story__copy > .master-story__evidence { display: none; }
 
 .v2-master-sequence--fallback,
 .v2-master-sequence--fallback .v2-master-sequence__stage { height: auto; min-height: 0; background: var(--v2-forest); }
@@ -125,37 +185,55 @@
 .v2-master-sequence--fallback .v2-master-sequence__veil { display: none; }
 .v2-master-sequence--fallback .master-story { position: relative; inset: auto; }
 .v2-master-sequence--fallback .master-story__scene,
-.v2-master-sequence--fallback .master-story__scene[data-story-active="true"] { position: relative; inset: auto; display: flex; min-height: 100svh; overflow: hidden; opacity: 1; pointer-events: auto; background: var(--v2-forest); }
+.v2-master-sequence--fallback .master-story__scene[data-story-active="true"] { position: relative; inset: auto; display: flex; min-height: 100svh; padding: max(var(--story-header-clearance), 22svh) var(--story-gutter) 88px var(--story-gutter-start); overflow: hidden; opacity: 1; pointer-events: auto; background: var(--v2-forest); }
 .v2-master-sequence--fallback .master-story__scene > .master-story__poster { position: absolute; z-index: 0; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
-.v2-master-sequence--fallback .master-story__scene::after { position: absolute; z-index: 1; inset: 0; content: ""; background: linear-gradient(90deg, rgba(5, 12, 9, 0.84), rgba(5, 12, 9, 0.2) 68%), linear-gradient(0deg, rgba(5, 12, 9, 0.7), transparent 54%); pointer-events: none; }
-.v2-master-sequence--fallback .master-story__copy { position: relative; z-index: 2; top: auto; right: auto; bottom: auto; left: auto; align-self: flex-end; width: 100%; max-width: none; padding: 0 7vw 16%; }
-.v2-master-sequence--fallback .master-story__scene--finance { display: block; min-height: 0; overflow: visible; background: var(--v2-paper); color: var(--v2-ink); }
+.v2-master-sequence--fallback .master-story__scene::after { position: absolute; z-index: 1; inset: 0; content: ""; background: linear-gradient(90deg, rgba(16, 26, 36, 0.42), rgba(16, 26, 36, 0.06) 56%, transparent 78%), linear-gradient(0deg, rgba(16, 26, 36, 0.26), transparent 42%); pointer-events: none; }
+.v2-master-sequence--fallback .master-story__scene:not(.master-story__scene--finance) .master-story__copy { position: relative; z-index: 2; top: auto; right: auto; bottom: auto; left: auto; align-self: flex-end; width: 100%; max-width: min(690px, 57vw); padding: 0; }
+.v2-master-sequence--fallback .master-story__scene--operations .master-story__copy { margin-left: auto; max-width: min(430px, 38vw); }
+.v2-master-sequence--fallback .master-story__scene--operations::after { background: linear-gradient(270deg, rgba(16, 26, 36, 0.58), transparent 62%); }
+.v2-master-sequence--fallback .master-story__scene--finance,
+.v2-master-sequence--fallback .master-story__scene--finance[data-story-active="true"] { display: block; min-height: 0; padding: 0; overflow: visible; background: var(--v2-paper); color: var(--v2-ink); }
 .v2-master-sequence--fallback .master-story__scene--finance::after { display: none; }
-.v2-master-sequence--fallback .master-story__scene--finance .master-story__copy { padding: 0; }
-.v2-master-sequence--fallback .master-story__scene--assessment { background: var(--v2-paper); color: var(--v2-ink); }
-.v2-master-sequence--fallback .master-story__scene--assessment::after { display: none; }
-.v2-master-sequence--fallback .master-story__scene[data-story-static-hidden="true"] { display: none; }
-
-@media (min-width: 901px) and (max-width: 1100px) {
-  .v2-finance--embedded .v2-finance__stage { grid-template-columns: 1fr; grid-template-rows: auto; align-items: start; gap: 18px; padding: 94px 34px 32px; overflow: auto; }
-  .v2-finance--embedded .v2-finance__copy,
-  .v2-finance--embedded .v2-finance__visual,
-  .v2-finance--embedded .v2-finance__panel,
-  .v2-finance--embedded .v2-finance__cumulative { grid-column: 1; }
-  .v2-finance--embedded .v2-finance__panel { display: flex; }
-  .v2-finance--embedded .v2-finance__copy h2 { font-size: clamp(48px, 7vw, 78px); }
-  .v2-finance--embedded .v2-finance__copy > p:not(.v2-kicker) { margin-top: 16px; }
-  .v2-finance--embedded .v2-finance__visual { padding: 14px 0 16px; }
-}
+.v2-master-sequence--fallback .master-story__scene--finance > .master-story__copy { position: relative; inset: auto; padding: 0; }
+.v2-master-sequence--fallback .v2-finance--embedded,
+.v2-master-sequence--fallback .v2-finance__track { height: auto; }
+.v2-master-sequence--fallback .v2-finance--embedded .v2-finance__stage { position: relative; inset: auto; height: auto; min-height: 100svh; overflow: visible; }  .v2-master-sequence--fallback .master-story__scene[data-story-static-hidden="true"] { display: none; }
+.v2-master-sequence--fallback .master-story__value-dock { display: none; }
 
 @media (min-width: 901px) and (max-height: 760px) {
-  .v2-master-sequence__stage { min-height: 560px; }
-  .master-story__copy { top: 20%; }
-  .master-story h1 { font-size: clamp(58px, 7.4vw, 104px); }
-  .master-story h2 { font-size: clamp(52px, 6.4vw, 88px); }
-  .master-story .v2-lede { margin-top: 20px; font-size: 14px; }
-  .v2-finance--embedded .v2-finance__stage { padding-top: 84px; padding-bottom: 24px; }
-  .v2-finance--embedded .v2-finance__visual { padding-top: 12px; padding-bottom: 12px; }
+  .v2-master-sequence__stage { min-height: 0; }
+  .master-story { --story-header-clearance: 140px; }
+  .master-story__scene--sky-opening .master-story__copy { top: var(--story-header-clearance); max-width: min(620px, 52vw); }
+  .master-story h1 { font-size: clamp(56px, 6.2vw, 82px); }
+  .master-story__scene:not(.master-story__scene--finance) h2 { font-size: clamp(48px, 5.4vw, 68px); }
+  .master-story .v2-kicker { margin-bottom: 12px; }
+  .master-story .v2-lede { margin-top: 16px; font-size: 14px; line-height: 1.5; }
+  .master-story__text-action { margin-top: 14px; }
+  .master-story__evidence { margin-top: 12px; }
+  .master-story__scroll-cue { display: none; }
+  .master-story__scene--decision .master-story__copy,
+  .master-story__scene--dusk .master-story__copy { top: max(var(--story-header-clearance), 40%); bottom: auto; }
+  .master-story__value-dock { bottom: 9%; }
+  .v2-finance--embedded .v2-finance__stage { gap: 24px 32px; padding-top: 140px; padding-bottom: 24px; }
+}
+
+/* Short viewports pay for their height in tighter vertical rhythm, not in
+   hidden content: every assumption stays visible and in the DOM. The finance
+   scene carries a bars-plus-ledger stack, so it needs its own height band —
+   the content box cannot hold it below ~880px without this. */
+@media (min-width: 901px) and (max-height: 880px) {
+  .v2-finance--embedded .v2-finance__stage { gap: 20px 32px; padding-top: 124px; padding-bottom: 24px; }
+  .v2-finance--embedded .v2-finance__copy h2 { font-size: clamp(44px, 4.6vw, 56px); }
+  .v2-finance--embedded .v2-finance__bars-meta { margin-bottom: 8px; }
+  .v2-finance--embedded .v2-finance__bar + .v2-finance__bar { margin-top: 10px; }
+  .v2-finance--embedded .v2-finance__bar-head { min-height: 30px; margin-bottom: 6px; }
+  .v2-finance--embedded .v2-finance__bar-total { font-size: clamp(24px, 2vw, 28px); }
+  .v2-finance--embedded .v2-finance__bar-track { height: 20px; }
+  .v2-finance--embedded .v2-finance__result { margin-top: 10px; padding: 8px 14px; }
+  .v2-finance--embedded .v2-finance__bill { margin-top: 10px; }
+  .v2-finance--embedded .v2-finance__bill th,
+  .v2-finance--embedded .v2-finance__bill td { padding-top: 6px; padding-bottom: 6px; }
+  .v2-finance--embedded .v2-finance__bill thead th { padding-bottom: 6px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -176,47 +254,41 @@
     inset: auto;
     display: flex;
     min-height: 100svh;
+    padding: max(var(--story-header-clearance), 22svh) var(--story-gutter) 88px var(--story-gutter-start);
     overflow: hidden;
     opacity: 1;
     pointer-events: auto;
     background: var(--v2-forest);
   }
-  .master-story__scene > .master-story__poster { position: absolute; z-index: 0; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; opacity: 1; filter: saturate(0.86) contrast(1.06); }
-  .master-story__scene::after { position: absolute; z-index: 1; inset: 0; content: ""; background: linear-gradient(90deg, rgba(5, 12, 9, 0.84), rgba(5, 12, 9, 0.2) 68%), linear-gradient(0deg, rgba(5, 12, 9, 0.7), transparent 54%); pointer-events: none; }
-  .master-story__copy { position: relative; z-index: 2; top: auto; right: auto; bottom: auto; left: auto; align-self: flex-end; width: 100%; max-width: none; padding: 0 22px 16%; }
+  .master-story__scene > .master-story__poster { position: absolute; z-index: 0; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; opacity: 1; filter: none; }
+  .master-story__scene::after { position: absolute; z-index: 1; inset: 0; content: ""; background: linear-gradient(90deg, rgba(16, 26, 36, 0.42), rgba(16, 26, 36, 0.06) 56%, transparent 78%), linear-gradient(0deg, rgba(16, 26, 36, 0.26), transparent 42%); pointer-events: none; }
+  .master-story__scene:not(.master-story__scene--finance) .master-story__copy { position: relative; z-index: 2; top: auto; right: auto; bottom: auto; left: auto; align-self: flex-end; width: 100%; max-width: min(690px, 57vw); padding: 0; }
   .master-story__scene--roof-transform .master-story__copy,
   .master-story__scene--city-infrastructure .master-story__copy,
   .master-story__scene--operations .master-story__copy,
-  .master-story__scene--dusk .master-story__copy,
-  .master-story__scene--assessment .master-story__copy { top: auto; right: auto; bottom: auto; left: auto; max-width: none; }
-  .master-story__scene--finance { display: block; min-height: 0; overflow: visible; background: var(--v2-paper); color: var(--v2-ink); }
+  .master-story__scene--dusk .master-story__copy { top: auto; right: auto; bottom: auto; left: auto; }
+  .master-story__scene--operations .master-story__copy { margin-left: auto; max-width: min(430px, 38vw); }
+  .master-story__scene--operations::after { background: linear-gradient(270deg, rgba(16, 26, 36, 0.58), transparent 62%); }
+  .master-story__scene--finance,
+  .master-story__scene--finance[data-story-active="true"] { display: block; min-height: 0; padding: 0; overflow: visible; background: var(--v2-paper); color: var(--v2-ink); }
   .master-story__scene--finance::after { display: none; }
   .master-story__scene--finance > .master-story__copy { position: relative; inset: auto; padding: 0; }
-  .v2-finance--embedded { height: auto; }
-  .master-story__scene--assessment { background: var(--v2-paper); color: var(--v2-ink); }
-  .master-story__scene--assessment::after { display: none; }
+  .v2-finance--embedded,
+  .v2-finance--embedded .v2-finance__track { height: auto; }
   .master-story__scene[data-story-static-hidden="true"] { display: none; }
-  .master-story__evidence { z-index: 3; right: 22px; bottom: 7%; max-width: 170px; font-size: 8px; line-height: 1.5; text-align: right; }
-  .master-story__scene--sky-opening .master-story__evidence { top: 16%; bottom: auto; }
   .master-story__scene--finance .master-story__evidence { display: none; }
   .master-story__specs { gap: 8px 14px; }
-  .master-story__scroll-cue { bottom: 26px; left: 50%; }
+  .master-story__scroll-cue { display: none; }
+  .master-story__value-dock { display: none !important; }
+  .master-story__scene { transition: none; }
   .v2-master-sequence__marker { position: absolute; top: 0; left: 0; scroll-margin-top: 0; }
-  .v2-finance--embedded .v2-finance__stage { position: relative; inset: auto; height: auto; min-height: 0; padding: 112px 22px 60px; }
-  .v2-finance--embedded .v2-finance__stage { grid-template-columns: 1fr; grid-template-rows: auto; }
-  .v2-finance--embedded .v2-finance__panel { display: flex; }
-  .v2-finance--embedded .v2-finance__copy,
-  .v2-finance--embedded .v2-finance__visual,
-  .v2-finance--embedded .v2-finance__panel,
-  .v2-finance--embedded .v2-finance__cumulative { grid-column: 1; }
-  .v2-finance--embedded .v2-finance__visual,
-  .v2-finance--embedded .v2-finance__cumulative { grid-column: 1; }
+  .v2-finance--embedded .v2-finance__stage { position: relative; inset: auto; height: auto; min-height: 0; overflow: visible; }
 }
 
 @media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
   .v2-master-sequence__stage { min-height: 0; }
 
-  .master-story__scene:not(.master-story__scene--finance) .master-story__copy {
+  .v2-master-sequence:not(.v2-master-sequence--fallback) .master-story__scene:not(.master-story__scene--finance) .master-story__copy {
     top: auto;
     right: 22px;
     bottom: 16%;
@@ -225,52 +297,61 @@
   }
 
   .master-story__scene--finance > .master-story__copy { padding: 0; }
-  .master-story__scene--sky-opening .master-story__scroll-cue { position: absolute; }
-  .master-story__evidence { right: 22px; bottom: 7%; max-width: 170px; font-size: 8px; line-height: 1.5; text-align: right; }
-  .master-story h1,
-  .master-story h2 { font-size: clamp(48px, 15vw, 82px); }
   .master-story .v2-lede { max-width: 340px; margin-top: 18px; font-size: 14px; }
   .master-story__specs { gap: 8px 14px; }
 
-  .v2-finance--embedded .v2-finance__stage {
+  .v2-master-sequence:not(.v2-master-sequence--fallback) .v2-finance--embedded .v2-finance__stage {
     position: absolute;
     inset: 0;
     display: grid;
     height: 100%;
     min-height: 0;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "copy" "bill" "evidence";
     align-items: start;
-    gap: 8px;
-    padding: 74px 18px 16px;
-    overflow: hidden;
+    align-content: start;
+    gap: 24px;
+    padding: 112px 22px 48px;
+    overflow: visible;
   }
+}
 
-  .v2-finance--embedded .v2-finance__copy,
-  .v2-finance--embedded .v2-finance__visual,
-  .v2-finance--embedded .v2-finance__panel,
-  .v2-finance--embedded .v2-finance__cumulative {
-    grid-column: 1;
-    min-width: 0;
-  }
-
-  .v2-finance--embedded .v2-finance__copy { grid-row: 1; align-self: start; max-width: none; }
-  .v2-finance--embedded .v2-finance__copy h2 { font-size: clamp(42px, 11vw, 54px); }
-  .v2-finance--embedded .v2-finance__copy > p:not(.v2-kicker) { margin-top: 12px; font-size: 13px; }
-  .v2-finance--embedded .v2-finance__note { margin-top: 12px; }
-  .v2-finance--embedded .v2-finance__visual { grid-row: 2; align-self: center; padding: 8px 0 10px; }
-  .v2-finance--embedded .v2-finance__visual-head { font-size: 7px; }
-  .v2-finance--embedded .v2-finance__legend { gap: 8px 12px; font-size: 8px; }
-  .v2-finance--embedded .v2-finance__delta { position: absolute; right: 0; bottom: -20px; }
-  .v2-finance--embedded .v2-finance__delta strong { font-size: clamp(34px, 10vw, 48px); }
-  .v2-finance--embedded .v2-finance__delta span { font-size: 7px; }
-  .v2-finance--embedded .v2-finance__panel { grid-row: 3; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 12px; align-self: end; font-size: 8px; }
-  .v2-finance--embedded .v2-finance__panel-label { grid-column: 1 / -1; }
-  .v2-finance--embedded .v2-finance__panel span:not(.v2-finance__panel-label) { padding-top: 6px; }
-  .v2-finance--embedded .v2-finance__cumulative { grid-row: 4; align-self: end; gap: 4px; padding-top: 8px; font-size: 8px; }
-  .v2-finance--embedded .v2-finance__cumulative strong { font-size: clamp(28px, 8vw, 38px); }
+@media (max-width: 900px) {
+  .master-story { --story-gutter: 22px; --story-gutter-start: 22px; --story-header-clearance: 104px; }
+  .master-story h1,
+  .master-story__scene:not(.master-story__scene--finance) h2 { font-size: clamp(48px, 9.7vw, 74px); letter-spacing: -0.048em; }
+  .master-story .v2-lede { max-width: 470px; margin-top: 20px; font-size: 15px; }
+  .master-story .v2-kicker { margin-bottom: 16px; font-size: 8px; line-height: 1.5; }
+  .master-story__scroll-cue { display: none; }
+  .v2-master-sequence--fallback .master-story__scene:not(.master-story__scene--finance),
+  .v2-master-sequence--static .master-story__scene:not(.master-story__scene--finance) { padding: max(var(--story-header-clearance), 45svh) var(--story-gutter) 80px; }
+  .v2-master-sequence--fallback .master-story__scene--sky-opening,
+  .v2-master-sequence--static .master-story__scene--sky-opening { padding-top: max(var(--story-header-clearance), 25svh); }
+  .v2-master-sequence--fallback .master-story__scene:not(.master-story__scene--finance) .master-story__copy,
+  .v2-master-sequence--static .master-story__scene:not(.master-story__scene--finance) .master-story__copy { max-width: 560px; margin-left: 0; }
+  .v2-master-sequence--fallback .master-story__scene::after,
+  .v2-master-sequence--static .master-story__scene::after { background: linear-gradient(0deg, rgba(16, 26, 36, 0.7), rgba(16, 26, 36, 0.44) 38%, transparent 78%); }
+  .v2-master-sequence--fallback .master-story__scene--sky-opening::after,
+  .v2-master-sequence--static .master-story__scene--sky-opening::after { background: linear-gradient(90deg, rgba(16, 26, 36, 0.48), rgba(16, 26, 36, 0.14) 85%); }
+  .v2-master-sequence--fallback .v2-finance--embedded .v2-finance__stage,
+  .v2-master-sequence--static .v2-finance--embedded .v2-finance__stage { position: relative; height: auto; min-height: 0; grid-template-columns: minmax(0, 1fr); grid-template-areas: "copy" "bill" "evidence"; gap: 24px; padding: 112px 22px 48px; overflow: visible; }
 }
 
 @media (max-width: 520px) {
-  .master-story__copy { padding-bottom: 19%; }
+  .v2-finance--embedded .v2-finance__stage,
+  .v2-master-sequence:not(.v2-master-sequence--fallback) .v2-finance--embedded .v2-finance__stage,
+  .v2-master-sequence--fallback .v2-finance--embedded .v2-finance__stage,
+  .v2-master-sequence--static .v2-finance--embedded .v2-finance__stage { gap: 20px; padding-top: 104px; padding-bottom: 32px; }
+  .master-story h1 { max-width: 350px; font-size: clamp(46px, 12.5vw, 64px); }
+  .master-story__scene:not(.master-story__scene--finance) h2 { font-size: clamp(44px, 12vw, 60px); }
+  .master-story .v2-lede { max-width: 340px; font-size: 14px; }
+  .master-story__text-action { font-size: 12px; }
+}
+
+@media (min-width: 901px) and (max-height: 620px) {
+  .master-story h1 { font-size: clamp(52px, 5.6vw, 72px); }
+  .master-story .v2-lede { max-width: 480px; margin-top: 14px; }
+  .master-story__scene:not(.master-story__scene--finance) h2 { font-size: 54px; }
+  .master-story__value-dock { bottom: 8%; }
+  .master-story__value-dock li { min-height: 56px; padding: 8px 14px; }
 }

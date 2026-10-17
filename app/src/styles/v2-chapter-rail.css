@@ -1,0 +1,148 @@
+/* Chapter rail: the journey sits beside the story and carries scroll progress.
+   No panel — a hairline spine and one ink scale, with gold reserved for the
+   chapter you are in. It sits on the right edge, clear of the story copy, and
+   legibility over the frames comes from a tight text shadow rather than a
+   capsule that competes with the photography. */
+.v2-chapter-rail {
+  --rail-ink: rgba(244, 238, 225, 0.72);
+  --rail-ink-active: #f4eee1;
+  --rail-line: rgba(244, 238, 225, 0.22);
+  --rail-gold: #c6a15b;
+  --rail-fill-top: #e3bd72;
+  --rail-shadow: 0 1px 10px rgba(7, 17, 13, 0.55), 0 0 2px rgba(7, 17, 13, 0.45);
+  position: fixed;
+  z-index: 45;
+  top: 50%;
+  right: clamp(14px, 1.6vw, 30px);
+  display: none;
+  flex-direction: row-reverse;
+  align-items: stretch;
+  gap: 13px;
+  transform: translateY(-50%);
+  transition: color 420ms ease;
+  color: var(--rail-ink);
+}
+
+.v2-chapter-rail[data-theme="light"] {
+  --rail-ink: rgba(16, 25, 20, 0.7);
+  --rail-ink-active: #101914;
+  --rail-line: rgba(16, 25, 20, 0.22);
+  /* Gold on paper fails contrast at 11px, so the light chapters use the same
+     darker gold the finance and assessment kickers already use (#7b602b). */
+  --rail-gold: #7b602b;
+  --rail-fill-top: #c6a15b;
+  --rail-shadow: none;
+}
+
+.v2-chapter-rail__track {
+  position: relative;
+  display: block;
+  width: 1px;
+  background: var(--rail-line);
+}
+
+.v2-chapter-rail__fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: top center;
+  background: linear-gradient(180deg, var(--rail-fill-top), var(--rail-gold));
+}
+
+.v2-chapter-rail__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v2-chapter-rail__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 0 2px;
+  color: inherit;
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  line-height: 1;
+  text-decoration: none;
+  text-shadow: var(--rail-shadow);
+  text-transform: uppercase;
+  transition: color 220ms ease, transform 220ms ease;
+}
+
+/* Gold is the state, not the resting colour: an inactive chapter reads as
+   navigable cream, and only the chapter you are in turns gold. */
+.v2-chapter-rail__link:hover,
+.v2-chapter-rail__link.is-active {
+  color: var(--rail-ink-active);
+}
+
+.v2-chapter-rail__link:hover {
+  transform: translateX(-2px);
+}
+
+.v2-chapter-rail__marker {
+  display: grid;
+  flex: 0 0 9px;
+  width: 9px;
+  height: 9px;
+  place-items: center;
+}
+
+.v2-chapter-rail__dot {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+  transition: width 220ms ease, height 220ms ease, opacity 220ms ease, background-color 220ms ease;
+}
+
+.v2-chapter-rail__link.is-active .v2-chapter-rail__dot,
+.v2-chapter-rail__link:hover .v2-chapter-rail__dot {
+  opacity: 1;
+}
+
+.v2-chapter-rail__link.is-active .v2-chapter-rail__dot {
+  width: 9px;
+  height: 9px;
+  background: var(--rail-gold);
+  box-shadow: 0 0 0 4px rgba(198, 161, 91, 0.18);
+}
+
+.v2-chapter-rail__number {
+  color: inherit;
+}
+
+.v2-chapter-rail__link:hover .v2-chapter-rail__number,
+.v2-chapter-rail__link.is-active .v2-chapter-rail__number {
+  color: var(--rail-gold);
+}
+
+.v2-chapter-rail__label {
+  white-space: nowrap;
+}
+
+.v2-chapter-rail__link:focus-visible {
+  outline: 2px solid var(--rail-gold);
+  outline-offset: 3px;
+}
+
+@media (min-width: 1024px) {
+  .v2-chapter-rail {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-chapter-rail__link,
+  .v2-chapter-rail__dot {
+    transition: none;
+  }
+}

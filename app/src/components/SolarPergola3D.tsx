@@ -362,7 +362,7 @@ export default function SolarPergola3D() {
             </h3>
           </div>
           <p className="mt-1 font-mono text-xs text-sage">
-            Real-time WebGL structural model · Drag to orbit 360° · Test sun shadows
+            Interactive reference model · Drag to orbit · Explore daylight conditions
           </p>
         </div>
 
@@ -400,11 +400,11 @@ export default function SolarPergola3D() {
         <div className="pointer-events-none absolute top-4 left-4 z-10 flex flex-col gap-2">
           <div className="flex items-center gap-2 rounded-lg border border-gold/40 bg-forest/80 px-3 py-1 text-xs text-warm backdrop-blur-md">
             <Layers className="h-3.5 w-3.5 text-gold" />
-            <span>Tier-1 Bi-facial Glass Modules (PR ≥ 81%)</span>
+            <span>Bifacial glass modules · selected per project</span>
           </div>
           <div className="flex items-center gap-2 rounded-lg border border-gold/40 bg-forest/80 px-3 py-1 text-xs text-warm backdrop-blur-md">
             <ShieldCheck className="h-3.5 w-3.5 text-gold" />
-            <span>Hot-Dip Galvanized Structural Steel (140mph wind certified)</span>
+            <span>Structural steel · wind design confirmed per site</span>
           </div>
         </div>
 
@@ -434,10 +434,10 @@ export default function SolarPergola3D() {
       <div className="mt-4 rounded-2xl border border-warm/10 bg-black/30 p-4">
         <div className="flex items-center justify-between text-xs">
           <span className="font-mono uppercase tracking-wider text-warm/70">
-            Simulate Solar Position & Shadow Casting
+            Explore a daylight reference
           </span>
           <span className="font-mono font-bold text-gold">
-            {timeOfDay >= 18 ? "Night Living Space (Canopy LEDs Active)" : "Daylight Solar Harvesting"}
+            {timeOfDay >= 18 ? "Evening reference lighting" : "Daylight reference"}
           </span>
         </div>
         <input

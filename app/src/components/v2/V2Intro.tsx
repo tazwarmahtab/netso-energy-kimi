@@ -296,7 +296,7 @@ export default function V2Intro({ onComplete }: V2IntroProps) {
       aria-busy={!mobile && filmState.key === "film" && filmState.status === "pending" ? "true" : undefined}
     >
       <div className="v2-intro__media" aria-hidden="true">
-        <img className="v2-intro__media-fallback" src={INTRO_SCENE.poster} alt="" />
+        <img className="v2-intro__media-fallback" src={INTRO_SCENE.poster} alt="" width="1280" height="720" />
         <canvas ref={canvasRef} className="v2-intro__media-film" />
       </div>
       <div className="v2-intro__wash" aria-hidden="true" />

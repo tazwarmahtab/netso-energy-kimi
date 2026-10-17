@@ -23,7 +23,7 @@ const manifest = {
     { id: "sky-opening", kind: "hold", chapter: "roof", startFrame: 0, endFrame: 60, frameCount: 60, poster: "sky.jpg", evidenceLabel: "Concept visualization" },
     { id: "roof-transform", kind: "scene", chapter: "roof", startFrame: 60, endFrame: 300, frameCount: 240, sceneId: "00-roof-transform", poster: "roof.jpg", evidenceLabel: "Concept visualization" },
     { id: "city-infrastructure", kind: "scene", chapter: "architecture", startFrame: 318, endFrame: 498, frameCount: 180, sceneId: "03-city-to-infrastructure", poster: "city.jpg", evidenceLabel: "Concept visualization" },
-    { id: "finance", kind: "plate", chapter: "finance", startFrame: 685, endFrame: 805, frameCount: 120, poster: "finance.jpg", evidenceLabel: "Illustrative index / no tariff or live quote" },
+    { id: "finance", kind: "plate", chapter: "finance", startFrame: 685, endFrame: 805, frameCount: 120,      poster: "finance.jpg", evidenceLabel: "Illustrative calculation / no tariff or live quote" },
   ],
   excludedScenes: [{ sceneId: "01-interior-energy", reason: "Sky-first opening removes the interior prelude." }],
 };
