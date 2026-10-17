@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router";
 import Home from "./pages/Home";
+import V2 from "./pages/V2";
 import Product from "./pages/Product";
 import CalculatorPage from "./pages/Calculator";
 import Partners from "./pages/Partners";
@@ -36,7 +37,7 @@ export default function App() {
       <ScrollManager />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/v2" element={<Home />} />
+        <Route path="/v2" element={<V2 />} />
         <Route path="/product" element={<Product />} />
         <Route path="/calculator" element={<CalculatorPage />} />
         <Route path="/partners" element={<Partners />} />
