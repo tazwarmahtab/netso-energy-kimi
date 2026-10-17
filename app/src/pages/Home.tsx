@@ -15,7 +15,6 @@ import OperationsScroller from "../components/OperationsScroller";
 import SolarPergola3D from "../components/SolarPergola3D";
 import SiteStudyPoster from "../components/SiteStudyPoster";
 import FeasibilityModal from "../components/FeasibilityModal";
-import { CinematicIntro } from "../components/CinematicIntro";
 import { MarqueeTicker } from "../components/MarqueeTicker";
 import { RMGEdgeSection } from "../components/RMGEdgeSection";
 import solarRoof from "../assets/solar-roof-dusk.jpg";
@@ -379,8 +378,7 @@ export default function Home() {
   const isV2 = pathname === "/v2";
 
   return (
-    <div className="bg-cream">
-      <CinematicIntro />
+    <div className="overflow-x-clip bg-cream">
       <Nav theme="dark" onOpenAssessment={() => setIsModalOpen(true)} />
       <main id="content">
         <CanvasHero onOpenAssessment={() => setIsModalOpen(true)} />

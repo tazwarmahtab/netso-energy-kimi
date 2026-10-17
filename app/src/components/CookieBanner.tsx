@@ -44,24 +44,42 @@ export default function CookieBanner() {
     <AnimatePresence>
       {visible && (
         <motion.div
-          className="fixed inset-x-0 bottom-0 z-[60] px-4"
-          style={{ bottom: "max(1rem, env(safe-area-inset-bottom))" }}
-          initial={{ y: 120, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 120, opacity: 0 }}
+          className="relative z-[60] w-full border-t border-ink/10 bg-cream/95 px-4 py-3 backdrop-blur-sm md:px-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="glass-chip-light mx-auto max-w-3xl rounded-2xl p-5 shadow-2xl md:p-6">
-            <p className="text-[14px] leading-relaxed text-ink/80">
-              We use cookies to run this site, understand how it is used, and improve your experience.
-              Read our{" "}
+          <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-x-8 gap-y-3">
+            <p className="max-w-3xl text-[12px] leading-relaxed text-ink/70 md:text-[13px]">
+              We use cookies to run this site, understand how it is used, and improve your experience. Read our{" "}
               <Link to="/legal/privacy-policy" className="font-medium text-ink underline underline-offset-2">
                 privacy policy
               </Link>
               .
             </p>
+            <div className="flex shrink-0 flex-wrap items-center gap-2">
+              <button
+                onClick={() => choose("accepted")}
+                className="h-10 rounded-full bg-ink px-5 text-[12px] font-semibold text-cream transition-transform hover:scale-[1.03] active:scale-[0.97]"
+              >
+                Accept
+              </button>
+              <button
+                onClick={() => choose("rejected")}
+                className="h-10 rounded-full border border-ink/20 px-5 text-[12px] font-semibold text-ink transition-colors hover:bg-ink/5"
+              >
+                Reject
+              </button>
+              <button
+                onClick={() => (customize ? choose("custom") : setCustomize(true))}
+                className="h-10 rounded-full px-4 text-[12px] font-medium text-ink/60 underline-offset-2 hover:underline"
+              >
+                {customize ? "Save choices" : "Customize"}
+              </button>
+            </div>
             {customize && (
-              <div className="mt-4 grid grid-cols-2 gap-2 text-[13px] sm:grid-cols-4">
+              <div className="order-3 grid w-full grid-cols-2 gap-2 text-[12px] sm:grid-cols-4">
                 {["Essential", "Analytics", "Preferences", "Marketing"].map((c, i) => (
                   <label
                     key={c}
@@ -73,26 +91,6 @@ export default function CookieBanner() {
                 ))}
               </div>
             )}
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              <button
-                onClick={() => choose("accepted")}
-                className="h-11 rounded-full bg-ink px-6 text-[14px] font-semibold text-cream transition-transform hover:scale-[1.03] active:scale-[0.97]"
-              >
-                Accept
-              </button>
-              <button
-                onClick={() => choose("rejected")}
-                className="h-11 rounded-full border border-ink/20 px-6 text-[14px] font-semibold text-ink transition-colors hover:bg-ink/5"
-              >
-                Reject
-              </button>
-              <button
-                onClick={() => (customize ? choose("custom") : setCustomize(true))}
-                className="h-11 rounded-full px-5 text-[14px] font-medium text-ink/60 underline-offset-2 hover:underline"
-              >
-                {customize ? "Save choices" : "Customize"}
-              </button>
-            </div>
           </div>
         </motion.div>
       )}
