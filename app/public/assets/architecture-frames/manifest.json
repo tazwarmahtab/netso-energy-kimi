@@ -1,0 +1,10 @@
+{
+  "count": 240,
+  "pattern": "f%03d.jpg",
+  "fps": 24,
+  "source": "pergola-dusk.mp4",
+  "role": "architecture-dusk-scroll-film",
+  "evidence": "reference",
+  "blackGap1Based": [149, 188],
+  "narrative": ["sky", "structure", "occupied-terrace"]
+}

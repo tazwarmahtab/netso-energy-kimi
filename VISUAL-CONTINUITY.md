@@ -34,13 +34,26 @@ Sampled frames show a useful operational progression:
 
 The code's four-phase timing is directionally aligned with this sequence. The copy is intentionally generalized so it does not claim that a particular frame proves a specific service-level commitment.
 
+### Architecture dusk film (`pergola-dusk.mp4` → `architecture-frames/`)
+
+Scroll-film narrative extracted from the previously unused pergola dusk master:
+
+| Representative frame | Observed visual state | Intended narrative role |
+| --- | --- | --- |
+| f001 | open twilight sky | possibility before the asset |
+| f080 | illuminated solar canopy over city | structure as architecture |
+| f149–f188 | near-black breath | cinematic transition (compressed in scrub map) |
+| f240 | occupied terrace under canopy | asset as usable amenity |
+
+Peak stills are also published under `public/assets/stills/` for Product and secondary surfaces.
+
 ### Architectural day/dusk pair
 
 `bangladeshi-solar-hq-day.jpg` and `bangladeshi-solar-hq-dusk.jpg` depict the same architectural scene from the same viewpoint. This makes them suitable for a genuine visual continuity transition:
 
 **daylight generation -> dusk occupation/lighting**
 
-They should remain labelled as a **reference configuration**, not a commissioned project.
+They should remain labelled as a **reference configuration**, not a commissioned project. On Home they follow the dusk scroll film as same-viewpoint evidence.
 
 ### Secondary visual assets
 

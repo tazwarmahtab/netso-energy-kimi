@@ -7,9 +7,11 @@ import CTASection from "../components/CTASection";
 import FeasibilityModal from "../components/FeasibilityModal";
 import { FadeUp } from "../components/Reveal";
 import { WhatsAppIcon, getNetsoWhatsAppUrl } from "../components/ui/WhatsAppIcon";
-import panels from "../assets/panels-closeup.jpg";
 import inverters from "../assets/battery-wall.jpg";
-import roof from "../assets/solar-roof-dusk.jpg";
+
+/** Peak narrative stills extracted from home scroll films (reference, not project evidence). */
+const ARCH_DUSK_STILL = "/assets/stills/architecture-dusk-mid.jpg";
+const OPS_INSPECTION_STILL = "/assets/stills/ops-inspection.jpg";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -18,8 +20,8 @@ function Hero({ onOpenAssessment }: { onOpenAssessment: () => void }) {
   return (
     <section className="relative flex min-h-[90svh] flex-col justify-end overflow-hidden bg-forest text-warm">
       <motion.img
-        src={panels}
-        alt="Dual-glass TOPCon bifacial solar pergola catching warm light"
+        src={ARCH_DUSK_STILL}
+        alt="Reference rooftop solar pergola at dusk overlooking the city"
         className="absolute inset-0 h-full w-full object-cover"
         initial={{ scale: 1.12, opacity: 0.55 }}
         animate={{ scale: 1, opacity: 0.85 }}
@@ -35,7 +37,7 @@ function Hero({ onOpenAssessment }: { onOpenAssessment: () => void }) {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
           </span>
           <span className="font-mono text-xs font-medium tracking-wide text-gold">
-            C&I Architectural Solar Pergola · Class 0.2s Telemetry
+            C&I Architectural Solar Pergola · Reference Configuration
           </span>
         </div>
       </div>
@@ -47,7 +49,7 @@ function Hero({ onOpenAssessment }: { onOpenAssessment: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.7, ease: EASE }}
         >
-          Architectural Solar Pergola · 20-Year PPA Infrastructure
+          Architectural Solar Pergola · Long-term PPA Infrastructure
         </motion.p>
         <h1 className="font-display mt-4 max-w-4xl text-5xl text-warm sm:text-7xl md:text-8xl">
           Your roof's institutional energy asset.
@@ -58,7 +60,7 @@ function Hero({ onOpenAssessment }: { onOpenAssessment: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8, ease: EASE }}
         >
-          An elevated pergola-style solar canopy transforms idle commercial rooftops into high-yield, utility-grade generating assets. Netso finances, constructs, and maintains the entire plant — you simply purchase clean power at a guaranteed <span className="font-semibold text-warm">30% discount below utility grid tariffs</span>.
+          An elevated pergola-style solar canopy can transform idle commercial rooftops into generating assets. Netso finances, constructs, and maintains the plant — customers purchase the power under a long-term PPA, with commercial terms set for each executed agreement.
         </motion.p>
 
         <motion.div
@@ -97,8 +99,8 @@ const FLOW = [
   {
     n: "02",
     t: "Direct Daylight Consumption",
-    c: "Clean solar power routes straight into your facility's Main Distribution Board (MDB), covering 75–85% of daytime manufacturing loads at a guaranteed 30% discount to grid tariffs.",
-    tag: "30% Discount vs Grid*",
+    c: "Clean solar power can route into the facility Main Distribution Board (MDB). Daytime load coverage and tariff terms are defined in the executed PPA after site survey.",
+    tag: "PPA Tariff • Site-specific",
   },
   {
     n: "03",
@@ -287,8 +289,8 @@ const HW = [
       "Bifacial dual-glass architecture captures up to 25% rear albedo gain",
       "30-year linear power performance warranty backed by Netso",
     ],
-    img: roof,
-    alt: "A luxury pergola-style solar canopy on a factory rooftop at dusk",
+    img: ARCH_DUSK_STILL,
+    alt: "Reference architectural solar pergola at dusk — illustrative configuration",
     isTerminal: false,
   },
   {
@@ -303,6 +305,20 @@ const HW = [
     ],
     img: inverters,
     alt: "Huawei smart string inverters mounted in a factory electrical room",
+    isTerminal: false,
+  },
+  {
+    icon: ShieldCheck,
+    t: "Field Operations & Inspection",
+    c: "Reference operating sequence still — structured inspection and preventive maintenance continue for the life of the agreement. Site frequency is defined by the asset and service agreement.",
+    points: [
+      "Scheduled on-site inspection and exception handling",
+      "String-level verification against commissioning baselines",
+      "Remote monitoring with service-level response windows",
+      "Evidence labelled reference — not a specific Netso deployment proof",
+    ],
+    img: OPS_INSPECTION_STILL,
+    alt: "Reference field inspection on a rooftop solar array",
     isTerminal: false,
   },
   {

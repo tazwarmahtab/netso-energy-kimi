@@ -1,0 +1,8 @@
+{
+  "count": 236,
+  "pattern": "f%03d.jpg",
+  "fps": 24,
+  "source": "netso-operations.mp4",
+  "role": "operations-scroll-film",
+  "evidence": "reference"
+}
