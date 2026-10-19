@@ -6,21 +6,31 @@ interface InstitutionalEconomicsProps {
   onOpenAssessment: () => void;
 }
 
+/** Typographic metric rail — Meta 01–04 craft, claims-safe copy (no absolute guarantees). */
 const PRINCIPLES = [
   {
-    n: "01",
-    title: "Funded as an energy service",
-    copy: "Netso can own and capitalize the plant. Customers purchase power under a long-term PPA — financing structure is set project by project.",
+    n: "01 / 04",
+    metric: "৳0",
+    label: "Client CAPEX*",
+    copy: "We can invest. You buy power. Roof-sensitive mounting and structural vetting are scoped per facility — financing pathway under evaluation.",
   },
   {
-    n: "02",
-    title: "Contracted price structure",
-    copy: "PPA pricing is documented against site load, tariff, generation and financing. This page uses illustrative scenarios, not a quoted tariff.",
+    n: "02 / 04",
+    metric: "Below grid",
+    label: "Illustrative PPA",
+    copy: "Floating discount logic can index to applicable utility rates. Example shapes are illustrative; binding formula lives only in the executed PPA.",
   },
   {
-    n: "03",
-    title: "One operating partner",
-    copy: "Design, permitting, installation and operating services are coordinated by Netso. Delivery and maintenance commitments live in the project documents.",
+    n: "03 / 04",
+    metric: "Long-term",
+    label: "BOO ownership",
+    copy: "Build-own-operate model: Netso owns, operates, and insures. Tenure and any end-of-term transfer are set project by project.",
+  },
+  {
+    n: "04 / 04",
+    metric: "On-site",
+    label: "Generation evidence",
+    copy: "Avoided grid imports can support emissions accounting and buyer scorecards. Compliance claims remain method- and contract-specific — never absolute on this page.",
   },
 ] as const;
 
@@ -30,31 +40,30 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
       className="relative w-full overflow-hidden bg-forest-dark text-cream"
       aria-label="Commercial thesis — contracted rooftop power"
     >
-      {/* Soft atmosphere — not card chrome */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute left-1/2 top-0 h-[420px] w-[900px] -translate-x-1/2 rounded-full bg-gold/[0.035] blur-[140px]" />
       </div>
 
       <div className="relative mx-auto max-w-[1440px] px-5 py-20 md:px-10 md:py-28">
-        {/* Zone A — one job header */}
+        {/* Zone A — one job header (Meta thesis voice, softened) */}
         <FadeUp>
           <div className="max-w-3xl">
             <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
               Rooftop solar · Long-term PPA
             </p>
-            <h2 className="font-display mt-4 text-[clamp(2rem,4.2vw,3.75rem)] font-bold leading-[1.05] tracking-tight text-warm">
-              Your roof, working harder.
+            <h2 className="font-display mt-4 text-[clamp(2rem,4.2vw,3.75rem)] font-bold leading-[1.02] tracking-tight text-warm">
+              We don&apos;t sell hardware.
             </h2>
             <p className="mt-3 font-serif text-[clamp(1.35rem,2.6vw,2.15rem)] italic leading-snug text-gold/95">
-              Lower-cost power without buying the plant upfront.
+              We sell contracted rooftop power.
             </p>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-sage/85">
-              We finance, engineer and operate rooftop systems. Customers buy the power produced under a long-term agreement — commercial terms are confirmed per site.
+              Zero client CAPEX pathways, BOO ownership, and an illustrative floating discount vs grid — all subject to site survey, financing, and the executed PPA. If grid rates move, the contract can define how your solar price moves with them.
             </p>
           </div>
         </FadeUp>
 
-        {/* Zone B — chart as the visual anchor (single stage, not a card grid) */}
+        {/* Zone B — chart as the visual anchor */}
         <FadeUp delay={0.08}>
           <div className="mt-14 md:mt-16">
             <div className="flex flex-col gap-4 border-b border-white/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
@@ -150,17 +159,22 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
           </div>
         </FadeUp>
 
-        {/* Zone C — principles as typographic rail (no cards) */}
+        {/* Zone C — Meta-style numbered metric rail (hairlines, not cards) */}
         <FadeUp delay={0.12}>
-          <div className="mt-16 grid grid-cols-1 gap-0 border-t border-white/10 md:mt-20 md:grid-cols-3">
+          <div className="mt-16 grid grid-cols-1 gap-0 border-t border-white/10 md:mt-20 md:grid-cols-2 xl:grid-cols-4">
             {PRINCIPLES.map((p, i) => (
               <div
                 key={p.n}
-                className={`py-8 md:px-6 md:py-10 ${i > 0 ? "border-t border-white/10 md:border-t-0 md:border-l" : ""}`}
+                className={`group py-8 md:px-5 md:py-10 ${
+                  i > 0 ? "border-t border-white/10 md:border-t-0 md:border-l xl:border-l" : ""
+                } ${i === 2 ? "xl:border-l" : ""} ${i === 1 ? "md:border-l" : ""}`}
               >
-                <p className="font-mono text-[11px] font-semibold tracking-[0.2em] text-gold/80">{p.n}</p>
-                <h3 className="font-display mt-3 text-xl font-bold tracking-tight text-warm">{p.title}</h3>
-                <p className="mt-3 max-w-sm text-sm leading-relaxed text-sage/80">{p.copy}</p>
+                <p className="font-mono text-[10px] font-semibold tracking-[0.2em] text-gold/70">{p.n}</p>
+                <p className="font-display mt-4 text-[clamp(1.75rem,3vw,2.35rem)] font-bold leading-none tracking-tight text-warm transition-colors group-hover:text-gold">
+                  {p.metric}
+                </p>
+                <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-cream/45">{p.label}</p>
+                <p className="mt-3 max-w-[26ch] text-sm leading-relaxed text-sage/75">{p.copy}</p>
               </div>
             ))}
           </div>
@@ -183,7 +197,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                 onClick={onOpenAssessment}
                 className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-gold px-6 py-3 font-mono text-xs font-bold text-forest transition-transform hover:scale-[1.02] hover:bg-gold/90"
               >
-                Request assessment
+                Get roof assessment
                 <ArrowRight className="h-3.5 w-3.5" />
               </button>
               <Link

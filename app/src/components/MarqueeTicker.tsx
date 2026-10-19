@@ -5,10 +5,12 @@ export function MarqueeTicker() {
     "SAVAR",
     "ASHULIA",
     "CHATTOGRAM",
+    "BOO MODEL",
     "ROOF-SENSITIVE STRUCTURAL DESIGN",
     "LOCAL OPERATIONS SUPPORT",
     "LONG-TERM PPA MODEL",
     "SITE-SPECIFIC ENGINEERING",
+    "INSTALL AROUND OPERATIONS",
   ];
 
   return (

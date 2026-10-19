@@ -292,7 +292,7 @@ function HowItWorks() {
 /* --------------------------- Why netso --------------------------- */
 const RISKS = [
   { big: "Rising", label: "Grid tariffs rise with no ceiling in sight", note: "Utility escalation exposes factory operating budgets year after year." },
-  { big: "30%", label: "Guaranteed floating discount margin against utility rate hikes", note: "Energy transitions from an unhedged operational risk into contractually guaranteed savings." },
+  { big: "Below", label: "Illustrative floating discount structure vs utility rate moves", note: "Energy can shift from unhedged operational risk into a contractually defined PPA price path — subject to executed terms." },
   { big: "Idle", label: "Vast industrial rooftop area sits unutilized", note: "A market-scale clean-energy resource waiting above the buildings that need it most." },
 ];
 

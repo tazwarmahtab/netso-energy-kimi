@@ -93,41 +93,86 @@ export default function Nav({
           <Link
             to="/"
             aria-label="Netso Energy home"
-            className="relative z-50 flex items-center text-[15px] transition-transform duration-300 hover:opacity-90 active:scale-98 shrink-0"
+            className="relative z-50 flex shrink-0 flex-col items-start text-[15px] transition-transform duration-300 hover:opacity-90 active:scale-98"
           >
             <Wordmark dark={!dark} />
+            {!scrolled && (
+              <span
+                className={`mt-0.5 hidden font-mono text-[8px] uppercase tracking-[0.18em] md:block ${
+                  dark ? "text-cream/45" : "text-ink/45"
+                }`}
+              >
+                BOO · Long-term PPA · Dhaka
+              </span>
+            )}
           </Link>
 
-          {/* Center Nav Links */}
-          <nav
-            className={`hidden items-center transition-all duration-300 lg:flex ${
-              scrolled ? "gap-6 text-[13px]" : "gap-8 text-[14px]"
-            }`}
-            aria-label="Primary"
-          >
-            {LINKS.map((l) => (
-              <NavLink
-                key={l.to}
-                to={l.to}
-                className={({ isActive }) =>
-                  `link-underline font-medium tracking-tight transition-colors ${
-                    isActive
-                      ? "text-gold font-semibold"
-                      : dark
-                      ? "text-cream/80 hover:text-cream"
-                      : "text-ink/80 hover:text-ink"
-                  }`
-                }
+          {/* Center: locations (Meta clean-nav) + primary links */}
+          <div className="hidden min-w-0 flex-1 items-center justify-center gap-6 lg:flex xl:gap-10">
+            {!scrolled && (
+              <p
+                className={`shrink-0 font-mono text-[10px] uppercase tracking-[0.16em] ${
+                  dark ? "text-cream/40" : "text-ink/40"
+                }`}
+                aria-label="Service geography"
               >
-                {l.label}
-              </NavLink>
-            ))}
-          </nav>
+                Dhaka <span className="mx-1.5 opacity-40">|</span> Chattogram{" "}
+                <span className="mx-1.5 opacity-40">|</span> Gazipur EPZ
+              </p>
+            )}
+            <nav
+              className={`flex items-center transition-all duration-300 ${
+                scrolled ? "gap-6 text-[13px]" : "gap-7 text-[14px]"
+              }`}
+              aria-label="Primary"
+            >
+              {LINKS.map((l) => (
+                <NavLink
+                  key={l.to}
+                  to={l.to}
+                  className={({ isActive }) =>
+                    `link-underline font-medium tracking-tight transition-colors ${
+                      isActive
+                        ? "text-gold font-semibold"
+                        : dark
+                        ? "text-cream/80 hover:text-cream"
+                        : "text-ink/80 hover:text-ink"
+                    }`
+                  }
+                >
+                  {l.label}
+                </NavLink>
+              ))}
+            </nav>
+          </div>
 
-          {/* Mobile Menu Trigger */}
-          <div className="relative z-50 flex items-center lg:hidden">
+          {/* Right: claims-safe thesis + CTA (Meta yellow assessment pattern) */}
+          <div className="relative z-50 flex shrink-0 items-center gap-3 md:gap-4">
+            <p
+              className={`hidden font-mono text-[10px] uppercase tracking-[0.14em] xl:block ${
+                dark ? "text-cream/45" : "text-ink/45"
+              }`}
+            >
+              We sell power — not hardware
+            </p>
+            {onOpenAssessment ? (
+              <button
+                type="button"
+                onClick={onOpenAssessment}
+                className="hidden h-9 items-center rounded-full bg-gold px-4 font-mono text-[11px] font-bold tracking-[0.06em] text-forest transition-transform hover:scale-[1.02] hover:bg-gold/90 sm:inline-flex md:h-[38px] md:px-5"
+              >
+                Get roof assessment →
+              </button>
+            ) : (
+              <a
+                href="/#get-started"
+                className="hidden h-9 items-center rounded-full bg-gold px-4 font-mono text-[11px] font-bold tracking-[0.06em] text-forest transition-transform hover:scale-[1.02] hover:bg-gold/90 sm:inline-flex md:h-[38px] md:px-5"
+              >
+                Get roof assessment →
+              </a>
+            )}
             <button
-              className="flex h-9 w-9 items-center justify-center rounded-full text-warm hover:text-gold transition-colors"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-warm hover:text-gold transition-colors lg:hidden"
               onClick={() => setOpen(!open)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}

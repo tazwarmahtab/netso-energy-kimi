@@ -327,35 +327,41 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
         >
           <div className="hero-meta-elem mb-3 flex items-center gap-3">
             <span className="h-px w-8 bg-gold/60" />
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-              Netso Energy · Rooftop Energy Infrastructure
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-gold">
+              RMG factories · Floating PPA · Zero client CAPEX*
             </p>
           </div>
 
           <h1
-            className="font-display font-bold leading-[1.05] tracking-[-0.035em] text-warm text-[clamp(34px,4.8vw,68px)]"
-            aria-label="your roof, now an energy asset."
+            className="font-display font-bold leading-[0.92] tracking-[-0.04em] text-warm text-[clamp(36px,5.4vw,76px)] uppercase"
+            aria-label="Your rooftop is a power plant."
           >
-            <span className="block overflow-hidden pt-1 pb-3">
-              <span className="line-reveal-inner block">
-                your roof,
-              </span>
+            <span className="block overflow-hidden pt-1 pb-2">
+              <span className="line-reveal-inner block">Your rooftop</span>
             </span>
-            <span className="block overflow-hidden pt-1 pb-3">
-              <span className="line-reveal-inner block">
-                generating
-              </span>
-            </span>
-            <span className="block overflow-hidden pt-1 pb-3">
-              <span className="line-reveal-inner block">
-                revenue<em className="not-italic text-gold">.</em>
+            <span className="block overflow-hidden pt-1 pb-2">
+              <span className="line-reveal-inner flex flex-wrap items-baseline gap-x-[0.28em]">
+                <em className="font-serif text-[0.72em] font-normal normal-case italic tracking-[-0.02em] text-gold">
+                  is a
+                </em>
+                <span>power plant</span>
+                <span className="text-gold">.</span>
               </span>
             </span>
           </h1>
 
-          <p className="hero-meta-elem mt-4 max-w-xl text-sm leading-relaxed text-warm/85 md:text-base">
-            We finance, design, and operate rooftop solar assets for commercial and industrial facilities. Customers buy the power produced under a long-term PPA, with final commercial terms set for each site.
-          </p>
+          <div className="hero-meta-elem mt-5 flex flex-col gap-4 md:flex-row md:items-start md:gap-10">
+            <p className="max-w-[52ch] text-sm leading-relaxed text-warm/85 md:text-[17px] md:leading-[1.6]">
+              We don&apos;t sell kWh as a commodity. We structure{" "}
+              <span className="font-medium text-gold">
+                contracted rooftop power with an illustrative below-grid target
+              </span>
+              . Zero client CAPEX pathways, BOO ownership, and floating discount logic — all subject to site survey and the executed PPA. Roof-sensitive mounting; engineering validated per facility.
+            </p>
+            <p className="hidden max-w-[28ch] border-l border-white/15 pl-5 font-mono text-[11px] leading-[1.7] tracking-[0.04em] text-warm/50 md:block">
+              Illustrative floating structure: PPA can track a share of applicable grid cost. Market risk allocation is defined contractually — CFOs buy the hedge, not a hardware SKU.
+            </p>
+          </div>
 
           <div className="hero-meta-elem mt-6 flex flex-wrap items-center gap-4">
             <LiquidMetalButton

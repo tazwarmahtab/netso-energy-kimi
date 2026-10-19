@@ -58,48 +58,48 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
   return (
     <section className="relative w-full bg-forest-dark py-24 px-6 sm:px-10 border-t border-gold/15">
       <div className="mx-auto max-w-7xl">
-        {/* Section Header */}
-        <div className="max-w-3xl mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1 mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">
-              04.2 GW Stranded Asset • Bangladesh RMG Belt
-            </span>
+        {/* Section Header — Meta “RMG EDGE / BUILT FOR SHEDS” typography, claims-safe */}
+        <div className="mb-14 flex flex-col gap-8 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl">
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-gold/70">
+              RMG considerations
+            </p>
+            <h2 className="font-display mt-4 text-[clamp(2.25rem,5.5vw,4.5rem)] font-bold leading-[0.92] tracking-tight text-cream">
+              RMG edge —{" "}
+              <span className="block text-cream/30 md:inline">built for sheds</span>
+            </h2>
+            <p className="mt-4 max-w-xl font-sans text-sm leading-relaxed text-cream/70 sm:text-base">
+              Not generic solar. Engineered for Bangladeshi corrugated roofs, heat, dust, cyclone exposure, and buyer audit workflows — under a BOO model where clients can buy power with zero CAPEX pathways, subject to executed PPA.
+            </p>
           </div>
-
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-cream">
-            Your rooftop is baking at 62°C. <br />
-            <span className="text-gold italic font-serif">We turn that heat into rent.</span>
-          </h2>
-
-          <p className="mt-4 font-sans text-sm sm:text-base text-cream/70 leading-relaxed">
-            Over 4,200 RMG factories in Gazipur, Ashulia, Savar, and Narayanganj burn diesel while their tin sheds radiate relentless heat into sewing lines, forcing HVAC systems to overwork. Under our Build-Own-Operate (BOO) model, Netso shades your roof, absorbs the solar radiation, and sells you power 30% below grid with zero capital expenditure.
+          <p className="max-w-[28ch] font-mono text-[11px] leading-relaxed tracking-[0.08em] text-cream/40 lg:text-right">
+            Gazipur · Ashulia · Savar · Narayanganj — industrial daytime load above idle roof steel.
           </p>
         </div>
 
-        {/* 6 Technical Objection Killers Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        {/* Typographic rail — hairlines over card chrome */}
+        <div className="mb-16 grid grid-cols-1 gap-0 border-y border-white/10 sm:grid-cols-2 lg:grid-cols-3">
           {edgePillars.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
               <div
-                key={idx}
-                className="group relative rounded-2xl border border-white/10 bg-white/[0.02] p-6 sm:p-7 backdrop-blur-sm transition-all hover:border-gold/40 hover:bg-gold/[0.03]"
+                key={pillar.title}
+                className="group relative border-b border-white/10 px-0 py-8 last:border-b-0 sm:border-r sm:px-6 sm:py-10 sm:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:[&:nth-child(3n)]:border-r-0 sm:[&:nth-last-child(-n+2)]:border-b-0 lg:[&:nth-last-child(-n+3)]:border-b-0"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gold/10 border border-gold/25 text-gold group-hover:bg-gold group-hover:text-forest transition-colors">
+                <div className="mb-4 flex items-center justify-between">
+                  <div className="flex h-9 w-9 items-center justify-center text-gold">
                     <Icon className="h-5 w-5" />
                   </div>
-                  <span className="font-mono text-[11px] text-cream/30 font-bold">
-                    0{idx + 1}
+                  <span className="font-mono text-[11px] font-bold text-cream/30">
+                    {String(idx + 1).padStart(2, "0")}
                   </span>
                 </div>
 
-                <h3 className="font-display text-lg font-bold text-cream group-hover:text-gold transition-colors">
+                <h3 className="font-display text-lg font-bold tracking-tight text-cream transition-colors group-hover:text-gold">
                   {pillar.title}
                 </h3>
 
-                <p className="mt-2 text-xs sm:text-sm text-cream/65 leading-relaxed font-sans">
+                <p className="mt-2 max-w-[36ch] font-sans text-xs leading-relaxed text-cream/65 sm:text-sm">
                   {pillar.description}
                 </p>
               </div>
