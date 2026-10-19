@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "node --test src/lib/lead-intake.test.mjs scripts/site-contract.test.mjs"
+    "test": "node --test src/lib/lead-intake.test.mjs scripts/site-contract.test.mjs",
+    "lead-api": "node ../scripts/lead-api-dev.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
