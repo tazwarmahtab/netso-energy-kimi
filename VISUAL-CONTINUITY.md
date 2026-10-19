@@ -72,6 +72,8 @@ They should remain labelled as a **reference configuration**, not a commissioned
 
 ## Current homepage sequence
 
-**Hero -> metadata rail -> reference architecture -> illustrative economics -> reference operations -> RMG technical considerations -> reference engineering model -> customer outcomes -> process -> macro rationale -> network -> origination**
+**Hero film → hero handoff (same canopy still) → metadata rail → commercial thesis (chart-led) → architecture dusk film → reference day/dusk pair → operations film → RMG considerations → reference engineering model → customer outcomes → process → macro rationale → network → origination**
+
+Rationale: after the roof becomes an asset on film, answer the commercial question before another scroll film. Architecture and operations then prove physical form and operating life.
 
 The objective is that every step feels like a change in representation of the same Netso thesis, not a collection of unrelated landing-page modules.

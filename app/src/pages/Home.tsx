@@ -15,6 +15,7 @@ import SolarPergola3D from "../components/SolarPergola3D";
 import FeasibilityModal from "../components/FeasibilityModal";
 import { CinematicIntro } from "../components/CinematicIntro";
 import { MarqueeTicker } from "../components/MarqueeTicker";
+import { HeroHandoff } from "../components/HeroHandoff";
 import { RMGEdgeSection } from "../components/RMGEdgeSection";
 import { SectionBridge } from "../components/SectionBridge";
 import solarRoof from "../assets/solar-roof-dusk.jpg";
@@ -417,14 +418,15 @@ export default function Home() {
       <Nav theme="dark" onOpenAssessment={() => setIsModalOpen(true)} />
       <main id="content">
         <CanvasHero onOpenAssessment={() => setIsModalOpen(true)} />
+        <HeroHandoff />
         <MarqueeTicker />
-        <SectionBridge from="dark" to="dark" />
-        <ArchitecturalTransformation onOpenAssessment={() => setIsModalOpen(true)} />
-        <SectionBridge from="dark" to="dark" />
+        <SectionBridge from="dark" to="dark" label="Commercial structure" />
         <InstitutionalEconomics onOpenAssessment={() => setIsModalOpen(true)} />
-        <SectionBridge from="dark" to="dark" />
+        <SectionBridge from="dark" to="dark" label="Reference architecture" />
+        <ArchitecturalTransformation onOpenAssessment={() => setIsModalOpen(true)} />
+        <SectionBridge from="dark" to="dark" label="Operating life" />
         <OperationsScroller onOpenAssessment={() => setIsModalOpen(true)} />
-        <SectionBridge from="dark" to="dark" />
+        <SectionBridge from="dark" to="dark" label="RMG considerations" />
         <RMGEdgeSection onOpenFeasibility={() => setIsModalOpen(true)} />
         <SectionBridge from="dark" to="dark" />
         <section id="pergola-twin" className="relative bg-forest-dark py-24 md:py-36 text-warm border-t border-warm/10">
