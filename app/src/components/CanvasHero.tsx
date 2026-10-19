@@ -6,7 +6,11 @@ import { LiquidMetalButton } from "./ui/liquid-metal-button";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TOTAL_FRAMES = 240;
+/** Fallback when `/assets/frames/manifest.json` is missing. */
+const DEFAULT_FRAME_COUNT = 240;
+const LERP = 0.14;
+const BITMAP_AHEAD = 18;
+const BITMAP_KEEP = 28;
 
 export interface CanvasHeroProps {
   onOpenAssessment?: () => void;
@@ -27,10 +31,21 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
     const ctx = canvas.getContext("2d", { alpha: false });
     if (!ctx) return;
 
-    // Retina & high-DPR adaptive canvas sizing
+    let cancelled = false;
+    let totalFrames = DEFAULT_FRAME_COUNT;
+    let rafId = 0;
+    let targetFrame = 0;
+    let currentFrame = 0;
+    let displayed = -1;
+    let bmpCenter = -999;
+    const images: (HTMLImageElement | undefined)[] = [];
+    const bitmaps = new Map<number, ImageBitmap>();
+    const decoding = new Set<number>();
+
+    // Cap DPR per scroll-film-studio engine guidance (blit cost vs quality).
     const updateCanvasDimensions = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       const targetW = Math.round(rect.width * dpr);
       const targetH = Math.round(rect.height * dpr);
       if (canvas.width !== targetW || canvas.height !== targetH) {
@@ -43,35 +58,26 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
 
     updateCanvasDimensions();
 
-    // Preload with chunked priority queue to prevent network starvation
-    const frames: HTMLImageElement[] = new Array(TOTAL_FRAMES);
-    let lastRenderedIndex = 0;
+    const frameUrl = (i1: number) => `/assets/frames/f${String(i1).padStart(3, "0")}.jpg`;
 
-    const loadFrame = (i: number): HTMLImageElement => {
-      if (frames[i - 1]) return frames[i - 1];
+    const loadFrame = (i0: number): HTMLImageElement => {
+      if (images[i0]) return images[i0]!;
       const img = new Image();
-      const numStr = String(i).padStart(3, "0");
-      img.src = `/assets/frames/f${numStr}.jpg`;
+      img.src = frameUrl(i0 + 1);
       img.decoding = "async";
-      frames[i - 1] = img;
+      images[i0] = img;
       return img;
     };
 
-    // Aspect-ratio cover drawing to maintain pristine aspect ratio with zero distortion
-    const drawCover = (img: HTMLImageElement) => {
+    const drawSource = (source: CanvasImageSource, nw: number, nh: number) => {
       const cw = canvas.width;
       const ch = canvas.height;
-      const nw = img.naturalWidth || 1280;
-      const nh = img.naturalHeight || 720;
-
       const imgRatio = nw / nh;
       const canvasRatio = cw / ch;
-
       let dw = cw;
       let dh = ch;
       let ox = 0;
       let oy = 0;
-
       if (canvasRatio > imgRatio) {
         dw = cw;
         dh = cw / imgRatio;
@@ -81,131 +87,212 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
         dw = ch * imgRatio;
         ox = (cw - dw) / 2;
       }
-
-      ctx.drawImage(img, ox, oy, dw, dh);
+      ctx.drawImage(source, ox, oy, dw, dh);
     };
 
-    // 1. Eagerly load first frame and initial sequence (1-30) for instant interactive response
-    const firstImg = loadFrame(1);
-    firstImg.onload = () => {
-      updateCanvasDimensions();
-      drawCover(firstImg);
-      const wrapper = containerRef.current?.querySelector(".hero-canvas-wrapper");
-      if (wrapper) (wrapper as HTMLElement).style.opacity = "1";
-    };
-
-    // 2. Progressively stream remaining frames (31-240) in chunks during browser idle time
-    let nextChunkStart = 31;
-    const CHUNK_SIZE = 20;
-
-    const scheduleNextChunk = () => {
-      if (nextChunkStart > TOTAL_FRAMES) return;
-      const end = Math.min(TOTAL_FRAMES, nextChunkStart + CHUNK_SIZE);
-      for (let i = nextChunkStart; i <= end; i++) {
-        loadFrame(i);
+    const nearestReady = (idx: number): number | null => {
+      for (let d = 0; d < totalFrames; d++) {
+        for (const i of [idx - d, idx + d]) {
+          if (i < 0 || i >= totalFrames) continue;
+          if (bitmaps.has(i)) return i;
+          const img = images[i];
+          if (img && img.complete && img.naturalWidth > 0) return i;
+        }
       }
-      nextChunkStart = end + 1;
-      if (nextChunkStart <= TOTAL_FRAMES) {
-        if ("requestIdleCallback" in window) {
-          window.requestIdleCallback(scheduleNextChunk, { timeout: 1000 });
-        } else {
-          setTimeout(scheduleNextChunk, 80);
+      return null;
+    };
+
+    const drawFrame = (idx: number, force = false) => {
+      if (!force && idx === displayed) return;
+      const bmp = bitmaps.get(idx);
+      if (bmp) {
+        drawSource(bmp, bmp.width, bmp.height);
+        displayed = idx;
+        return;
+      }
+      const ready = nearestReady(idx);
+      if (ready == null) return;
+      const nearBmp = bitmaps.get(ready);
+      if (nearBmp) {
+        drawSource(nearBmp, nearBmp.width, nearBmp.height);
+        displayed = ready;
+        return;
+      }
+      const img = images[ready];
+      if (img && img.complete && img.naturalWidth > 0) {
+        drawSource(img, img.naturalWidth, img.naturalHeight);
+        displayed = ready;
+      }
+    };
+
+    const ensureBitmaps = (center: number) => {
+      if (Math.abs(center - bmpCenter) < 3) return;
+      bmpCenter = center;
+      const lo = Math.max(0, center - BITMAP_AHEAD);
+      const hi = Math.min(totalFrames - 1, center + BITMAP_AHEAD);
+      for (let i = lo; i <= hi; i++) {
+        if (bitmaps.has(i) || decoding.has(i)) continue;
+        const img = loadFrame(i);
+        if (!img.complete || img.naturalWidth === 0) {
+          img.decode?.().catch(() => undefined);
+          img.onload = () => {
+            if (!cancelled) ensureBitmaps(Math.round(currentFrame));
+          };
+          continue;
+        }
+        decoding.add(i);
+        createImageBitmap(img)
+          .then((b) => {
+            decoding.delete(i);
+            if (cancelled) {
+              b.close();
+              return;
+            }
+            if (Math.abs(i - bmpCenter) > BITMAP_KEEP) {
+              b.close();
+              return;
+            }
+            bitmaps.set(i, b);
+            if (i === displayed || i === Math.round(currentFrame)) drawFrame(i, true);
+          })
+          .catch(() => decoding.delete(i));
+      }
+      for (const k of Array.from(bitmaps.keys())) {
+        if (k < center - BITMAP_KEEP || k > center + BITMAP_KEEP) {
+          bitmaps.get(k)?.close();
+          bitmaps.delete(k);
         }
       }
     };
 
-    if ("requestIdleCallback" in window) {
-      window.requestIdleCallback(scheduleNextChunk, { timeout: 500 });
-    } else {
-      setTimeout(scheduleNextChunk, 100);
-    }
-
-    const renderFrame = (index: number) => {
-      const safeIndex = Math.max(0, Math.min(TOTAL_FRAMES - 1, index));
-      const targetImg = loadFrame(safeIndex + 1);
-      if (targetImg && targetImg.complete && targetImg.naturalWidth > 0) {
-        drawCover(targetImg);
-        lastRenderedIndex = safeIndex;
-      } else {
-        const fallback = frames[lastRenderedIndex];
-        if (fallback && fallback.complete && fallback.naturalWidth > 0) {
-          drawCover(fallback);
-        }
-      }
+    const tick = () => {
+      if (cancelled) return;
+      currentFrame += (targetFrame - currentFrame) * LERP;
+      if (Math.abs(targetFrame - currentFrame) < 0.02) currentFrame = targetFrame;
+      const idx = Math.round(currentFrame);
+      ensureBitmaps(idx);
+      drawFrame(idx);
+      rafId = requestAnimationFrame(tick);
     };
 
-    // Responsive canvas aspect ratio sizing via ResizeObserver
+    const preloadWindow = (start: number, end: number) => {
+      for (let i = start; i <= end; i++) loadFrame(i);
+    };
+
     let resizeTimer: ReturnType<typeof setTimeout>;
     const resizeObserver = new ResizeObserver(() => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
         updateCanvasDimensions();
-        renderFrame(lastRenderedIndex);
+        drawFrame(Math.round(currentFrame), true);
         ScrollTrigger.refresh();
       }, 150);
     });
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
-    }
+    if (containerRef.current) resizeObserver.observe(containerRef.current);
 
-    // GSAP ScrollTrigger Timeline
-    const ctxCleanup = gsap.context(() => {
-      gsap.set(".line-reveal-inner", { yPercent: 110 });
-      gsap.set(".hero-meta-elem", { opacity: 0, y: 20 });
-      gsap.set(scrollCueRef.current, { opacity: 0 });
+    let ctxCleanup: gsap.Context | null = null;
 
-      // 1. Initial entrance timeline (staggered line reveal)
-      gsap.timeline({ defaults: { ease: "power3.out" } })
-        .to(".hero-canvas-wrapper", { opacity: 1, duration: 1.0 }, 0)
-        .to(".line-reveal-inner", { yPercent: 0, duration: 1.0, stagger: 0.1 }, 0.15)
-        .to(".hero-meta-elem", { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 }, 0.45)
-        .to(scrollCueRef.current, { opacity: 1, duration: 0.6 }, 0.75);
-
-      // 2. Scroll-driven timeline
-      const scrubObj = { frame: 0 };
-      
-      const st = ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.5,
-        onUpdate: (self) => {
-          // Progress 0.0 to 0.80 maps to frames 0 to 239; 0.80 to 1.00 holds on frame 239
-          const scrubProgress = Math.min(1, self.progress / 0.80);
-          const targetFrame = Math.round(scrubProgress * (TOTAL_FRAMES - 1));
-          if (targetFrame !== scrubObj.frame) {
-            scrubObj.frame = targetFrame;
-            renderFrame(targetFrame);
+    const boot = async () => {
+      try {
+        const res = await fetch("/assets/frames/manifest.json", { cache: "no-cache" });
+        if (res.ok) {
+          const manifest = (await res.json()) as { count?: number };
+          if (typeof manifest.count === "number" && manifest.count > 1) {
+            totalFrames = Math.floor(manifest.count);
           }
-        },
-      });
+        }
+      } catch {
+        /* keep default */
+      }
+      if (cancelled) return;
 
-      // Synchronized typographic overlay timeline
-      // Keep shade overlay subtle (max 0.35) so twilight colors and pergola lights stay vibrant
-      gsap.timeline({
-        scrollTrigger: {
+      preloadWindow(0, Math.min(29, totalFrames - 1));
+      const first = loadFrame(0);
+      const reveal = () => {
+        updateCanvasDimensions();
+        drawFrame(0, true);
+        const wrapper = containerRef.current?.querySelector(".hero-canvas-wrapper");
+        if (wrapper) (wrapper as HTMLElement).style.opacity = "1";
+        ensureBitmaps(0);
+      };
+      if (first.complete && first.naturalWidth > 0) reveal();
+      else first.onload = reveal;
+
+      let next = 30;
+      const pump = () => {
+        if (cancelled || next >= totalFrames) return;
+        const end = Math.min(totalFrames - 1, next + 19);
+        preloadWindow(next, end);
+        next = end + 1;
+        if (next < totalFrames) {
+          if ("requestIdleCallback" in window) {
+            window.requestIdleCallback(pump, { timeout: 1000 });
+          } else {
+            setTimeout(pump, 80);
+          }
+        }
+      };
+      if ("requestIdleCallback" in window) window.requestIdleCallback(pump, { timeout: 500 });
+      else setTimeout(pump, 100);
+
+      rafId = requestAnimationFrame(tick);
+
+      ctxCleanup = gsap.context(() => {
+        gsap.set(".line-reveal-inner", { yPercent: 110 });
+        gsap.set(".hero-meta-elem", { opacity: 0, y: 20 });
+        gsap.set(scrollCueRef.current, { opacity: 0 });
+
+        gsap
+          .timeline({ defaults: { ease: "power3.out" } })
+          .to(".hero-canvas-wrapper", { opacity: 1, duration: 1.0 }, 0)
+          .to(".line-reveal-inner", { yPercent: 0, duration: 1.0, stagger: 0.1 }, 0.15)
+          .to(".hero-meta-elem", { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 }, 0.45)
+          .to(scrollCueRef.current, { opacity: 1, duration: 0.6 }, 0.75);
+
+        ScrollTrigger.create({
           trigger: containerRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.5,
-        },
-      })
-        .to(shadeRef.current, { opacity: 0.35, duration: 1 }, 0)
-        .to(scrollCueRef.current, { opacity: 0, duration: 0.12 }, 0)
-        .to(headlineRef.current, { y: -80, opacity: 0, duration: 0.25, ease: "power1.in" }, 0.18)
-        .set(phase2Ref.current, { visibility: "visible" }, 0.72)
-        .fromTo(phase2Ref.current, { opacity: 0, y: 35 }, { opacity: 1, y: 0, duration: 0.15 }, 0.75)
-        .fromTo(telemetryRef.current, { opacity: 0, scale: 0.95, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.12 }, 0.76);
+          scrub: true,
+          onUpdate: (self) => {
+            const scrubProgress = Math.min(1, self.progress / 0.8);
+            targetFrame = scrubProgress * (totalFrames - 1);
+          },
+        });
 
-      return () => {
-        st.kill();
-      };
-    }, containerRef);
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 0.5,
+            },
+          })
+          .to(shadeRef.current, { opacity: 0.35, duration: 1 }, 0)
+          .to(scrollCueRef.current, { opacity: 0, duration: 0.12 }, 0)
+          .to(headlineRef.current, { y: -80, opacity: 0, duration: 0.25, ease: "power1.in" }, 0.18)
+          .set(phase2Ref.current, { visibility: "visible" }, 0.72)
+          .fromTo(phase2Ref.current, { opacity: 0, y: 35 }, { opacity: 1, y: 0, duration: 0.15 }, 0.75)
+          .fromTo(
+            telemetryRef.current,
+            { opacity: 0, scale: 0.95, y: 30 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.12 },
+            0.76,
+          );
+      }, containerRef);
+    };
+
+    void boot();
 
     return () => {
+      cancelled = true;
+      cancelAnimationFrame(rafId);
       clearTimeout(resizeTimer);
       resizeObserver.disconnect();
-      ctxCleanup.revert();
+      ctxCleanup?.revert();
+      for (const b of bitmaps.values()) b.close();
+      bitmaps.clear();
     };
   }, []);
 

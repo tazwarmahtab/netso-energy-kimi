@@ -1,0 +1,6 @@
+{
+  "count": 240,
+  "pattern": "f%03d.jpg",
+  "source": "legacy-hero-sequence",
+  "note": "Replace by running scripts/extract-hero-frames.sh on the Gemini master video"
+}
