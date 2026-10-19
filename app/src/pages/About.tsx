@@ -15,8 +15,8 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 const MEANS = [
   {
     title: "A factory's biggest cost, finally contained",
-    desc: "Energy is often 20%–35% of an industrial plant's operational expenditure. Netso locks in 20-year fixed tariffs below the grid peak.",
-    stat: "35% Instant Cut",
+    desc: "Energy is often 20%–35% of an industrial plant's operational expenditure. Netso's floating discount structure is designed to keep offtaker power costs below the utility grid under the terms of an executed PPA.",
+    stat: "30% Below Grid*",
   },
   {
     title: "Every idle roof converted into a productive utility asset",

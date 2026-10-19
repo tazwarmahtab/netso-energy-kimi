@@ -16,13 +16,15 @@ export default function ContactPage() {
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [submitNote, setSubmitNote] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      await recordLeadForDispatch({
+      const res = await recordLeadForDispatch({
+        source: "contact",
         contactName: name,
         orgName: orgName || "Contact Inquiry",
         email,
@@ -32,10 +34,12 @@ export default function ContactPage() {
         monthlySpend: "500000",
         notes: message,
       });
+      setSubmitNote(res.message);
       setSubmitted(true);
     } catch (err) {
       console.error("Submission failed", err);
-      setSubmitted(true); // Graceful fallback
+      setSubmitNote("Continue in WhatsApp to reach the Netso desk.");
+      setSubmitted(true);
     } finally {
       setLoading(false);
     }
@@ -166,7 +170,8 @@ export default function ContactPage() {
                         Dossier Request Dispatched
                       </h3>
                       <p className="mt-2 text-sm text-sage max-w-md mx-auto">
-                        Thank you. Your facility parameters have been recorded. Tazwar Mahtab or an origination director will reach out within 24–48 hours.
+                        {submitNote ||
+                          "Thank you. Continue on WhatsApp if you need a same-day response from the origination desk."}
                       </p>
                       <div className="mt-8">
                         <button

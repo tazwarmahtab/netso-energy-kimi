@@ -18,6 +18,7 @@ import CTASection from "../components/CTASection";
 import FeasibilityModal from "../components/FeasibilityModal";
 import { FadeUp, Stagger, StaggerItem, Words } from "../components/Reveal";
 import { WhatsAppIcon, getNetsoWhatsAppUrl } from "../components/ui/WhatsAppIcon";
+import { recordLeadForDispatch } from "../lib/notion";
 import aerial from "../assets/neighborhood-aerial.jpg";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -398,11 +399,44 @@ function Field({ label, ...props }: { label: string } & React.InputHTMLAttribute
 
 function PartnerForm() {
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitNote, setSubmitNote] = useState("");
   const [partnerType, setPartnerType] = useState("epc");
   const [regions, setRegions] = useState<string[]>(["Chattogram", "Gazipur"]);
 
   const toggle = (s: string) =>
     setRegions((cur) => (cur.includes(s) ? cur.filter((x) => x !== s) : [...cur, s]));
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const form = new FormData(e.currentTarget);
+    const firstName = String(form.get("firstName") || "").trim();
+    const lastName = String(form.get("lastName") || "").trim();
+    const contactName = `${firstName} ${lastName}`.trim();
+    try {
+      const res = await recordLeadForDispatch({
+        source: "partner",
+        contactName: contactName || "Partner contact",
+        orgName: String(form.get("company") || "Partner organization"),
+        email: String(form.get("email") || ""),
+        phone: String(form.get("phone") || ""),
+        partnerType,
+        role: String(form.get("role") || ""),
+        trackRecord: String(form.get("trackRecord") || ""),
+        website: String(form.get("website") || ""),
+        officeAddress: String(form.get("office") || ""),
+        operationalDistricts: regions,
+      });
+      setSubmitNote(res.message);
+      setSent(true);
+    } catch {
+      setSubmitNote("Continue via WhatsApp finance desk if you need a same-day response.");
+      setSent(true);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <section id="partner-form" className="bg-parchment py-24 md:py-36">
@@ -429,8 +463,8 @@ function PartnerForm() {
                 </div>
                 <h3 className="font-display mt-6 text-4xl text-forest">Partnership Intake Received.</h3>
                 <p className="mt-3 max-w-md text-sm leading-relaxed text-ink/70">
-                  Our structured finance & project procurement desk will review your credentials and contact you
-                  within 2 business days to discuss upcoming pipeline tranches.
+                  {submitNote ||
+                    "Our structured finance & project procurement desk will review your credentials. Prefer WhatsApp for same-day contact."}
                 </p>
                 <p className="font-mono text-xs text-gold mt-6 uppercase tracking-wider">Netso Energy Ltd · Partner Desk</p>
               </motion.div>
@@ -439,10 +473,7 @@ function PartnerForm() {
                 key="form"
                 className="rounded-3xl border border-ink/10 bg-cream p-6 md:p-10 shadow-lg"
                 exit={{ opacity: 0, y: -14 }}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSent(true);
-                }}
+                onSubmit={handleSubmit}
               >
                 {/* Partner Category Selector */}
                 <fieldset>
@@ -477,11 +508,11 @@ function PartnerForm() {
                     Primary Contact
                   </legend>
                   <div className="grid gap-5 sm:grid-cols-2">
-                    <Field label="First Name" required placeholder="Arif" />
-                    <Field label="Last Name" required placeholder="Rahman" />
-                    <Field label="Work Email" required type="email" placeholder="a.rahman@firm.com.bd" />
-                    <Field label="Direct Phone" required type="tel" placeholder="+880 1711-XXXXXX" />
-                    <Field label="Title / Function" required placeholder="Head of Structured Finance / Projects Director" />
+                    <Field name="firstName" label="First Name" required placeholder="Arif" />
+                    <Field name="lastName" label="Last Name" required placeholder="Rahman" />
+                    <Field name="email" label="Work Email" required type="email" placeholder="a.rahman@firm.com.bd" />
+                    <Field name="phone" label="Direct Phone" required type="tel" placeholder="+880 1711-XXXXXX" />
+                    <Field name="role" label="Title / Function" required placeholder="Head of Structured Finance / Projects Director" />
                   </div>
                 </fieldset>
 
@@ -490,12 +521,12 @@ function PartnerForm() {
                     Organization Details
                   </legend>
                   <div className="grid gap-5 sm:grid-cols-2">
-                    <Field label="Company / Entity Name" required placeholder="Crescent Infrastructure Ltd." />
+                    <Field name="company" label="Company / Entity Name" required placeholder="Crescent Infrastructure Ltd." />
                     <div>
                       <label className={labelCls}>
                         Track Record / Capacity <span className="text-gold">*</span>
                       </label>
-                      <select className={inputCls} required defaultValue="">
+                      <select name="trackRecord" className={inputCls} required defaultValue="">
                         <option value="" disabled>Select track record…</option>
                         <option>10MWp+ Installed / Financed</option>
                         <option>2MWp to 10MWp C&I Experience</option>
@@ -503,8 +534,8 @@ function PartnerForm() {
                         <option>Financial Institution / Asset Manager</option>
                       </select>
                     </div>
-                    <Field label="Company Website" required type="url" placeholder="https://" />
-                    <Field label="Registered Office Address" required placeholder="Plot 14, CEPZ, Chattogram" />
+                    <Field name="website" label="Company Website" required type="url" placeholder="https://" />
+                    <Field name="office" label="Registered Office Address" required placeholder="Plot 14, CEPZ, Chattogram" />
                     <div className="sm:col-span-2">
                       <span className={labelCls}>Operational Districts</span>
                       <div className="mt-1 flex flex-wrap gap-2">
@@ -533,9 +564,10 @@ function PartnerForm() {
                 <div className="mt-10 flex flex-wrap items-center gap-4">
                   <button
                     type="submit"
-                    className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-gold text-base font-semibold text-forest shadow-md transition-transform duration-300 hover:scale-[1.01] active:scale-[0.99] sm:w-auto sm:px-10"
+                    disabled={submitting}
+                    className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-gold text-base font-semibold text-forest shadow-md transition-transform duration-300 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 sm:w-auto sm:px-10"
                   >
-                    Submit Partner Credentials <ArrowRight className="h-4 w-4" />
+                    {submitting ? "Submitting…" : "Submit Partner Credentials"} <ArrowRight className="h-4 w-4" />
                   </button>
                   <a
                     href={getNetsoWhatsAppUrl(

@@ -46,7 +46,7 @@ const ARTICLES: Article[] = [
     metrics: [
       { label: "Annual CO₂ Abated (1 MWp)", val: "840 Tonnes" },
       { label: "Certification Standard", val: "I-REC Standard" },
-      { label: "Buyer Audit Status", val: "EU CBAM Compliant" },
+      { label: "Buyer Audit Status", val: "CBAM-ready pathway*" },
     ],
   },
   {

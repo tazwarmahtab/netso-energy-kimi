@@ -1,14 +1,16 @@
 /**
- * Netso Energy — safe lead dispatch ledger.
+ * Netso Energy — lead dispatch bridge.
  *
- * This module intentionally contains no Notion credential and never calls the
- * Notion API from browser code. A future server-side adapter can consume the
- * returned lead through a protected endpoint or an approved CRM connector.
+ * Prefer the provider-neutral lead intake client when a safe backend endpoint
+ * is configured (`VITE_LEAD_INTAKE_ENDPOINT`). Always keep a local ledger copy
+ * for WhatsApp-first handoff. Never call Notion (or any CRM) with browser secrets.
  */
+import { submitLead, type LeadIntakeResult } from "./lead-intake";
+
 export interface FeasibilityLead {
-  facilityType: string;
-  roofArea: string;
-  monthlySpend: string;
+  facilityType?: string;
+  roofArea?: string;
+  monthlySpend?: string;
   contactName: string;
   orgName: string;
   email: string;
@@ -16,12 +18,21 @@ export interface FeasibilityLead {
   notes?: string;
   estimatedTariff?: string;
   timestamp?: string;
+  source?: "contact" | "feasibility" | "partner";
+  partnerType?: string;
+  role?: string;
+  trackRecord?: string;
+  website?: string;
+  officeAddress?: string;
+  operationalDistricts?: string[];
 }
 
 export interface SyncResult {
   success: boolean;
   syncedToNotion: boolean;
+  status: LeadIntakeResult["status"] | "local";
   message: string;
+  requestId?: string;
 }
 
 const LOCAL_STORAGE_KEY = "netso_feasibility_leads_ledger";
@@ -38,9 +49,7 @@ function recordLeadLocally(lead: FeasibilityLead): void {
 }
 
 /**
- * Records a lead locally for the WhatsApp-first dispatch flow.
- * Any CRM synchronization must be implemented server-side; client bundles must
- * never contain private integration credentials or call a provider API directly.
+ * Attempts durable intake when configured; always records locally for WhatsApp follow-up.
  */
 export async function recordLeadForDispatch(lead: FeasibilityLead): Promise<SyncResult> {
   const leadWithTime: FeasibilityLead = {
@@ -49,10 +58,50 @@ export async function recordLeadForDispatch(lead: FeasibilityLead): Promise<Sync
     estimatedTariff: lead.estimatedTariff || "Illustrative savings versus applicable grid costs",
   };
   recordLeadLocally(leadWithTime);
+
+  const result = await submitLead({
+    source: lead.source ?? "feasibility",
+    contactName: lead.contactName,
+    organization: lead.orgName,
+    email: lead.email,
+    phone: lead.phone,
+    message: lead.notes,
+    facilityType: lead.facilityType,
+    roofAreaSqFt: lead.roofArea,
+    monthlySpendBdt: lead.monthlySpend,
+    partnerType: lead.partnerType,
+    role: lead.role,
+    trackRecord: lead.trackRecord,
+    website: lead.website,
+    officeAddress: lead.officeAddress,
+    operationalDistricts: lead.operationalDistricts,
+  });
+
+  if (result.status === "accepted") {
+    return {
+      success: true,
+      syncedToNotion: false,
+      status: result.status,
+      message: result.message,
+      requestId: result.requestId,
+    };
+  }
+
+  if (result.status === "unavailable") {
+    return {
+      success: true,
+      syncedToNotion: false,
+      status: result.status,
+      message:
+        "Saved for WhatsApp dispatch. Durable CRM intake is not configured yet — continue in WhatsApp to reach Netso.",
+    };
+  }
+
   return {
-    success: true,
+    success: result.status === "error" ? false : true,
     syncedToNotion: false,
-    message: "Lead recorded in the local dispatch ledger. Continue in WhatsApp to send it to Netso.",
+    status: result.status,
+    message: `${result.message} You can still continue via WhatsApp.`,
   };
 }
 

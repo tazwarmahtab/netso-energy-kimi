@@ -98,7 +98,7 @@ const FLOW = [
     n: "02",
     t: "Direct Daylight Consumption",
     c: "Clean solar power routes straight into your facility's Main Distribution Board (MDB), covering 75–85% of daytime manufacturing loads at a guaranteed 30% discount to grid tariffs.",
-    tag: "30% Guaranteed Savings",
+    tag: "30% Discount vs Grid*",
   },
   {
     n: "03",
@@ -193,8 +193,8 @@ function NeosTelemetryTerminal() {
             <Activity className="h-3.5 w-3.5 text-gold" />
             <span className="font-mono text-[11px] uppercase tracking-wider">Active Generation</span>
           </div>
-          <p className="font-display mt-2 text-2xl font-bold text-warm md:text-3xl">64.8 kW</p>
-          <span className="font-mono text-[10px] text-emerald-400 font-medium">81.0% Peak Output</span>
+          <p className="font-display mt-2 text-2xl font-bold text-warm md:text-3xl">~65 kW</p>
+          <span className="font-mono text-[10px] text-emerald-400 font-medium">Illustrative peak output</span>
         </div>
 
         <div className="rounded-xl border border-warm/10 bg-forest/60 p-4">
@@ -514,7 +514,7 @@ function Compare() {
         <FadeUp className="mt-12 max-w-2xl">
           <h3 className="font-display text-2xl font-bold text-ink">Why institutional clients choose the Netso PPA</h3>
           <p className="mt-3 text-base leading-relaxed text-ink/75">
-            Unless energy generation is your core competency, deploying millions in corporate capital into solar hardware, ongoing string maintenance, and utility grid compliance is inefficient. Netso delivers the same high-efficiency solar energy on your roof — zero capital outlay, guaranteed uptime, and an immediate 30% tariff reduction on day one.
+            Unless energy generation is your core competency, deploying millions in corporate capital into solar hardware, ongoing string maintenance, and utility grid compliance is inefficient. Netso delivers rooftop solar under a BOO / RESCO model — ৳0 client CAPEX, operations handled by Netso, and a 30% floating discount vs utility tariffs as specified in the executed PPA.
           </p>
         </FadeUp>
       </div>
@@ -537,7 +537,7 @@ export default function Product() {
         <CTASection
           title="The sky is already working"
           heading="Your roof is an institutional asset."
-          copy="Ready to eliminate grid peak vulnerability? ৳0 upfront CAPEX, guaranteed 30% tariff savings, and full 20-year operations handled by Netso."
+          copy="Ready to convert your roof into an energy asset? ৳0 upfront CAPEX, 30% floating discount vs utility tariffs subject to executed PPA, and full operations handled by Netso."
           cta="Request Rooftop Assessment"
         />
       </main>

@@ -128,7 +128,7 @@ The current browser build uses local dispatch persistence plus direct WhatsApp f
 ```bash
 npm run dev
 ```
-Preview the application at: `http://localhost:3001/`
+Preview the application at: `http://localhost:3000/` (Vite `server.port` in `app/vite.config.ts`)
 
 ### Production Build
 ```bash

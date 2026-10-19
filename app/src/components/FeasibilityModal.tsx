@@ -59,6 +59,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
     setIsSubmitting(true);
     try {
       const res = await recordLeadForDispatch({
+        source: "feasibility",
         facilityType,
         roofArea,
         monthlySpend,
@@ -68,12 +69,12 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
         phone,
       });
       setSyncFeedback(
-        res.syncedToNotion
-          ? "Ready for Netso dispatch"
-          : "Logged to Netso Dispatch Ledger"
+        res.status === "accepted"
+          ? "Request acknowledged — continue in WhatsApp"
+          : res.message
       );
     } catch {
-      setSyncFeedback("Logged to Netso Dispatch Ledger");
+      setSyncFeedback("Continue in WhatsApp to reach the Netso desk");
     } finally {
       setIsSubmitting(false);
       setIsSubmitted(true);
