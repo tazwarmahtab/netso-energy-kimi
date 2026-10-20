@@ -42,7 +42,7 @@ const OPENINGS: JobOpening[] = [
       "Drive 20-year take-or-pay solar PPA acquisitions across Tier-1 RMG, textile, and pharmaceutical manufacturers in Dhaka, Gazipur, and Chattogram. Work alongside CFOs and Managing Directors to present financial yield models.",
     requirements: [
       "BBA/Finance or Engineering background with demonstrated B2B enterprise sales success",
-      "Clear understanding of BERC utility tariff structures, IDCOL senior debt covenants, and cash flows",
+      "Clear understanding of BERC utility tariff structures, institutional project-finance covenants, and cash flows",
       "Executive executive presence and high-conviction communication skills",
     ],
   },

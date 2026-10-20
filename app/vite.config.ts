@@ -9,6 +9,13 @@ export default defineConfig({
   plugins: [inspectAttr(), react()],
   server: {
     port: 3000,
+    proxy: {
+      // Local durable-ish intake (scripts/lead-api-dev.mjs on :3010)
+      "/api": {
+        target: "http://127.0.0.1:3010",
+        changeOrigin: true,
+      },
+    },
   },
   resolve: {
     alias: {

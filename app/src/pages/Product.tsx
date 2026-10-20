@@ -7,9 +7,11 @@ import CTASection from "../components/CTASection";
 import FeasibilityModal from "../components/FeasibilityModal";
 import { FadeUp } from "../components/Reveal";
 import { WhatsAppIcon, getNetsoWhatsAppUrl } from "../components/ui/WhatsAppIcon";
-import panels from "../assets/panels-closeup.jpg";
 import inverters from "../assets/battery-wall.jpg";
-import roof from "../assets/solar-roof-dusk.jpg";
+
+/** Peak narrative stills extracted from home scroll films (reference, not project evidence). */
+const ARCH_DUSK_STILL = "/assets/stills/architecture-dusk-mid.jpg";
+const OPS_INSPECTION_STILL = "/assets/stills/ops-inspection.jpg";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -18,8 +20,8 @@ function Hero({ onOpenAssessment }: { onOpenAssessment: () => void }) {
   return (
     <section className="relative flex min-h-[90svh] flex-col justify-end overflow-hidden bg-forest text-warm">
       <motion.img
-        src={panels}
-        alt="Dual-glass TOPCon bifacial solar pergola catching warm light"
+        src={ARCH_DUSK_STILL}
+        alt="Reference rooftop solar pergola at dusk overlooking the city"
         className="absolute inset-0 h-full w-full object-cover"
         initial={{ scale: 1.12, opacity: 0.55 }}
         animate={{ scale: 1, opacity: 0.85 }}
@@ -35,7 +37,7 @@ function Hero({ onOpenAssessment }: { onOpenAssessment: () => void }) {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
           </span>
           <span className="font-mono text-xs font-medium tracking-wide text-gold">
-            C&I Architectural Solar Pergola · Class 0.2s Telemetry
+            C&I Architectural Solar Pergola · Reference Configuration
           </span>
         </div>
       </div>
@@ -47,7 +49,7 @@ function Hero({ onOpenAssessment }: { onOpenAssessment: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.7, ease: EASE }}
         >
-          Architectural Solar Pergola · 20-Year PPA Infrastructure
+          Architectural Solar Pergola · Long-term PPA Infrastructure
         </motion.p>
         <h1 className="font-display mt-4 max-w-4xl text-5xl text-warm sm:text-7xl md:text-8xl">
           Your roof's institutional energy asset.
@@ -58,7 +60,7 @@ function Hero({ onOpenAssessment }: { onOpenAssessment: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8, ease: EASE }}
         >
-          An elevated pergola-style solar canopy transforms idle commercial rooftops into high-yield, utility-grade generating assets. Netso finances, constructs, and maintains the entire plant — you simply purchase clean power at a guaranteed <span className="font-semibold text-warm">30% discount below utility grid tariffs</span>.
+          An elevated pergola-style solar canopy can transform idle commercial rooftops into generating assets. Netso finances, constructs, and maintains the plant — customers purchase the power under a long-term PPA, with commercial terms set for each executed agreement.
         </motion.p>
 
         <motion.div
@@ -97,8 +99,8 @@ const FLOW = [
   {
     n: "02",
     t: "Direct Daylight Consumption",
-    c: "Clean solar power routes straight into your facility's Main Distribution Board (MDB), covering 75–85% of daytime manufacturing loads at a guaranteed 30% discount to grid tariffs.",
-    tag: "30% Guaranteed Savings",
+    c: "Clean solar power can route into the facility Main Distribution Board (MDB). Daytime load coverage and tariff terms are defined in the executed PPA after site survey.",
+    tag: "PPA Tariff • Site-specific",
   },
   {
     n: "03",
@@ -174,7 +176,7 @@ function NeosTelemetryTerminal() {
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
           </div>
           <span className="font-mono text-xs font-semibold tracking-wider text-warm/70">
-            NEOS Utility Telemetry · Node CGS-01
+            NEOS Telemetry Concept · Illustrative — not live project data
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -182,7 +184,7 @@ function NeosTelemetryTerminal() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
           </span>
-          <span className="font-mono text-[11px] font-semibold text-emerald-400">CLASS 0.2S LIVE</span>
+          <span className="font-mono text-[11px] font-semibold text-emerald-400">CLASS 0.2S-CAPABLE (ILLUSTRATIVE)</span>
         </div>
       </div>
 
@@ -193,8 +195,8 @@ function NeosTelemetryTerminal() {
             <Activity className="h-3.5 w-3.5 text-gold" />
             <span className="font-mono text-[11px] uppercase tracking-wider">Active Generation</span>
           </div>
-          <p className="font-display mt-2 text-2xl font-bold text-warm md:text-3xl">64.8 kW</p>
-          <span className="font-mono text-[10px] text-emerald-400 font-medium">81.0% Peak Output</span>
+          <p className="font-display mt-2 text-2xl font-bold text-warm md:text-3xl">~65 kW</p>
+          <span className="font-mono text-[10px] text-emerald-400 font-medium">Illustrative peak output</span>
         </div>
 
         <div className="rounded-xl border border-warm/10 bg-forest/60 p-4">
@@ -203,7 +205,7 @@ function NeosTelemetryTerminal() {
             <span className="font-mono text-[11px] uppercase tracking-wider">Performance Ratio</span>
           </div>
           <p className="font-display mt-2 text-2xl font-bold text-warm md:text-3xl">81.4%</p>
-          <span className="font-mono text-[10px] text-gold font-medium">Exceeds 78% Guarantee</span>
+          <span className="font-mono text-[10px] text-gold font-medium">Illustrative figure</span>
         </div>
 
         <div className="rounded-xl border border-warm/10 bg-forest/60 p-4">
@@ -248,6 +250,10 @@ function NeosTelemetryTerminal() {
         <span>SREDA Net Metering Sync: 100% Validated</span>
         <span className="text-gold font-semibold">Automated PPA Invoicing · Daily 24:00 UTC+6</span>
       </div>
+      <p className="mt-3 text-[11px] leading-relaxed text-warm/50">
+        Concept visual with illustrative figures. Live generation, performance-ratio and settlement data
+        appear only after commissioning.
+      </p>
 
       {/* Touchpoint 6: Technical SCADA & SLD WhatsApp Line */}
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-warm/10 bg-forest/80 p-3.5">
@@ -283,8 +289,8 @@ const HW = [
       "Bifacial dual-glass architecture captures up to 25% rear albedo gain",
       "30-year linear power performance warranty backed by Netso",
     ],
-    img: roof,
-    alt: "A luxury pergola-style solar canopy on a factory rooftop at dusk",
+    img: ARCH_DUSK_STILL,
+    alt: "Reference architectural solar pergola at dusk — illustrative configuration",
     isTerminal: false,
   },
   {
@@ -299,6 +305,20 @@ const HW = [
     ],
     img: inverters,
     alt: "Huawei smart string inverters mounted in a factory electrical room",
+    isTerminal: false,
+  },
+  {
+    icon: ShieldCheck,
+    t: "Field Operations & Inspection",
+    c: "Reference operating sequence still — structured inspection and preventive maintenance continue for the life of the agreement. Site frequency is defined by the asset and service agreement.",
+    points: [
+      "Scheduled on-site inspection and exception handling",
+      "String-level verification against commissioning baselines",
+      "Remote monitoring with service-level response windows",
+      "Evidence labelled reference — not a specific Netso deployment proof",
+    ],
+    img: OPS_INSPECTION_STILL,
+    alt: "Reference field inspection on a rooftop solar array",
     isTerminal: false,
   },
   {
@@ -510,7 +530,7 @@ function Compare() {
         <FadeUp className="mt-12 max-w-2xl">
           <h3 className="font-display text-2xl font-bold text-ink">Why institutional clients choose the Netso PPA</h3>
           <p className="mt-3 text-base leading-relaxed text-ink/75">
-            Unless energy generation is your core competency, deploying millions in corporate capital into solar hardware, ongoing string maintenance, and utility grid compliance is inefficient. Netso delivers the same high-efficiency solar energy on your roof — zero capital outlay, guaranteed uptime, and an immediate 30% tariff reduction on day one.
+            Unless energy generation is your core competency, deploying millions in corporate capital into solar hardware, ongoing string maintenance, and utility grid compliance is inefficient. Netso delivers rooftop solar under a BOO / RESCO model — ৳0 client CAPEX, operations handled by Netso, and a 30% floating discount vs utility tariffs as specified in the executed PPA.
           </p>
         </FadeUp>
       </div>
@@ -533,7 +553,7 @@ export default function Product() {
         <CTASection
           title="The sky is already working"
           heading="Your roof is an institutional asset."
-          copy="Ready to eliminate grid peak vulnerability? ৳0 upfront CAPEX, guaranteed 30% tariff savings, and full 20-year operations handled by Netso."
+          copy="Ready to convert your roof into an energy asset? ৳0 upfront CAPEX, 30% floating discount vs utility tariffs subject to executed PPA, and full operations handled by Netso."
           cta="Request Rooftop Assessment"
         />
       </main>

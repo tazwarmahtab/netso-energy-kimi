@@ -2,10 +2,11 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ShieldCheck, Activity, CheckCircle2, Wrench, Eye, ArrowRight } from "lucide-react";
+import { createScrollFilm, fetchFrameManifest } from "../lib/scrollFilmCanvas";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const TOTAL_OPS_FRAMES = 236;
+const DEFAULT_OPS_FRAMES = 236;
 
 interface OperationsScrollerProps {
   onOpenAssessment?: () => void;
@@ -25,211 +26,108 @@ export default function OperationsScroller({ onOpenAssessment }: OperationsScrol
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: false });
-    if (!ctx) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
-    // Retina & high-DPR adaptive canvas sizing
-    const updateCanvasDimensions = () => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const targetW = Math.round(rect.width * dpr);
-      const targetH = Math.round(rect.height * dpr);
-      if (canvas.width !== targetW || canvas.height !== targetH) {
-        canvas.width = targetW;
-        canvas.height = targetH;
-      }
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = "high";
-    };
-
-    updateCanvasDimensions();
-
-    // Chunked frame preloading
-    const frames: HTMLImageElement[] = new Array(TOTAL_OPS_FRAMES);
-    let lastRenderedIndex = 0;
-
-    const loadFrame = (i: number): HTMLImageElement => {
-      if (frames[i - 1]) return frames[i - 1];
-      const img = new Image();
-      const numStr = String(i).padStart(3, "0");
-      img.src = `/assets/ops-frames/f${numStr}.jpg`;
-      img.decoding = "async";
-      frames[i - 1] = img;
-      return img;
-    };
-
-    // Aspect-ratio cover drawing
-    const drawCover = (img: HTMLImageElement) => {
-      const cw = canvas.width;
-      const ch = canvas.height;
-      const nw = img.naturalWidth || 1280;
-      const nh = img.naturalHeight || 720;
-
-      const imgRatio = nw / nh;
-      const canvasRatio = cw / ch;
-
-      let dw = cw;
-      let dh = ch;
-      let ox = 0;
-      let oy = 0;
-
-      if (canvasRatio > imgRatio) {
-        dw = cw;
-        dh = cw / imgRatio;
-        oy = (ch - dh) / 2;
-      } else {
-        dh = ch;
-        dw = ch * imgRatio;
-        ox = (cw - dw) / 2;
-      }
-
-      ctx.drawImage(img, ox, oy, dw, dh);
-    };
-
-    // Load first frame eagerly
-    const firstImg = loadFrame(1);
-    firstImg.onload = () => {
-      updateCanvasDimensions();
-      drawCover(firstImg);
-      const wrapper = containerRef.current?.querySelector(".ops-canvas-wrapper");
-      if (wrapper) (wrapper as HTMLElement).style.opacity = "1";
-    };
-
-    // Stream remaining frames in idle time
-    let nextChunkStart = 20;
-    const CHUNK_SIZE = 25;
-
-    const scheduleNextChunk = () => {
-      if (nextChunkStart > TOTAL_OPS_FRAMES) return;
-      const end = Math.min(TOTAL_OPS_FRAMES, nextChunkStart + CHUNK_SIZE);
-      for (let i = nextChunkStart; i <= end; i++) {
-        loadFrame(i);
-      }
-      nextChunkStart = end + 1;
-      if (nextChunkStart <= TOTAL_OPS_FRAMES) {
-        if ("requestIdleCallback" in window) {
-          window.requestIdleCallback(scheduleNextChunk, { timeout: 1000 });
-        } else {
-          setTimeout(scheduleNextChunk, 80);
-        }
-      }
-    };
-
-    if ("requestIdleCallback" in window) {
-      window.requestIdleCallback(scheduleNextChunk, { timeout: 500 });
-    } else {
-      setTimeout(scheduleNextChunk, 100);
-    }
-
-    const renderFrame = (index: number) => {
-      const safeIndex = Math.max(0, Math.min(TOTAL_OPS_FRAMES - 1, index));
-      const targetImg = loadFrame(safeIndex + 1);
-      if (targetImg && targetImg.complete && targetImg.naturalWidth > 0) {
-        drawCover(targetImg);
-        lastRenderedIndex = safeIndex;
-      } else {
-        const fallback = frames[lastRenderedIndex];
-        if (fallback && fallback.complete && fallback.naturalWidth > 0) {
-          drawCover(fallback);
-        }
-      }
-    };
-
-    // ResizeObserver
+    let destroyed = false;
+    let film: ReturnType<typeof createScrollFilm> | null = null;
+    let ctxCleanup: gsap.Context | null = null;
     let resizeTimer: ReturnType<typeof setTimeout>;
+
     const resizeObserver = new ResizeObserver(() => {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        updateCanvasDimensions();
-        renderFrame(lastRenderedIndex);
-        ScrollTrigger.refresh();
-      }, 150);
+      resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 150);
     });
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
-    }
+    resizeObserver.observe(container);
 
-    // GSAP ScrollTrigger Scrubbed Timeline
-    const ctxCleanup = gsap.context(() => {
-      const scrubObj = { frame: 0 };
+    const boot = async () => {
+      const total = await fetchFrameManifest(
+        "/assets/ops-frames/manifest.json",
+        DEFAULT_OPS_FRAMES,
+      );
+      if (destroyed) return;
 
-      // 1. Video Frame Scroller
-      const st = ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.4,
-        onUpdate: (self) => {
-          const targetFrame = Math.round(self.progress * (TOTAL_OPS_FRAMES - 1));
-          if (targetFrame !== scrubObj.frame) {
-            scrubObj.frame = targetFrame;
-            renderFrame(targetFrame);
-          }
-          if (progressTrackRef.current) {
-            progressTrackRef.current.style.width = `${(self.progress * 100).toFixed(1)}%`;
-          }
-        },
+      film = createScrollFilm({
+        canvas,
+        totalFrames: total,
+        frameUrl: (i1) => `/assets/ops-frames/f${String(i1).padStart(3, "0")}.jpg`,
       });
 
-      // 2. Synchronized Narrative Cards
-      // Phase 1 (0% to 25%): Physical Asset Ownership & Daily Walks
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
+      const wrapper = container.querySelector(".ops-canvas-wrapper");
+      if (wrapper) (wrapper as HTMLElement).style.opacity = "1";
+
+      ctxCleanup = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: container,
           start: "top top",
-          end: "25% top",
-          scrub: 0.5,
-        },
-      })
-        .fromTo(phase1Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5 }, 0)
-        .to(phase1Ref.current, { opacity: 0, y: -20, duration: 0.3 }, 0.7);
-
-      // Phase 2 (25% to 55%): Generation & Site Performance
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "25% top",
-          end: "55% top",
-          scrub: 0.5,
-        },
-      })
-        .fromTo(phase2Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5 }, 0.1)
-        .to(phase2Ref.current, { opacity: 0, y: -20, duration: 0.3 }, 0.75);
-
-      // Phase 3 (55% to 80%): String-Level Multimeter Calibration
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "55% top",
-          end: "80% top",
-          scrub: 0.5,
-        },
-      })
-        .fromTo(phase3Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5 }, 0.1)
-        .to(phase3Ref.current, { opacity: 0, y: -20, duration: 0.3 }, 0.75);
-
-      // Phase 4 (80% to 100%): 24/7 Night Inspection & SCADA Security
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "80% top",
           end: "bottom bottom",
-          scrub: 0.5,
-        },
-      })
-        .fromTo(phase4Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5 }, 0.1)
-        .to(phase4Ref.current, { opacity: 1, duration: 0.4 }, 0.6);
+          scrub: true,
+          onUpdate: (self) => {
+            film?.setProgress(self.progress);
+            if (progressTrackRef.current) {
+              progressTrackRef.current.style.width = `${(self.progress * 100).toFixed(1)}%`;
+            }
+          },
+        });
 
-      return () => {
-        st.kill();
-      };
-    }, containerRef);
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: container,
+              start: "top top",
+              end: "25% top",
+              scrub: 0.5,
+            },
+          })
+          .fromTo(phase1Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5 }, 0)
+          .to(phase1Ref.current, { opacity: 0, y: -20, duration: 0.3 }, 0.7);
+
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: container,
+              start: "25% top",
+              end: "55% top",
+              scrub: 0.5,
+            },
+          })
+          .fromTo(phase2Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5 }, 0.1)
+          .to(phase2Ref.current, { opacity: 0, y: -20, duration: 0.3 }, 0.75);
+
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: container,
+              start: "55% top",
+              end: "80% top",
+              scrub: 0.5,
+            },
+          })
+          .fromTo(phase3Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5 }, 0.1)
+          .to(phase3Ref.current, { opacity: 0, y: -20, duration: 0.3 }, 0.75);
+
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: container,
+              start: "80% top",
+              end: "bottom bottom",
+              scrub: 0.5,
+            },
+          })
+          .fromTo(phase4Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5 }, 0.1)
+          .to(phase4Ref.current, { opacity: 1, duration: 0.4 }, 0.6);
+      }, container);
+    };
+
+    void boot();
 
     return () => {
+      destroyed = true;
       clearTimeout(resizeTimer);
       resizeObserver.disconnect();
-      ctxCleanup.revert();
+      ctxCleanup?.revert();
+      film?.destroy();
     };
   }, []);
 

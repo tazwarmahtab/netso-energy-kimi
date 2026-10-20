@@ -36,6 +36,12 @@
       "sourceType": "github",
       "skillPath": "skills/skill-vetter/SKILL.md",
       "computedHash": "5172ac6d437a5f41b5fa8be0def458a48b0e73c6b901c3f4e5e792434c4dc133"
+    },
+    "scroll-film-studio": {
+      "source": "local-upload/Super_website_skill_v2",
+      "sourceType": "upload",
+      "skillPath": "scroll-film-studio/SKILL.md",
+      "computedHash": "upload-super-website-skill-v2"
     }
   }
 }

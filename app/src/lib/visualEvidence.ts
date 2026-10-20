@@ -22,6 +22,11 @@ export const VISUAL_ASSET_MANIFEST: Record<string, VisualAssetDefinition> = {
     scene: "solar-reference-architecture",
     supports: ["structure", "module configuration", "architectural integration"],
   },
+  architectureFilm: {
+    state: "reference",
+    scene: "pergola-dusk-sky-to-occupation",
+    supports: ["dusk film narrative", "terrace amenity", "architectural lighting"],
+  },
   economics: {
     state: "illustrative",
     scene: "asset-to-cashflow",

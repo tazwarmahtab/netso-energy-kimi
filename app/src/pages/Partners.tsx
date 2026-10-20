@@ -18,6 +18,7 @@ import CTASection from "../components/CTASection";
 import FeasibilityModal from "../components/FeasibilityModal";
 import { FadeUp, Stagger, StaggerItem, Words } from "../components/Reveal";
 import { WhatsAppIcon, getNetsoWhatsAppUrl } from "../components/ui/WhatsAppIcon";
+import { recordLeadForDispatch } from "../lib/notion";
 import aerial from "../assets/neighborhood-aerial.jpg";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -44,7 +45,7 @@ function Hero({ onOpenModal }: { onOpenModal: () => void }) {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
           </span>
           <span className="font-mono text-xs font-medium tracking-wide text-gold">
-            IDCOL 80% Senior Debt · 1.25× DSCR Covenant · Non-Recourse SPVs
+            Institutional Project Financing · Non-Recourse SPVs
           </span>
         </div>
       </div>
@@ -68,7 +69,7 @@ function Hero({ onOpenModal }: { onOpenModal: () => void }) {
           transition={{ delay: 0.8, duration: 0.8, ease: EASE }}
         >
           Netso structures bankable 20-year take-or-pay distributed rooftop solar assets. Powered by
-          concessionary senior debt financing, ring-fenced project SPVs, and standardized milestone
+          institutional project financing, ring-fenced project SPVs, and standardized milestone
           disbursements for top-tier EPC contractors.
         </motion.p>
 
@@ -98,10 +99,10 @@ function Hero({ onOpenModal }: { onOpenModal: () => void }) {
 
 /* ----------------------- Institutional Metrics Strip ----------------------- */
 const METRICS = [
-  { val: "80%", unit: "LTV", label: "Senior Debt Facility", sub: "IDCOL 5.0%–5.5% concessionary facility" },
-  { val: "1.25×", unit: "Min", label: "DSCR Covenant", sub: "Ring-fenced take-or-pay cash flow coverage" },
+  { val: "Per-project", unit: "terms", label: "Institutional Financing", sub: "Project debt arranged at financial close — no rates disclosed" },
+  { val: "SPV", unit: "model", label: "Ring-Fenced Assets", sub: "Non-recourse vehicles with audited escrow waterfall" },
   { val: "30%", unit: "Margin", label: "Guaranteed Offtaker Savings", sub: "Locked discount below BERC peak grid tariff" },
-  { val: "৳60k", unit: "/kWp", label: "CAPEX Benchmark Ceiling", sub: "Strict engineering discipline under IDCOL rules" },
+  { val: "Lifetime", unit: "O&M", label: "Netso Operates", sub: "Maintenance, monitoring and performance risk stay with Netso" },
 ];
 
 function MetricsStrip() {
@@ -146,7 +147,7 @@ function CapitalStack() {
           <FadeUp delay={0.15}>
             <p className="max-w-md text-sm text-warm/70 leading-relaxed">
               Every rooftop asset is ring-fenced in a special purpose bankruptcy-remote vehicle, backed by
-              tri-partite escrow accounts, bank guarantees, and creditworthy Tier-1 industrial offtakers.
+              tri-partite escrow accounts, lender security arrangements, and creditworthy Tier-1 industrial offtakers.
             </p>
           </FadeUp>
         </div>
@@ -171,13 +172,13 @@ function CapitalStack() {
                 <div className="rounded-2xl border border-gold/40 bg-gold/10 p-5 transition-colors hover:border-gold">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs font-semibold text-gold uppercase tracking-wider">
-                      Senior Concessionary Debt
+                      Senior Project Debt
                     </span>
-                    <span className="font-display text-2xl font-bold text-warm">80%</span>
+                    <span className="font-display text-2xl font-bold text-warm">Per project</span>
                   </div>
                   <p className="mt-2 text-xs text-warm/75 leading-relaxed">
-                    IDCOL Renewable Energy Credit Facility @ <strong>5.0%–5.5%</strong> interest rate. 10-year
-                    tenure including 1-year construction grace period.
+                    Institutional term debt arranged per project at financial close. Terms are set in
+                    project documents — no rates are disclosed on this site.
                   </p>
                 </div>
 
@@ -216,19 +217,19 @@ function CapitalStack() {
           <div className="grid gap-5 sm:grid-cols-2 lg:col-span-7">
             <div className="rounded-3xl border border-warm/15 bg-forest-light/40 p-7 transition-all hover:border-gold/30">
               <Landmark className="h-8 w-8 text-gold" />
-              <h3 className="font-display mt-5 text-2xl text-warm">IDCOL Senior Facility</h3>
+              <h3 className="font-display mt-5 text-2xl text-warm">Institutional Project Debt</h3>
               <p className="mt-2 text-sm text-warm/70 leading-relaxed">
-                Eligible under IDCOL’s concessionary green fund. Structured with 50%–75% bank guarantee backing to
-                unlock the lowest 5.0% rate tiers, capped well below commercial lending benchmarks.
+                Project debt is arranged per project at financial close through institutional lenders.
+                Terms are set in project documents — no rates are disclosed on this site.
               </p>
             </div>
 
             <div className="rounded-3xl border border-warm/15 bg-forest-light/40 p-7 transition-all hover:border-gold/30">
               <Scale className="h-8 w-8 text-gold" />
-              <h3 className="font-display mt-5 text-2xl text-warm">1.25× DSCR Floor</h3>
+              <h3 className="font-display mt-5 text-2xl text-warm">Lender-Ready Covenants</h3>
               <p className="mt-2 text-sm text-warm/70 leading-relaxed">
-                Debt service is tested across conservative P90 insolation modeling. Net generation cash flows
-                provide substantial buffer over debt service requirements across all economic seasons.
+                Debt service is tested against conservative generation modeling, with cash-flow buffers
+                sized per project across all economic seasons.
               </p>
             </div>
 
@@ -277,7 +278,7 @@ const EPC_WHY = [
     icon: Award,
     t: "Certified Milestone Escrow",
     h: "No 120-day client receivables",
-    c: "Disbursements occur in escrow against certified progress: 30% mobilization, 40% mechanical completion, and 30% COD grid sync.",
+    c: "Disbursements occur in escrow against certified progress, phased across mobilization, mechanical completion, and COD grid sync.",
   },
 ];
 
@@ -372,7 +373,7 @@ function Compare() {
           ))}
           <div className="grid grid-cols-2 border-t border-warm/15 bg-forest-light p-5 md:p-7">
             <p className="font-mono text-xs uppercase tracking-wider text-warm/50">Partner Outcome</p>
-            <p className="font-display text-2xl text-gold md:text-3xl">Guaranteed cash flow & zero sales drag.</p>
+            <p className="font-display text-2xl text-gold md:text-3xl">Predictable cash flow & zero sales drag.</p>
           </div>
         </FadeUp>
       </div>
@@ -398,11 +399,44 @@ function Field({ label, ...props }: { label: string } & React.InputHTMLAttribute
 
 function PartnerForm() {
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitNote, setSubmitNote] = useState("");
   const [partnerType, setPartnerType] = useState("epc");
   const [regions, setRegions] = useState<string[]>(["Chattogram", "Gazipur"]);
 
   const toggle = (s: string) =>
     setRegions((cur) => (cur.includes(s) ? cur.filter((x) => x !== s) : [...cur, s]));
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const form = new FormData(e.currentTarget);
+    const firstName = String(form.get("firstName") || "").trim();
+    const lastName = String(form.get("lastName") || "").trim();
+    const contactName = `${firstName} ${lastName}`.trim();
+    try {
+      const res = await recordLeadForDispatch({
+        source: "partner",
+        contactName: contactName || "Partner contact",
+        orgName: String(form.get("company") || "Partner organization"),
+        email: String(form.get("email") || ""),
+        phone: String(form.get("phone") || ""),
+        partnerType,
+        role: String(form.get("role") || ""),
+        trackRecord: String(form.get("trackRecord") || ""),
+        website: String(form.get("website") || ""),
+        officeAddress: String(form.get("office") || ""),
+        operationalDistricts: regions,
+      });
+      setSubmitNote(res.message);
+      setSent(true);
+    } catch {
+      setSubmitNote("Continue via WhatsApp finance desk if you need a same-day response.");
+      setSent(true);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <section id="partner-form" className="bg-parchment py-24 md:py-36">
@@ -429,8 +463,8 @@ function PartnerForm() {
                 </div>
                 <h3 className="font-display mt-6 text-4xl text-forest">Partnership Intake Received.</h3>
                 <p className="mt-3 max-w-md text-sm leading-relaxed text-ink/70">
-                  Our structured finance & project procurement desk will review your credentials and contact you
-                  within 2 business days to discuss upcoming pipeline tranches.
+                  {submitNote ||
+                    "Our structured finance & project procurement desk will review your credentials. Prefer WhatsApp for same-day contact."}
                 </p>
                 <p className="font-mono text-xs text-gold mt-6 uppercase tracking-wider">Netso Energy Ltd · Partner Desk</p>
               </motion.div>
@@ -439,10 +473,7 @@ function PartnerForm() {
                 key="form"
                 className="rounded-3xl border border-ink/10 bg-cream p-6 md:p-10 shadow-lg"
                 exit={{ opacity: 0, y: -14 }}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSent(true);
-                }}
+                onSubmit={handleSubmit}
               >
                 {/* Partner Category Selector */}
                 <fieldset>
@@ -451,7 +482,7 @@ function PartnerForm() {
                   </legend>
                   <div className="grid gap-3 sm:grid-cols-3">
                     {[
-                      { id: "lender", label: "Senior Lender / DFI", desc: "IDCOL facility, commercial co-financing, or green debt" },
+                      { id: "lender", label: "Senior Lender / DFI", desc: "Institutional project debt or green financing" },
                       { id: "epc", label: "Tier-1 EPC Contractor", desc: "Turnkey electrical & solar pergola installation" },
                       { id: "origination", label: "Commercial Origination", desc: "Industrial park or factory roof portfolio sourcing" },
                     ].map((t) => (
@@ -477,11 +508,11 @@ function PartnerForm() {
                     Primary Contact
                   </legend>
                   <div className="grid gap-5 sm:grid-cols-2">
-                    <Field label="First Name" required placeholder="Arif" />
-                    <Field label="Last Name" required placeholder="Rahman" />
-                    <Field label="Work Email" required type="email" placeholder="a.rahman@firm.com.bd" />
-                    <Field label="Direct Phone" required type="tel" placeholder="+880 1711-XXXXXX" />
-                    <Field label="Title / Function" required placeholder="Head of Structured Finance / Projects Director" />
+                    <Field name="firstName" label="First Name" required placeholder="Arif" />
+                    <Field name="lastName" label="Last Name" required placeholder="Rahman" />
+                    <Field name="email" label="Work Email" required type="email" placeholder="a.rahman@firm.com.bd" />
+                    <Field name="phone" label="Direct Phone" required type="tel" placeholder="+880 1711-XXXXXX" />
+                    <Field name="role" label="Title / Function" required placeholder="Head of Structured Finance / Projects Director" />
                   </div>
                 </fieldset>
 
@@ -490,12 +521,12 @@ function PartnerForm() {
                     Organization Details
                   </legend>
                   <div className="grid gap-5 sm:grid-cols-2">
-                    <Field label="Company / Entity Name" required placeholder="Crescent Infrastructure Ltd." />
+                    <Field name="company" label="Company / Entity Name" required placeholder="Crescent Infrastructure Ltd." />
                     <div>
                       <label className={labelCls}>
                         Track Record / Capacity <span className="text-gold">*</span>
                       </label>
-                      <select className={inputCls} required defaultValue="">
+                      <select name="trackRecord" className={inputCls} required defaultValue="">
                         <option value="" disabled>Select track record…</option>
                         <option>10MWp+ Installed / Financed</option>
                         <option>2MWp to 10MWp C&I Experience</option>
@@ -503,8 +534,8 @@ function PartnerForm() {
                         <option>Financial Institution / Asset Manager</option>
                       </select>
                     </div>
-                    <Field label="Company Website" required type="url" placeholder="https://" />
-                    <Field label="Registered Office Address" required placeholder="Plot 14, CEPZ, Chattogram" />
+                    <Field name="website" label="Company Website" required type="url" placeholder="https://" />
+                    <Field name="office" label="Registered Office Address" required placeholder="Plot 14, CEPZ, Chattogram" />
                     <div className="sm:col-span-2">
                       <span className={labelCls}>Operational Districts</span>
                       <div className="mt-1 flex flex-wrap gap-2">
@@ -533,13 +564,14 @@ function PartnerForm() {
                 <div className="mt-10 flex flex-wrap items-center gap-4">
                   <button
                     type="submit"
-                    className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-gold text-base font-semibold text-forest shadow-md transition-transform duration-300 hover:scale-[1.01] active:scale-[0.99] sm:w-auto sm:px-10"
+                    disabled={submitting}
+                    className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-gold text-base font-semibold text-forest shadow-md transition-transform duration-300 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 sm:w-auto sm:px-10"
                   >
-                    Submit Partner Credentials <ArrowRight className="h-4 w-4" />
+                    {submitting ? "Submitting…" : "Submit Partner Credentials"} <ArrowRight className="h-4 w-4" />
                   </button>
                   <a
                     href={getNetsoWhatsAppUrl(
-                      "Hello Tazwar, reaching out from [Bank/Investment Institution] regarding Netso's IDCOL concessionary debt co-financing facility and 20-year PPA portfolio financial models."
+                      "Hello Tazwar, reaching out from [Bank/Investment Institution] regarding Netso's project financing and long-term PPA portfolio models."
                     )}
                     target="_blank"
                     rel="noopener noreferrer"

@@ -8,17 +8,17 @@ The homepage is treated as one continuous visual narrative. Every visual asset h
 
 ### Hero sequence
 
-The sampled sequence currently reads coherently:
+Source: Meta AI share **Netso Final Video Hero** (`hero-master.mp4` → `frames/`, 240 @ 24fps). Scrub map compresses near-black frames 149–188.
 
 | Representative frame | Observed visual state | Intended narrative role |
 | --- | --- | --- |
 | f001 | open sky / clouds | possibility before the asset appears |
-| f060 | solar canopy entering the frame | roof becoming infrastructure |
+| f060–f080 | solar canopy / LED entering | roof becoming infrastructure |
 | f120 | rooftop canopy and skyline at dusk | installed architectural asset |
-| f180 | near-black visual beat | transition / visual breath |
+| f149–f188 | near-black visual beat | transition / visual breath (compressed) |
 | f240 | occupied rooftop under illuminated canopy | asset as usable infrastructure |
 
-The hero should therefore narrate **roof -> energy asset -> operated/usable asset**. It should not imply that the sequence is documentary evidence of a commissioned Netso site.
+The hero should therefore narrate **roof -> energy asset -> operated/usable asset**. It should not imply that the sequence is documentary evidence of a commissioned Netso site. Absolute Meta marketing claims (30% forever, EU CBAM ready) are **not** carried into production copy.
 
 ### Operations sequence
 
@@ -34,13 +34,26 @@ Sampled frames show a useful operational progression:
 
 The code's four-phase timing is directionally aligned with this sequence. The copy is intentionally generalized so it does not claim that a particular frame proves a specific service-level commitment.
 
+### Architecture dusk film (`pergola-dusk.mp4` → `architecture-frames/`)
+
+Scroll-film narrative extracted from the previously unused pergola dusk master:
+
+| Representative frame | Observed visual state | Intended narrative role |
+| --- | --- | --- |
+| f001 | open twilight sky | possibility before the asset |
+| f080 | illuminated solar canopy over city | structure as architecture |
+| f149–f188 | near-black breath | cinematic transition (compressed in scrub map) |
+| f240 | occupied terrace under canopy | asset as usable amenity |
+
+Peak stills are also published under `public/assets/stills/` for Product and secondary surfaces.
+
 ### Architectural day/dusk pair
 
 `bangladeshi-solar-hq-day.jpg` and `bangladeshi-solar-hq-dusk.jpg` depict the same architectural scene from the same viewpoint. This makes them suitable for a genuine visual continuity transition:
 
 **daylight generation -> dusk occupation/lighting**
 
-They should remain labelled as a **reference configuration**, not a commissioned project.
+They should remain labelled as a **reference configuration**, not a commissioned project. On Home they follow the dusk scroll film as same-viewpoint evidence.
 
 ### Secondary visual assets
 
@@ -59,6 +72,8 @@ They should remain labelled as a **reference configuration**, not a commissioned
 
 ## Current homepage sequence
 
-**Hero -> metadata rail -> reference architecture -> illustrative economics -> reference operations -> RMG technical considerations -> reference engineering model -> customer outcomes -> process -> macro rationale -> network -> origination**
+**Hero film → hero handoff (same canopy still) → metadata rail → commercial thesis (chart-led) → architecture dusk film → reference day/dusk pair → operations film → RMG considerations → reference engineering model → customer outcomes → process → macro rationale → network → origination**
+
+Rationale: after the roof becomes an asset on film, answer the commercial question before another scroll film. Architecture and operations then prove physical form and operating life.
 
 The objective is that every step feels like a change in representation of the same Netso thesis, not a collection of unrelated landing-page modules.

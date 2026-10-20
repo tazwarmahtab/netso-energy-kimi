@@ -15,6 +15,7 @@ import SolarPergola3D from "../components/SolarPergola3D";
 import FeasibilityModal from "../components/FeasibilityModal";
 import { CinematicIntro } from "../components/CinematicIntro";
 import { MarqueeTicker } from "../components/MarqueeTicker";
+import { HeroHandoff } from "../components/HeroHandoff";
 import { RMGEdgeSection } from "../components/RMGEdgeSection";
 import { SectionBridge } from "../components/SectionBridge";
 import solarRoof from "../assets/solar-roof-dusk.jpg";
@@ -290,9 +291,9 @@ function HowItWorks() {
 
 /* --------------------------- Why netso --------------------------- */
 const RISKS = [
-  { big: "+16.7%", label: "Industrial tariffs jumped 16.7% in one BERC order", note: "The latest BERC escalation exposed factory operating budgets with no ceiling in sight." },
-  { big: "30%", label: "Guaranteed floating discount margin against utility rate hikes", note: "Energy transitions from an unhedged operational risk into contractually guaranteed savings." },
-  { big: "3,600 MWp", label: "Bangladesh's industrial rooftops could host 3,600 MWp", note: "A $2.1B market sitting idle above the buildings that need it most." },
+  { big: "Rising", label: "Grid tariffs rise with no ceiling in sight", note: "Utility escalation exposes factory operating budgets year after year." },
+  { big: "Below", label: "Illustrative floating discount structure vs utility rate moves", note: "Energy can shift from unhedged operational risk into a contractually defined PPA price path — subject to executed terms." },
+  { big: "Idle", label: "Vast industrial rooftop area sits unutilized", note: "A market-scale clean-energy resource waiting above the buildings that need it most." },
 ];
 
 function Why() {
@@ -367,6 +368,14 @@ function Network() {
               network of owned energy assets across Chattogram, Gazipur and Narayanganj — engineered to
               scale with every new installation.
             </p>
+            <div className="mt-6 flex flex-wrap gap-2.5" aria-label="Anonymized project pipeline">
+              <span className="rounded-full border border-ink/10 bg-cream px-4 py-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-ink/60">
+                Educational campus · ~80 kWp · LOI signed
+              </span>
+              <span className="rounded-full border border-ink/10 bg-cream px-4 py-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-ink/60">
+                Industrial facility · ~400 kWp · PPA draft
+              </span>
+            </div>
             <a
               href="#get-started"
               className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold text-forest hover:text-gold transition-colors link-underline"
@@ -409,14 +418,14 @@ export default function Home() {
       <Nav theme="dark" onOpenAssessment={() => setIsModalOpen(true)} />
       <main id="content">
         <CanvasHero onOpenAssessment={() => setIsModalOpen(true)} />
+        <HeroHandoff />
         <MarqueeTicker />
-        <SectionBridge from="dark" to="dark" />
-        <ArchitecturalTransformation onOpenAssessment={() => setIsModalOpen(true)} />
-        <SectionBridge from="dark" to="dark" />
         <InstitutionalEconomics onOpenAssessment={() => setIsModalOpen(true)} />
-        <SectionBridge from="dark" to="dark" />
+        <SectionBridge from="dark" to="dark" label="Reference architecture" />
+        <ArchitecturalTransformation onOpenAssessment={() => setIsModalOpen(true)} />
+        <SectionBridge from="dark" to="dark" label="Operating life" />
         <OperationsScroller onOpenAssessment={() => setIsModalOpen(true)} />
-        <SectionBridge from="dark" to="dark" />
+        <SectionBridge from="dark" to="dark" label="RMG considerations" />
         <RMGEdgeSection onOpenFeasibility={() => setIsModalOpen(true)} />
         <SectionBridge from="dark" to="dark" />
         <section id="pergola-twin" className="relative bg-forest-dark py-24 md:py-36 text-warm border-t border-warm/10">

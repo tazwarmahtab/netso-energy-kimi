@@ -122,8 +122,8 @@ export function CinematicIntro() {
           <span className="text-gold text-[0.6em] font-light">%</span>
         </div>
 
-        <div className="max-w-[320px] font-mono text-[10px] sm:text-[11px] tracking-[0.12em] text-cream/50 sm:text-right leading-relaxed">
-          ROOFTOP PPA • CUSTOMER CAPEX CAN BE ZERO* • NEM-READY DESIGN
+        <div className="max-w-[340px] font-mono text-[10px] sm:text-[11px] tracking-[0.12em] text-cream/50 sm:text-right leading-relaxed">
+          FLOATING PPA · ZERO CLIENT CAPEX* · LOADING ASSET
         </div>
       </div>
     </div>
