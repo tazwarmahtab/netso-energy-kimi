@@ -15,7 +15,7 @@ export function MarqueeTicker() {
 
   return (
     <div
-      className="relative w-full select-none overflow-hidden border-y border-gold/12 bg-[#06110c] py-3.5"
+      className="relative w-full select-none overflow-hidden border-y border-gold/12 bg-[#06110c] py-4 md:py-5"
       aria-label="Locations and craft metadata"
     >
       <style>{`

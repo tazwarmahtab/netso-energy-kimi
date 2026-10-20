@@ -44,34 +44,37 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
         <div className="absolute left-1/2 top-0 h-[420px] w-[900px] -translate-x-1/2 rounded-full bg-gold/[0.035] blur-[140px]" />
       </div>
 
-      <div className="relative mx-auto max-w-[1440px] px-5 pb-20 pt-16 md:px-10 md:pb-28 md:pt-24 lg:pt-28">
-        {/* Zone A — one-job header: display stack + right aside (balanced, not left-cramped) */}
+      <div className="relative mx-auto max-w-[1440px] px-6 pb-24 pt-20 sm:px-8 md:px-12 md:pb-32 md:pt-28 lg:pt-32">
+        {/* Zone A — airy header: display stack + right aside */}
         <FadeUp>
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.85fr)] lg:items-end lg:gap-16 xl:gap-20">
-            <div className="min-w-0">
-              <p className="inline-flex items-center gap-2 rounded-full border border-gold/35 px-3.5 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-gold">
-                <span className="h-1 w-1 shrink-0 rounded-full bg-gold" aria-hidden="true" />
+          <div className="grid gap-14 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)] lg:items-start lg:gap-20 xl:gap-24">
+            <div className="min-w-0 max-w-[38rem]">
+              <p className="inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-gold/[0.06] px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-gold">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true" />
                 Rooftop solar · Long-term PPA
               </p>
-              <h2 className="font-display mt-7 text-[clamp(2.15rem,4.4vw,3.85rem)] font-bold leading-[1.08] tracking-tight text-warm md:mt-8">
-                We don&apos;t sell hardware.
+
+              <h2 className="font-display mt-10 text-[clamp(2.35rem,4.6vw,4rem)] font-bold leading-[1.12] tracking-[-0.03em] text-warm md:mt-12">
+                Your roof, working harder.
               </h2>
-              <p className="font-display-italic mt-4 text-[clamp(1.2rem,2.35vw,1.95rem)] text-gold md:mt-5">
-                We sell contracted rooftop power.
+
+              <p className="font-display-italic mt-6 max-w-[22ch] text-[clamp(1.45rem,2.8vw,2.35rem)] text-gold md:mt-7">
+                Lower-cost power without the plant upfront.
               </p>
-              <p className="mt-7 max-w-xl text-base leading-[1.7] text-sage/85 md:mt-8">
-                Zero client CAPEX pathways, BOO ownership, and an illustrative floating discount vs grid — all subject to site survey, financing, and the executed PPA. If grid rates move, the contract can define how your solar price moves with them.
+
+              <p className="mt-10 max-w-[36rem] text-[15px] leading-[1.75] text-sage/85 md:mt-12 md:text-base md:leading-[1.8]">
+                We fund, engineer, construct and operate rooftop solar on suitable commercial property. You avoid funding the plant upfront and pay for the electricity it produces — terms confirmed per site and the executed PPA.
               </p>
             </div>
 
-            <aside className="max-w-md border-t border-white/10 pt-6 lg:max-w-none lg:border-t-0 lg:border-l lg:pl-10 lg:pt-1 xl:pl-12">
+            <aside className="max-w-md border-t border-white/10 pt-8 lg:mt-2 lg:max-w-none lg:border-t-0 lg:border-l lg:pl-12 lg:pt-2 xl:pl-14">
               <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/40">
                 Commercial structure · 02
               </p>
-              <p className="mt-4 text-sm leading-relaxed text-sage/80 md:text-[15px] md:leading-[1.7]">
-                Financed, built and operated by Netso on suitable commercial roofs. You buy the electricity — plant funding stays with us, subject to assessment and the executed PPA.
+              <p className="mt-5 text-sm leading-relaxed text-sage/80 md:text-[15px] md:leading-[1.75]">
+                Financed, built and operated by Netso. You buy the electricity — plant funding stays with us, subject to assessment and the executed agreement.
               </p>
-              <div className="mt-6 space-y-3 border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-cream/45">
+              <div className="mt-8 space-y-4 border-t border-white/10 pt-6 font-mono text-[10px] uppercase tracking-[0.18em] text-cream/45">
                 <p className="flex items-baseline gap-3">
                   <span className="text-gold/80">01</span>
                   <span>৳0 client CAPEX pathways*</span>
@@ -88,7 +91,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
               <button
                 type="button"
                 onClick={onOpenAssessment}
-                className="mt-7 inline-flex cursor-pointer items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-gold transition-colors hover:text-gold/80"
+                className="mt-8 inline-flex cursor-pointer items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-gold transition-colors hover:text-gold/80"
               >
                 Start roof assessment
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -99,7 +102,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
 
         {/* Zone B — chart as the visual anchor */}
         <FadeUp delay={0.08}>
-          <div className="mt-14 md:mt-16">
+          <div className="mt-20 md:mt-28">
             <div className="flex flex-col gap-4 border-b border-white/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-cream/45">
