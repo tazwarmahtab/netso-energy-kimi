@@ -8,17 +8,17 @@ The homepage is treated as one continuous visual narrative. Every visual asset h
 
 ### Hero sequence
 
-The sampled sequence currently reads coherently:
+Source: Meta AI share **Netso Final Video Hero** (`hero-master.mp4` → `frames/`, 240 @ 24fps). Scrub map compresses near-black frames 149–188.
 
 | Representative frame | Observed visual state | Intended narrative role |
 | --- | --- | --- |
 | f001 | open sky / clouds | possibility before the asset appears |
-| f060 | solar canopy entering the frame | roof becoming infrastructure |
+| f060–f080 | solar canopy / LED entering | roof becoming infrastructure |
 | f120 | rooftop canopy and skyline at dusk | installed architectural asset |
-| f180 | near-black visual beat | transition / visual breath |
+| f149–f188 | near-black visual beat | transition / visual breath (compressed) |
 | f240 | occupied rooftop under illuminated canopy | asset as usable infrastructure |
 
-The hero should therefore narrate **roof -> energy asset -> operated/usable asset**. It should not imply that the sequence is documentary evidence of a commissioned Netso site.
+The hero should therefore narrate **roof -> energy asset -> operated/usable asset**. It should not imply that the sequence is documentary evidence of a commissioned Netso site. Absolute Meta marketing claims (30% forever, EU CBAM ready) are **not** carried into production copy.
 
 ### Operations sequence
 

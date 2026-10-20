@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, ShieldCheck, Activity, TrendingUp } from "lucide-react";
 import { LiquidMetalButton } from "./ui/liquid-metal-button";
+import { createGapCompressedMapper } from "../lib/scrollFilmCanvas";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +12,8 @@ const DEFAULT_FRAME_COUNT = 240;
 const LERP = 0.14;
 const BITMAP_AHEAD = 18;
 const BITMAP_KEEP = 28;
+/** Near-black breath in Meta final-video-hero master (1-based). */
+const HERO_BLACK_GAP = createGapCompressedMapper(149, 188, 0.05);
 
 export interface CanvasHeroProps {
   onOpenAssessment?: () => void;
@@ -256,7 +259,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           scrub: true,
           onUpdate: (self) => {
             const scrubProgress = Math.min(1, self.progress / 0.8);
-            targetFrame = scrubProgress * (totalFrames - 1);
+            targetFrame = HERO_BLACK_GAP(scrubProgress, totalFrames);
           },
         });
 
@@ -492,7 +495,7 @@ export default function CanvasHero({ onOpenAssessment }: CanvasHeroProps) {
           className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 pointer-events-none"
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-warm/60">
-            Scroll to Explore
+            Scroll to explore rooftop
           </span>
           <div className="w-5 h-8 rounded-full border border-warm/30 flex justify-center p-1">
             <div className="w-1 h-2 bg-gold rounded-full animate-bounce" />

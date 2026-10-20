@@ -11,12 +11,18 @@ export function HeroHandoff() {
     >
       <div className="absolute inset-0">
         <img
+          src="/assets/meta-refs/rmg-aerial-rooftop.webp"
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-cover object-center opacity-[0.32]"
+        />
+        <img
           src="/assets/stills/hero-occupied-canopy.jpg"
           alt=""
           aria-hidden="true"
-          className="h-full w-full object-cover opacity-[0.22]"
+          className="absolute inset-0 h-full w-full object-cover opacity-[0.18] mix-blend-luminosity"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-forest-dark/50 via-forest-dark/88 to-forest-dark" />
+        <div className="absolute inset-0 bg-gradient-to-b from-forest-dark/55 via-forest-dark/88 to-forest-dark" />
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-forest-dark to-transparent"
           aria-hidden="true"

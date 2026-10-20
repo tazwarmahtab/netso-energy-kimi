@@ -1,6 +1,11 @@
 {
   "count": 240,
   "pattern": "f%03d.jpg",
-  "source": "legacy-hero-sequence",
-  "note": "Replace by running scripts/extract-hero-frames.sh on the Gemini master video"
+  "fps": 24,
+  "scale": 1280,
+  "source": "hero-master.mp4",
+  "origin": "meta.ai/share/a/3c8b0220-2466-4f56-8cfa-0cf58848ee80",
+  "title": "Netso Final Video Hero",
+  "blackGap1Based": [149, 188],
+  "narrative": ["sky", "pergola-led", "skyline", "night-occupied"]
 }
