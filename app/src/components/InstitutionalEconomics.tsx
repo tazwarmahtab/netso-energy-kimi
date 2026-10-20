@@ -44,22 +44,56 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
         <div className="absolute left-1/2 top-0 h-[420px] w-[900px] -translate-x-1/2 rounded-full bg-gold/[0.035] blur-[140px]" />
       </div>
 
-      <div className="relative mx-auto max-w-[1440px] px-5 pb-20 pt-14 md:px-10 md:pb-28 md:pt-20">
-        {/* Zone A — one job header (Meta thesis voice, softened) */}
+      <div className="relative mx-auto max-w-[1440px] px-5 pb-20 pt-16 md:px-10 md:pb-28 md:pt-24 lg:pt-28">
+        {/* Zone A — one-job header: display stack + right aside (balanced, not left-cramped) */}
         <FadeUp>
-          <div className="max-w-3xl">
-            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
-              Commercial structure · 02
-            </p>
-            <h2 className="font-display mt-4 text-[clamp(2rem,4.2vw,3.75rem)] font-bold leading-[1.02] tracking-tight text-warm">
-              We don&apos;t sell hardware.
-            </h2>
-            <p className="mt-3 font-serif text-[clamp(1.35rem,2.6vw,2.15rem)] italic leading-snug text-gold/95">
-              We sell contracted rooftop power.
-            </p>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-sage/85">
-              Zero client CAPEX pathways, BOO ownership, and an illustrative floating discount vs grid — all subject to site survey, financing, and the executed PPA. If grid rates move, the contract can define how your solar price moves with them.
-            </p>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.85fr)] lg:items-end lg:gap-16 xl:gap-20">
+            <div className="min-w-0">
+              <p className="inline-flex items-center gap-2 rounded-full border border-gold/35 px-3.5 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-gold">
+                <span className="h-1 w-1 shrink-0 rounded-full bg-gold" aria-hidden="true" />
+                Rooftop solar · Long-term PPA
+              </p>
+              <h2 className="font-display mt-7 text-[clamp(2.15rem,4.4vw,3.85rem)] font-bold leading-[1.08] tracking-tight text-warm md:mt-8">
+                We don&apos;t sell hardware.
+              </h2>
+              <p className="font-display-italic mt-4 text-[clamp(1.2rem,2.35vw,1.95rem)] text-gold md:mt-5">
+                We sell contracted rooftop power.
+              </p>
+              <p className="mt-7 max-w-xl text-base leading-[1.7] text-sage/85 md:mt-8">
+                Zero client CAPEX pathways, BOO ownership, and an illustrative floating discount vs grid — all subject to site survey, financing, and the executed PPA. If grid rates move, the contract can define how your solar price moves with them.
+              </p>
+            </div>
+
+            <aside className="max-w-md border-t border-white/10 pt-6 lg:max-w-none lg:border-t-0 lg:border-l lg:pl-10 lg:pt-1 xl:pl-12">
+              <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-cream/40">
+                Commercial structure · 02
+              </p>
+              <p className="mt-4 text-sm leading-relaxed text-sage/80 md:text-[15px] md:leading-[1.7]">
+                Financed, built and operated by Netso on suitable commercial roofs. You buy the electricity — plant funding stays with us, subject to assessment and the executed PPA.
+              </p>
+              <div className="mt-6 space-y-3 border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-cream/45">
+                <p className="flex items-baseline gap-3">
+                  <span className="text-gold/80">01</span>
+                  <span>৳0 client CAPEX pathways*</span>
+                </p>
+                <p className="flex items-baseline gap-3">
+                  <span className="text-gold/80">02</span>
+                  <span>Illustrative below-grid PPA</span>
+                </p>
+                <p className="flex items-baseline gap-3">
+                  <span className="text-gold/80">03</span>
+                  <span>Terms confirmed after assessment</span>
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={onOpenAssessment}
+                className="mt-7 inline-flex cursor-pointer items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-gold transition-colors hover:text-gold/80"
+              >
+                Start roof assessment
+                <ArrowRight className="h-3.5 w-3.5" />
+              </button>
+            </aside>
           </div>
         </FadeUp>
 

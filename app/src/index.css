@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap');
 
 @tailwind base;
@@ -93,6 +93,21 @@
     font-weight: 540;
     letter-spacing: -0.02em;
     line-height: 0.95;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /*
+   * Refined display italic for gold accent lines.
+   * Stays inside Archivo (no newspaper serif fallback); slightly wider
+   * than hero display so long commercial phrases stay elegant, not blobby.
+   */
+  .font-display-italic {
+    font-family: "Archivo", "General Sans", system-ui, sans-serif;
+    font-style: italic;
+    font-variation-settings: "wdth" 84;
+    font-weight: 480;
+    letter-spacing: -0.015em;
+    line-height: 1.18;
     font-variant-numeric: tabular-nums;
   }
 
