@@ -14,7 +14,10 @@ export function MarqueeTicker() {
   ];
 
   return (
-    <div className="relative w-full select-none overflow-hidden border-y border-gold/15 bg-[#06110c] py-3">
+    <div
+      className="relative w-full select-none overflow-hidden border-y border-gold/12 bg-[#06110c] py-2.5"
+      aria-label="Locations and craft metadata"
+    >
       <style>{`
         @keyframes marqueeScroll {
           0% { transform: translateX(0); }
@@ -35,9 +38,9 @@ export function MarqueeTicker() {
 
       <div className="animate-marquee-infinite flex items-center">
         {[...items, ...items].map((item, idx) => (
-          <div key={`${item}-${idx}`} className="flex shrink-0 items-center gap-4 px-6">
-            <span className="h-1 w-1 shrink-0 rounded-full bg-gold/70" />
-            <span className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-cream/65 sm:text-[12px]">
+          <div key={`${item}-${idx}`} className="flex shrink-0 items-center gap-4 px-5 sm:px-6">
+            <span className="h-1 w-1 shrink-0 rounded-full bg-gold/70" aria-hidden="true" />
+            <span className="font-mono text-[10px] font-medium uppercase tracking-[0.18em] text-cream/60 sm:text-[11px]">
               {item}
             </span>
           </div>

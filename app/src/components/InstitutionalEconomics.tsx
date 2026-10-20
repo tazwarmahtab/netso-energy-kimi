@@ -44,12 +44,12 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
         <div className="absolute left-1/2 top-0 h-[420px] w-[900px] -translate-x-1/2 rounded-full bg-gold/[0.035] blur-[140px]" />
       </div>
 
-      <div className="relative mx-auto max-w-[1440px] px-5 py-20 md:px-10 md:py-28">
+      <div className="relative mx-auto max-w-[1440px] px-5 pb-20 pt-14 md:px-10 md:pb-28 md:pt-20">
         {/* Zone A — one job header (Meta thesis voice, softened) */}
         <FadeUp>
           <div className="max-w-3xl">
             <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
-              Rooftop solar · Long-term PPA
+              Commercial structure · 02
             </p>
             <h2 className="font-display mt-4 text-[clamp(2rem,4.2vw,3.75rem)] font-bold leading-[1.02] tracking-tight text-warm">
               We don&apos;t sell hardware.

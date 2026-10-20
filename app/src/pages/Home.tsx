@@ -420,7 +420,6 @@ export default function Home() {
         <CanvasHero onOpenAssessment={() => setIsModalOpen(true)} />
         <HeroHandoff />
         <MarqueeTicker />
-        <SectionBridge from="dark" to="dark" label="Commercial structure" />
         <InstitutionalEconomics onOpenAssessment={() => setIsModalOpen(true)} />
         <SectionBridge from="dark" to="dark" label="Reference architecture" />
         <ArchitecturalTransformation onOpenAssessment={() => setIsModalOpen(true)} />
