@@ -47,6 +47,7 @@ type PanelProps = {
   variant?: "default" | "quiet" | "deep" | "gold" | "light";
   sheen?: boolean;
   style?: CSSProperties;
+  id?: string;
 };
 
 export function Panel({
@@ -55,6 +56,7 @@ export function Panel({
   variant = "default",
   sheen = true,
   style,
+  id,
 }: PanelProps) {
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -76,6 +78,7 @@ export function Panel({
 
   return (
     <div
+      id={id}
       ref={ref}
       onPointerMove={onPointerMove}
       style={style}
