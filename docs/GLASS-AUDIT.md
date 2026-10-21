@@ -285,22 +285,42 @@ loop and it is stated rather than papered over.
 
 ## 5. Verification
 
+Numbers below are the state after the full sub-page port (commit `fc922b2`), not after the homepage
+swap alone.
+
 ```
-tsc -b           0 errors
-eslint .         0 problems
-npm run build    8.8s, clean
-npm test         5/5 (claims contract)
-dev server       /glass 200, all modules 200, no Vite errors
+tsc -b                     0 errors
+eslint .                   0 problems
+npm run build              8.56s, clean
+npm test                   7/7 (claims contract)
+CSS                        154.46 kB → 27.36 kB gzip
+JS                       1,508.71 kB → 417.98 kB gzip
 ```
 
-**Weight added**
+**Claims contract — what the seven rules are**
 
-| Metric | Before | After | Delta |
+| # | Rule |
+|---|---|
+| 1 | No per-kWh / per-unit rate anywhere in source or docs |
+| 2 | IDCOL is applied-for / under appraisal, never qualified, approved or secured |
+| 3 | Performance and telemetry figures are labelled illustrative |
+| 4 | **Savings are never described as guaranteed, locked or contractually assured** |
+| 5 | **IDCOL is never described as compliant, executed or in place** |
+| 6 | Documentation carries no developer-machine absolute paths |
+| 7 | No media over 10 MB in `app/public` |
+
+Rules 4 and 5 exist because the suite passed for months while `SavingsCalculator` (embedded at
+`/calculator`) and `FeasibilityModal` (opened from every glass page) both displayed
+"30% Guaranteed". A guard that does not know the word cannot guard the claim.
+
+**Weight**
+
+| Metric | Homepage swap | After sub-page port | Note |
 |---|---|---|---|
-| JS (gzip) | 400.2 kB | 418.2 kB | **+18 kB** |
-| CSS (gzip) | 21.8 kB | 26.7 kB | **+4.9 kB** |
-| New media | — | 0 bytes | **0** |
-| New dependencies | — | `lenis` (1 package) | — |
+| JS (gzip) | 418.2 kB | 418.0 kB | Flat: the pages replaced classic components, they did not add libraries |
+| CSS (gzip) | 26.7 kB | 27.4 kB | **+0.7 kB** for six redesigned pages and two new primitives |
+| New media | 0 bytes | 0 bytes | — |
+| New dependencies | `lenis` | `lenis` | Unchanged since the homepage pass |
 
 **Accessibility carried into v3**
 
@@ -333,9 +353,11 @@ Because the redesign was never rendered in a browser inside this sandbox, shippi
 fallback is strictly safer than shipping it blind — a visitor (or you) can reach the old page in one
 click from the footer of either version.
 
-Sub-pages (`/product`, `/calculator`, `/partners`, `/about`, `/brand`, legal) stay on the classic
-system for now. They are task pages, not marketing pages; porting them is a separate pass and would
-double the blast radius of this change for no conversion benefit.
+Sub-pages were left on the classic system at the time of this decision. **That has since been
+reversed — see D3.** The reasoning above was right for the moment it was written (a homepage swap
+should not also rewrite nine pages), but it produced a worse outcome in practice: the glass nav and
+footer are shared, so every link off the homepage dropped the visitor from a deep-forest pane into a
+cream document with a different type stack. The seam was more jarring than the redesign itself.
 
 ### D2 — Hero film · **DECIDED: no film, keep the still**
 
@@ -351,19 +373,62 @@ the same value. Net result: a hero that moves, at zero added media weight.
 If the film is ever wanted back it re-grafts into `.g-hero__media` without touching the rest of the
 system — that slot was deliberately left as a single element.
 
+### D3 — Port every sub-page to v3 · **DECIDED: yes, in conversion order**
+
+The seam described in D1 is the reason. Once the homepage was glass, the cream sub-pages stopped
+reading as "a different section" and started reading as "a different company". Order and rationale:
+
+| Pass | Pages | Why this order |
+|---|---|---|
+| 1 | `/product`, `/calculator`, `/about` | The commercial argument. A visitor who leaves the homepage to check the engineering must not lose the register. |
+| 2 | `/contact`, `/partners` | The conversion pages, and the two whose copy was furthest behind the claims position. |
+| 3 | `/legal`, `/licenses`, `/careers`, `/insights`, `404` | Reference and hiring pages. Cheap once the primitives settled — each needed less new code than the last. |
+| 4 | `/brand` | Last, because it had to be rewritten rather than restyled: it documented a cream-and-ink system the site no longer used. |
+
+Two reusable primitives came out of this and are the reason the later pages were cheap:
+
+- **`GlassShell`** — nav (`onHome={false}`), footer, smooth scroll, assessment modal, scroll reset.
+  Every inner page is `<GlassShell>{children}</GlassShell>`.
+- **`useAssessModal`** — the three-line modal state, so pages without their own form do not repeat it.
+
+`/classic` is still served. Nothing was deleted; the previous homepage remains the fallback, and
+`/classic` costs one route entry and no bundle weight that was not already there.
+
+### D4 — De-risk the embedded legacy components · **DECIDED: yes, copy not behaviour**
+
+Porting a page did not port the components it embeds. `SavingsCalculator` sits inside `/calculator`
+and `FeasibilityModal` opens from every glass page's CTA, so both were still asserting a guaranteed
+30% — and `SavingsCalculator` opened with "executed 20-year IDCOL PPA terms" for a facility that is
+applied for and under appraisal. The site contradicted itself precisely where a visitor decides.
+
+The fix is copy and identifiers only (`DISCOUNT_BASIS` instead of `GUARANTEED_SAVINGS_PERCENT`); the
+arithmetic, the inputs and the WhatsApp/memo handover are unchanged, because those are the product.
+Rewriting the calculator's visuals is a separate pass — it is the one screen still carrying classic
+styling, and it is deliberately wrapped in `.g-embed` (glass.css §15) so its legacy chrome does not
+punch a cream hole in the page.
+
 ### Deliberately *not* done
 
 - **No duplicate CI workflow.** `cursor/platform-phase-2-baseline-8fd8` already adds
   `.github/workflows/ci.yml`; adding a second one here would conflict on merge for no gain.
-- **Claims guard stays docs-scoped for the IDCOL-figure rule.** Source copy is still fixed by
-  `fix/de-risk-claims`; widening the rule now would fail the build on files that PR already fixes.
-  The hard bans (`"qualified for IDCOL"`, `"IDCOL-backed agreement"`) already cover source.
+- **Claims guard was not widened during the homepage pass.** That was correct then and wrong in
+  hindsight: the guard had five rules and none of them looked for the word "guaranteed", so
+  "30% Guaranteed" stayed live in the calculator and the modal for months while the suite passed.
+  Resolved in the claims pass — see §5 — with two rules that now scan source as well as docs.
 
 ---
 
 ## 7. Open items for the next loop
 
-1. **Visual QA in the preview** — still the one unverified step. Check 390×844, 768, 1440×900, 1920.
-2. **Port the sub-pages** to the glass system, starting with `/product` (highest traffic after `/`).
+1. **Visual QA** — still the one unverified step, and the biggest outstanding risk. No headless
+   browser is installable in this sandbox (`libnspr4.so` missing, package installs blocked, Playwright
+   CDN unreachable), so every page in this document is verified by types, lint, tests and build only.
+   Someone with a browser should check 390×844, 768, 1440×900, 1920 on `/`, `/product`, `/partners`,
+   `/calculator` and `/brand` before this is called done. Read §4 of this document as "reasoned about",
+   not "seen".
+2. **SavingsCalculator visuals** — now the only screen in classic styling, embedded at `/calculator`.
+   Restyling its internals on the v3 primitives would retire `.g-embed` entirely.
 3. **Motion budget** — consider `content-visibility: auto` on lower sections once real-user metrics exist.
 4. **Hero media A/B** — if the film returns, serve it as a ≤2 MB loop, not a 240-frame sequence.
+5. **JS weight** — 1,508 kB raw / 418 kB gzip in one chunk. Route-level splitting is the obvious next
+   win; nothing here justifies it yet, but the number should be watched rather than discovered.

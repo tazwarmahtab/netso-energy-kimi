@@ -153,13 +153,22 @@ Typechecks and compiles the application to `app/dist/` with 0 TypeScript errors.
 
 ## 🖥️ Routes
 
-The site is a Vite SPA with three homepage-level routes:
+The site is a Vite SPA. **Every route now renders Glass v3** — the design system in
+`app/src/styles/glass.css` — with one deliberate exception preserved as a fallback.
 
 | Route | Renders |
 |---|---|
-| `/` | **Glass v3** — the current homepage (design system: `app/src/styles/glass.css`) |
+| `/` | **Glass v3** homepage |
 | `/glass` | Alias of `/` so older links keep working |
 | `/classic` | The previous homepage, preserved verbatim |
+| `/product` · `/calculator` · `/about` · `/partners` · `/contact` · `/support` | Glass v3 inner pages via `GlassShell` |
+| `/insights` · `/careers` · `/brand` · `/licenses` · `/legal/privacy-policy` · `/legal/terms-of-service` | Glass v3 — ported in the documentation pass |
+| `*` | Glass v3 404 with a route table |
+
+The port order was deliberate: `/product`, `/calculator`, `/about`, `/contact` and `/partners` are the
+conversion path, so they moved first; the reference and legal pages followed once the primitives
+(`Panel`, `PageHero`, `PageSection`, `useAssessModal`) were settled and each new page needed less
+bespoke code than the one before it.
 
 The rationale, the section-by-section audit of the previous homepage, the reference research and the
 decision ledger live in [`docs/GLASS-AUDIT.md`](docs/GLASS-AUDIT.md). Reverting the homepage is a
