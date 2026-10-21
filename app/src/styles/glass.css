@@ -873,3 +873,10 @@
 .g-embed > section > div:first-child {
   display: none !important;
 }
+
+/* The embedded component also brings its own section header, which duplicates
+   the host page's hero. The host page carries the same disclosure in its own
+   notes, so the inner header is redundant rather than merely repetitive. */
+.g-embed [data-embed-hide] {
+  display: none !important;
+}

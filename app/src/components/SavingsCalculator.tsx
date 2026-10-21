@@ -98,8 +98,10 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
-        {/* Section Header */}
-        <div className="mx-auto max-w-3xl text-center">
+        {/* Section Header — the component is also embedded at /calculator, where the
+            host page supplies its own hero and disclosure, so this block is hidden
+            there via [data-embed-hide] (glass.css §15). */}
+        <div data-embed-hide className="mx-auto max-w-3xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 backdrop-blur-md">
             <Calculator className="h-4 w-4 text-gold" />
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">
