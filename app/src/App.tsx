@@ -19,11 +19,25 @@ function ScrollManager() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
     if (hash) {
-      const el = document.querySelector(hash);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-        return;
-      }
+      // The target may not exist on the first frame after an SPA navigation
+      // (the destination page is still mounting), so retry briefly before
+      // falling back to the top of the page.
+      let frames = 0;
+      let raf = 0;
+      const seek = () => {
+        const el = document.querySelector(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+        if (frames++ < 30) {
+          raf = requestAnimationFrame(seek);
+          return;
+        }
+        window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+      };
+      raf = requestAnimationFrame(seek);
+      return () => cancelAnimationFrame(raf);
     }
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [pathname, hash]);

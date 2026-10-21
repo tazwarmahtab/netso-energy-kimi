@@ -843,3 +843,21 @@
     display: none;
   }
 }
+
+/* ==========================================================================
+   15. EMBED — porting a legacy component into the glass canvas
+   --------------------------------------------------------------------------
+   Some components (e.g. SavingsCalculator) ship their own dark page section
+   with its own background and vertical padding. Inside a glass page that would
+   stack a second canvas on top of the first. This strips the wrapper only —
+   the component's internal styling is left intact.
+   ========================================================================== */
+
+.g-embed > section {
+  background: transparent !important;
+  padding-block: 0 !important;
+}
+
+.g-embed > section > div:first-child {
+  display: none !important;
+}

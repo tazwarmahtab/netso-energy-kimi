@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Link } from "react-router";
 import { ArrowRight, ArrowUpRight, Menu, X } from "lucide-react";
 import {
   GhostLink,
@@ -28,7 +29,14 @@ const NAV_LINKS = [
   { label: "Network", href: "#network" },
 ];
 
-export function GlassNav({ onAssess }: { onAssess: () => void }) {
+export function GlassNav({
+  onAssess,
+  onHome = true,
+}: {
+  onAssess: () => void;
+  /** False on sub-pages, where the section anchors live on the homepage. */
+  onHome?: boolean;
+}) {
   const [condensed, setCondensed] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -49,8 +57,8 @@ export function GlassNav({ onAssess }: { onAssess: () => void }) {
             : "border-transparent bg-transparent"
         }`}
       >
-        <a
-          href="#top"
+        <Link
+          to={onHome ? "#top" : "/"}
           className="flex items-center gap-2.5 pl-1 pr-2 text-[15px] font-semibold tracking-[-0.02em] text-[#fffaf0]"
         >
           <span
@@ -61,17 +69,26 @@ export function GlassNav({ onAssess }: { onAssess: () => void }) {
           <span className="hidden text-[10px] font-normal uppercase tracking-[0.24em] text-[rgba(255,250,240,0.45)] sm:inline">
             ENERGY
           </span>
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-1 lg:flex">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
-              <a
-                href={link.href}
-                className="rounded-full px-3.5 py-2 text-[13.5px] text-[rgba(255,250,240,0.62)] transition-colors hover:bg-[rgba(255,250,240,0.06)] hover:text-[#fffaf0]"
-              >
-                {link.label}
-              </a>
+              {onHome ? (
+                <a
+                  href={link.href}
+                  className="rounded-full px-3.5 py-2 text-[13.5px] text-[rgba(255,250,240,0.62)] transition-colors hover:bg-[rgba(255,250,240,0.06)] hover:text-[#fffaf0]"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  to={`/${link.href}`}
+                  className="rounded-full px-3.5 py-2 text-[13.5px] text-[rgba(255,250,240,0.62)] transition-colors hover:bg-[rgba(255,250,240,0.06)] hover:text-[#fffaf0]"
+                >
+                  {link.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>
@@ -101,15 +118,15 @@ export function GlassNav({ onAssess }: { onAssess: () => void }) {
       {open && (
         <div className="pointer-events-auto fixed inset-x-4 top-[76px] z-50 rounded-3xl border border-[rgba(255,250,240,0.12)] bg-[rgba(4,13,9,0.9)] p-3 backdrop-blur-2xl lg:hidden">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
-              href={link.href}
+              to={onHome ? link.href : `/${link.href}`}
               onClick={() => setOpen(false)}
               className="flex items-center justify-between rounded-2xl px-4 py-3 text-[15px] text-[rgba(255,250,240,0.8)] hover:bg-[rgba(255,250,240,0.06)]"
             >
               {link.label}
               <ArrowRight className="h-4 w-4 text-[var(--g-gold)]" />
-            </a>
+            </Link>
           ))}
         </div>
       )}
