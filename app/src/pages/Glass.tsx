@@ -23,11 +23,12 @@ import {
 import "../styles/glass.css";
 
 /**
- * NETSO GLASS — the v3 experience.
+ * NETSO GLASS — the v3 homepage.
  *
- * A parallel route to the shipped homepage so the two can be compared
- * side by side. Design direction, section-by-section audit and the decision
- * ledger live in `docs/GLASS-AUDIT.md`.
+ * Served at `/` (and `/glass`). The previous homepage remains reachable at
+ * `/classic` so the two can be compared and so the swap can be reverted with a
+ * one-line route change. Design direction, the section-by-section audit and the
+ * decision ledger live in `docs/GLASS-AUDIT.md`.
  */
 export default function Glass() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,7 +57,7 @@ export default function Glass() {
 
       <div className="fixed bottom-4 left-4 z-40 hidden md:block">
         <Link
-          to="/"
+          to="/classic"
           className="g-chip !bg-[rgba(4,13,9,0.7)] !text-[9px] hover:!text-[var(--g-gold-hi)]"
         >
           ← Classic view

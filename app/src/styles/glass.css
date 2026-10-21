@@ -523,6 +523,19 @@
   object-position: center 42%;
   filter: saturate(0.86) contrast(1.06) brightness(0.72);
   transform: scale(1.04);
+  /* The hero carries no film, so a 28s drift keeps the frame alive. The GSAP
+     scroll scrub owns the wrapper transform; this owns the image, so the two
+     never fight over the same property. */
+  animation: g-drift 28s ease-in-out infinite alternate;
+}
+
+@keyframes g-drift {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.1) translate3d(-1.2%, -1.6%, 0);
+  }
 }
 
 /* Scrim: keeps the type legible without flattening the photograph. */
@@ -753,6 +766,7 @@
 
   .g-hero__media img {
     transform: none;
+    animation: none;
   }
 }
 

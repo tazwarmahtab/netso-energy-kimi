@@ -1,6 +1,6 @@
 # NETSO GLASS — v3 deep dive, section by section
 
-**Route:** `/glass` (parallel to the shipped homepage; the classic page is untouched)
+**Route:** `/` — Glass v3 is the canonical homepage. The previous homepage is preserved at `/classic`; `/glass` remains an alias.
 **Date:** 2026-10-21
 **Method:** Refero Styles research → decision ledger → rebuild section by section → verification loop
 **Stack added:** `lenis@1.3.27` (smooth scroll), GSAP `ScrollTrigger` (already present), zero new media
@@ -313,11 +313,57 @@ dev server       /glass 200, all modules 200, no Vite errors
 
 ---
 
-## 6. Open items for the next loop
+## 6. Decision record
 
-1. **Visual QA in the preview** — the only unverified step. Check 390×844, 768, 1440×900 and 1920.
-2. **Decide the hero film question** — keep the 240-frame scrub at ~14 MB, or stay with the still plate.
-3. **Promote to `/`** once approved (one-line route swap), or keep `/` as classic and make `/glass` canonical.
-4. **Extend the claims guard to app copy** — it currently hedges IDCOL figures in docs; the source-level
-   rule can tighten once `fix/de-risk-claims` lands.
-5. **Motion budget** — consider `content-visibility: auto` on the lower sections once real-user metrics exist.
+Two questions were left open at handoff. Both are now decided and shipped.
+
+### D1 — Promote Glass to `/` · **DECIDED: yes**
+
+Glass is the better homepage, and a "best version" that lives at a secondary URL is not the
+homepage. Shipped as:
+
+| Route | Renders |
+|---|---|
+| `/` | **Glass v3** |
+| `/glass` | Glass v3 (alias, so existing links and previews keep working) |
+| `/classic` | the previous homepage, unchanged |
+
+**Reversibility is the point.** The swap is three lines in `App.tsx` and is documented in the commit.
+Because the redesign was never rendered in a browser inside this sandbox, shipping it *with* a live
+fallback is strictly safer than shipping it blind — a visitor (or you) can reach the old page in one
+click from the footer of either version.
+
+Sub-pages (`/product`, `/calculator`, `/partners`, `/about`, `/brand`, legal) stay on the classic
+system for now. They are task pages, not marketing pages; porting them is a separate pass and would
+double the blast radius of this change for no conversion benefit.
+
+### D2 — Hero film · **DECIDED: no film, keep the still**
+
+The 240-frame scrub cost 14 MB of frames inside a 32 MB `public/` — roughly 44% of all shipped
+assets — before the visitor has read a headline. It also required a 380vh scroll commitment to
+reveal content that now sits above the fold.
+
+Instead the hero keeps three cheap depth cues: the photograph, an 8% scroll parallax on the wrapper,
+a pointer-held warm light, and a **28s drift on the image itself**. The wrapper and the image animate
+different properties (`yPercent`/`scale` via GSAP vs `transform` via CSS), so they cannot fight over
+the same value. Net result: a hero that moves, at zero added media weight.
+
+If the film is ever wanted back it re-grafts into `.g-hero__media` without touching the rest of the
+system — that slot was deliberately left as a single element.
+
+### Deliberately *not* done
+
+- **No duplicate CI workflow.** `cursor/platform-phase-2-baseline-8fd8` already adds
+  `.github/workflows/ci.yml`; adding a second one here would conflict on merge for no gain.
+- **Claims guard stays docs-scoped for the IDCOL-figure rule.** Source copy is still fixed by
+  `fix/de-risk-claims`; widening the rule now would fail the build on files that PR already fixes.
+  The hard bans (`"qualified for IDCOL"`, `"IDCOL-backed agreement"`) already cover source.
+
+---
+
+## 7. Open items for the next loop
+
+1. **Visual QA in the preview** — still the one unverified step. Check 390×844, 768, 1440×900, 1920.
+2. **Port the sub-pages** to the glass system, starting with `/product` (highest traffic after `/`).
+3. **Motion budget** — consider `content-visibility: auto` on lower sections once real-user metrics exist.
+4. **Hero media A/B** — if the film returns, serve it as a ≤2 MB loop, not a 240-frame sequence.

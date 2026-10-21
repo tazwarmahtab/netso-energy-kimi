@@ -140,10 +140,10 @@ export default function Footer() {
         <div className="mx-auto flex max-w-[1440px] flex-col gap-3 px-5 py-6 text-[13px] text-cream/40 md:flex-row md:items-center md:justify-between md:px-10">
           <span>© {new Date().getFullYear()} Netso Energy Limited. All rights reserved.</span>
           <a
-            href="/glass"
+            href="/"
             className="font-mono text-xs uppercase tracking-widest text-cream/40 transition-colors hover:text-gold"
           >
-            Glass v3 preview →
+            Homepage →
           </a>
           <span className="font-mono text-xs tracking-widest text-gold/70 uppercase">NETSO° • DHAKA — GAZIPUR</span>
         </div>

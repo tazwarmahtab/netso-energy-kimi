@@ -35,8 +35,12 @@ export default function App() {
     <>
       <ScrollManager />
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* Glass v3 is the canonical homepage. The classic page stays routable
+            at /classic (one-line revert if needed), and /glass remains an alias
+            so existing links and previews do not 404. */}
+        <Route path="/" element={<Glass />} />
         <Route path="/glass" element={<Glass />} />
+        <Route path="/classic" element={<Home />} />
         <Route path="/product" element={<Product />} />
         <Route path="/calculator" element={<CalculatorPage />} />
         <Route path="/partners" element={<Partners />} />

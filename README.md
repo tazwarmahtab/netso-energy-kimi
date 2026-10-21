@@ -151,6 +151,22 @@ Typechecks and compiles the application to `app/dist/` with 0 TypeScript errors.
 
 ---
 
+## 🖥️ Routes
+
+The site is a Vite SPA with three homepage-level routes:
+
+| Route | Renders |
+|---|---|
+| `/` | **Glass v3** — the current homepage (design system: `app/src/styles/glass.css`) |
+| `/glass` | Alias of `/` so older links keep working |
+| `/classic` | The previous homepage, preserved verbatim |
+
+The rationale, the section-by-section audit of the previous homepage, the reference research and the
+decision ledger live in [`docs/GLASS-AUDIT.md`](docs/GLASS-AUDIT.md). Reverting the homepage is a
+three-line change in `app/src/App.tsx`.
+
+---
+
 ## 📜 Regulatory & Financial Disclaimers
 
 1. **Tariff Floor & Floating Spreads:** All tariff projections reference canonical Bangladesh Energy Regulatory Commission (BERC) orders. Floating discounts are indexed to prevailing PDB industrial bulk rates.
