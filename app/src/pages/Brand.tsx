@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Check, Copy, Download } from "lucide-react";
-import Nav from "../components/Nav";
-import Footer from "../components/Footer";
-import FeasibilityModal from "../components/FeasibilityModal";
-import { FadeUp, Words } from "../components/Reveal";
+import { Check, Copy } from "lucide-react";
+import { Panel, Reveal } from "../components/glass/primitives";
+import { GlassShell, PageHero } from "../components/glass/shell";
 import { SunMark, type MarkVariant } from "../components/Wordmark";
+import { useAssessModal } from "../hooks/useAssessModal";
 import heroHouse from "../assets/hero-house.jpg";
 import solarRoof from "../assets/solar-roof-dusk.jpg";
 import inverters from "../assets/battery-wall.jpg";
@@ -14,7 +13,7 @@ import panels from "../assets/panels-closeup.jpg";
 const SECTIONS = [
   { id: "welcome", n: "00", t: "Welcome" },
   { id: "logo", n: "01", t: "Logo" },
-  { id: "color", n: "02", t: "Color" },
+  { id: "color", n: "02", t: "Colour" },
   { id: "typography", n: "03", t: "Typography" },
   { id: "voice", n: "04", t: "Voice" },
   { id: "photography", n: "05", t: "Photography" },
@@ -22,147 +21,191 @@ const SECTIONS = [
   { id: "components", n: "07", t: "Components" },
 ];
 
-const MOMENTS = [
-  { t: "Dawn", g: "linear-gradient(160deg,#321F61 0%,#C880FF 55%,#FCCC3C 100%)" },
-  { t: "Day", g: "linear-gradient(160deg,#1D3E86 0%,#8ED5FF 60%,#FFF7E9 100%)" },
-  { t: "Dusk", g: "linear-gradient(160deg,#08140F 0%,#C6A15B 55%,#FCCC3C 100%)" },
-  { t: "Night", g: "linear-gradient(160deg,#08140F 0%,#111111 60%,#1C1C1C 100%)" },
+/* ------------------------------------------------------------------------- */
+/*  Colour                                                                   */
+/* ------------------------------------------------------------------------- */
+
+type Token = {
+  name: string;
+  hex: string;
+  varName: string;
+  onDark: boolean;
+  note: string;
+  group: "surface" | "light" | "accent";
+};
+
+/**
+ * The v3 palette. These are the literal values in styles/glass.css — the
+ * page reads them as documentation, so a drift here is a documentation bug.
+ */
+const TOKENS: Token[] = [
+  { name: "Void", hex: "#040D09", varName: "--g-void", onDark: true, note: "Below abyss. Form fields, inset wells, the deepest edge of the stack.", group: "surface" },
+  { name: "Abyss", hex: "#071A13", varName: "--g-abyss", onDark: true, note: "The canvas. Every page begins here.", group: "surface" },
+  { name: "Kelp", hex: "#0B2419", varName: "--g-kelp", onDark: true, note: "First lift. Alternate sections and quiet panes.", group: "surface" },
+  { name: "Lift", hex: "#10301F", varName: "--g-lift", onDark: true, note: "Second lift. Hover states on deep panes.", group: "surface" },
+  { name: "Lift 2", hex: "#163A27", varName: "--g-lift-2", onDark: true, note: "Third lift. Reserved — used sparingly for emphasis blocks.", group: "surface" },
+  { name: "Parchment", hex: "#F6EFDF", varName: "--g-parchment", onDark: false, note: "Warm paper. Light panes and the classic-view canvas.", group: "light" },
+  { name: "Cream", hex: "#FFFAF0", varName: "--g-cream", onDark: false, note: "Primary text on glass, and the lightest pane.", group: "light" },
+  { name: "Gold", hex: "#C6A15B", varName: "--g-gold", onDark: false, note: "The single voltage. Actions, metrics, rules, focus rings.", group: "accent" },
+  { name: "Gold high", hex: "#F0D9A4", varName: "--g-gold-hi", onDark: false, note: "Lit gold. Inline links and hover on gold text.", group: "accent" },
+  { name: "Gold low", hex: "#8A6B31", varName: "--g-gold-lo", onDark: true, note: "Shade gold. Gradient stops, never text on dark.", group: "accent" },
+  { name: "Sage", hex: "#93A89C", varName: "--g-sage", onDark: false, note: "Muted green-grey. Secondary metadata and captions.", group: "accent" },
 ];
 
-const COLORS = [
-  { name: "Netso Gold", hex: "#C6A15B", ink: true, note: "Primary action & metric signal. The CGS benchmark, institutional certainty." },
-  { name: "Deep Forest", hex: "#08140F", ink: false, note: "The utility foundation. Deep glass, industrial authority, grounding." },
-  { name: "Cream", hex: "#FFF7E9", ink: true, note: "The page. Warm architectural paper." },
-  { name: "Netso Yellow", hex: "#FCCC3C", ink: true, note: "The energy signal. Telemetry, irradiance highlights, the sun mark." },
-  { name: "Ink", hex: "#111111", ink: false, note: "Authority, primary text, high-contrast headings." },
-  { name: "Beige", hex: "#F0E5CF", ink: true, note: "Quiet structural surfaces, card backgrounds, and dividers." },
-  { name: "Sand", hex: "#DACAB6", ink: true, note: "Photography overlays and muted architectural containers." },
-  { name: "Taupe", hex: "#A09B93", ink: false, note: "Captions, legal metadata, and secondary telemetry." },
-  { name: "Sky", hex: "#8ED5FF", ink: true, note: "Secondary electrical indicator. SREDA net-metering grid sync." },
-  { name: "Royal", hex: "#1D3E86", ink: false, note: "Technical SCADA depth. High-voltage utility telemetry." },
-  { name: "Parchment", hex: "#F8F3EA", ink: true, note: "Elevated card substrates and interactive panels." },
-  { name: "Charcoal", hex: "#1E1E1E", ink: false, note: "Structural steel and anodized pergola framing." },
-];
+const GROUP_LABEL = { surface: "Forest stack", light: "Light surfaces", accent: "Voltage" } as const;
 
-function Swatch({ c }: { c: (typeof COLORS)[number] }) {
+function Swatch({ t }: { t: Token }) {
   const [copied, setCopied] = useState(false);
+
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(c.hex);
+      await navigator.clipboard.writeText(t.hex);
     } catch {
-      /* clipboard unavailable */
+      /* clipboard unavailable — still flash the affordance */
     }
     setCopied(true);
     setTimeout(() => setCopied(false), 1400);
   };
+
   return (
     <button
+      type="button"
       onClick={copy}
-      className="group overflow-hidden rounded-2xl border border-ink/10 text-left transition-transform duration-300 hover:-translate-y-1"
-      aria-label={`Copy ${c.name} ${c.hex}`}
+      aria-label={`Copy ${t.name} ${t.hex}`}
+      className="group overflow-hidden rounded-xl border border-[rgba(255,250,240,0.1)] text-left transition-transform duration-300 hover:-translate-y-1"
     >
-      <div
-        className="relative flex h-28 items-end justify-end p-3 md:h-32"
-        style={{ backgroundColor: c.hex }}
-      >
+      <div className="relative flex h-24 items-end justify-end p-2.5 md:h-28" style={{ backgroundColor: t.hex }}>
         <span
-          className={`flex h-8 w-8 items-center justify-center rounded-full transition-all ${
-            c.ink ? "bg-ink/10 text-ink" : "bg-cream/15 text-cream"
-          } ${copied ? "scale-110" : "opacity-60 group-hover:opacity-100"}`}
+          className={`flex h-7 w-7 items-center justify-center rounded-full backdrop-blur-sm transition-all ${
+            t.onDark ? "bg-white/10 text-white/70" : "bg-black/10 text-black/60"
+          } ${copied ? "scale-110" : "opacity-50 group-hover:opacity-100"}`}
         >
-          {copied ? <Check className="h-4 w-4 text-gold" /> : <Copy className="h-3.5 w-3.5" />}
+          {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3 w-3" />}
         </span>
       </div>
-      <div className="bg-cream p-4">
-        <p className="text-[14.5px] font-semibold text-ink">{c.name}</p>
-        <p className="mt-0.5 font-mono text-[12.5px] font-bold uppercase text-gold">{copied ? "Copied!" : c.hex}</p>
-        <p className="mt-1.5 text-[12.5px] leading-snug text-ink/55">{c.note}</p>
+      <div className="bg-[rgba(4,13,9,0.6)] px-3.5 py-3">
+        <p className="font-sans text-[13px] font-medium text-[#fffaf0]">{t.name}</p>
+        <p className="mt-0.5 font-mono text-[10.5px] uppercase tracking-[0.1em] text-[var(--g-gold-hi)]">
+          {copied ? "Copied" : t.hex}
+        </p>
+        <p className="mt-1.5 font-mono text-[9px] uppercase tracking-[0.1em] text-[rgba(255,250,240,0.3)]">
+          {t.varName}
+        </p>
+        <p className="mt-2 font-sans text-[11.5px] leading-snug text-[rgba(255,250,240,0.45)]">{t.note}</p>
       </div>
     </button>
   );
 }
 
+/* ------------------------------------------------------------------------- */
+/*  Typography                                                               */
+/* ------------------------------------------------------------------------- */
+
 const TYPE_ROWS = [
   {
-    role: "Hero / Display",
+    role: "Display",
     sample: "Your roof. Now an energy asset.",
-    spec: "Feature Deck · 64–96px · 400 · 95% LH · -2% LS · Restrained institutional tone",
-    cls: "font-display text-5xl md:text-7xl text-forest",
-    accent: "text-gold",
-    accentFrom: 2,
+    spec: "Archivo · variable width 78 · weight 520 · tracking −0.032em · leading 0.92",
+    cls: "g-display text-[clamp(2rem,4.6vw,3.4rem)]",
   },
   {
-    role: "Section Heading",
+    role: "Display accent",
+    sample: "Working.",
+    spec: "Instrument Serif italic · inherits display size · always gold · one phrase per heading",
+    cls: "g-display text-[clamp(2rem,4.6vw,3.4rem)]",
+  },
+  {
+    role: "Section head",
     sample: "Utility-scale power on industrial roofs",
-    spec: "Feature Deck · 40–56px · 400 · 95% LH · -2% LS",
-    cls: "font-display text-4xl md:text-5xl text-forest",
-    accent: "",
-    accentFrom: 0,
+    spec: "Archivo · 78 width · 520 · clamp(1.6rem, 3vw, 2.35rem)",
+    cls: "g-display text-[clamp(1.5rem,2.6vw,2rem)]",
   },
   {
-    role: "Title",
-    sample: "Take-or-pay kilowatt-hours below grid peak",
-    spec: "General Sans Medium · 24–32px · 500 · 116% LH · -1% LS",
-    cls: "text-2xl font-medium md:text-[2rem] text-forest",
-    accent: "",
-    accentFrom: 0,
-  },
-  {
-    role: "Body / Subtitles",
+    role: "Body",
     sample:
-      "Netso finances, builds, owns and operates distributed solar systems: high-yield bifacial hardware, real-time SCADA telemetry, and non-recourse senior debt capital.",
-    spec: "General Sans Regular · 15–17px · 400 · 140% LH · -1% LS",
-    cls: "max-w-xl text-[16px] leading-[1.5] text-ink/75",
-    accent: "",
-    accentFrom: 0,
+      "Netso finances, builds, owns and operates distributed solar systems: bifacial hardware, metered telemetry, and a discount to the grid tariff set in the agreement.",
+    spec: "General Sans · 400 · 15–15.5px · 1.7–1.78 leading · cream at 55–66%",
+    cls: "max-w-[60ch] font-sans text-[15px] leading-[1.72] text-[rgba(255,250,240,0.6)]",
   },
   {
-    role: "Labels / Mono / Data",
-    sample: "[ CGS 80kWp Reference ] · 30% Grid Tariff Discount · Class 0.2s Bidirectional · SREDA NEM 2025",
-    spec: "Space Mono · 12px or 14px only · 400 · 135% LH · 4% LS · Uppercase only when contextual",
-    cls: "font-mono text-[12px] uppercase tracking-[0.1em] text-forest font-medium",
-    accent: "",
-    accentFrom: 0,
+    role: "Label / data",
+    sample: "[ CGS 80 kWp reference ] · 30% grid tariff basis · Class 0.2s bidirectional · SREDA NEM 2025",
+    spec: "Space Mono · 9–10.5px · uppercase · 0.14–0.19em tracking · never for sentences",
+    cls: "max-w-[62ch] font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-[rgba(255,250,240,0.45)]",
   },
 ];
 
+/* ------------------------------------------------------------------------- */
+/*  Voice                                                                    */
+/* ------------------------------------------------------------------------- */
+
 const TAGLINES = [
-  { k: "Primary", v: "The Sky Is Already Working.", d: "The core manifesto. The sun generates irradiance continuously — Netso builds the asset infrastructure to harvest it." },
-  { k: "Asset framing", v: "Your roof. Now an energy asset.", d: "The core commercial proposition: converting non-performing factory roof slabs into long-term cash flow and tariff reduction." },
-  { k: "Product", v: "Solar as a Service (RESCO / BOO)", d: "The customer model: ৳0 customer CAPEX, 20-year take-or-pay PPA with 30% guaranteed savings vs grid peak, full turnkey utility operation included." },
-  { k: "Institutional sign-off", v: "Power on", d: "The executive sign-off. Grounded, determined, forward-moving." },
-  { k: "Discipline", v: "Evidence over adjectives", d: "Every commercial claim distinguishes audited fact from estimate. Zero phantom savings, zero killed tariff numbers." },
+  { k: "Manifesto", v: "The sky is already working.", d: "The sun delivers irradiance continuously and for free. Netso builds the asset that harvests it. The line is about the resource, not about us." },
+  { k: "Asset framing", v: "Your roof. Now an energy asset.", d: "The commercial proposition stated as a change of state: a non-performing slab becomes a metered revenue line." },
+  { k: "Sign-off", v: "Power on.", d: "The executive close. Two words, no exclamation mark, no gradient." },
+  { k: "Discipline", v: "Evidence over adjectives.", d: "Every claim on the site is a regulator's figure, a contract term, or a number we will defend in a credit committee. Modelled output is labelled modelled." },
 ];
 
 const PRINCIPLES = [
-  { n: "01", t: "Direct & Grounded", d: "We write for C-suite industrial executives and plant engineers. Short sentences, bankable numbers, zero marketing fluff." },
-  { n: "02", t: "Contractually Precise", d: "All figures cite exact benchmarks: 30% guaranteed grid discount, ৳0 customer CAPEX, 80% IDCOL debt, 1.25× DSCR." },
-  { n: "03", t: "Institutional Authority", d: "Calm, architectural, and legally sound. Designed to withstand scrutiny from senior lenders, credit committees, and international buyers." },
-  { n: "04", t: "Engineering Truth", d: "Dual-glass bifacial TOPCon modules, certified 160 km/h wind load pergolas, and Class 0.2s utility meters with daily billing settlement." },
+  { n: "01", t: "Direct and grounded", d: "We write for industrial CFOs and plant engineers. Short sentences. No superlatives that a lender could strike out." },
+  { n: "02", t: "Contractually precise", d: "Discounts are expressed as a percentage of the applicable grid tariff, because that is how the agreement is drafted. We do not quote a flat rate that a tariff change would invalidate." },
+  { n: "03", t: "Institutional authority", d: "Calm, architectural, legally sound. Written to survive scrutiny from senior lenders, credit committees and international buyers." },
+  { n: "04", t: "Engineering truth", d: "Wind load, module class and meter class are engineering facts we state plainly. Uptime and yield are outcomes of an individual site — so they are described per site, not as a headline." },
 ];
+
+/* ------------------------------------------------------------------------- */
+/*  Photography                                                              */
+/* ------------------------------------------------------------------------- */
 
 const PHOTOS = [
-  { img: heroHouse, t: "Rooftops at dusk", d: "Industrial facilities in Chattogram, under-canopy LEDs glowing softly after golden hour." },
-  { img: solarRoof, t: "Architectural Pergolas", d: "Structural steel canopies that preserve 100% roof usability while generating clean energy." },
-  { img: inverters, t: "Telemetry Hardware", d: "Utility-grade string inverters with Class 0.2s bidirectional metering." },
-  { img: aerial, t: "The Distributed Grid", d: "Industrial corridors in Gazipur and Narayanganj transforming into localized micro-utilities." },
-  { img: panels, t: "Bifacial Architecture", d: "Dual-glass TOPCon cells capturing direct sky irradiance and rooftop albedo reflection." },
+  { img: heroHouse, t: "Rooftops at dusk", d: "Industrial facilities in Chattogram, under-canopy LEDs glowing after golden hour." },
+  { img: solarRoof, t: "Architectural pergolas", d: "Structural steel canopies that preserve roof usability while generating." },
+  { img: inverters, t: "Telemetry hardware", d: "Utility-grade string inverters with bidirectional metering." },
+  { img: aerial, t: "The distributed grid", d: "Industrial corridors in Gazipur and Narayanganj read as localised micro-utilities." },
+  { img: panels, t: "Bifacial architecture", d: "Dual-glass cells capturing sky irradiance and rooftop albedo reflection." },
 ];
 
-const LOGO_TILES: { bg: string; variant: MarkVariant; label: string }[] = [
-  { bg: "#08140F", variant: "yellow", label: "Yellow on Deep Forest — canonical" },
-  { bg: "#111111", variant: "yellow", label: "Yellow on Ink" },
-  { bg: "#FFFFFF", variant: "ink", label: "Ink on White" },
-  { bg: "#FFF7E9", variant: "ink", label: "Ink on Cream" },
-  { bg: "#FCCC3C", variant: "ink", label: "Ink on Yellow" },
-  { bg: "#08140F", variant: "cream", label: "Cream on Deep Forest" },
-  { bg: "#DACAB6", variant: "ink", label: "Ink on Sand" },
-  { bg: "#1D3E86", variant: "yellow", label: "Yellow on Royal Technical" },
+/* ------------------------------------------------------------------------- */
+/*  Motion                                                                   */
+/* ------------------------------------------------------------------------- */
+
+const MOTION = [
+  { k: "Reveal", v: "26px lift · 6px blur → 0 · 900ms · cubic-bezier(.22,1,.36,1)", d: "The only entrance. It happens once per element, on first intersection, and never repeats on scroll-back." },
+  { k: "Stagger", v: "70ms between siblings", d: "Enough to read as a sequence, short enough that the last card is not waiting a second for its turn." },
+  { k: "Hover", v: "180–240ms · transform only", d: "Panes lift 2px and gold sweeps the sheen. No colour flashing, no shadow inflation." },
+  { k: "Reduced motion", v: "prefers-reduced-motion: reduce", d: "Every transform, blur and stagger collapses to none. Content is fully present without motion — motion is never the delivery mechanism." },
 ];
+
+const LOGO_TILES: { bg: string; variant: MarkVariant; label: string; dark: boolean }[] = [
+  { bg: "#071A13", variant: "yellow", label: "Yellow on Abyss — canonical", dark: true },
+  { bg: "#111111", variant: "yellow", label: "Yellow on Ink", dark: true },
+  { bg: "#1D3E86", variant: "yellow", label: "Yellow on Royal", dark: true },
+  { bg: "#FFFFFF", variant: "ink", label: "Ink on White", dark: false },
+  { bg: "#FFF7E9", variant: "ink", label: "Ink on Cream", dark: false },
+  { bg: "#FCCC3C", variant: "ink", label: "Ink on Yellow", dark: false },
+  { bg: "#DACAB6", variant: "ink", label: "Ink on Sand", dark: false },
+  { bg: "#F6EFDF", variant: "ink", label: "Ink on Parchment", dark: false },
+];
+
+/* ------------------------------------------------------------------------- */
+
+function SectionHead({ n, t, note }: { n: string; t: string; note: string }) {
+  return (
+    <div className="grid gap-3 border-b border-[rgba(255,250,240,0.12)] pb-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
+      <div>
+        <p className="g-label">
+          <span className="text-[rgba(198,161,91,0.65)]">{n}</span> {t}
+        </p>
+        <h2 className="g-display mt-3 text-[clamp(1.5rem,2.8vw,2.1rem)]">{t}</h2>
+      </div>
+      <p className="max-w-[56ch] font-sans text-[13px] leading-relaxed text-[rgba(255,250,240,0.45)]">{note}</p>
+    </div>
+  );
+}
 
 export default function Brand() {
   const [active, setActive] = useState("welcome");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const assess = useAssessModal();
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -171,7 +214,7 @@ export default function Brand() {
           if (e.isIntersecting) setActive(e.target.id);
         });
       },
-      { rootMargin: "-30% 0px -60% 0px" }
+      { rootMargin: "-30% 0px -60% 0px" },
     );
     SECTIONS.forEach((s) => {
       const el = document.getElementById(s.id);
@@ -181,337 +224,429 @@ export default function Brand() {
   }, []);
 
   return (
-    <div className="bg-cream text-ink">
-      <Nav theme="light" onOpenAssessment={() => setIsModalOpen(true)} />
-      <main id="content" className="mx-auto max-w-[1440px] px-5 pb-24 pt-28 md:px-10 md:pt-36">
-        {/* Header */}
-        <div className="flex flex-wrap items-start justify-between gap-6 border-b border-ink/10 pb-12">
-          <div>
-            <FadeUp>
-              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">Design System & Brand Standards</p>
-            </FadeUp>
-            <h1 className="font-display mt-4 text-5xl text-forest md:text-7xl">
-              <Words text="This is Netso" accent={1} />
-            </h1>
-            <FadeUp delay={0.15}>
-              <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                The institutional identity of Bangladesh's C&I rooftop solar utility. Engineered for boardrooms,
-                senior lenders, industrial factory owners, and top-tier EPC contractors.
-              </p>
-            </FadeUp>
-          </div>
-          <FadeUp delay={0.2} className="flex gap-3">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-forest shadow-md transition-transform hover:scale-[1.03]"
-            >
-              Assess Facility Feasibility
-            </button>
-            <span className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full border border-ink/20 px-5 text-sm font-semibold text-ink transition-colors hover:bg-ink/5">
-              <Download className="h-4 w-4" /> Brand Assets
+    <GlassShell {...assess}>
+      <PageHero
+        eyebrow="Brand system · v3"
+        title={
+          <>
+            Forest glass, gold <em>light.</em>
+          </>
+        }
+        lede="The working specification for Netso's visual and verbal identity: a deep-forest surface stack where depth is water rather than shadow, a single rationed voltage, and a voice that leads with evidence. This page documents the system the site actually runs on."
+        meta={
+          <>
+            <span className="g-chip">
+              <span className="g-dot" aria-hidden="true" />
+              v3 · October 2026
             </span>
-          </FadeUp>
-        </div>
+            <span className="g-chip">Archivo · Instrument Serif · Space Mono</span>
+            <span className="g-chip">{TOKENS.length} colour tokens</span>
+          </>
+        }
+      />
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-[220px_1fr] lg:gap-20">
-          {/* Sticky section nav */}
+      <div className="g-wrap py-10 md:py-14">
+        <div className="grid gap-10 lg:grid-cols-[180px_minmax(0,1fr)] lg:gap-14">
+          {/* Contents rail */}
           <aside className="hidden lg:block">
-            <nav className="sticky top-28 space-y-1.5" aria-label="Brand sections">
-              {SECTIONS.map((s) => (
-                <a
-                  key={s.id}
-                  href={`#${s.id}`}
-                  className={`group flex items-baseline gap-3 rounded-xl px-3.5 py-2.5 transition-all ${
-                    active === s.id
-                      ? "bg-forest text-warm font-semibold shadow-sm"
-                      : "text-ink/60 hover:bg-ink/5 hover:text-ink"
-                  }`}
-                >
-                  <span className={`font-mono text-xs ${active === s.id ? "text-gold" : "text-ink/40"}`}>
-                    {s.n}
-                  </span>
-                  <span className="text-sm">{s.t}</span>
-                </a>
-              ))}
-            </nav>
+            <div className="lg:sticky lg:top-28">
+              <p className="g-label">Contents</p>
+              <nav aria-label="Brand sections" className="mt-4">
+                <ul>
+                  {SECTIONS.map((s) => {
+                    const on = active === s.id;
+                    return (
+                      <li key={s.id}>
+                        <a
+                          href={`#${s.id}`}
+                          className="group flex items-baseline gap-2.5 border-l pl-3 py-1.5 transition-colors"
+                          style={{
+                            borderColor: on ? "var(--g-gold)" : "rgba(255,250,240,0.1)",
+                          }}
+                        >
+                          <span
+                            className="font-mono text-[9.5px] tracking-[0.1em]"
+                            style={{ color: on ? "var(--g-gold)" : "rgba(255,250,240,0.3)" }}
+                          >
+                            {s.n}
+                          </span>
+                          <span
+                            className="font-sans text-[12.5px] transition-colors"
+                            style={{ color: on ? "#fffaf0" : "rgba(255,250,240,0.45)" }}
+                          >
+                            {s.t}
+                          </span>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            </div>
           </aside>
 
-          {/* Main content */}
-          <div className="min-w-0 space-y-28 md:space-y-36">
-            {/* 00 Welcome */}
-            <section id="welcome" className="scroll-mt-28">
-              <FadeUp>
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">00 — Welcome</p>
-                <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">
-                  Energy infrastructure that reads like a utility
-                </h2>
-                <div className="mt-6 space-y-4 max-w-3xl text-[16px] leading-relaxed text-ink/75">
-                  <p>
-                    Netso does not market residential gadgets or consumer novelty. We build 20-year infrastructure
-                    assets for heavy textile mills, garment exporters, and manufacturing facilities across Bangladesh.
+          <div className="space-y-16 md:space-y-24">
+            {/* 00 — Welcome */}
+            <section id="welcome" className="scroll-mt-24">
+              <SectionHead
+                n="00"
+                t="Welcome"
+                note="What the system is for, and the three rules that decide any ambiguous call."
+              />
+
+              <Reveal>
+                <Panel className="mt-6 px-6 py-8 md:px-10 md:py-10">
+                  <p className="g-display max-w-[24ch] text-[clamp(1.5rem,3vw,2.2rem)]">
+                    Depth is water, not <em>shadow.</em>
                   </p>
-                  <p>
-                    Our visual and verbal system reflects that mandate: institutional authority, architectural quietude,
-                    contractual precision, and mathematical honesty.
+                  <p className="mt-5 max-w-[68ch] font-sans text-[14.5px] leading-[1.72] text-[rgba(255,250,240,0.62)]">
+                    Netso sells twenty-year infrastructure to people who will read the contract.
+                    The interface should feel like the asset: engineered, cool, lit from within, and
+                    quiet under pressure. Glass is not a decoration here — it is the metaphor. A
+                    pane of glass is transparent about what is behind it.
                   </p>
-                </div>
-              </FadeUp>
+
+                  <div className="mt-8 grid gap-px overflow-hidden rounded-xl border border-[rgba(255,250,240,0.09)] bg-[rgba(255,250,240,0.09)] sm:grid-cols-3">
+                    {[
+                      { h: "No drop shadows", b: "Depth comes from a surface shifting half a tone and a 1px specular edge. A shadow implies a light source that does not exist." },
+                      { h: "One voltage", b: "Gold is light, never paint. It marks action, metric and rule — nothing else competes for it." },
+                      { h: "If in doubt, remove", b: "The system fails toward restraint. A pane that needs three effects to read is a pane that has not been designed." },
+                    ].map((r) => (
+                      <div key={r.h} className="bg-[rgba(4,13,9,0.5)] px-4 py-4">
+                        <p className="font-sans text-[13px] font-medium text-[#fffaf0]">{r.h}</p>
+                        <p className="mt-1.5 font-sans text-[11.5px] leading-relaxed text-[rgba(255,250,240,0.45)]">
+                          {r.b}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </Panel>
+              </Reveal>
             </section>
 
-            {/* 01 Logo */}
-            <section id="logo" className="scroll-mt-28">
-              <FadeUp>
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">01 — The Mark</p>
-                <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">The Netso Sun Mark</h2>
-                <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                  A high-precision geometric radiating mark symbolizing equatorial solar irradiance, architectural
-                  steel pergola symmetry, and continuous energy transmission.
-                </p>
-              </FadeUp>
-              <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-                {LOGO_TILES.map((t) => (
-                  <FadeUp key={t.label}>
+            {/* 01 — Logo */}
+            <section id="logo" className="scroll-mt-24">
+              <SectionHead
+                n="01"
+                t="Logo"
+                note="The sun mark carries the colour; the wordmark carries the name. They are placed, never locked into new shapes."
+              />
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {LOGO_TILES.map((tile, i) => (
+                  <Reveal key={tile.label} delay={i * 0.04}>
                     <div
-                      className="flex h-36 flex-col items-center justify-center rounded-2xl border border-ink/10 p-4 transition-transform hover:-translate-y-1"
-                      style={{ backgroundColor: t.bg }}
+                      className="flex aspect-[4/3] items-center justify-center rounded-xl border border-[rgba(255,250,240,0.1)]"
+                      style={{ backgroundColor: tile.bg }}
                     >
-                      <SunMark variant={t.variant} className="h-10 w-10" />
-                      <span className="font-mono mt-3 text-[10px] text-center text-ink/50 leading-tight">
-                        {t.label}
+                      <SunMark variant={tile.variant} className="h-9" />
+                      <span
+                        className="ml-2 font-sans text-[15px] font-semibold tracking-tight"
+                        style={{ color: tile.dark ? "#FFF7E9" : "#111111" }}
+                      >
+                        NETSO<span className="align-super text-[9px]">°</span>ENERGY
                       </span>
                     </div>
-                  </FadeUp>
-                ))}
-              </div>
-            </section>
-
-            {/* 02 Color */}
-            <section id="color" className="scroll-mt-28">
-              <FadeUp>
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">02 — Color Palette</p>
-                <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">
-                  Anchored in Netso Gold & Deep Utility Forest
-                </h2>
-                <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                  Tap any swatch to copy its hex value. Netso Gold highlights key financial metrics; Deep Forest
-                  provides utility gravity; Netso Yellow indicates live telemetry; Cream provides an editorial paper ground.
-                </p>
-              </FadeUp>
-              <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
-                {COLORS.map((c) => (
-                  <FadeUp key={c.hex}>
-                    <Swatch c={c} />
-                  </FadeUp>
+                    <p className="mt-2 font-mono text-[9px] uppercase leading-relaxed tracking-[0.1em] text-[rgba(255,250,240,0.34)]">
+                      {tile.label}
+                    </p>
+                  </Reveal>
                 ))}
               </div>
 
-              <div className="mt-12 border-t border-ink/10 pt-8">
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/60 mb-4">
-                  Diurnal Light Gradients · Sun Path Solar Palettes
-                </p>
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                  {MOMENTS.map((m) => (
-                    <FadeUp key={m.t}>
-                      <div className="rounded-2xl border border-ink/10 p-3 bg-parchment">
-                        <div className="h-16 w-full rounded-xl shadow-inner" style={{ background: m.g }} />
-                        <span className="font-mono text-xs font-semibold text-forest mt-3 block">{m.t}</span>
-                      </div>
-                    </FadeUp>
-                  ))}
+              <Reveal delay={0.08}>
+                <div className="mt-6 grid gap-4 md:grid-cols-2">
+                  <Panel className="px-5 py-5" variant="quiet" sheen={false}>
+                    <p className="g-label !text-[9px] text-[var(--g-gold-hi)]">Clear space</p>
+                    <p className="mt-2 font-sans text-[12.5px] leading-relaxed text-[rgba(255,250,240,0.5)]">
+                      Minimum clear space equals the height of the sun mark on all sides. Never
+                      place the mark on a mid-tone photograph without a scrim.
+                    </p>
+                  </Panel>
+                  <Panel className="px-5 py-5" variant="quiet" sheen={false}>
+                    <p className="g-label !text-[9px] text-[var(--g-gold-hi)]">Never</p>
+                    <p className="mt-2 font-sans text-[12.5px] leading-relaxed text-[rgba(255,250,240,0.5)]">
+                      No recolouring the mark outside the three supplied variants, no outlines, no
+                      gradients, no rotation, no enclosing badges.
+                    </p>
+                  </Panel>
                 </div>
+              </Reveal>
+            </section>
+
+            {/* 02 — Colour */}
+            <section id="color" className="scroll-mt-24">
+              <SectionHead
+                n="02"
+                t="Colour"
+                note="Click any swatch to copy its hex. Every step of the forest stack is a half-tone — adjacent surfaces are 3–6% apart, which is what produces glass depth without borders."
+              />
+
+              {(["surface", "light", "accent"] as const).map((g) => (
+                <div key={g} className="mt-7">
+                  <p className="mb-2.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-[rgba(255,250,240,0.32)]">
+                    {GROUP_LABEL[g]}
+                  </p>
+                  <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
+                    {TOKENS.filter((t) => t.group === g).map((t, i) => (
+                      <Reveal key={t.varName} delay={i * 0.03}>
+                        <Swatch t={t} />
+                      </Reveal>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              <Reveal>
+                <p className="mt-6 max-w-[70ch] font-sans text-[12px] leading-relaxed text-[rgba(255,250,240,0.38)]">
+                  The warm cream, ink, beige and sand tones documented in earlier revisions of
+                  this page remain in the classic stylesheet and still render at{" "}
+                  <span className="font-mono text-[11px] text-[rgba(255,250,240,0.6)]">/classic</span>.
+                  They are legacy, not canonical — new work uses the forest stack above.
+                </p>
+              </Reveal>
+            </section>
+
+            {/* 03 — Typography */}
+            <section id="typography" className="scroll-mt-24">
+              <SectionHead
+                n="03"
+                t="Typography"
+                note="Three families, strict roles. Archivo carries the display voice, Instrument Serif italic supplies exactly one accent phrase, Space Mono is data, never prose."
+              />
+
+              <div className="mt-6 space-y-2">
+                {TYPE_ROWS.map((row, i) => (
+                  <Reveal key={row.role} delay={i * 0.04}>
+                    <Panel className="px-5 py-6 md:px-8 md:py-7" sheen={false}>
+                      <div className="flex flex-wrap items-baseline justify-between gap-2">
+                        <p className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-[var(--g-gold-hi)]">
+                          {row.role}
+                        </p>
+                        <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-[rgba(255,250,240,0.28)]">
+                          {row.spec}
+                        </p>
+                      </div>
+                      <p className={`mt-4 ${row.cls}`}>
+                        {row.role === "Display accent" ? <em>{row.sample}</em> : row.sample}
+                      </p>
+                    </Panel>
+                  </Reveal>
+                ))}
               </div>
             </section>
 
-            {/* 03 Typography */}
-            <section id="typography" className="scroll-mt-28">
-              <FadeUp>
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">03 — Typography</p>
-                <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">Three Typefaces, Three Strict Disciplines</h2>
-                <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                  Archivo Condensed Grotesque for monumental statements, General Sans for high-legibility legal and
-                  technical copy, and Space Mono for tabular telemetry and contract constants.
-                </p>
-              </FadeUp>
-              <div className="mt-10 divide-y divide-ink/10 border-y border-ink/10">
-                {TYPE_ROWS.map((r, i) => (
-                  <FadeUp key={r.role} delay={i * 0.05}>
-                    <div className="grid gap-4 py-8 md:grid-cols-[200px_1fr] md:gap-10">
-                      <div>
-                        <p className="font-mono text-xs font-semibold uppercase text-gold">{r.role}</p>
-                        <p className="mt-2 max-w-[200px] font-mono text-[11px] leading-relaxed text-ink/50">{r.spec}</p>
-                      </div>
-                      <p className={r.cls}>
-                        {r.accentFrom > 0 ? (
-                          <>
-                            {r.sample.split(" ").slice(0, -r.accentFrom).join(" ")}{" "}
-                            <span className={r.accent}>{r.sample.split(" ").slice(-r.accentFrom).join(" ")}</span>
-                          </>
-                        ) : (
-                          r.sample
-                        )}
+            {/* 04 — Voice */}
+            <section id="voice" className="scroll-mt-24">
+              <SectionHead
+                n="04"
+                t="Voice"
+                note="How Netso speaks: what we say, and the four rules that decide whether a sentence ships."
+              />
+
+              <div className="mt-6 grid gap-2.5 md:grid-cols-2">
+                {TAGLINES.map((tag, i) => (
+                  <Reveal key={tag.k} delay={i * 0.04}>
+                    <Panel className="flex h-full flex-col px-5 py-5" variant="quiet" sheen={false}>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-[rgba(255,250,240,0.32)]">
+                        {tag.k}
+                      </p>
+                      <p className="g-display mt-2.5 text-[20px] leading-[1.1]">{tag.v}</p>
+                      <p className="mt-2 font-sans text-[12px] leading-relaxed text-[rgba(255,250,240,0.45)]">
+                        {tag.d}
+                      </p>
+                    </Panel>
+                  </Reveal>
+                ))}
+              </div>
+
+              <div className="mt-3 space-y-2">
+                {PRINCIPLES.map((p, i) => (
+                  <Reveal key={p.n} delay={i * 0.04}>
+                    <div className="grid gap-2 border-b border-[rgba(255,250,240,0.08)] py-4 md:grid-cols-[52px_minmax(0,0.8fr)_minmax(0,1.6fr)] md:items-baseline md:gap-6">
+                      <span className="font-mono text-[10px] tracking-[0.16em] text-[rgba(198,161,91,0.7)]">
+                        {p.n}
+                      </span>
+                      <h3 className="font-sans text-[14.5px] font-medium text-[#fffaf0]">{p.t}</h3>
+                      <p className="max-w-[64ch] font-sans text-[12.5px] leading-relaxed text-[rgba(255,250,240,0.5)]">
+                        {p.d}
                       </p>
                     </div>
-                  </FadeUp>
+                  </Reveal>
                 ))}
               </div>
             </section>
 
-            {/* 04 Voice & Tone */}
-            <section id="voice" className="scroll-mt-28">
-              <FadeUp>
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">04 — Verbal Architecture</p>
-                <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">Evidenced, Calm, Institutional</h2>
-                <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                  Netso speaks with the authority of an asset owner. We never speak in generic green platitudes; we speak
-                  in tariffs, coverage ratios, bankable covenants, and audited kilowatt-hours.
-                </p>
-              </FadeUp>
-              <div className="mt-10 divide-y divide-ink/10 border-y border-ink/10">
-                {TAGLINES.map((t, i) => (
-                  <FadeUp key={t.k} delay={i * 0.04}>
-                    <div className="grid items-baseline gap-2 py-6 md:grid-cols-[160px_1.2fr_1.5fr] md:gap-8">
-                      <span className="font-mono text-xs font-semibold uppercase text-gold">{t.k}</span>
-                      <span className="font-display text-2xl text-forest md:text-3xl">{t.v}</span>
-                      <span className="text-sm leading-relaxed text-ink/65">{t.d}</span>
-                    </div>
-                  </FadeUp>
-                ))}
-              </div>
-              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {PRINCIPLES.map((p, i) => (
-                  <FadeUp key={p.n} delay={i * 0.06}>
-                    <div className="h-full rounded-2xl border border-ink/10 bg-parchment p-6">
-                      <p className="font-mono text-xs font-bold text-gold">{p.n} /</p>
-                      <h3 className="font-display mt-3 text-xl text-forest">{p.t}</h3>
-                      <p className="mt-2 text-xs leading-relaxed text-ink/65">{p.d}</p>
-                    </div>
-                  </FadeUp>
-                ))}
-              </div>
-            </section>
+            {/* 05 — Photography */}
+            <section id="photography" className="scroll-mt-24">
+              <SectionHead
+                n="05"
+                t="Photography"
+                note="Real roofs, real light, no stock optimism. Photograph the asset at the hour it is most honest — dawn and dusk."
+              />
 
-            {/* 05 Photography */}
-            <section id="photography" className="scroll-mt-28">
-              <FadeUp>
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">05 — Photography</p>
-                <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">Authentic Industrial Reality</h2>
-                <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                  Captured across real factory rooftops in Bangladesh. Golden hour sun on dual-glass TOPCon bifacial modules,
-                  heavy structural steel pergola joints, and digital Class 0.2s utility meters.
-                </p>
-              </FadeUp>
-              <div className="mt-10 columns-1 gap-4 sm:columns-2 xl:columns-3 [&>*]:mb-4">
+              <div className="mt-6 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
                 {PHOTOS.map((p, i) => (
-                  <FadeUp key={p.t} delay={i * 0.05} className="break-inside-avoid">
-                    <figure className="group overflow-hidden rounded-2xl border border-ink/10 bg-cream">
-                      <img
-                        src={p.img}
-                        alt={p.d}
-                        className="w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                      />
-                      <figcaption className="p-4 bg-cream">
-                        <span className="font-display text-base font-semibold text-forest">{p.t}</span>
-                        <p className="mt-1 text-xs leading-relaxed text-ink/60">{p.d}</p>
+                  <Reveal key={p.t} delay={i * 0.04}>
+                    <figure className="group overflow-hidden rounded-xl border border-[rgba(255,250,240,0.1)]">
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <img
+                          src={p.img}
+                          alt={p.t}
+                          loading="lazy"
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        />
+                        <div
+                          aria-hidden="true"
+                          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(4,13,9,0.7),transparent_55%)]"
+                        />
+                      </div>
+                      <figcaption className="bg-[rgba(4,13,9,0.5)] px-3.5 py-3">
+                        <p className="font-sans text-[12.5px] font-medium text-[#fffaf0]">{p.t}</p>
+                        <p className="mt-1 font-sans text-[11px] leading-relaxed text-[rgba(255,250,240,0.42)]">
+                          {p.d}
+                        </p>
                       </figcaption>
                     </figure>
-                  </FadeUp>
+                  </Reveal>
                 ))}
               </div>
             </section>
 
-            {/* 06 Motion */}
-            <section id="motion" className="scroll-mt-28">
-              <FadeUp>
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">06 — Motion & Physics</p>
-                <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">Natural Solar Kinematics</h2>
-                <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-ink/75">
-                  Editorial at rest, cinematic when navigated. Every animation mimics the slow, certain arc of the sun:
-                  fluid spring settling, zero abrupt pop-ups, and smooth scrubbed WebGL canvas scrubbers.
-                </p>
-              </FadeUp>
-              <FadeUp className="mt-10 overflow-hidden rounded-3xl bg-forest p-8 text-warm md:p-12 border border-warm/15">
-                <p className="font-mono text-xs uppercase tracking-wider text-gold">Live Specimen — Smooth Spring Settling</p>
-                <p className="font-display mt-6 text-3xl sm:text-5xl text-warm">
-                  <Words text="Every kilowatt-hour arrives in its own time" accent={3} once={false} />
-                </p>
-                <div className="mt-10 grid gap-4 border-t border-warm/15 pt-6 sm:grid-cols-3">
-                  {[
-                    { k: "Kinematic Easing", v: "cubic-bezier(0.16, 1, 0.3, 1)" },
-                    { k: "Headline Stagger", v: "55ms sequential reveal" },
-                    { k: "Spring Dampening", v: "Mass 1.0 · Stiffness 120 · Damping 14" },
-                  ].map((s) => (
-                    <div key={s.k}>
-                      <p className="font-mono text-[10px] uppercase tracking-wider text-warm/40">{s.k}</p>
-                      <p className="mt-1 font-mono text-xs font-bold text-gold">{s.v}</p>
-                    </div>
-                  ))}
-                </div>
-              </FadeUp>
+            {/* 06 — Motion */}
+            <section id="motion" className="scroll-mt-24">
+              <SectionHead
+                n="06"
+                t="Motion"
+                note="Motion reveals; it never performs. Every rule below collapses to nothing under prefers-reduced-motion."
+              />
+
+              <div className="mt-6 grid gap-2.5 md:grid-cols-2">
+                {MOTION.map((m, i) => (
+                  <Reveal key={m.k} delay={i * 0.04}>
+                    <Panel className="h-full px-5 py-5" variant="quiet" sheen={false}>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-[var(--g-gold-hi)]">
+                        {m.k}
+                      </p>
+                      <p className="mt-2 font-mono text-[10.5px] leading-relaxed text-[rgba(255,250,240,0.7)]">
+                        {m.v}
+                      </p>
+                      <p className="mt-2.5 font-sans text-[12px] leading-relaxed text-[rgba(255,250,240,0.45)]">
+                        {m.d}
+                      </p>
+                    </Panel>
+                  </Reveal>
+                ))}
+              </div>
             </section>
 
-            {/* 07 Components */}
-            <section id="components" className="scroll-mt-28">
-              <FadeUp>
-                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-gold">07 — UI Primitives</p>
-                <h2 className="font-display mt-4 text-3xl sm:text-5xl text-forest">Institutional Component Library</h2>
-              </FadeUp>
-              <FadeUp className="mt-10 space-y-10 rounded-3xl border border-ink/10 bg-parchment p-8 md:p-12">
-                <div>
-                  <p className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/50 mb-4">Button Variants</p>
-                  <div className="flex flex-wrap gap-4">
-                    <button
-                      onClick={() => setIsModalOpen(true)}
-                      className="inline-flex h-12 items-center rounded-full bg-gold px-7 text-sm font-semibold text-forest shadow-md transition-transform hover:scale-[1.02]"
-                    >
-                      Assess Facility Feasibility
-                    </button>
-                    <span className="inline-flex h-12 cursor-pointer items-center rounded-full bg-forest px-7 text-sm font-semibold text-warm">
-                      CGS 80kWp Reference
-                    </span>
-                    <span className="inline-flex h-12 cursor-pointer items-center rounded-full border border-ink/25 px-7 text-sm font-semibold text-forest hover:bg-ink/5">
-                      Review Capital Stack
-                    </span>
+            {/* 07 — Components */}
+            <section id="components" className="scroll-mt-24">
+              <SectionHead
+                n="07"
+                t="Components"
+                note="The primitives every page is built from. If a page needs a new one, it is added here first."
+              />
+
+              <div className="mt-6 space-y-3">
+                <Reveal>
+                  <Panel className="px-5 py-6 md:px-8">
+                    <p className="g-label !text-[9px] text-[rgba(255,250,240,0.4)]">Buttons</p>
+                    <div className="mt-4 flex flex-wrap items-center gap-3">
+                      <button type="button" className="g-btn" onClick={assess.onAssess}>
+                        Request an assessment
+                      </button>
+                      <button type="button" className="g-btn g-btn--ghost">
+                        Secondary action
+                      </button>
+                      <button type="button" className="g-btn g-btn--sm">
+                        Compact
+                      </button>
+                    </div>
+                    <p className="mt-4 max-w-[62ch] font-sans text-[11.5px] leading-relaxed text-[rgba(255,250,240,0.4)]">
+                      Gold fill is the page&rsquo;s single primary action. Everything else is a ghost
+                      button — a glass pane with a lit hairline. Never two gold buttons side by side.
+                    </p>
+                  </Panel>
+                </Reveal>
+
+                <Reveal delay={0.04}>
+                  <Panel className="px-5 py-6 md:px-8">
+                    <p className="g-label !text-[9px] text-[rgba(255,250,240,0.4)]">Chips &amp; labels</p>
+                    <div className="mt-4 flex flex-wrap items-center gap-2">
+                      <span className="g-chip">
+                        <span className="g-dot" aria-hidden="true" />
+                        Live indicator
+                      </span>
+                      <span className="g-chip">SREDA NEM 2025</span>
+                      <span className="g-chip border-[rgba(198,161,91,0.42)] text-[var(--g-gold-hi)]">
+                        Settled
+                      </span>
+                      <span className="g-chip border-[rgba(255,250,240,0.18)]">Under appraisal</span>
+                    </div>
+                    <p className="mt-4 max-w-[62ch] font-sans text-[11.5px] leading-relaxed text-[rgba(255,250,240,0.4)]">
+                      Pills are metadata only: status, class, date, category. Gold-bordered chips mark
+                      something concluded; neutral chips mark something conditional. That distinction is
+                      load-bearing — it is how a pending filing stays visibly pending.
+                    </p>
+                  </Panel>
+                </Reveal>
+
+                <Reveal delay={0.08}>
+                  <div className="grid gap-2.5 md:grid-cols-2">
+                    {(
+                      [
+                        ["default", "Default pane"],
+                        ["quiet", "Quiet pane"],
+                        ["deep", "Deep pane"],
+                        ["light", "Light pane"],
+                      ] as const
+                    ).map(([variant, label]) => (
+                      <Panel key={variant} variant={variant} className="px-5 py-6">
+                        <p
+                          className={`g-label !text-[9px] ${
+                            variant === "light" ? "text-[rgba(4,13,9,0.5)]" : "text-[rgba(255,250,240,0.4)]"
+                          }`}
+                        >
+                          {variant}
+                        </p>
+                        <p
+                          className={`mt-2 font-sans text-[12px] leading-relaxed ${
+                            variant === "light" ? "text-[rgba(4,13,9,0.62)]" : "text-[rgba(255,250,240,0.45)]"
+                          }`}
+                        >
+                          {label} — top-lighter fill, 1px inner specular, gold sweep on pointer.
+                        </p>
+                      </Panel>
+                    ))}
                   </div>
-                </div>
-                <div>
-                  <p className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/50 mb-4">Institutional Status Badges</p>
-                  <div className="flex flex-wrap gap-3">
-                    <span className="rounded-full bg-forest px-4 py-2 font-mono text-xs font-medium text-gold">
-                      SREDA NEM 2025 Synchronized
-                    </span>
-                    <span className="rounded-full border border-ink/20 px-4 py-2 font-mono text-xs font-medium text-forest">
-                      IDCOL Senior Debt 80% LTV
-                    </span>
-                    <span className="rounded-full bg-gold/20 border border-gold/40 px-4 py-2 font-mono text-xs font-semibold text-forest">
-                      1.25× DSCR Floor
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <p className="font-mono text-xs font-semibold uppercase tracking-wider text-ink/50 mb-4">Verified Financial Constants</p>
-                  <div className="flex flex-wrap gap-4">
-                    <span className="rounded-2xl border border-ink/10 bg-cream p-4">
-                      <span className="font-mono text-[10px] text-ink/50 uppercase block">PPA Savings Guarantee</span>
-                      <span className="font-mono text-base font-bold text-forest">30% Below Grid</span>
-                    </span>
-                    <span className="rounded-2xl border border-ink/10 bg-cream p-4">
-                      <span className="font-mono text-[10px] text-ink/50 uppercase block">BERC Tariff Hedge</span>
-                      <span className="font-mono text-base font-bold text-forest">Floating Discount</span>
-                    </span>
-                    <span className="rounded-2xl border border-ink/10 bg-cream p-4">
-                      <span className="font-mono text-[10px] text-ink/50 uppercase block">Customer CAPEX</span>
-                      <span className="font-mono text-base font-bold text-gold">৳0.00 (Zero)</span>
-                    </span>
-                  </div>
-                </div>
-              </FadeUp>
+                </Reveal>
+
+                <Reveal delay={0.12}>
+                  <Panel className="px-5 py-6 md:px-8">
+                    <p className="g-label !text-[9px] text-[rgba(255,250,240,0.4)]">Shape &amp; rhythm</p>
+                    <dl className="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2">
+                      {[
+                        ["Radii", "6 small · 12 controls · 16 cards · 22 large · 30 hero · 999 pill"],
+                        ["Canvas", "1320px max width · gutter clamp(20px, 4.2vw, 56px)"],
+                        ["Section rhythm", "clamp(88px, 11vw, 168px) — tight halves it"],
+                        ["Grid gap", "clamp(14px, 1.6vw, 22px)"],
+                      ].map(([k, v]) => (
+                        <div key={k} className="flex flex-wrap items-baseline justify-between gap-2 border-b border-[rgba(255,250,240,0.07)] py-1.5">
+                          <dt className="font-mono text-[9px] uppercase tracking-[0.14em] text-[rgba(255,250,240,0.32)]">
+                            {k}
+                          </dt>
+                          <dd className="font-sans text-[11.5px] text-[rgba(255,250,240,0.6)]">{v}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </Panel>
+                </Reveal>
+              </div>
             </section>
           </div>
         </div>
-      </main>
-      <Footer />
-
-      <FeasibilityModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-    </div>
+      </div>
+    </GlassShell>
   );
 }
