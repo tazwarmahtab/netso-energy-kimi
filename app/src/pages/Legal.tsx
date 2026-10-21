@@ -1,8 +1,10 @@
-import Nav from "../components/Nav";
-import Footer from "../components/Footer";
-import { FadeUp, Words } from "../components/Reveal";
+import { Panel, Reveal } from "../components/glass/primitives";
+import { GlassShell, PageHero } from "../components/glass/shell";
+import { useAssessModal } from "../hooks/useAssessModal";
 
 type Section = { h: string; body: string[] };
+
+const slug = (s: string) => s.toLowerCase().replace(/^[0-9]+\.\s*/, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 const PRIVACY: Section[] = [
   {
@@ -88,38 +90,111 @@ const TERMS: Section[] = [
 export default function Legal({ kind }: { kind: "privacy" | "terms" }) {
   const isPrivacy = kind === "privacy";
   const sections = isPrivacy ? PRIVACY : TERMS;
-  return (
-    <div className="bg-cream text-ink">
-      <Nav theme="light" />
-      <main id="content" className="mx-auto max-w-[860px] px-5 pb-28 pt-28 md:px-10 md:pt-40">
-        <FadeUp>
-          <p className="eyebrow text-gold">Legal · Netso Energy Limited</p>
-        </FadeUp>
-        <h1 className="font-display mt-5 text-5xl md:text-7xl">
-          <Words text={isPrivacy ? "Privacy Policy" : "Terms of Service"} accent={isPrivacy ? 1 : 2} />
-        </h1>
-        <FadeUp delay={0.15}>
-          <p className="mt-4 font-mono text-[12.5px] uppercase tracking-[0.14em] text-ink/45">
-            Effective October 1, 2026 · Netso Energy Limited, Dhaka, Bangladesh
-          </p>
-        </FadeUp>
+  const assess = useAssessModal();
 
-        <div className="mt-12 space-y-10">
-          {sections.map((s, i) => (
-            <FadeUp key={s.h} delay={i * 0.03}>
-              <section className="border-b border-ink/10 pb-10">
-                <h2 className="font-display-wide text-2xl text-ink md:text-[1.7rem]">{s.h}</h2>
-                {s.body.map((p, j) => (
-                  <p key={j} className="mt-3.5 text-[15.5px] leading-[1.75] text-ink/70">
-                    {p}
-                  </p>
-                ))}
-              </section>
-            </FadeUp>
-          ))}
+  return (
+    <GlassShell {...assess}>
+      <PageHero
+        compact
+        eyebrow={`Legal · Netso Energy Limited`}
+        title={
+          isPrivacy ? (
+            <>
+              Privacy, in <em>plain terms.</em>
+            </>
+          ) : (
+            <>
+              Terms, in <em>plain terms.</em>
+            </>
+          )
+        }
+        lede={
+          isPrivacy
+            ? "What we collect when you ask us to look at a roof, why we need it, and how to get it back. Written to be read, not skimmed past."
+            : "How the Energy-as-a-Service relationship is structured, what the estimates on this site do and do not mean, and where your individual agreement takes over."
+        }
+        meta={
+          <>
+            <span className="g-chip">Effective 1 October 2026</span>
+            <span className="g-chip">{sections.length} sections</span>
+            <span className="g-chip">Dhaka, Bangladesh</span>
+          </>
+        }
+      />
+
+      <section className="g-section g-section--tight">
+        <div className="g-wrap grid gap-10 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:gap-16">
+          {/* Contents index */}
+          <aside className="lg:sticky lg:top-28 lg:self-start">
+            <Reveal>
+              <p className="g-label">Contents</p>
+              <nav aria-label="Document contents" className="mt-5">
+                <ol className="space-y-0.5">
+                  {sections.map((s) => (
+                    <li key={s.h}>
+                      <a
+                        href={`#${slug(s.h)}`}
+                        className="group flex items-baseline gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-[rgba(255,250,240,0.045)]"
+                      >
+                        <span className="font-mono text-[10px] text-[rgba(198,161,91,0.75)]">
+                          {s.h.match(/^\d+/)?.[0]?.padStart(2, "0")}
+                        </span>
+                        <span className="font-sans text-[13.5px] leading-snug text-[rgba(255,250,240,0.62)] transition-colors group-hover:text-[#fffaf0]">
+                          {s.h.replace(/^[0-9]+\.\s*/, "")}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+
+              <div className="mt-8 border-t border-[rgba(255,250,240,0.1)] pt-6">
+                <p className="g-label !text-[9px] text-[rgba(255,250,240,0.42)]">Questions</p>
+                <a
+                  href="mailto:tazwar@netsoenergy.com"
+                  className="mt-2 inline-block font-mono text-[12px] text-[var(--g-gold-hi)] transition-opacity hover:opacity-75"
+                >
+                  tazwar@netsoenergy.com
+                </a>
+              </div>
+            </Reveal>
+          </aside>
+
+          {/* Document body */}
+          <div>
+            <Reveal>
+              <Panel className="px-6 py-8 md:px-10 md:py-12">
+                <div className="space-y-10">
+                  {sections.map((s) => (
+                    <section
+                      key={s.h}
+                      id={slug(s.h)}
+                      className="scroll-mt-28 border-b border-[rgba(255,250,240,0.08)] pb-10 last:border-0 last:pb-0"
+                    >
+                      <h2 className="g-display text-[24px] md:text-[28px]">{s.h}</h2>
+                      {s.body.map((para, j) => (
+                        <p
+                          key={j}
+                          className="mt-4 max-w-[62ch] font-sans text-[15px] leading-[1.78] text-[rgba(255,250,240,0.66)]"
+                        >
+                          {para}
+                        </p>
+                      ))}
+                    </section>
+                  ))}
+                </div>
+              </Panel>
+            </Reveal>
+
+            <Reveal delay={0.08}>
+              <p className="mt-6 max-w-[62ch] font-mono text-[10.5px] uppercase leading-relaxed tracking-[0.13em] text-[rgba(255,250,240,0.34)]">
+                Superseded versions available on request. Governing law: People&rsquo;s Republic of
+                Bangladesh.
+              </p>
+            </Reveal>
+          </div>
         </div>
-      </main>
-      <Footer />
-    </div>
+      </section>
+    </GlassShell>
   );
 }
