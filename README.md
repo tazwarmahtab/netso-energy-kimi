@@ -8,7 +8,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Three.js](https://img.shields.io/badge/Three.js-WebGL_3D-black?logo=three.js&logoColor=white)](https://threejs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![IDCOL Concessionary](https://img.shields.io/badge/Financing-IDCOL_80%25_Senior_Debt-C6A15B)](https://idcol.org/)
+[![IDCOL Application](https://img.shields.io/badge/Financing-IDCOL_Application_Under_Appraisal-C6A15B)](https://idcol.org/)
 [![SREDA NEM 2025](https://img.shields.io/badge/Compliance-SREDA_NEM_2025-08140F)](http://www.sreda.gov.bd/)
 
 ---
@@ -17,12 +17,12 @@
 
 Netso Energy finances, constructs, and operates utility-grade architectural solar pergolas for commercial and industrial facilities across Bangladesh under a **Build-Own-Operate (BOO / RESCO)** model.
 
-- **Client CAPEX:** **৳0 Upfront** — 100% financed and insured by Netso Energy under a 20-year IDCOL-backed agreement.
+- **Client CAPEX:** **৳0 Upfront** — 100% financed and insured by Netso Energy under a 20-year Build-Own-Operate (RESCO) agreement.
 - **Commercial Structure:** **30% Guaranteed Savings** below utility grid tariffs, delivering immediate 6-figure monthly cash savings directly to operational EBITDA.
 - **The Beth Doctrine:** Floating 30% discount to utility grid tariffs (`Utility Bill × 0.70`), ensuring client power costs always stay below the grid under all market conditions.
-- **Concessionary Capital:** Qualified for IDCOL 80% senior debt facility at 5.0%–5.5% interest, backed by sovereign green refinancing.
+- **Concessionary Capital:** IDCOL 80% senior-debt facility **applied for and under appraisal** (SREUP window; an indicative 5.0%–5.5% concessionary range is modelled, not a committed term).
 - **Regulatory Framework:** SREDA Net Metering (NEM) Guidelines 2025 (90% monthly settlement credit, 10% DSM reserve) and BERC industrial tariff schedules.
-- **RMG Operational Edge:** Non-penetrative standing-seam clamps (zero roof puncture), zero factory downtime during installation, 98% daytime load matching, and EU CBAM carbon audit compliance.
+- **RMG Operational Edge:** Non-penetrative standing-seam clamps (zero roof puncture), installation sequencing designed for zero factory downtime, modelled ~98% daytime load matching (site-dependent), and EU CBAM carbon-reporting readiness.
 
 ---
 
@@ -42,7 +42,7 @@ Netso Energy finances, constructs, and operates utility-grade architectural sola
 - Live scenario stress tests: Baseline Utility Index, Tariff Hike (+35%), Tariff Softening, highlighting cumulative 20-year corporate treasury savings with zero per-unit rate disclosure.
 
 ### 4. NEOS Utility SCADA Telemetry Terminal
-- Bankable operational telemetry interface displaying real-time power generation (64.8 kW active), Performance Ratio (81.4% PR), Class 0.2s bidirectional meter accuracy, and automated I-REC carbon certification.
+- Operational telemetry interface demonstrating Class 0.2s bidirectional metering and I-REC carbon certification tracking. Displayed values (64.8 kW active, 81.4% PR) are illustrative samples, not plant data.
 
 ### 5. Safe WhatsApp-First Lead Dispatch
 - Lead intake gateway (`app/src/lib/notion.ts`) records a local dispatch ledger and hands the prospect to the WhatsApp-first origination flow.
@@ -89,7 +89,7 @@ netso-energy-kimi/
 │   │   └── pages/
 │   │       ├── Home.tsx                    # Flagship commercial landing
 │   │       ├── Product.tsx                 # Pergola engineering & NEOS SCADA
-│   │       ├── Partners.tsx                # IDCOL senior debt & capital
+│   │       ├── Partners.tsx                # Project finance & capital stack
 │   │       ├── About.tsx                   # Institutional ethos & chronology
 │   │       └── Brand.tsx                   # Design tokens & diurnal system
 │   ├── tailwind.config.js                  # Netso Gold & Forest color tokens
@@ -154,5 +154,6 @@ Typechecks and compiles the application to `app/dist/` with 0 TypeScript errors.
 ## 📜 Regulatory & Financial Disclaimers
 
 1. **Tariff Floor & Floating Spreads:** All tariff projections reference canonical Bangladesh Energy Regulatory Commission (BERC) orders. Floating discounts are indexed to prevailing PDB industrial bulk rates.
-2. **Concessionary Debt:** IDCOL senior debt facility terms (5.0%–5.5%) are subject to technical feasibility approval, minimum 1.25× DSCR covenant floor, and SREDA NEM 2025 compliance.
-3. **Intellectual Property:** Netso Energy Ltd. All rights reserved. Registered trademark and proprietary design patents pending for the Netso Architectural Solar Pergola.
+2. **Concessionary Debt:** IDCOL senior-debt financing is **applied for and under appraisal**. Indicative facility terms (5.0%–5.5%) are subject to technical feasibility approval, a 1.25× DSCR covenant target, and SREDA NEM 2025 compliance. Nothing here constitutes a committed financing term.
+3. **Commercial Illustrations:** Savings models, telemetry read-outs, and per-facility figures shown in this repository are illustrative unless explicitly attributed to an executed agreement. Final terms are set only in executed project documents.
+4. **Intellectual Property:** Netso Energy Ltd. All rights reserved. Registered trademark and proprietary design patents pending for the Netso Architectural Solar Pergola.
