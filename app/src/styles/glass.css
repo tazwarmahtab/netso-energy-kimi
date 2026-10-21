@@ -1,0 +1,831 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+/* ==========================================================================
+   NETSO GLASS — v3 design system
+   --------------------------------------------------------------------------
+   Direction locked from Refero Styles research (Oct 2026):
+     · Auros .............. abyssal surface stack, no drop shadows, depth from
+                            surface shifts, rationed chromatic accent
+     · Superhuman ......... parchment canvas, translucent UI floating on
+                            photography, hairline borders, weight-460 display
+     · Wise ............... deep moss canvas with a single voltage accent
+   Netso synthesis: a "forest glass" system. Depth is water, not shadow.
+   Gold is light, never paint. Every surface is a pane you could tap.
+   ========================================================================== */
+
+.g-root ::selection {
+  background: rgba(198, 161, 91, 0.35);
+  color: #fffaf0;
+}
+
+.g-root {
+  /* --- surface stack: each step is a half-tone, never a border ------------ */
+  --g-void: #040d09;
+  --g-abyss: #071a13;
+  --g-kelp: #0b2419;
+  --g-lift: #10301f;
+  --g-lift-2: #163a27;
+
+  /* --- light surfaces ---------------------------------------------------- */
+  --g-parchment: #f6efdf;
+  --g-cream: #fffaf0;
+
+  /* --- the voltage ------------------------------------------------------- */
+  --g-gold: #c6a15b;
+  --g-gold-hi: #f0d9a4;
+  --g-gold-lo: #8a6b31;
+  --g-sage: #93a89c;
+
+  /* --- glass recipe ------------------------------------------------------ */
+  --g-glass-fill: linear-gradient(
+    168deg,
+    rgba(255, 250, 240, 0.085) 0%,
+    rgba(255, 250, 240, 0.045) 42%,
+    rgba(255, 250, 240, 0.022) 100%
+  );
+  --g-glass-line: rgba(255, 250, 240, 0.11);
+  --g-glass-line-hi: rgba(255, 250, 240, 0.2);
+  --g-specular: inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+  --g-blur: 22px;
+
+  /* --- shape ------------------------------------------------------------- */
+  --g-r-xs: 6px;
+  --g-r-sm: 12px;
+  --g-r-md: 16px;
+  --g-r-lg: 22px;
+  --g-r-xl: 30px;
+  --g-r-pill: 999px;
+
+  /* --- rhythm ------------------------------------------------------------ */
+  --g-max: 1320px;
+  --g-gutter: clamp(20px, 4.2vw, 56px);
+  --g-section: clamp(88px, 11vw, 168px);
+  --g-gap: clamp(14px, 1.6vw, 22px);
+
+  /* --- light, not elevation ---------------------------------------------- */
+  --g-float: 0 40px 80px -48px rgba(0, 0, 0, 0.8);
+  --g-halo-gold: 0 0 0 1px rgba(198, 161, 91, 0.22),
+    0 24px 70px -30px rgba(198, 161, 91, 0.28);
+
+  /* --- motion ------------------------------------------------------------ */
+  --g-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --g-ease-soft: cubic-bezier(0.32, 0.08, 0.18, 1);
+  --g-fast: 240ms;
+  --g-slow: 720ms;
+
+  color: var(--g-cream);
+  background: var(--g-void);
+  font-feature-settings: "ss01" 1, "cv01" 1;
+}
+
+/* ==========================================================================
+   1. CANVAS
+   ========================================================================== */
+
+.g-canvas {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(120% 70% at 50% -10%, #0d2c1e 0%, transparent 58%),
+    linear-gradient(180deg, var(--g-abyss) 0%, var(--g-void) 100%);
+}
+
+/* A single warm light source, top-centre, like sun through a roof light. */
+.g-canvas::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 70vh;
+  background: radial-gradient(
+    60% 100% at 50% 0%,
+    rgba(198, 161, 91, 0.14) 0%,
+    rgba(198, 161, 91, 0.04) 38%,
+    transparent 72%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Film grain: 2% over everything. Kills gradient banding on wide displays. */
+.g-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0.26;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
+   2. THE GLASS PANE
+   Three layers, in this order, always:
+     (a) fill      — a vertical tint that is lighter at the top
+     (b) specular  — 1px white inside the top edge, 1px black inside the bottom
+     (c) sweep     — a gold highlight that crosses the border on hover/enter
+   ========================================================================== */
+
+.g-glass {
+  position: relative;
+  background: var(--g-glass-fill);
+  border: 1px solid var(--g-glass-line);
+  border-radius: var(--g-r-lg);
+  box-shadow: var(--g-specular);
+  -webkit-backdrop-filter: blur(var(--g-blur)) saturate(1.35);
+  backdrop-filter: blur(var(--g-blur)) saturate(1.35);
+}
+
+.g-glass::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    100deg,
+    transparent 18%,
+    rgba(198, 161, 91, 0.5) 44%,
+    rgba(255, 240, 200, 0.95) 50%,
+    rgba(198, 161, 91, 0.5) 56%,
+    transparent 82%
+  );
+  background-size: 240% 100%;
+  background-position: 120% 0;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--g-fast) linear;
+}
+
+.g-glass:hover::before,
+.g-glass:focus-within::before,
+.g-glass.is-lit::before {
+  opacity: 1;
+  animation: g-sweep 1500ms var(--g-ease-soft) forwards;
+}
+
+@keyframes g-sweep {
+  from {
+    background-position: 130% 0;
+  }
+  to {
+    background-position: -40% 0;
+  }
+}
+
+/* Pane variants ----------------------------------------------------------- */
+
+.g-glass--quiet {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 250, 240, 0.05),
+    rgba(255, 250, 240, 0.018)
+  );
+}
+
+.g-glass--deep {
+  background: linear-gradient(
+    180deg,
+    rgba(4, 13, 9, 0.72),
+    rgba(4, 13, 9, 0.5)
+  );
+  --g-blur: 26px;
+}
+
+.g-glass--gold {
+  border-color: rgba(198, 161, 91, 0.34);
+  box-shadow: var(--g-specular), var(--g-halo-gold);
+}
+
+/* Light-surface glass, for the parchment sections. */
+.g-glass--light {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.78),
+    rgba(255, 250, 240, 0.52)
+  );
+  border-color: rgba(11, 30, 23, 0.09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 24px 50px -38px rgba(11, 30, 23, 0.45);
+  color: #14231c;
+}
+
+/* Pointer-tracked sheen. --mx / --my are set by GlassPanel. */
+.g-glass--sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms var(--g-ease);
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(255, 240, 200, 0.1),
+    transparent 62%
+  );
+}
+
+.g-glass--sheen:hover::after {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   3. TYPE
+   ========================================================================== */
+
+.g-display {
+  font-family: "Archivo", "General Sans", system-ui, sans-serif;
+  font-variation-settings: "wdth" 78;
+  font-weight: 520;
+  letter-spacing: -0.032em;
+  line-height: 0.92;
+  text-wrap: balance;
+  color: var(--g-cream);
+}
+
+.g-display--xl {
+  font-size: clamp(3.1rem, 7.6vw, 6.6rem);
+}
+
+.g-display--lg {
+  font-size: clamp(2.3rem, 4.6vw, 3.9rem);
+  line-height: 0.96;
+}
+
+.g-display--md {
+  font-size: clamp(1.6rem, 2.4vw, 2.15rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
+
+.g-display em,
+.g-em {
+  font-family: "Instrument Serif", "Archivo", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: normal;
+  letter-spacing: -0.01em;
+  color: var(--g-gold-hi);
+}
+
+.g-body {
+  font-family: "General Sans", "Inter", system-ui, sans-serif;
+  font-size: clamp(0.95rem, 1.05vw, 1.06rem);
+  line-height: 1.62;
+  letter-spacing: -0.006em;
+  color: rgba(255, 250, 240, 0.66);
+}
+
+.g-body strong {
+  color: rgba(255, 250, 240, 0.92);
+  font-weight: 600;
+}
+
+.g-label {
+  font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.19em;
+  line-height: 1.4;
+  color: var(--g-gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.g-num {
+  font-family: "Archivo", system-ui, sans-serif;
+  font-variation-settings: "wdth" 84;
+  font-weight: 480;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+  color: var(--g-cream);
+}
+
+/* ==========================================================================
+   4. LAYOUT
+   ========================================================================== */
+
+.g-wrap {
+  width: 100%;
+  max-width: var(--g-max);
+  margin-inline: auto;
+  padding-inline: var(--g-gutter);
+}
+
+.g-section {
+  position: relative;
+  padding-block: var(--g-section);
+}
+
+/* Alternate rhythm: card-dense sections get a tighter band so the page does not
+   read as twelve identical slabs. */
+.g-section--tight {
+  padding-block: clamp(56px, 6.5vw, 96px);
+}
+
+/* The nav is 72px tall and fixed; anchors must clear it. */
+.g-root section[id] {
+  scroll-margin-top: clamp(88px, 11vh, 116px);
+}
+
+.g-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(198, 161, 91, 0.3) 18%,
+    rgba(198, 161, 91, 0.3) 82%,
+    transparent
+  );
+}
+
+/* A hairline that dissolves — used between stacked sections. */
+.g-seam {
+  position: relative;
+  height: 1px;
+  margin-inline: auto;
+  max-width: var(--g-max);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 250, 240, 0.09) 30%,
+    rgba(255, 250, 240, 0.09) 70%,
+    transparent
+  );
+}
+
+/* ==========================================================================
+   5. CONTROLS
+   ========================================================================== */
+
+.g-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 50px;
+  padding-inline: 26px;
+  border-radius: var(--g-r-pill);
+  font-family: "General Sans", system-ui, sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--g-abyss);
+  background: linear-gradient(180deg, #f2ddaa 0%, var(--g-gold) 55%, #b8913f 100%);
+  border: 1px solid rgba(255, 240, 200, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 18px 40px -22px rgba(198, 161, 91, 0.75);
+  transition: transform var(--g-fast) var(--g-ease),
+    box-shadow var(--g-fast) var(--g-ease), filter var(--g-fast) linear;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.g-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 70%
+  );
+  transform: translateX(-130%);
+  transition: transform 900ms var(--g-ease-soft);
+}
+
+.g-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 24px 50px -22px rgba(198, 161, 91, 0.9);
+}
+
+.g-btn:hover::after {
+  transform: translateX(130%);
+}
+
+.g-btn:active {
+  transform: translateY(0);
+}
+
+.g-btn--ghost {
+  color: rgba(255, 250, 240, 0.9);
+  background: rgba(255, 250, 240, 0.045);
+  border: 1px solid rgba(255, 250, 240, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.g-btn--ghost:hover {
+  background: rgba(255, 250, 240, 0.08);
+  border-color: rgba(198, 161, 91, 0.4);
+}
+
+.g-btn--ghost::after {
+  display: none;
+}
+
+.g-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: var(--g-r-pill);
+  border: 1px solid rgba(255, 250, 240, 0.13);
+  background: rgba(255, 250, 240, 0.05);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 250, 240, 0.72);
+}
+
+.g-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--g-gold);
+  box-shadow: 0 0 0 3px rgba(198, 161, 91, 0.16);
+  flex: none;
+}
+
+/* ==========================================================================
+   6. REVEAL — the motion is a lift, not a bounce.
+   ========================================================================== */
+
+.g-reveal {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  filter: blur(6px);
+  transition: opacity 900ms var(--g-ease), transform 900ms var(--g-ease),
+    filter 900ms var(--g-ease);
+}
+
+.g-reveal.is-in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+/* Staggered children. */
+.g-stagger > * {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 800ms var(--g-ease), transform 800ms var(--g-ease);
+}
+
+.g-stagger.is-in > * {
+  opacity: 1;
+  transform: none;
+}
+
+.g-stagger.is-in > *:nth-child(1) { transition-delay: 0ms; }
+.g-stagger.is-in > *:nth-child(2) { transition-delay: 70ms; }
+.g-stagger.is-in > *:nth-child(3) { transition-delay: 140ms; }
+.g-stagger.is-in > *:nth-child(4) { transition-delay: 210ms; }
+.g-stagger.is-in > *:nth-child(5) { transition-delay: 280ms; }
+.g-stagger.is-in > *:nth-child(6) { transition-delay: 350ms; }
+
+/* ==========================================================================
+   7. HERO PLATES — three independent depth planes
+   ========================================================================== */
+
+.g-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: clip;
+}
+
+.g-hero__media {
+  position: absolute;
+  inset: -10% 0 -10% 0;
+  z-index: 0;
+}
+
+.g-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  filter: saturate(0.86) contrast(1.06) brightness(0.72);
+  transform: scale(1.04);
+}
+
+/* Scrim: keeps the type legible without flattening the photograph. */
+.g-hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(4, 13, 9, 0.72) 0%, rgba(4, 13, 9, 0.18) 34%, rgba(4, 13, 9, 0.55) 72%, var(--g-void) 100%),
+    radial-gradient(70% 60% at 18% 78%, rgba(4, 13, 9, 0.72), transparent 70%);
+}
+
+/* A warm light that follows the pointer across the hero. Set by GlassHero. */
+.g-hero__light {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 600ms var(--g-ease);
+  background: radial-gradient(
+    460px circle at var(--hx, 62%) var(--hy, 38%),
+    rgba(255, 236, 194, 0.13),
+    rgba(255, 236, 194, 0.04) 38%,
+    transparent 66%
+  );
+}
+
+.g-hero:hover .g-hero__light {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .g-hero__light {
+    display: none;
+  }
+}
+
+.g-hero__plate {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-block: clamp(120px, 18vh, 190px) clamp(40px, 6vh, 72px);
+}
+
+/* The floating telemetry pane in the hero. */
+.g-telemetry {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border-radius: var(--g-r-md);
+  background: rgba(255, 250, 240, 0.08);
+}
+
+.g-telemetry > div {
+  background: linear-gradient(180deg, rgba(4, 13, 9, 0.72), rgba(4, 13, 9, 0.52));
+  padding: 16px 18px;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+/* ==========================================================================
+   8. MARQUEE
+   ========================================================================== */
+
+.g-marquee {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid rgba(255, 250, 240, 0.08);
+  background: rgba(4, 13, 9, 0.5);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.g-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: g-marquee 46s linear infinite;
+}
+
+.g-marquee:hover .g-marquee__track {
+  animation-play-state: paused;
+}
+
+.g-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 26px;
+  padding: 16px 26px;
+  font-family: "Space Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 250, 240, 0.5);
+  white-space: nowrap;
+}
+
+.g-marquee__item::after {
+  content: "◆";
+  font-size: 7px;
+  color: rgba(198, 161, 91, 0.7);
+}
+
+@keyframes g-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* ==========================================================================
+   9. ECONOMICS — the Beth Doctrine instrument
+   ========================================================================== */
+
+.g-instrument {
+  position: relative;
+  padding: clamp(20px, 3vw, 38px);
+  border-radius: var(--g-r-xl);
+}
+
+.g-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--g-gold) 0%,
+    var(--g-gold) var(--fill, 32%),
+    rgba(255, 250, 240, 0.16) var(--fill, 32%),
+    rgba(255, 250, 240, 0.16) 100%
+  );
+  outline: none;
+  cursor: ew-resize;
+}
+
+.g-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff6df, var(--g-gold) 60%, #9a7a3b);
+  border: 1px solid rgba(255, 250, 240, 0.7);
+  box-shadow: 0 0 0 6px rgba(198, 161, 91, 0.14), 0 10px 24px -8px rgba(0, 0, 0, 0.7);
+  transition: box-shadow 200ms linear;
+}
+
+.g-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 9px rgba(198, 161, 91, 0.18), 0 10px 24px -8px rgba(0, 0, 0, 0.7);
+}
+
+.g-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--g-gold);
+  border: 1px solid rgba(255, 250, 240, 0.7);
+}
+
+/* ==========================================================================
+   10. PROCESS RAIL
+   ========================================================================== */
+
+.g-rail {
+  position: relative;
+  display: grid;
+  gap: var(--g-gap);
+}
+
+.g-rail__line {
+  position: absolute;
+  left: 42px;
+  top: 28px;
+  bottom: 28px;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(198, 161, 91, 0.55),
+    rgba(198, 161, 91, 0.1) 70%,
+    transparent
+  );
+}
+
+/* ==========================================================================
+   11. MISC
+   ========================================================================== */
+
+.g-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.88) contrast(1.04);
+}
+
+.g-noise-strong {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
+}
+
+.g-focus:focus-visible,
+.g-root :focus-visible {
+  outline: 2px solid var(--g-gold-hi);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   12. REDUCED MOTION — the page must still read as designed, just still.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .g-reveal,
+  .g-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+
+  .g-marquee__track {
+    animation: none;
+  }
+
+  .g-glass::before,
+  .g-btn::after {
+    display: none;
+  }
+
+  .g-hero__media img {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   13. RESPONSIVE
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  .g-rail__line {
+    left: 46px;
+  }
+}
+
+@media (max-width: 900px) {
+  .g-telemetry {
+    grid-template-columns: 1fr;
+  }
+
+  .g-hero {
+    min-height: 92svh;
+  }
+
+  .g-rail__line {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .g-btn {
+    height: 46px;
+    padding-inline: 20px;
+    font-size: 14px;
+  }
+
+  .g-display {
+    letter-spacing: -0.028em;
+  }
+}
+
+/* Backdrop-filter is expensive on low-end mobile: a tighter radius keeps the
+   glass reading without paying for a 22px blur over every pane. */
+@media (max-width: 640px) {
+  .g-glass {
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .g-glass {
+    background: linear-gradient(180deg, #0d2a1d, #0a2016);
+  }
+}
+
+
+/* ==========================================================================
+   14. SCROLL PROGRESS — a single gold hairline, the only persistent chrome.
+   ========================================================================== */
+
+.g-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: 2px;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, #8a6b31, #c6a15b 45%, #f0d9a4 78%, #fff6df);
+  box-shadow: 0 0 18px rgba(198, 161, 91, 0.55);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .g-progress {
+    display: none;
+  }
+}
