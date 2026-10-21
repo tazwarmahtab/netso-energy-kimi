@@ -18,8 +18,8 @@
 Netso Energy finances, constructs, and operates utility-grade architectural solar pergolas for commercial and industrial facilities across Bangladesh under a **Build-Own-Operate (BOO / RESCO)** model.
 
 - **Client CAPEX:** **৳0 Upfront** — 100% financed and insured by Netso Energy under a 20-year Build-Own-Operate (RESCO) agreement.
-- **Commercial Structure:** **30% Guaranteed Savings** below utility grid tariffs, delivering immediate 6-figure monthly cash savings directly to operational EBITDA.
-- **The Beth Doctrine:** Floating 30% discount to utility grid tariffs (`Utility Bill × 0.70`), ensuring client power costs always stay below the grid under all market conditions.
+- **Commercial Structure:** A floating **discount to the applicable grid tariff** — modelled at a **30% basis** — set in the executed agreement. Savings scale with the client's own meter and the prevailing BERC schedule, so they are projected per facility, never promised as a fixed outcome.
+- **The Beth Doctrine:** The discount floats with the BERC schedule rather than being fixed, so the modelled cost tracks the bill in either direction. The 30% figure (`Utility Bill × 0.70`) is a modelling basis, not a contractual floor.
 - **Concessionary Capital:** IDCOL 80% senior-debt facility **applied for and under appraisal** (SREUP window; an indicative 5.0%–5.5% concessionary range is modelled, not a committed term).
 - **Regulatory Framework:** SREDA Net Metering (NEM) Guidelines 2025 (90% monthly settlement credit, 10% DSM reserve) and BERC industrial tariff schedules.
 - **RMG Operational Edge:** Non-penetrative standing-seam clamps (zero roof puncture), installation sequencing designed for zero factory downtime, modelled ~98% daytime load matching (site-dependent), and EU CBAM carbon-reporting readiness.

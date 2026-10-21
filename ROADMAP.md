@@ -9,12 +9,12 @@ This document tracks all completed and pending audits, polishes, and canonical t
 - **Canonical Brief:** Bound to `~/Brain/MASTER-CONTEXT.md` (Tazwar Mahtab / Netso Energy Ltd).
 - **Core Business Model:** Distributed C&I rooftop solar, RESCO/BOO, **৳0 customer CAPEX**, 20-year PPAs.
 - **Strict Commercial Discipline:** **NO PER-UNIT PPA RATES ANYWHERE** (Zero per-kWh rates disclosed). Competitors do not disclose unit tariffs.
-- **Commercial Anchor:** **30% Guaranteed Savings / 30% Below Utility Tariff** (floating discount structure), **৳0 Upfront CAPEX**, and total facility cash savings (e.g., ৳4.6 Lakh/mo, ৳13.2+ Crore cumulative).
+- **Commercial Anchor:** A **floating discount to the applicable grid tariff**, modelled at a **30% basis**, with **৳0 Upfront CAPEX**. Cumulative savings are projections from that basis (e.g., ৳4.6 Lakh/mo, ৳13.2+ Crore over 20 years) and are illustrative of one facility profile.
 - **Financing:** IDCOL 80% senior-debt facility — **applied for, under appraisal** (SREUP window; indicative 5.0%–5.5%, not a committed term).
 - **Regulations:** SREDA NEM 2025 (90% monthly settlement credit, 10% DSM); BERC industrial tariff schedules.
 - **🚫 STRICTLY BANNED NUMBERS (ZERO PER-UNIT DISCLOSURE):**
   - Never quote any per-unit / per-kWh electricity rate (e.g., the banned benchmark figures previously used in drafts). <!-- claims-guard: allow -->
-  - All commercial offers are strictly anchored to **30% Guaranteed Discount below utility grid billing**.
+  - All commercial offers express the discount as a **percentage of the applicable grid tariff** (30% modelling basis) — never as a flat per-kWh rate, and never as a guarantee.
   - Financing status must always be described as **applied / under appraisal** — never "qualified" or "approved".
   - These rules are enforced in CI by [`app/scripts/claims-contract.test.mjs`](app/scripts/claims-contract.test.mjs).
 
@@ -44,7 +44,7 @@ This document tracks all completed and pending audits, polishes, and canonical t
 
 ### 🔄 In Progress / Current Pass (Home.tsx & index.css)
 - [x] **Phase 1: Institutional Tone & Commercial Truth**
-  - [x] Strict removal of all per-unit PPA rates in favor of canonical **30% guaranteed savings below utility grid tariffs**.
+  - [x] Strict removal of all per-unit PPA rates in favor of a **30% discount basis against the applicable grid tariff**. The guarantee wording was removed in the v3 claims pass.
   - [x] Replace high-saturation safety neon orange with institutional solar amber/gold tone (`--primary`).
   - [x] Align hero headline to canonical asset framing: **"Your roof. Now an energy asset."**
   - [x] Anchor Netso's positioning: industrial textile and manufacturing rooftop utility, not consumer solar.
@@ -61,7 +61,7 @@ This document tracks all completed and pending audits, polishes, and canonical t
   - [x] Staggered line reveal entrance: *"your roof, / generating / revenue."* with clean clearance for descenders.
   - [x] Seamless transition to Phase 2: rooftop terrace landing with under-canopy linear LEDs glowing at dusk, low-profile architectural floating glass dock (৳0 Upfront, We Operate It, 30% Savings), keeping the executive and terrace 100% unobstructed.
   - [x] Built `LiquidMetalButton.tsx` utilizing `@paper-design/shaders` with WebGL fragment shader, 3D perspective layers, and radial click ripples.
-  - [x] Built `SavingsCalculator.tsx`: interactive CFO tariff modeling with monthly bill & roof area sliders, 30% guaranteed discount, and 20-year cumulative savings projection.
+  - [x] Built `SavingsCalculator.tsx`: interactive CFO tariff modeling with monthly bill & roof area sliders, 30% discount basis, and a 20-year cumulative savings projection labelled as modelled.
   - [x] Built `SolarPergola3D.tsx`: Three.js WebGL 3D architectural solar pergola twin with 360° OrbitControls, bifacial glass modules, structural steel frame, directional sun casting soft shadows, and time-of-day solar slider that triggers under-canopy linear LEDs at dusk/night.
   - [x] Built `FeasibilityModal.tsx`: 3-step institutional qualification dialog (Facility Type → Roof & Grid Spend → Contact Dispatch) with Escape key and body scroll lock.
   - [x] Connected top navigation CTA ("Get roof assessment") to dispatch modal.
@@ -75,7 +75,7 @@ This document tracks all completed and pending audits, polishes, and canonical t
   - [x] Replaced template orange highlights with canonical Netso Gold (`#c6a15b`) and deep forest (`#08140f`).
   - [x] Replaced toy phone mockup with authentic **NEOS Utility Telemetry Terminal** (illustrative sample values: 64.8 kW active, 81.4% PR, Class 0.2s live status, and I-REC tracking).
   - [x] Upgraded Network section with synchronized 4-stage Bidirectional Energy Matrix (Array → Inverter → MDB → SREDA NEM 2025 Class 0.2s Meter).
-  - [x] Hardened Direct EPC vs Netso 20-Year PPA commercial comparison table against bankable ground truth (৳0 CAPEX, 30% guaranteed savings, 100% Netso performance risk).
+  - [x] Hardened Direct EPC vs Netso 20-Year PPA commercial comparison table against bankable ground truth (৳0 CAPEX, 30% discount basis, Netso bearing performance risk under the agreement).
   - [x] Clean compilation with `npm run build` (zero errors).
 
 ---
@@ -103,7 +103,7 @@ This document tracks all completed and pending audits, polishes, and canonical t
   - [x] Realigned color foundation: Netso Gold (`#C6A15B`), Deep Forest (`#08140F`), Cream (`#FFF7E9`), Netso Yellow (`#FCCC3C`).
   - [x] Implemented Diurnal Light Gradients (Dawn, Day, Dusk, Night solar transitions).
   - [x] Defined strict 3-tier typography discipline: Archivo Condensed, General Sans, Space Mono.
-  - [x] Documented institutional UI primitives and verified financial constants (30% guaranteed savings, floating discount hedge, ৳0 CAPEX).
+  - [x] Documented institutional UI primitives and verified financial constants (30% discount basis, floating discount mechanism, ৳0 CAPEX).
   - [x] Integrated `FeasibilityModal` and verified with `npm run build`.
 
 ---
@@ -123,7 +123,7 @@ This document tracks all completed and pending audits, polishes, and canonical t
   - [x] **Thermodynamic Brand Lockup:** Upgraded [`Wordmark.tsx`](app/src/components/Wordmark.tsx) to `NETSO° ENERGY` with elevated degree symbol `°` in Netso Gold (`#C6A15B`).
   - [x] **Architectural Cinematic Preloader:** Built [`CinematicIntro.tsx`](app/src/components/CinematicIntro.tsx) with monospace percentage elevator (`00%` → `100%`), micro progress track, thermodynamic degree symbol pulse, and upward curtain unveil. Gated with `sessionStorage` and instantaneous skip escape.
   - [x] **Institutional Marquee Ribbon:** Built [`MarqueeTicker.tsx`](app/src/components/MarqueeTicker.tsx) pure CSS scrolling ribbon highlighting BOO Model, 30% floating discount, 0 BDT CAPEX, EU CBAM compliance, and RMG industrial corridors (Gazipur, Ashulia, Chattogram).
-  - [x] **25-Year Beth Doctrine Simulation Chart:** Built [`FloatingSimulationChart.tsx`](app/src/components/FloatingSimulationChart.tsx) with interactive SVG curve mapping utility power bill against Netso's guaranteed 30% discount floor (`Utility Bill × 0.70`), shaded CFO margin spread, and live scenario stress test cards (Baseline, Tariff Hike +35%, Tariff Softening) — with zero per-unit rates.
+  - [x] **25-Year Beth Doctrine Simulation Chart:** Built [`FloatingSimulationChart.tsx`](app/src/components/FloatingSimulationChart.tsx) with interactive SVG curve mapping utility power bill against a 30% discount basis (`Utility Bill × 0.70`), now marked modelled in the component, shaded CFO margin spread, and live scenario stress test cards (Baseline, Tariff Hike +35%, Tariff Softening) — with zero per-unit rates.
   - [x] **RMG Operational Edge:** Built [`RMGEdgeSection.tsx`](app/src/components/RMGEdgeSection.tsx) addressing six objection themes (daytime load matching, roof-attachment strategy, installation around operations, emissions & buyer reporting, grid & net-metering integration, local O&M capability). The named customer benchmark card was later removed in the claims de-risk pass; no third-party facility is cited.
   - [x] **Board-Ready WhatsApp Forwarder:** Upgraded [`SavingsCalculator.tsx`](app/src/components/SavingsCalculator.tsx) to generate pre-formatted board estimate messages for 1-click WhatsApp CFO forwarding.
   - [x] **Monumental Watermark:** Embedded monumental `NETSO°` watermark in [`Footer.tsx`](app/src/components/Footer.tsx).
@@ -146,7 +146,7 @@ This document tracks all completed and pending audits, polishes, and canonical t
 - [x] **Phase 13: WhatsApp Commercial Acquisition Funnel & Streamline SVG Architecture**
   - [x] **Reusable Component:** Created [`app/src/components/ui/WhatsAppIcon.tsx`](app/src/components/ui/WhatsAppIcon.tsx) embedding the official Streamline SVG with dynamic, collision-free linear gradient IDs (`#1faf38` → `#60d669`) and canonical telephone routing (`8801791222777`).
   - [x] **Touchpoint 1 (Header Navigation):** Replaced dead "Client login" with high-performing Dual-CTA pairing: dark glass WhatsApp Direct capsule + Netso Gold Assessment button in [`Nav.tsx`](app/src/components/Nav.tsx).
-  - [x] **Touchpoint 2 (Savings Calculator):** Upgraded forwarder in [`SavingsCalculator.tsx`](app/src/components/SavingsCalculator.tsx) with dynamic executive CFO summary payload (roof area, monthly spend, 30% guaranteed discount, 20-year cumulative savings).
+  - [x] **Touchpoint 2 (Savings Calculator):** Upgraded forwarder in [`SavingsCalculator.tsx`](app/src/components/SavingsCalculator.tsx) with dynamic executive CFO summary payload (roof area, monthly spend, 30% discount basis, modelled 20-year cumulative savings).
   - [x] **Touchpoint 3 (Feasibility Modal):** Added instant utility bill photo upload in Step 3 and post-submission priority dispatch button in [`FeasibilityModal.tsx`](app/src/components/FeasibilityModal.tsx).
   - [x] **Touchpoint 4 (RMG Technical Edge):** Embedded "Talk to Lead Engineer" action under the Ananta Denim benchmark card in [`RMGEdgeSection.tsx`](app/src/components/RMGEdgeSection.tsx).
   - [x] **Touchpoint 5 (Partners & Capital):** Embedded "Direct Finance Desk on WhatsApp" in [`Partners.tsx`](app/src/pages/Partners.tsx) for institutional lenders and IDCOL co-financiers.

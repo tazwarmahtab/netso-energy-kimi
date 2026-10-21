@@ -17,7 +17,7 @@ interface Article {
 
 /**
  * Copy note: the metric values here were previously stated as guarantees
- * ("30% Guaranteed", "Tariff Exposure: Zero", "EU CBAM Compliant"). They are
+ * ("30% Guaranteed", "Tariff Exposure: Zero", "EU CBAM Compliant"). They are <!-- claims-guard: allow -->
  * modelled or regulatory observations, so they now say so. The claims contract
  * in scripts/claims-contract.test.mjs enforces the same rule site-wide.
  */

@@ -7,8 +7,18 @@
  *   2. IDCOL financing is *applied for / under appraisal* — never "qualified",
  *      "approved", or "secured".
  *   3. Performance, telemetry and savings visuals are illustrative unless an
+ *      executed agreement is cited. Savings are never described as
+ *      "guaranteed" or "locked" in marketing copy — an executed agreement
+ *      may contain a guarantee, a page may not promise one.
+ *   4. Performance, telemetry and savings visuals are illustrative unless an
  *      executed agreement is cited.
- *   4. Documentation must not link to developer-machine absolute paths.
+ *   5. Documentation must not link to developer-machine absolute paths.
+
+ * Why this file is stricter than it looks: the "30% Guaranteed" string had
+ * been live in SavingsCalculator (embedded at /calculator) and
+ * FeasibilityModal (opened from every glass page's CTA) for months while
+ * every rule above passed, because none of them looked for guarantee
+ * language. Tests are cheap; a credit committee finding is not.
  *
  * Run with: npm test
  */
@@ -84,7 +94,7 @@ test("no per-unit / per-kWh electricity rate is published", () => {
   assert.equal(
     violations.length,
     0,
-    `Banned per-kWh rate found — anchor all offers to the 30% guaranteed discount instead:\n${format(violations)}`,
+    `Banned per-kWh rate found — express the discount as a percentage of the applicable grid tariff instead:\n${format(violations)}`,
   );
 });
 
@@ -156,6 +166,51 @@ test("performance and telemetry figures are labelled illustrative", () => {
     0,
     `Unqualified performance figure in docs — label it illustrative or modelled:\n${format(violations)}`,
   );
+});
+
+
+test("savings and returns are never described as guaranteed", () => {
+  // Applies to source and docs. An executed PPA may contain a guarantee; a
+  // marketing page may not promise one, and "guaranteed" next to a savings
+  // percentage is the specific failure this rule exists for.
+  const patterns = [
+    /\bguarantee(?:d|s)?\b[^.\n]{0,40}?\b(?:savings?|discounts?|reductions?|returns?|yields?|uptime|generation|tariff)\b/i,
+    /\b(?:savings?|discounts?|reductions?)\b[^.\n]{0,40}?\bguarantee(?:d)?\b/i,
+    /\b(?:savings?|discount|return)\s+guarantee\b/i,
+    /\bguaranteed\s+(?:reduction|discount|savings|hedge)\b/i,
+    /\bcontractually[- ]guaranteed\b/i,
+    /\b30%\s*guaranteed\b/i,
+  ];
+
+  for (const pattern of patterns) {
+    const violations = findViolations(docsAndSources, pattern);
+    assert.equal(
+      violations.length,
+      0,
+      `Guarantee language attached to a savings claim — say "discount basis" or "modelled" instead:\n${format(violations)}`,
+    );
+  }
+});
+
+test("IDCOL is never described as compliant, executed or in place", () => {
+  // The facility is applied for and under appraisal. Anything that reads as
+  // a settled IDCOL pillar — "IDCOL-compliant", "executed IDCOL terms" — is
+  // a claim we cannot support today.
+  const patterns = [
+    /IDCOL[- ]compliant/i,
+    /executed[^.\n]{0,25}IDCOL/i,
+    /IDCOL[^.\n]{0,25}executed/i,
+    /IDCOL[^.\n]{0,25}\bin place\b/i,
+  ];
+
+  for (const pattern of patterns) {
+    const violations = findViolations(docsAndSources, pattern);
+    assert.equal(
+      violations.length,
+      0,
+      `IDCOL described as concluded — use "applied for / under appraisal":\n${format(violations)}`,
+    );
+  }
 });
 
 test("documentation does not link to developer-machine absolute paths", () => {

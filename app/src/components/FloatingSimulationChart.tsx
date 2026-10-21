@@ -18,7 +18,7 @@ const SCENARIOS: Scenario[] = [
     label: "Current Baseline",
     badge: "Active Utility Tariff",
     gridStatus: "100% Unhedged",
-    netsoStatus: "30% Guaranteed Discount",
+    netsoStatus: "30% discount basis",
     offtakerBenefit: "30% Net Savings",
     description: "Standard industrial utility power bill. Netso delivers immediate 30% cash reduction across all daytime solar generation.",
     cashImpact: "Delivers immediate 6-figure monthly cash flow expansion directly to operational EBITDA from Month 1.",
@@ -41,7 +41,7 @@ const SCENARIOS: Scenario[] = [
     netsoStatus: "Floats Down Automatically",
     offtakerBenefit: "Zero Balance-Sheet Risk",
     description: "Rigid fixed-tariff PPAs leave factories trapped paying above-market prices if grid rates soften. Netso automatically floats downward, ensuring you never pay more than 70% of grid power.",
-    cashImpact: "100% regulatory downside hedge. You are contractually guaranteed to pay below grid under every economic condition.",
+    cashImpact: "A floating discount. The percentage is set in the executed agreement, so it tracks the tariff rather than lagging it under every economic condition.",
   },
 ];
 
@@ -73,7 +73,7 @@ export function FloatingSimulationChart({
             </h2>
             <p className="mt-4 font-sans text-sm sm:text-base text-cream/70 leading-relaxed">
               Conventional solar developers lock factories into rigid, 20-year fixed tariffs. When grid prices shift or currency fluctuates, fixed PPAs create balance sheet tension. Netso indexes strictly:{" "}
-              <strong className="text-cream">Netso Cost = Utility Bill × 0.70</strong>. You are guaranteed a 30% discount forever.
+              <strong className="text-cream">Netso Cost = Utility Bill × 0.70</strong>. This is a model of a 30% basis; the executed agreement sets the actual percentage, and the discount floats with the BERC schedule.
             </p>
           </div>
 
@@ -101,7 +101,7 @@ export function FloatingSimulationChart({
                   25-Year Long-Term Contract Horizon
                 </span>
                 <div className="text-sm font-medium text-cream mt-0.5">
-                  Utility Power Bill vs. Netso Guaranteed 30% Discount Floor
+                  Utility Power Bill vs. Netso 30% Discount Basis
                 </div>
               </div>
 
@@ -180,7 +180,7 @@ export function FloatingSimulationChart({
 
                 <rect x="385" y="107" width="175" height="20" rx="4" fill="#18231e" stroke="#C6A15B" strokeWidth="0.75" />
                 <text x="472" y="121" fill="#C6A15B" fontSize="9" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
-                  Netso Guarantee: –30% Locked
+                  Netso basis: –30% modelled
                 </text>
 
                 {/* Center Spread Watermark */}
@@ -265,10 +265,10 @@ export function FloatingSimulationChart({
             {/* Live Delta Summary Card */}
             <div className="mt-2 rounded-xl border border-gold/30 bg-gold/[0.08] p-5">
               <div className="flex items-center justify-between text-xs font-mono text-cream/70 mb-2">
-                <span>Contractual Spread Guarantee</span>
+                <span>Contractual spread basis</span>
                 <span className="text-gold font-bold flex items-center gap-1">
                   <CheckCircle2 className="h-3.5 w-3.5" />
-                  30.0% Guaranteed
+                  30.0% modelled
                 </span>
               </div>
               <div className="font-display text-3xl font-bold text-cream flex items-baseline gap-2">

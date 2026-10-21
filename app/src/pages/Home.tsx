@@ -291,7 +291,7 @@ function HowItWorks() {
 /* --------------------------- Why netso --------------------------- */
 const RISKS = [
   { big: "+16.7%", label: "Industrial tariffs jumped 16.7% in one BERC order", note: "The latest BERC escalation exposed factory operating budgets with no ceiling in sight." },
-  { big: "30%", label: "Guaranteed floating discount margin against utility rate hikes", note: "Energy transitions from an unhedged operational risk into contractually guaranteed savings." },
+  { big: "30%", label: "Discount basis against utility rate hikes", note: "Energy transitions from an unhedged operational risk into a floating discount that moves with the bill." },
   { big: "3,600 MWp", label: "Bangladesh's industrial rooftops could host 3,600 MWp", note: "A $2.1B market sitting idle above the buildings that need it most." },
 ];
 

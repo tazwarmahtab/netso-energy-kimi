@@ -28,11 +28,13 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
   // State: Preview memo toggle
   const [showMemoPreview, setShowMemoPreview] = useState(false);
 
-  // Commercial model: 30% contractually guaranteed savings below utility grid tariff
-  const GUARANTEED_SAVINGS_PERCENT = 0.30; // 30% guaranteed discount
+  // Modelling basis: a discount to the applicable grid tariff, taken here at the
+  // 30% figure published in the Partners structure. This is an illustration of
+  // one basis point — the executed agreement sets the actual percentage.
+  const DISCOUNT_BASIS = 0.30;
 
   // Calculations
-  const monthlySavings = Math.round(monthlyBill * GUARANTEED_SAVINGS_PERCENT);
+  const monthlySavings = Math.round(monthlyBill * DISCOUNT_BASIS);
   const annualSavings = monthlySavings * 12;
   // 20-year cumulative savings with conservative 2% average annual grid escalation
   const twentyYearSavings = Math.round(annualSavings * 24.3);
@@ -63,8 +65,8 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
     `⚡ *Estimated Solar Array:* ${estimatedCapacityKwp} kWp (Bifacial Pergola)\n` +
     `📊 *Current Monthly Grid Spend:* ৳${monthlyBill.toLocaleString("en-US")}\n\n` +
     `💰 *COMMERCIAL PPA STRUCTURE (ZERO CAPEX):*\n` +
-    `• Netso Contracted Savings: 30% Guaranteed Discount vs Utility Grid Peak\n` +
-    `• Tariff Protection: Floats with BERC schedules (Guaranteed margin hedge)\n` +
+    `• Netso Savings Basis: 30% discount to the applicable grid tariff (modelled)\n` +
+    `• Tariff Protection: Floats with BERC schedules, so the discount tracks the bill\n` +
     `• Upfront Investment: ৳0.00 (100% Financed & Maintained by Netso)\n\n` +
     `📈 *PROJECTED CASH SAVINGS:*\n` +
     `• Estimated Monthly Savings: ${formatBDT(monthlySavings)} / month\n` +
@@ -74,7 +76,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
     `• Annual Clean Generation: ${(annualGenerationKwh / 1000).toFixed(0)} MWh\n` +
     `• Avoided Carbon Emissions: ${co2AvoidedTonnes} tonnes CO₂ / year\n` +
     `────────────────────────────────────────\n` +
-    `Tazwar, please share the formal IDCOL-compliant PPA term sheet and dispatch satellite shadow profiling for our facility.`;
+    `Tazwar, please share a PPA term sheet for review and dispatch satellite shadow profiling for our facility.`;
 
   const handleCopyMemo = async () => {
     try {
@@ -108,7 +110,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
             See what your roof saves.
           </h2>
           <p className="mt-4 text-base text-sage md:text-lg">
-            Based on executed 20-year IDCOL PPA terms: <span className="font-semibold text-warm">৳0 upfront CAPEX</span>, full Netso operational maintenance, and a contractually locked <span className="font-semibold text-gold">30% guaranteed savings</span> below your utility grid tariff.
+            Modelled on a 20-year agreement: <span className="font-semibold text-warm">৳0 upfront CAPEX</span>, full Netso operations and maintenance, and a floating discount to your grid tariff — taken at <span className="font-semibold text-gold">30% for this illustration</span>. Actual terms are set in the executed agreement.
           </p>
         </div>
 
@@ -214,12 +216,12 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
                 <span className="font-mono font-bold text-red-400">Rising BERC Tariffs</span>
               </div>
               <div className="mt-2 flex items-center justify-between text-xs">
-                <span className="text-warm/70">Netso Commercial Guarantee:</span>
+                <span className="text-warm/70">Netso commercial basis:</span>
                 <span className="font-mono font-bold text-emerald-400">30% Below Utility Tariff</span>
               </div>
               <div className="mt-3 border-t border-warm/10 pt-2.5 flex items-center justify-between text-xs font-semibold">
                 <span className="text-gold">Contractual Spread:</span>
-                <span className="font-mono text-gold">30% Guaranteed Hedged Savings</span>
+                <span className="font-mono text-gold">30% discount basis · modelled</span>
               </div>
             </div>
           </div>
@@ -236,7 +238,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
                 </div>
                 <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-bold text-emerald-400">
                   <Sparkles className="h-3.5 w-3.5" />
-                  <span>30% Guaranteed Reduction</span>
+                  <span>30% discount · modelled</span>
                 </div>
               </div>
 
@@ -286,7 +288,7 @@ export default function SavingsCalculator({ onOpenAssessment }: SavingsCalculato
                 </div>
               </div>
 
-              {/* Institutional Guarantees */}
+              {/* Institutional backing */}
               <div className="mt-6 space-y-2 text-xs text-sage">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-gold" />
