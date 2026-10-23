@@ -25,6 +25,14 @@ export default function Nav({
   const location = useLocation();
   const dark = theme === "dark";
 
+  // Reset the drawer when the route changes. Adjusting state during render is
+  // the documented alternative to a setState-inside-effect cascading render.
+  const [renderedPath, setRenderedPath] = useState(location.pathname);
+  if (renderedPath !== location.pathname) {
+    setRenderedPath(location.pathname);
+    setOpen(false);
+  }
+
   // Top reading scroll progress line
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -49,8 +57,6 @@ export default function Nav({
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => setOpen(false), [location.pathname]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";

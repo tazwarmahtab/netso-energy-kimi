@@ -75,7 +75,7 @@ export default function CalculatorTeaser({ onOpenAssessment }: CalculatorTeaserP
                   </div>
                   <div className="flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-emerald-400">
                     <Sparkles className="h-3 w-3" />
-                    <span>30% Guaranteed</span>
+                    <span>30% discount basis</span>
                   </div>
                 </div>
 

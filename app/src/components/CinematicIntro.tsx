@@ -1,29 +1,25 @@
 import { useEffect, useState } from "react";
 import { SunMark } from "./Wordmark";
 
+/** Session gate: show the splash only once per session, and never with ?nointro. */
+function shouldPlayIntro() {
+  try {
+    if (window.location.search.includes("nointro")) return false;
+    if (sessionStorage.getItem("netso_intro_seen") === "true") return false;
+  } catch {
+    // Ignore storage errors in restricted contexts
+  }
+  return true;
+}
+
 export function CinematicIntro() {
-  const [isVisible, setIsVisible] = useState(false);
+  // Decided during the first render; the effect below only drives the timeline.
+  const [play] = useState(shouldPlayIntro);
+  const [isVisible, setIsVisible] = useState(play);
   const [progress, setProgress] = useState(0);
-  const [hasCheckedSession, setHasCheckedSession] = useState(false);
 
   useEffect(() => {
-    // Check if intro has already been shown in this session or bypassed via query parameter
-    try {
-      if (window.location.search.includes("nointro")) {
-        setHasCheckedSession(true);
-        return;
-      }
-      const alreadySeen = sessionStorage.getItem("netso_intro_seen");
-      if (alreadySeen === "true") {
-        setHasCheckedSession(true);
-        return;
-      }
-    } catch {
-      // Ignore storage errors in restricted contexts
-    }
-
-    setIsVisible(true);
-    setHasCheckedSession(true);
+    if (!play) return;
 
     let current = 0;
     const interval = setInterval(() => {
@@ -51,7 +47,7 @@ export function CinematicIntro() {
       clearInterval(interval);
       clearTimeout(exitTimer);
     };
-  }, []);
+  }, [play]);
 
   const handleDismiss = () => {
     setIsVisible(false);
@@ -62,7 +58,7 @@ export function CinematicIntro() {
     }
   };
 
-  if (!hasCheckedSession) return null;
+  if (!play) return null;
 
   return (
     <div

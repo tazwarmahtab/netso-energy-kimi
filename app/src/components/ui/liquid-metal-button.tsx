@@ -84,6 +84,10 @@ export function LiquidMetalButton({
       shaderWidth: calculatedWidth,
       shaderHeight: btnHeight,
     };
+  // `fontLoaded` is a deliberate cache-buster: canvas text metrics change once
+  // the webfont lands, so the measurement must re-run even though the value is
+  // not read directly in the computation.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewMode, label, width, height, fontLoaded]);
 
   useEffect(() => {

@@ -4,20 +4,27 @@ import { Link } from "react-router";
 
 const KEY = "netso-cookie-consent";
 
+function hasStoredConsent() {
+  try {
+    return Boolean(localStorage.getItem(KEY));
+  } catch {
+    // Storage blocked (private mode): treat as "no consent yet" and prompt.
+    return false;
+  }
+}
+
 export default function CookieBanner() {
+  // Resolve the stored preference once, during the first render, so the effect
+  // only schedules the reveal timer.
+  const [shouldPrompt] = useState(() => !hasStoredConsent());
   const [visible, setVisible] = useState(false);
   const [customize, setCustomize] = useState(false);
 
   useEffect(() => {
-    try {
-      if (!localStorage.getItem(KEY)) {
-        const t = setTimeout(() => setVisible(true), 1200);
-        return () => clearTimeout(t);
-      }
-    } catch {
-      setVisible(true);
-    }
-  }, []);
+    if (!shouldPrompt) return;
+    const t = setTimeout(() => setVisible(true), 1200);
+    return () => clearTimeout(t);
+  }, [shouldPrompt]);
 
   const choose = (v: string) => {
     try {
