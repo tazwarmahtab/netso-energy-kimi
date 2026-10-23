@@ -291,10 +291,11 @@ swap alone.
 ```
 tsc -b                     0 errors
 eslint .                   0 problems
-npm run build              8.56s, clean
+npm run build              9.08s, clean
 npm test                   7/7 (claims contract)
-CSS                        154.46 kB → 27.36 kB gzip
-JS                       1,508.71 kB → 417.98 kB gzip
+CSS                        154.51 kB → 27.37 kB gzip
+JS (initial route)         614.22 kB → 199.25 kB gzip
+JS (/classic, on demand)   694.78 kB → 171.94 kB gzip
 ```
 
 **Claims contract — what the seven rules are**
@@ -315,12 +316,18 @@ Rules 4 and 5 exist because the suite passed for months while `SavingsCalculator
 
 **Weight**
 
-| Metric | Homepage swap | After sub-page port | Note |
-|---|---|---|---|
-| JS (gzip) | 418.2 kB | 418.0 kB | Flat: the pages replaced classic components, they did not add libraries |
-| CSS (gzip) | 26.7 kB | 27.4 kB | **+0.7 kB** for six redesigned pages and two new primitives |
-| New media | 0 bytes | 0 bytes | — |
-| New dependencies | `lenis` | `lenis` | Unchanged since the homepage pass |
+| Metric | Homepage swap | After port, one chunk | After route splitting | Note |
+|---|---|---|---|---|
+| JS (gzip) | 418.2 kB | 418.0 kB | **199.3 kB** | 52% cut on first load |
+| CSS (gzip) | 26.7 kB | 27.4 kB | 27.4 kB | +0.7 kB for six redesigned pages |
+| New media | 0 bytes | 0 bytes | 0 bytes | — |
+| New dependencies | `lenis` | `lenis` | `lenis` | Unchanged throughout |
+
+The single chunk was hiding a specific absurdity: **Three.js was in the initial
+bundle** because `/classic` imports `SolarPergola3D`, and `/classic` was eagerly
+imported alongside every other route. A visitor who never left the glass homepage
+downloaded a 3D toolkit to look at a photograph. Splitting the routes moved it to a
+694 kB chunk that only loads if someone actually opens the archived page.
 
 **Accessibility carried into v3**
 
@@ -430,5 +437,9 @@ punch a cream hole in the page.
    Restyling its internals on the v3 primitives would retire `.g-embed` entirely.
 3. **Motion budget** — consider `content-visibility: auto` on lower sections once real-user metrics exist.
 4. **Hero media A/B** — if the film returns, serve it as a ≤2 MB loop, not a 240-frame sequence.
-5. **JS weight** — 1,508 kB raw / 418 kB gzip in one chunk. Route-level splitting is the obvious next
-   win; nothing here justifies it yet, but the number should be watched rather than discovered.
+5. ~~**JS weight**~~ — done. Every route except `/` is a dynamic import; see §5. Remaining bulk is
+   React plus framer-motion, which the glass pages genuinely use. A vendor `manualChunks` split is
+   possible but buys a round trip, not a byte count.
+6. **Chunk reload guard** — `main.tsx` now listens for `vite:preloadError` and reloads once (guarded
+   by `sessionStorage`) so a visitor holding a stale `index.html` across a deploy does not hit a
+   blank route. Worth revisiting if analytics ever show it firing.
