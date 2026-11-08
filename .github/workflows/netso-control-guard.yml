@@ -1,0 +1,25 @@
+name: Netso delivery control guard
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'verification/**'
+      - '.github/workflows/netso-control-guard.yml'
+jobs:
+  charter-and-gaps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate gap register and release-blocking status
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs');
+          const g=JSON.parse(fs.readFileSync('verification/GAP-REGISTER.json','utf8'));
+          if(!Array.isArray(g.gaps)) process.exit(2);
+          const ids=new Set();
+          for(const x of g.gaps) {
+            if(!x.id || ids.has(x.id) || !['P0','P1','P2','P3'].includes(x.severity) || !x.status) process.exit(2);
+            ids.add(x.id);
+          }
+          console.log('Gap schema valid; release blocking remains independent of this workflow.');
+          NODE
