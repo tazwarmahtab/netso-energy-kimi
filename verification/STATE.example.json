@@ -1,0 +1,22 @@
+{
+  "commit": null,
+  "deployment": {
+    "commit": null,
+    "environment": "staging",
+    "artifactDigest": null,
+    "smokePassed": false
+  },
+  "requirements": [],
+  "gaps": [],
+  "gates": {},
+  "observatory": {
+    "collectorHealthy": false,
+    "reconciled": false,
+    "faultInjectionPassed": false,
+    "observedAt": null
+  },
+  "contentReview": {
+    "approved": false
+  },
+  "approval": null
+}

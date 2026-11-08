@@ -1,0 +1,52 @@
+name: Netso delivery control guard
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'verification/**'
+      - 'app/src/**'
+      - 'app/package.json'
+      - 'app/package-lock.json'
+      - '.github/workflows/netso-control-guard.yml'
+jobs:
+  charter-and-gaps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run delivery control tests
+        run: node --test verification/netso-control.test.mjs
+      - name: Confirm incomplete release stays blocked
+        run: |
+          if node verification/netso-control.mjs verify verification/STATE.example.json; then
+            echo 'Unsafe: incomplete release approved'; exit 1
+          fi
+      - name: Validate gap register and release-blocking status
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs');
+          const g=JSON.parse(fs.readFileSync('verification/GAP-REGISTER.json','utf8'));
+          if(!Array.isArray(g.gaps)) process.exit(2);
+          const ids=new Set();
+          for(const x of g.gaps) {
+            if(!x.id || ids.has(x.id) || !['P0','P1','P2','P3'].includes(x.severity) || !x.status) process.exit(2);
+            ids.add(x.id);
+          }
+          console.log('Gap schema valid; release blocking remains independent of this workflow.');
+          NODE
+
+  app-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run lint
+      - run: npm run build
