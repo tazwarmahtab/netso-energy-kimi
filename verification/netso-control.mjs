@@ -35,7 +35,7 @@ export function evaluate(state, now = Date.now()) {
 }
 export function observe(state,previous,now=Date.now()) {
   const current=evaluate(state,now), prior=previous?evaluate(previous,now):null;
-  return {...current,changed:!prior || current.commit!==prior.commit || hash(current.errors)!==hash(prior.errors),observedAt:new Date(now).toISOString()};
+  return {...current,changed:!prior || current.stateDigest!==prior.stateDigest,observedAt:new Date(now).toISOString()};
 }
 if(process.argv[1]?.endsWith('/netso-control.mjs')) {
   try {
