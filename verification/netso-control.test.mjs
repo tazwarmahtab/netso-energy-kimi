@@ -25,3 +25,6 @@ test('missing human approval blocks',()=>{const s=valid();s.approval=null;assert
 test('changed observation detected',()=>{const a=valid(),b=valid();b.gates.G3.status='FAIL';assert.equal(observe(b,a).changed,true)});
 test('unchanged observation remains quiet',()=>{const a=valid();assert.equal(observe(a,a).changed,false)});
 test('future observatory timestamp blocks',()=>{const s=valid();s.observatory.observedAt=new Date(Date.now()+600000).toISOString();assert.equal(evaluate(s).decision,'BLOCKED')});
+
+test('observatory detects changed artifact evidence even when gate errors are unchanged',()=>{const a=valid(),b=valid();b.deployment.artifactDigest='sha256:changed';assert.equal(observe(b,a).changed,true)});
+test('observatory detects updated evidence with unchanged pass status',()=>{const a=valid(),b=valid();b.requirements[0].evidenceId='new-evidence';assert.equal(observe(b,a).changed,true)});
