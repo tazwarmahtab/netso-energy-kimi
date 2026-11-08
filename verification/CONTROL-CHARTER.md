@@ -20,7 +20,7 @@ PASS requires current-build evidence. FAIL, BLOCKED and UNVERIFIED never count a
 
 ## Initial reconciliation blockers
 
-The master README currently contains legacy Netso-financed BOO/RESCO, 30% discount, and financing-under-appraisal claims that conflict with the later approved website constraints. Do not copy them into the active site without factual approval. The GitHub repository's root package.json and verification/WORKFLOW.md were not found at inspected paths. The actual active Sites source and deployed version must be reconciled before automated CI is wired to that source.
+The master README currently contains legacy Netso-financed BOO/RESCO, 30% discount, and financing-under-appraisal claims that conflict with the later approved website constraints. Do not copy them into the active site without factual approval. Repository structure has now been identified: the Vite/React application is under app/ (app/package.json, app/src/App.tsx). The active ChatGPT Sites source and its relationship to this GitHub/Vercel application remain unverified. Never treat the GitHub build as proof of the Sites deployment.
 
 ## Definition of done
 
