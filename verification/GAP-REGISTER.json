@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "scope": "staging",
+  "gaps": [
+    {
+      "id": "NETSO-P1-001",
+      "severity": "P1",
+      "status": "OPEN",
+      "area": "commercial-content",
+      "description": "Legacy master README describes Netso-financed BOO/RESCO, modeled 30% discount, and financing claims inconsistent with later approved website constraints",
+      "expected": "Approved CAPEX factory-owned / partner-funded OPEX distinctions; no unsupported financing, discount, tariff, savings, or portfolio claims",
+      "evidence": "master README.md inspected 2026-11-09",
+      "closure": "Reconcile active source, update or retire stale documentation through approved copy review, then independently verify staging copy"
+    },
+    {
+      "id": "NETSO-P1-002",
+      "severity": "P1",
+      "status": "BLOCKED",
+      "area": "source-provenance",
+      "description": "Active Sites source and deployment mapping not yet independently established",
+      "expected": "Verified source commit, deployed artifact digest and staging build identity",
+      "evidence": "GitHub master package.json and verification/WORKFLOW.md not found at inspected paths",
+      "closure": "Locate canonical Sites project and compare current source, artifact and deployed staging"
+    }
+  ]
+}
