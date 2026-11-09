@@ -39,8 +39,8 @@ export default function ContactPage() {
         email,
         phone,
         facilityType: "commercial",
-        roofArea: "20000",
-        monthlySpend: "500000",
+        roofArea: "",
+        monthlySpend: "",
         notes: message,
       });
       setSubmitted(true);
@@ -107,7 +107,7 @@ export default function ContactPage() {
               <Panel className="p-7">
                 <h2 className="g-display text-[22px]">Corporate headquarters</h2>
                 <p className="g-label mt-2 !text-[9px] text-[rgba(255,250,240,0.45)]">
-                  Netso Energy Limited
+                  Transo Ltd trading as Netso Energy
                 </p>
 
                 <div className="mt-7 space-y-5">
