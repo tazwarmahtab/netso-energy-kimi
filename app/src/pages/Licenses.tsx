@@ -4,17 +4,17 @@ import { GlassShell, PageHero } from "../components/glass/shell";
 import { useAssessModal } from "../hooks/useAssessModal";
 
 const FILINGS = [
-  { entity: "Netso Energy Limited", authority: "RJSC", item: "Certificate of Incorporation", ref: "On file" },
-  { entity: "Netso Energy Limited", authority: "SREDA", item: "Net Metering (NEM) 2025 interconnection filings", ref: "Per site" },
-  { entity: "Netso Energy Limited", authority: "BERC", item: "Tariff & settlement compliance", ref: "Jun 2026 order" },
-  { entity: "Netso Energy Limited", authority: "IDCOL", item: "Concessionary project debt (SREUP window)", ref: "Under appraisal" },
-  { entity: "Netso Energy Limited", authority: "BIDA", item: "Tax holiday application", ref: "Dossier filed" },
-  { entity: "Netso Energy Limited", authority: "Evident I-TRACK", item: "I-REC registration & monetization", ref: "Workflow established" },
+  { entity: "Transo Ltd", authority: "RJSC", item: "Company incorporation", ref: "Verify documents" },
+  { entity: "Transo Ltd", authority: "SREDA", item: "Net-metering eligibility and interconnection", ref: "Site-specific" },
+  { entity: "Transo Ltd", authority: "BERC", item: "Applicable tariff and regulatory review", ref: "Verify per project" },
+  { entity: "Transo Ltd", authority: "IDCOL", item: "Potential project finance eligibility", ref: "Subject to lender review" },
+  { entity: "Transo Ltd", authority: "BIDA", item: "Applicable incentive eligibility", ref: "Not confirmed" },
+  { entity: "Transo Ltd", authority: "Evident I-TRACK", item: "Renewable certificate eligibility", ref: "Not confirmed" },
 ];
 
 /** Statuses that are finished read as gold; everything still in motion stays
  *  quieter so a reader can see at a glance what is closed vs. open. */
-const SETTLED = new Set(["On file", "Per site", "Workflow established"]);
+const SETTLED = new Set<string>();
 
 /* Each filing authority gets one line of context. This is the difference
    between a compliance table and something a lender can actually read. */
@@ -39,14 +39,14 @@ export default function Licenses() {
             Built to be <em>auditable.</em>
           </>
         }
-        lede="Netso Energy Limited operates inside Bangladesh's renewable-energy framework. Every registration, filing and programme we rely on is listed here with its current status — including the ones still open."
+        lede="Transo Ltd trades as Netso Energy. Regulatory eligibility, registrations and project approvals require documentary verification; this is a due-diligence checklist, not a certificate register."
         meta={
           <>
-            <span className="g-chip">RJSC incorporated</span>
-            <span className="g-chip">SREDA net metering</span>
+            <span className="g-chip">Company documents subject to review</span>
+            <span className="g-chip">Site-specific interconnection</span>
             <span className="g-chip">
               <span className="g-dot" aria-hidden="true" />
-              {FILINGS.length} filings tracked
+              {FILINGS.length} topics to verify
             </span>
           </>
         }
@@ -56,7 +56,7 @@ export default function Licenses() {
         <div className="g-wrap">
           <Reveal>
             <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-[rgba(255,250,240,0.12)] pb-4">
-              <p className="g-label">Filing register</p>
+              <p className="g-label">Verification checklist</p>
               <p className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-[rgba(255,250,240,0.4)]">
                 As of October 2026
               </p>
