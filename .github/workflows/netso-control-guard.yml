@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run delivery control tests
-        run: node --test verification/netso-control.test.mjs
+        run: node --test verification/*.test.mjs
       - name: Confirm incomplete release stays blocked
         run: |
           if node verification/netso-control.mjs verify verification/STATE.example.json; then
