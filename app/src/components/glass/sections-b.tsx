@@ -209,8 +209,8 @@ const LENSES = [
     id: "cost",
     label: "Cost",
     title: "Lower the cost of power without buying the asset",
-    body: "Netso structures a rooftop PPA priced below the applicable grid tariff. Final savings depend on the facility, tariff structure, system output and the executed agreement — not on a headline rate.",
-    points: ["No client CAPEX", "Off-balance-sheet power purchase", "Floating discount, not a fixed unit rate"],
+    body: "Partner-funded OPEX may be suitable after site and credit assessment. Pricing, term and other commercial provisions are agreed per project.",
+    points: ["Partner-funded installation", "Site-specific power purchase agreement", "Assessment before commercial terms"],
   },
   {
     id: "risk",
@@ -471,8 +471,8 @@ export function GlassCTA({ onAssess }: { onAssess: () => void }) {
                 Request the assessment
                 <ArrowUpRight className="h-4 w-4" />
               </GoldLink>
-              <GhostLink href="#economics">
-                Model it first
+              <GhostLink href="/solutions">
+                Compare solutions
                 <ArrowRight className="h-4 w-4" />
               </GhostLink>
             </div>
