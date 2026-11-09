@@ -13,6 +13,7 @@ import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
  */
 const Home = lazy(() => import("./pages/Home"));
 const Product = lazy(() => import("./pages/Product"));
+const SolutionsPage = lazy(() => import("./pages/Solutions"));
 const CalculatorPage = lazy(() => import("./pages/Calculator"));
 const Partners = lazy(() => import("./pages/Partners"));
 const About = lazy(() => import("./pages/About"));
@@ -104,6 +105,11 @@ export default function App() {
           <Route path="/glass" element={<Glass />} />
           <Route path="/classic" element={<Home />} />
           <Route path="/product" element={<Product />} />
+          <Route path="/solutions" element={<SolutionsPage />} />
+          <Route path="/capex" element={<SolutionsPage route="capex" />} />
+          <Route path="/opex" element={<SolutionsPage route="opex" />} />
+          <Route path="/homes" element={<SolutionsPage route="homes" />} />
+          <Route path="/home-pergola" element={<SolutionsPage route="homes" />} />
           <Route path="/calculator" element={<CalculatorPage />} />
           <Route path="/partners" element={<Partners />} />
           <Route path="/about" element={<About />} />
