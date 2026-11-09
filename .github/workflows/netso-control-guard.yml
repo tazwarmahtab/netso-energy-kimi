@@ -24,6 +24,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run delivery control tests
         run: node --test verification/*.test.mjs
+      - name: Scan website source for prohibited commercial claims
+        run: node verification/claims-cli.mjs app/src
       - name: Confirm incomplete release stays blocked
         run: |
           if node verification/netso-control.mjs verify verification/STATE.example.json; then
