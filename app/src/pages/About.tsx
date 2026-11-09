@@ -7,7 +7,7 @@ import aerial from "../assets/neighborhood-aerial.jpg";
 const MEANS = [
   {
     title: "A factory's biggest controllable cost",
-    desc: "Energy is often 20–35% of an industrial plant's operating expenditure. The agreement fixes a floating discount to the grid tariff for the full term, so the exposure has a ceiling.",
+    desc: "Electricity demand and tariff exposure vary by facility. A site assessment determines the appropriate solar design and commercial route.",
     stat: "Term-wide discount",
   },
   {
@@ -39,7 +39,7 @@ const THESIS = [
         A utility partner, not a hardware <em>broker.</em>
       </>
     ),
-    body: "Netso owns the assets, carries equipment and performance risk, operates the telemetry and sells power under a long-term agreement. If the system produces less, the settlement reflects it.",
+    body: "Factory-owned CAPEX and partner-funded OPEX have different ownership and operating responsibilities. These are agreed in each project contract.",
   },
   {
     eyebrow: "Institutional architecture",
@@ -157,7 +157,7 @@ export default function About() {
         aside={
           <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.14em] text-[rgba(255,250,240,0.45)]">
             <ShieldCheck className="h-4 w-4 text-[var(--g-gold)]" />
-            Netso Energy Ltd · Dhaka
+            Transo Ltd trading as Netso Energy · Dhaka
           </div>
         }
       >
@@ -190,7 +190,7 @@ export default function About() {
               <div className="mt-8 border-t border-[rgba(255,250,240,0.09)] pt-6">
                 <p className="g-display text-[24px]">Tazwar Mahtab</p>
                 <p className="g-label mt-2 !text-[9px] text-[var(--g-gold)]">
-                  Founder &amp; Managing Director · Netso Energy Ltd
+                  Founder &amp; Managing Director · Transo Ltd trading as Netso Energy
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <span className="g-chip !text-[9px]">Reference site</span>
