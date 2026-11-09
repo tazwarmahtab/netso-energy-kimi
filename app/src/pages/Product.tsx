@@ -31,8 +31,8 @@ const FLOW = [
   {
     n: "02",
     t: "Direct daylight consumption",
-    c: "Generation routes into the facility main distribution board and covers the daytime manufacturing load. The commercial basis is a floating discount to the grid tariff, set in the agreement.",
-    tag: "30% discount basis",
+    c: "Generation routes into the facility main distribution board and covers the daytime manufacturing load. Commercial terms are determined by the selected CAPEX or OPEX route and project agreements.",
+    tag: "Site-specific terms",
   },
   {
     n: "03",
@@ -56,7 +56,7 @@ const HW = [
   {
     icon: PanelsTopLeft,
     t: "Tier-1 architectural solar pergola",
-    c: "Elevated dual-glass TOPCon 585 Wp+ bifacial modules on an engineered steel pergola. Netso owns, insures and maintains the array; there is no capital or maintenance line on your books.",
+    c: "Elevated dual-glass TOPCon 585 Wp+ bifacial modules on an engineered steel pergola. Ownership, insurance and maintenance depend on the project structure and executed agreements.",
     points: [
       "Cyclone loading engineered to BNBC 2020 — modelled to 260 km/h",
       "Non-penetrating base plates, so the roof waterproofing warranty stands",
@@ -106,7 +106,7 @@ const NODES = [
 
 const ROWS = [
   { k: "Upfront capital expenditure", cash: "Capital deployed from corporate reserves", dl: "৳0 — financed by Netso" },
-  { k: "Contractual tariff", cash: "Return depends on execution and yield", dl: "Floating discount below the grid tariff" },
+  { k: "Contractual tariff", cash: "Return depends on execution and yield", dl: "Site-specific commercial terms" },
   { k: "Technical and generation risk", cash: "Borne by your facility", dl: "Netso carries performance and degradation risk" },
   { k: "Operations and maintenance", cash: "Internal staff, inverter replacement", dl: "20-year O&M, washing and spares included" },
   { k: "SREDA and interconnection", cash: "Handled in-house", dl: "Handled end-to-end by Netso" },
@@ -206,8 +206,8 @@ export default function Product() {
         lede={
           <>
             An elevated pergola canopy turns idle commercial roof area into a generating
-            asset. Netso finances, builds and maintains the plant; you buy the power at a
-            floating discount to the grid tariff.
+            asset. A funding partner may finance and own the plant under an OPEX agreement; the customer purchases daytime power on a
+            site-specific commercial basis.
           </>
         }
         image={panels}
