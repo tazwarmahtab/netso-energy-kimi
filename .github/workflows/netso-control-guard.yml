@@ -1,6 +1,15 @@
 name: Netso delivery control guard
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - 'staging/netso-delivery-control'
+    paths:
+      - 'verification/**'
+      - 'app/src/**'
+      - 'app/package.json'
+      - 'app/package-lock.json'
+      - '.github/workflows/netso-control-guard.yml'
   pull_request:
     paths:
       - 'verification/**'
