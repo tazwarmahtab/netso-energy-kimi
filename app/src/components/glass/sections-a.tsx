@@ -207,7 +207,7 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
                 <span className="g-dot" aria-hidden="true" />
                 Chattogram · Gazipur · Narayanganj
               </span>
-              <span className="g-chip hidden sm:inline-flex">Build-Own-Operate</span>
+              <span className="g-chip hidden sm:inline-flex">Site-specific solutions</span>
             </div>
           </Reveal>
 
@@ -215,7 +215,7 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
             <h1 className="g-display g-display--xl mt-8 max-w-[16ch]">
               Your roof.
               <br />
-              Now an <em>energy asset.</em>
+              A new <em>energy asset.</em>
             </h1>
           </Reveal>
 
@@ -223,9 +223,10 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
             <div>
               <Reveal delay={170}>
                 <p className="g-body max-w-[42ch]">
-                  Netso finances, builds and operates architectural solar pergolas on
-                  industrial roofs across Bangladesh. You buy the power, not the plant —
-                  <strong> zero client CAPEX</strong>, under a long-term agreement.
+                  Netso designs and installs rooftop solar for factories and homes in Bangladesh —
+                  own it outright, or buy the power with no upfront cost. The right model
+                  depends on your roof, your load, and your balance sheet. An assessment
+                  decides it, not a headline.
                 </p>
               </Reveal>
 
@@ -312,13 +313,11 @@ export function GlassTicker() {
   return (
     <Marquee
       items={[
-        "Zero client CAPEX",
-        "Build · Own · Operate",
-        "Non-penetrative roof attachment",
-        "SREDA net metering 2025",
-        "Class 0.2s bidirectional metering",
-        "30% floating discount",
-        "I-REC carbon tracking",
+        "Industrial rooftops",
+        "Solar canopies",
+        "Site assessment",
+        "Engineering design",
+        "Installation",
       ]}
     />
   );
