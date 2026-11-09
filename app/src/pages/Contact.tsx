@@ -33,7 +33,7 @@ export default function ContactPage() {
     setLoading(true);
 
     try {
-      await recordLeadForDispatch({
+      const result = await recordLeadForDispatch({
         contactName: name,
         orgName: orgName || "Contact Inquiry",
         email,
@@ -43,12 +43,11 @@ export default function ContactPage() {
         monthlySpend: "",
         notes: message,
       });
+      if (!result.success) throw new Error(result.message);
       setSubmitted(true);
     } catch (err) {
       console.error("Submission failed", err);
-      // The lead is still queued locally by the dispatch ledger, so the
-      // visitor must never see a dead end.
-      setSubmitted(true);
+      setSubmitted(false);
     } finally {
       setLoading(false);
     }
@@ -177,9 +176,14 @@ export default function ContactPage() {
                   <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-400" />
                   <h3 className="g-display mt-4 text-[24px]">Request recorded</h3>
                   <p className="g-body mx-auto mt-3 max-w-[42ch]">
-                    Your facility parameters are queued for the desk. Tazwar Mahtab or an
-                    origination director will respond within 24–48 hours.
+                    Your details have been saved on this device only. They have not been sent to Netso. Open WhatsApp below and send the prepared message to complete your enquiry.
                   </p>
+                  <a
+                    href={getNetsoWhatsAppUrl(`Rooftop assessment enquiry\nName: ${name}\nOrganisation: ${orgName}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="g-btn mt-7"
+                  >Send enquiry via WhatsApp</a>
                   <button
                     type="button"
                     onClick={() => setSubmitted(false)}
@@ -285,8 +289,7 @@ export default function ContactPage() {
                   </button>
 
                   <p className="text-center text-[10.5px] leading-relaxed text-[rgba(255,250,240,0.3)]">
-                    Submitting records your details for this enquiry only. Nothing is shared
-                    with third parties.
+                    This form saves a local draft only. To contact Netso, complete the WhatsApp handoff on the next screen.
                   </p>
                 </form>
               )}
