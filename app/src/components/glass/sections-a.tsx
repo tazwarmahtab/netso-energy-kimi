@@ -346,6 +346,7 @@ const BUILDING_FACTS = [
 
 export function GlassArchitecture() {
   const [revealed, setRevealed] = useState(false);
+  const [timeOfDay, setTimeOfDay] = useState<"day" | "dusk">("day");
 
   return (
     <section id="architecture" className="g-section">
@@ -367,34 +368,33 @@ export function GlassArchitecture() {
 
         <Reveal delay={120} className="mt-14">
           <Panel className="overflow-hidden p-2 md:p-3" variant="deep">
-            <div className="grid gap-2 md:grid-cols-2 md:gap-3">
-              <figure className="relative overflow-hidden rounded-[18px]">
+            <div className="relative overflow-hidden rounded-[18px]">
+              <figure className="relative">
                 <img
-                  src={hqDay}
-                  alt="Industrial facility with a solar pergola in daylight"
-                  className="g-img aspect-[4/3]"
+                  src={timeOfDay === "day" ? hqDay : hqDusk}
+                  alt={timeOfDay === "day" ? "Concept rendering of a solar pergola in daylight" : "Concept rendering of the solar pergola at dusk"}
+                  className="g-img aspect-[4/3] w-full object-cover md:aspect-[16/9]"
                   loading="lazy"
                 />
                 <figcaption className="absolute left-4 top-4">
-                  <span className="g-chip !bg-[rgba(4,13,9,0.55)] !text-[9px]">
-                    Day · reference site
+                  <span className="g-chip !bg-[rgba(4,13,9,0.75)] !text-[9px]">
+                    {timeOfDay === "day" ? "Day · concept visualisation" : "Dusk · concept visualisation"}
                   </span>
                 </figcaption>
               </figure>
-
-              <figure className="relative overflow-hidden rounded-[18px]">
-                <img
-                  src={hqDusk}
-                  alt="The same facility at dusk with the pergola lit from below"
-                  className="g-img aspect-[4/3]"
-                  loading="lazy"
-                />
-                <figcaption className="absolute left-4 top-4">
-                  <span className="g-chip !bg-[rgba(4,13,9,0.55)] !text-[9px]">
-                    Dusk · canopy lighting
-                  </span>
-                </figcaption>
-              </figure>
+              <div role="group" aria-label="Concept visualisation time of day" className="absolute bottom-4 right-4 flex gap-1 rounded-full border border-white/20 bg-[#07100b]/85 p-1 backdrop-blur">
+                {(["day", "dusk"] as const).map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setTimeOfDay(value)}
+                    aria-pressed={timeOfDay === value}
+                    className={`rounded-full px-5 py-2 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--g-gold)] ${timeOfDay === value ? "bg-[var(--g-gold)] text-[#07100b]" : "text-white hover:bg-white/10"}`}
+                  >
+                    {value === "day" ? "Daylight" : "Dusk"}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-4 md:px-5">
