@@ -76,18 +76,14 @@ function ScrollManager() {
   return null;
 }
 
-/**
- * Suspense fallback.
- *
- * Deliberately a blank glass canvas rather than a spinner: the canvas colour
- * is the page background, so a route that is still downloading looks like a
- * page that has not finished painting — not like a white flash or a loading
- * state. Chunks here are small; this should rarely be visible for long.
- */
+/** Visible, accessible route loading state instead of a blank first screen. */
 function RouteFallback() {
   return (
-    <div className="g-root g-canvas" style={{ minHeight: "100svh" }} aria-busy="true">
-      <span className="sr-only">Loading page</span>
+    <div className="g-root g-canvas flex min-h-[100svh] items-center justify-center px-6" role="status" aria-live="polite" aria-busy="true">
+      <div className="text-center">
+        <p className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--g-gold)]">NETSO ENERGY</p>
+        <p className="mt-5 text-sm text-[#fffaf0]">Loading your page…</p>
+      </div>
     </div>
   );
 }
