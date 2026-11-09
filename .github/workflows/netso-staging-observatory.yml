@@ -1,0 +1,45 @@
+name: Netso staging observatory
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - staging/netso-delivery-control
+    paths:
+      - 'app/scripts/staging-observatory.mjs'
+      - '.github/workflows/netso-staging-observatory.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: netso-staging-observatory-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  observe-staging:
+    name: Read-only staging HTTP smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check out exact commit
+        uses: actions/checkout@v4
+      - name: Configure Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run staging observatory
+        env:
+          NETSO_STAGING_URL: https://netso-energy-kimi-preview.vercel.app
+        run: |
+          mkdir -p verification-results
+          node app/scripts/staging-observatory.mjs | tee verification-results/staging-observatory.json
+          test ${PIPESTATUS[0]} -eq 0
+      - name: Preserve observation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: netso-staging-observation-${{ github.run_id }}
+          path: verification-results/
+          if-no-files-found: warn
+          retention-days: 14
