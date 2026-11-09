@@ -262,10 +262,10 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
                       Tariff basis
                     </dt>
                     <dd className="g-num mt-2 text-[clamp(1.5rem,2.4vw,2rem)] leading-none">
-                      30<span className="text-[0.55em] text-[var(--g-gold)]">%</span>
+                      Site-specific
                     </dd>
                     <p className="mt-1.5 text-[11px] leading-snug text-[rgba(255,250,240,0.42)]">
-                      below the applicable grid tariff
+                      tariff depends on the agreed project model
                     </p>
                   </div>
                   <div>
@@ -273,7 +273,7 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
                       Client CAPEX
                     </dt>
                     <dd className="g-num mt-2 text-[clamp(1.5rem,2.4vw,2rem)] leading-none">
-                      ৳0
+                      Partner-funded
                     </dd>
                     <p className="mt-1.5 text-[11px] leading-snug text-[rgba(255,250,240,0.42)]">
                       subject to partner funding and site approval
@@ -293,8 +293,7 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
                 </dl>
 
                 <p className="border-t border-[rgba(255,250,240,0.08)] px-5 py-3 text-[10.5px] leading-relaxed text-[rgba(255,250,240,0.34)]">
-                  Illustrative structure. Binding rate, savings basis and term live only
-                  in an executed agreement.
+                  No tariff, term or savings offer is made here. Commercial terms depend on feasibility and an executed agreement.
                 </p>
               </Panel>
             </Reveal>
