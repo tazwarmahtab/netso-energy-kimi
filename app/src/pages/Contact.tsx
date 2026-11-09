@@ -69,7 +69,7 @@ export default function ContactPage() {
         lede={
           <>
             Commercial structuring, utility interconnection and field engineering — one desk,
-            in Dhaka, answering within two working days.
+            with project-specific follow-up after your enquiry is received.
           </>
         }
         actions={
