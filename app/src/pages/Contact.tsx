@@ -27,10 +27,12 @@ export default function ContactPage() {
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setSubmitError("");
 
     try {
       const result = await recordLeadForDispatch({
@@ -48,6 +50,7 @@ export default function ContactPage() {
     } catch (err) {
       console.error("Submission failed", err);
       setSubmitted(false);
+      setSubmitError("Could not save the draft on this device. Please use the WhatsApp link to contact Netso directly.");
     } finally {
       setLoading(false);
     }
@@ -279,6 +282,7 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {submitError && <p role="alert" className="text-sm text-red-300">{submitError}</p>}
                   <button
                     type="submit"
                     disabled={loading}
