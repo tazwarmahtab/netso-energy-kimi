@@ -26,14 +26,16 @@ export interface SyncResult {
 
 const LOCAL_STORAGE_KEY = "netso_feasibility_leads_ledger";
 
-function recordLeadLocally(lead: FeasibilityLead): void {
+function recordLeadLocally(lead: FeasibilityLead): boolean {
   try {
     const existing = localStorage.getItem(LOCAL_STORAGE_KEY);
     const leads: FeasibilityLead[] = existing ? JSON.parse(existing) : [];
     leads.unshift({ ...lead, timestamp: lead.timestamp || new Date().toISOString() });
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(leads));
+    return true;
   } catch (error) {
     console.warn("[Netso / Dispatch] Local lead persistence skipped:", error);
+    return false;
   }
 }
 
@@ -46,13 +48,13 @@ export async function recordLeadForDispatch(lead: FeasibilityLead): Promise<Sync
   const leadWithTime: FeasibilityLead = {
     ...lead,
     timestamp: lead.timestamp || new Date().toISOString(),
-    estimatedTariff: lead.estimatedTariff || "Illustrative savings versus applicable grid costs",
+    estimatedTariff: lead.estimatedTariff,
   };
-  recordLeadLocally(leadWithTime);
+  const stored = recordLeadLocally(leadWithTime);
   return {
-    success: true,
+    success: stored,
     syncedToNotion: false,
-    message: "Lead recorded in the local dispatch ledger. Continue in WhatsApp to send it to Netso.",
+    message: stored ? "Draft saved on this device. Send via WhatsApp to contact Netso." : "Could not save the local draft. Contact Netso directly through WhatsApp.",
   };
 }
 
