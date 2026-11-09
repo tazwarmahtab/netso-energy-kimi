@@ -83,7 +83,7 @@ export function GlassNav({
                 </a>
               ) : (
                 <Link
-                  to={`/${link.href}`}
+                  to={link.href.startsWith("/") ? link.href : `/${link.href}`}
                   className="rounded-full px-3.5 py-2 text-[13.5px] text-[rgba(255,250,240,0.62)] transition-colors hover:bg-[rgba(255,250,240,0.06)] hover:text-[#fffaf0]"
                 >
                   {link.label}
@@ -120,7 +120,7 @@ export function GlassNav({
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
-              to={onHome ? link.href : `/${link.href}`}
+              to={onHome || link.href.startsWith("/") ? link.href : `/${link.href}`}
               onClick={() => setOpen(false)}
               className="flex items-center justify-between rounded-2xl px-4 py-3 text-[15px] text-[rgba(255,250,240,0.8)] hover:bg-[rgba(255,250,240,0.06)]"
             >
