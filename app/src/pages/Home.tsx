@@ -219,7 +219,7 @@ function StepVisual({ kind }: { kind: string }) {
           </div>
           <div className="flex items-center justify-between gap-10">
             <span className="text-[13px] font-semibold text-ink">Netso PPA</span>
-            <span className="font-mono text-[13px] font-bold text-forest">30% Below Grid</span>
+            <span className="font-mono text-[13px] font-bold text-forest">Site-specific terms</span>
           </div>
           <div className="h-px bg-ink/10" />
           <div className="flex items-center justify-between gap-10">
@@ -245,7 +245,7 @@ function HowItWorks() {
           </h2>
           <FadeUp delay={0.15}>
             <p className="max-w-md text-[16.5px] leading-relaxed text-ink/70 lg:ml-auto">
-              Netso develops, finances, builds and operates rooftop solar assets. Customers buy the electricity produced under a long-term PPA, with commercial terms set project by project.
+              Netso develops rooftop solar for factories and homes. In CAPEX the factory owns the plant; in OPEX a funding partner owns the plant. The site assessment determines suitability.
             </p>
             <a
               href="#get-started"
@@ -291,7 +291,7 @@ function HowItWorks() {
 /* --------------------------- Why netso --------------------------- */
 const RISKS = [
   { big: "+16.7%", label: "Industrial tariffs jumped 16.7% in one BERC order", note: "The latest BERC escalation exposed factory operating budgets with no ceiling in sight." },
-  { big: "30%", label: "Discount basis against utility rate hikes", note: "Energy transitions from an unhedged operational risk into a floating discount that moves with the bill." },
+  { big: "Site-fit", label: "Project-specific commercial structure", note: "Financing and tariffs are determined after technical and commercial assessment." },
   { big: "3,600 MWp", label: "Bangladesh's industrial rooftops could host 3,600 MWp", note: "A $2.1B market sitting idle above the buildings that need it most." },
 ];
 
