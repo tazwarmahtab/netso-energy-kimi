@@ -160,7 +160,7 @@ export function Marquee({ items }: { items: string[] }) {
   const doubled = [...items, ...items];
 
   return (
-    <div className="g-marquee" aria-label="Netso capabilities">
+    <section className="g-marquee" aria-label="Netso capabilities and services">
       <div className="g-marquee__track">
         {doubled.map((item, index) => (
           <span className="g-marquee__item" key={`${item}-${index}`} aria-hidden={index >= items.length}>
@@ -168,7 +168,7 @@ export function Marquee({ items }: { items: string[] }) {
           </span>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
