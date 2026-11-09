@@ -236,8 +236,8 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
                     Request a rooftop assessment
                     <ArrowUpRight className="h-4 w-4" />
                   </GoldLink>
-                  <GhostLink href="#economics">
-                    Model the economics
+                  <GhostLink href="/solutions">
+                    Compare solutions
                     <ArrowRight className="h-4 w-4" />
                   </GhostLink>
                 </div>
@@ -276,7 +276,7 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
                       ৳0
                     </dd>
                     <p className="mt-1.5 text-[11px] leading-snug text-[rgba(255,250,240,0.42)]">
-                      financed and operated by Netso
+                      subject to partner funding and site approval
                     </p>
                   </div>
                   <div>
@@ -284,10 +284,10 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
                       Term
                     </dt>
                     <dd className="g-num mt-2 text-[clamp(1.5rem,2.4vw,2rem)] leading-none">
-                      20<span className="text-[0.55em] text-[var(--g-gold)]">yr</span>
+                      Site-specific
                     </dd>
                     <p className="mt-1.5 text-[11px] leading-snug text-[rgba(255,250,240,0.42)]">
-                      floating discount, set in the PPA
+                      term and tariff agreed per site
                     </p>
                   </div>
                 </dl>
