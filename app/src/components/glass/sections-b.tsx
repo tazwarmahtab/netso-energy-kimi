@@ -59,8 +59,8 @@ export function GlassOperations() {
           }
           aside={
             <p className="g-body max-w-[40ch] lg:ml-auto">
-              Netso owns the asset and the operating risk. There is no EPC hand-off and no
-              separate O&amp;M contract to reconcile.
+              Asset ownership and operating responsibilities depend on the chosen model.
+              Netso's development, monitoring and O&amp;M scope is agreed per project.
             </p>
           }
         />
@@ -338,12 +338,12 @@ const PROCESS = [
   {
     n: "02",
     t: "Structure",
-    d: "Netso finances and builds. The commercial terms, milestones and settlement basis are fixed in the agreement before mobilisation.",
+    d: "For CAPEX, the factory borrows and owns. For OPEX, a funding partner owns. Responsibilities and commercial terms are agreed per site.",
   },
   {
     n: "03",
     t: "Operate",
-    d: "Netso runs the asset for the term — monitoring, maintenance, insurance and settlement — against a published performance basis.",
+    d: "Monitoring, maintenance and any settlement responsibilities are defined by the executed project agreements.",
   },
 ];
 
@@ -585,8 +585,8 @@ export function GlassFooter() {
               </span>
             </p>
             <p className="mt-4 max-w-[34ch] text-[12.5px] leading-relaxed text-[rgba(255,250,240,0.42)]">
-              Institutional rooftop solar infrastructure for Bangladesh's industrial
-              corridors. Financed, built and operated by Netso Energy Ltd.
+              Rooftop solar development for Bangladesh's factories and homes.
+              Ownership and financing are determined by the selected project model.
             </p>
           </div>
 
@@ -638,7 +638,7 @@ export function GlassFooter() {
 
         <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[rgba(255,250,240,0.07)] pt-6">
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[rgba(255,250,240,0.3)]">
-            © 2026 Netso Energy Ltd · Dhaka · Chattogram
+            © 2026 Netso Energy · Bangladesh
           </p>
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[rgba(255,250,240,0.3)]">
             SREDA NEM 2025 aligned · BERC tariff basis
