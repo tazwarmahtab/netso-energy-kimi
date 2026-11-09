@@ -17,30 +17,10 @@ import { recordLeadForDispatch } from "../lib/notion";
 /* ------------------------------------------------------------------------- */
 
 const STRUCTURE = [
-  {
-    val: "80%",
-    unit: "target",
-    label: "Senior debt share",
-    sub: "IDCOL facility applied for, under appraisal (SREUP window).",
-  },
-  {
-    val: "1.25×",
-    unit: "floor",
-    label: "DSCR covenant target",
-    sub: "Tested against conservative generation modelling.",
-  },
-  {
-    val: "30%",
-    unit: "basis",
-    label: "Floating offtaker discount",
-    sub: "A percentage below the grid tariff, set in the agreement.",
-  },
-  {
-    val: "SPV",
-    unit: "model",
-    label: "Ring-fenced assets",
-    sub: "Non-recourse vehicles with audited escrow waterfall.",
-  },
+  { val: "CAPEX", unit: "factory-owned", label: "Factory arranges financing", sub: "Netso supports agreed development services; no Netso debt or guarantee." },
+  { val: "OPEX", unit: "partner-funded", label: "Third-party ownership", sub: "Funding partner approval and executed site-specific agreements required." },
+  { val: "Site", unit: "assessment", label: "Commercial model follows feasibility", sub: "Roof, demand and credit suitability determine available options." },
+  { val: "Terms", unit: "negotiated", label: "No published tariff or savings promise", sub: "Commercial terms depend on the selected project route." },
 ];
 
 const CAPITAL = [
