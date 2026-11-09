@@ -52,7 +52,7 @@ const TERMS: Section[] = [
   {
     h: "1. The service",
     body: [
-      "Netso Energy provides solar Energy-as-a-Service: rooftop solar systems financed, built, owned and operated by Netso Energy Limited, with electricity supplied under long-term power purchase agreements. Specific terms, tariffs, and equipment are defined in your individual Power Purchase Agreement.",
+      "Netso Energy is the trading name of Transo Ltd. Factory-owned CAPEX projects and partner-funded OPEX projects have different ownership and financing structures. The executed project agreements define each party’s responsibilities and commercial terms.",
     ],
   },
   {
@@ -64,13 +64,13 @@ const TERMS: Section[] = [
   {
     h: "3. Savings",
     body: [
-      "Savings figures — including '28–35%' — are estimates based on current BERC tariff schedules and modeled system performance. Actual savings vary with weather, consumption, and utility pricing, and are guaranteed only where expressly stated in your agreement.",
+      "No generic savings percentage, payback period or tariff is offered on this website. Any project estimate depends on verified site information and agreed assumptions.",
     ],
   },
   {
     h: "4. Equipment and ownership",
     body: [
-      "Netso owns and maintains the equipment for the duration of your agreement. Buy-out, transfer, and end-of-term options are defined per contract.",
+      "In the CAPEX route, the factory owns the plant. In partner-funded OPEX, the funding partner owns it. Maintenance, buyout and end-of-term arrangements are defined in the applicable agreements.",
     ],
   },
   {
@@ -96,7 +96,7 @@ export default function Legal({ kind }: { kind: "privacy" | "terms" }) {
     <GlassShell {...assess}>
       <PageHero
         compact
-        eyebrow={`Legal · Netso Energy Limited`}
+        eyebrow={`Legal · Transo Ltd trading as Netso Energy`}
         title={
           isPrivacy ? (
             <>
@@ -111,7 +111,7 @@ export default function Legal({ kind }: { kind: "privacy" | "terms" }) {
         lede={
           isPrivacy
             ? "What we collect when you ask us to look at a roof, why we need it, and how to get it back. Written to be read, not skimmed past."
-            : "How the Energy-as-a-Service relationship is structured, what the estimates on this site do and do not mean, and where your individual agreement takes over."
+            : "How the available commercial routes are structured, and why project-specific agreements govern the final terms."
         }
         meta={
           <>
