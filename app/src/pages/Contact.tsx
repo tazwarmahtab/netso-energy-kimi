@@ -94,7 +94,7 @@ export default function ContactPage() {
           <>
             <span className="g-chip">
               <span className="g-dot" aria-hidden="true" />
-              Response under 48 hours
+              Project-specific follow-up
             </span>
             <span className="g-chip">Mutual NDA on request</span>
           </>
@@ -107,14 +107,14 @@ export default function ContactPage() {
           <div className="space-y-4">
             <Reveal>
               <Panel className="p-7">
-                <h2 className="g-display text-[22px]">Corporate headquarters</h2>
+                <h2 className="g-display text-[22px]">Contact Netso Energy</h2>
                 <p className="g-label mt-2 !text-[9px] text-[rgba(255,250,240,0.45)]">
                   Transo Ltd trading as Netso Energy
                 </p>
 
                 <div className="mt-7 space-y-5">
-                  <Row icon={<MapPin className="h-4 w-4" />} label="Dhaka office">
-                    Road 11, Gulshan-2, Dhaka 1212, Bangladesh
+                  <Row icon={<MapPin className="h-4 w-4" />} label="Service area">
+                    Bangladesh — site visits by arrangement
                   </Row>
 
                   <Row icon={<Phone className="h-4 w-4" />} label="Origination desk">
@@ -139,7 +139,7 @@ export default function ContactPage() {
                   </Row>
 
                   <Row icon={<Clock className="h-4 w-4" />} label="Response">
-                    Under 48 hours, including a preliminary roof-shadow read.
+                    Response timing and assessment scope are confirmed after contact.
                   </Row>
                 </div>
 
