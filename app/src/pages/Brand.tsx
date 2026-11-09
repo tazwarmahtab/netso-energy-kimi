@@ -123,13 +123,13 @@ const TYPE_ROWS = [
   {
     role: "Body",
     sample:
-      "Netso finances, builds, owns and operates distributed solar systems: bifacial hardware, metered telemetry, and a discount to the grid tariff set in the agreement.",
+      "Netso develops rooftop solar projects for factory-owned CAPEX or partner-funded OPEX structures. Ownership and commercial terms depend on the chosen model.",
     spec: "General Sans · 400 · 15–15.5px · 1.7–1.78 leading · cream at 55–66%",
     cls: "max-w-[60ch] font-sans text-[15px] leading-[1.72] text-[rgba(255,250,240,0.6)]",
   },
   {
     role: "Label / data",
-    sample: "[ CGS 80 kWp reference ] · 30% grid tariff basis · Class 0.2s bidirectional · SREDA NEM 2025",
+    sample: "Site-specific assessment · Engineering design · Installation",
     spec: "Space Mono · 9–10.5px · uppercase · 0.14–0.19em tracking · never for sentences",
     cls: "max-w-[62ch] font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-[rgba(255,250,240,0.45)]",
   },
