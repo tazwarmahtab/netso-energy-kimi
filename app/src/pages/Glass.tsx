@@ -4,7 +4,6 @@ import FeasibilityModal from "../components/FeasibilityModal";
 import { useSmoothScroll } from "../hooks/useSmoothScroll";
 import {
   GlassArchitecture,
-  GlassEconomics,
   GlassHero,
   GlassNav,
   GlassProgress,
@@ -18,7 +17,6 @@ import {
   GlassOperations,
   GlassProcess,
   GlassProof,
-  GlassWhy,
 } from "../components/glass/sections-b";
 import "../styles/glass.css";
 
@@ -43,12 +41,10 @@ export default function Glass() {
         <GlassHero onAssess={() => setIsModalOpen(true)} />
         <GlassTicker />
         <GlassArchitecture />
-        <GlassEconomics onAssess={() => setIsModalOpen(true)} />
         <GlassOperations />
         <GlassProof />
         <GlassBenefits />
         <GlassProcess />
-        <GlassWhy />
         <GlassNetwork />
         <GlassCTA onAssess={() => setIsModalOpen(true)} />
       </main>
