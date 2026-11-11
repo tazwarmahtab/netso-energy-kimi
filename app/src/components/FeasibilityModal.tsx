@@ -67,13 +67,9 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
         email,
         phone,
       });
-      setSyncFeedback(
-        res.syncedToNotion
-          ? "Ready for Netso dispatch"
-          : "Logged to Netso Dispatch Ledger"
-      );
+      setSyncFeedback(res.message);
     } catch {
-      setSyncFeedback("Logged to Netso Dispatch Ledger");
+      setSyncFeedback("Could not save the local draft. Contact Netso directly through WhatsApp.");
     } finally {
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -128,10 +124,10 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                 <h2 id="modal-title" className="mt-2 font-display text-2xl font-bold text-warm md:text-3xl">
                   {step === 1 && "Select Facility Category"}
                   {step === 2 && "Rooftop & Power Usage"}
-                  {step === 3 && "Where should we send the audit?"}
+                  {step === 3 && "How can Netso contact you?"}
                 </h2>
                 <p className="mt-1 text-xs text-sage">
-                  Netso engineering conducts instant satellite shadow profiling at zero cost.
+                  Prepare a rooftop enquiry. Netso will discuss the scope after you contact us.
                 </p>
 
                 {/* Step Indicator */}
@@ -148,7 +144,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                       <label className="text-xs text-warm/70">Select your institutional or commercial property type:</label>
                       <div className="grid grid-cols-2 gap-3">
                         {[
-                          { id: "school", label: "School / Campus", icon: School, desc: "CGS 80kWp Model" },
+                          { id: "school", label: "School / Campus", icon: School, desc: "Education facilities" },
                           { id: "commercial", label: "Corporate HQ", icon: Building2, desc: "Commercial Offices" },
                           { id: "hospital", label: "Hospital / Healthcare", icon: Hospital, desc: "24/7 Critical Load" },
                           { id: "factory", label: "Industrial Factory", icon: Factory, desc: "Heavy Power Spikes" },
@@ -200,7 +196,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                           placeholder="e.g. 10000"
                           className="mt-1.5 w-full rounded-xl border border-warm/20 bg-forest/80 px-4 py-3 font-mono text-sm text-warm placeholder-warm/30 focus:border-gold focus:outline-none"
                         />
-                        <span className="text-[11px] text-warm/50">Minimum 3,000 sq ft for Netso ৳0 CAPEX qualification</span>
+                        <span className="text-[11px] text-warm/50">Roof suitability is assessed for each site.</span>
                       </div>
 
                       <div>
@@ -214,7 +210,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                           placeholder="e.g. 600000"
                           className="mt-1.5 w-full rounded-xl border border-warm/20 bg-forest/80 px-4 py-3 font-mono text-sm text-warm placeholder-warm/30 focus:border-gold focus:outline-none"
                         />
-                        <span className="text-[11px] text-warm/50">Used to model a 30% discount to your grid tariff against BERC schedules</span>
+                        <span className="text-[11px] text-warm/50">An estimate helps frame the assessment.</span>
                       </div>
 
                       <div className="flex gap-3 pt-3">
@@ -304,11 +300,11 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                           {isSubmitting ? (
                             <>
                               <Loader2 className="h-4 w-4 animate-spin" />
-                              <span>Preparing secure dispatch...</span>
+                              <span>Preparing enquiry…</span>
                             </>
                           ) : (
                             <>
-                              <span>Dispatch Satellite Feasibility Audit</span>
+                              <span>Prepare enquiry</span>
                               <CheckCircle2 className="h-4 w-4" />
                             </>
                           )}
@@ -346,9 +342,9 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
                   <CheckCircle2 className="h-9 w-9" />
                 </div>
-                <h3 className="mt-4 font-display text-2xl font-bold text-warm">
-                  Feasibility Request Dispatched
-                </h3>
+                <h2 id="modal-title" className="mt-4 font-display text-2xl font-bold text-warm">
+                  Enquiry ready to send
+                </h2>
                 {syncFeedback && (
                   <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 font-mono text-[11px] text-gold">
                     <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
@@ -356,7 +352,7 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                   </div>
                 )}
                 <p className="mt-3 text-sm text-sage">
-                  Thank you, <strong className="text-warm">{contactName}</strong>. Netso’s engineering team has initiated satellite shadow and azimuth profiling for <strong className="text-warm">{orgName}</strong>.
+                  Review your details, then send the enquiry in WhatsApp.
                 </p>
 
                 <div className="mt-6 rounded-2xl border border-gold/30 bg-forest/80 p-4 text-left font-mono text-xs">
@@ -368,27 +364,23 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                     <span className="text-warm/60">Estimated Roof Area:</span>
                     <span className="font-bold text-warm">{Number(roofArea).toLocaleString()} sq ft</span>
                   </div>
-                  <div className="flex justify-between py-1.5">
-                    <span className="text-warm/60">Savings basis:</span>
-                    <span className="font-bold text-emerald-400">30% discount · modelled</span>
-                  </div>
                 </div>
 
                 <p className="mt-4 text-xs text-warm/60">
-                  Our engineering team will contact you via WhatsApp at <strong className="text-warm">{phone}</strong> with your 3D solar model within 48 hours.
+                  Netso can discuss next steps after receiving your message.
                 </p>
 
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <a
                     href={getNetsoWhatsAppUrl(
-                      `Hi Tazwar, I just dispatched the feasibility request for ${orgName || "our facility"} on the site. Sending our electricity bill photo here for priority review.`
+                      `Rooftop assessment enquiry\nName: ${contactName}\nOrganisation: ${orgName}\nEmail: ${email}\nPhone: ${phone}\nFacility: ${facilityType}\nEstimated roof area (sq ft): ${roofArea}\nEstimated monthly electricity bill (BDT): ${monthlySpend}`
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex flex-1 items-center justify-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/15 py-3 text-xs font-bold text-emerald-300 hover:bg-emerald-500/25 transition-all shadow-sm"
                   >
                     <WhatsAppIcon className="h-4 w-4 shrink-0" />
-                    <span>WhatsApp Tazwar for Priority Review</span>
+                    <span>Open WhatsApp draft</span>
                   </a>
                   <button
                     onClick={onClose}
