@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import * as Dialog from "@radix-ui/react-dialog";
 import { X, CheckCircle2, Building2, School, Hospital, Factory, ArrowRight, ShieldCheck, Loader2 } from "lucide-react";
 import { recordLeadForDispatch } from "../lib/notion";
 import { WhatsAppIcon, getNetsoWhatsAppUrl } from "./ui/WhatsAppIcon";
@@ -22,36 +23,23 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
   const [syncFeedback, setSyncFeedback] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const modalRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const reduceMotion = useReducedMotion();
 
-  // Close on Escape key
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+    titleRef.current?.focus({ preventScroll: true });
+  }, [step, isSubmitted]);
 
-  // Lock body scroll when modal is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-      // Reset state on close
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setIsSubmitting(false);
-        setSyncFeedback("");
-        setStep(1);
-      }, 300);
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+    if (isOpen) return;
+    const timer = window.setTimeout(() => {
+      setIsSubmitted(false);
+      setIsSubmitting(false);
+      setSyncFeedback("");
+      setStep(1);
+    }, 300);
+    return () => window.clearTimeout(timer);
   }, [isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -77,40 +65,53 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
-        >
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md"
-          />
-
-          {/* Modal Container */}
-          <motion.div
-            ref={modalRef}
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: "spring", stiffness: 350, damping: 30 }}
-            className="relative w-full max-w-xl overflow-hidden rounded-3xl border border-gold/30 bg-forest-dark p-6 text-warm shadow-2xl md:p-8"
-          >
-            {/* Close Button */}
-            <button
-              onClick={onClose}
-              aria-label="Close dialog"
-              className="absolute top-5 right-5 rounded-full border border-warm/15 p-2 text-warm/60 transition-colors hover:border-warm/40 hover:text-warm"
+    <Dialog.Root open={isOpen} onOpenChange={(open) => { if (!open) onClose(); }}>
+      <Dialog.Portal forceMount>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              key="assessment"
+              initial={false}
+              exit={{ opacity: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.2 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
             >
-              <X className="h-5 w-5" />
-            </button>
+              <Dialog.Overlay forceMount asChild>
+                <motion.div
+                  initial={{ opacity: reduceMotion ? 1 : 0 }}
+                  animate={{ opacity: 1 }}
+                  className="fixed inset-0 bg-black/80 backdrop-blur-md"
+                />
+              </Dialog.Overlay>
+              <Dialog.Content
+                forceMount
+                asChild
+                aria-describedby={undefined}
+                onOpenAutoFocus={(event) => {
+                  event.preventDefault();
+                  openerRef.current = document.activeElement instanceof HTMLElement
+                    ? document.activeElement
+                    : null;
+                  titleRef.current?.focus({ preventScroll: true });
+                }}
+                onCloseAutoFocus={(event) => {
+                  event.preventDefault();
+                  if (openerRef.current?.isConnected) openerRef.current.focus({ preventScroll: true });
+                }}
+              >
+                <motion.div
+                  initial={reduceMotion ? false : { opacity: 0, scale: 0.95, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 30 }}
+                  className="relative max-h-[calc(100dvh-2rem)] w-full max-w-xl overflow-y-auto rounded-3xl border border-gold/30 bg-forest-dark p-6 text-warm shadow-2xl sm:max-h-[calc(100dvh-3rem)] md:p-8"
+                >
+                  <Dialog.Close
+                    type="button"
+                    aria-label="Close dialog"
+                    className="absolute top-5 right-5 rounded-full border border-warm/15 p-2 text-warm/60 transition-colors hover:border-warm/40 hover:text-warm"
+                  >
+                    <X className="h-5 w-5" />
+                  </Dialog.Close>
 
             {!isSubmitted ? (
               <div>
@@ -121,11 +122,11 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                     Institutional Feasibility Audit
                   </span>
                 </div>
-                <h2 id="modal-title" className="mt-2 font-display text-2xl font-bold text-warm md:text-3xl">
+                <Dialog.Title asChild><h2 ref={titleRef} tabIndex={-1} className="mt-2 font-display text-2xl font-bold text-warm md:text-3xl">
                   {step === 1 && "Select Facility Category"}
                   {step === 2 && "Rooftop & Power Usage"}
                   {step === 3 && "How can Netso contact you?"}
-                </h2>
+                </h2></Dialog.Title>
                 <p className="mt-1 text-xs text-sage">
                   Prepare a rooftop enquiry. Netso will discuss the scope after you contact us.
                 </p>
@@ -342,9 +343,9 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
                   <CheckCircle2 className="h-9 w-9" />
                 </div>
-                <h2 id="modal-title" className="mt-4 font-display text-2xl font-bold text-warm">
+                <Dialog.Title asChild><h2 ref={titleRef} tabIndex={-1} className="mt-4 font-display text-2xl font-bold text-warm">
                   Enquiry ready to send
-                </h2>
+                </h2></Dialog.Title>
                 {syncFeedback && (
                   <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 font-mono text-[11px] text-gold">
                     <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
@@ -391,9 +392,12 @@ export default function FeasibilityModal({ isOpen, onClose }: FeasibilityModalPr
                 </div>
               </div>
             )}
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
+                </motion.div>
+              </Dialog.Content>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
