@@ -61,19 +61,18 @@ export function RMGEdgeSection({ onOpenFeasibility }: RMGEdgeSectionProps) {
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
           <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1 mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-gold motion-safe:animate-pulse" />
             <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-gold">
-              04.2 GW Stranded Asset • Bangladesh RMG Belt
+              Rooftop solar for Bangladesh’s garment factories
             </span>
           </div>
 
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-cream">
-            Your rooftop is baking at 62°C. <br />
-            <span className="text-gold italic font-serif">We turn that heat into rent.</span>
+            Put your factory roof to work.
           </h2>
 
           <p className="mt-4 font-sans text-sm sm:text-base text-cream/70 leading-relaxed">
-            Over 4,200 RMG factories in Gazipur, Ashulia, Savar, and Narayanganj burn diesel while their tin sheds radiate relentless heat into sewing lines, forcing HVAC systems to overwork. Under our Build-Own-Operate (BOO) model, Netso shades your roof, absorbs the solar radiation, and sells you power 30% below grid with zero capital expenditure.
+            We assess the roof structure, daytime electricity use and installation constraints before recommending a project. With CAPEX, the factory arranges financing and owns the plant. With OPEX, a funding partner finances and owns the plant, and the factory buys daytime solar power on terms agreed for the site.
           </p>
         </div>
 
