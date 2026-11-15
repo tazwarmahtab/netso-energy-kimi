@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
+const LiquidChrome = lazy(() => import("../ui/LiquidChrome"));
 import { Link } from "react-router";
 import {
   ArrowRight,
@@ -449,11 +450,35 @@ export function GlassNetwork() {
 /* ========================================================================== */
 
 export function GlassCTA({ onAssess }: { onAssess: () => void }) {
+  const { ref: chromeRef, inView: chromeVisible } = useInView<HTMLDivElement>({ threshold: 0.01, rootMargin: "160px 0px" });
   return (
     <section id="cta" className="g-section">
       <div className="g-wrap">
         <Reveal>
           <Panel className="relative overflow-hidden px-6 py-16 text-center md:px-16 md:py-24" variant="gold">
+            {/* Decorative, viewport-gated: keep the hero media and all CTA controls untouched. */}
+            <div
+              ref={chromeRef}
+              aria-hidden="true"
+              className="pointer-events-auto absolute inset-x-0 top-0 h-44 overflow-hidden opacity-[0.32] [mask-image:linear-gradient(to_bottom,black_0%,transparent_100%)]"
+            >
+              {chromeVisible && (
+                <Suspense fallback={null}>
+                  <LiquidChrome
+                    color="#c6a15b"
+                    speed={0.12}
+                    amplitude={0.22}
+                    detail={3}
+                    roughness={0.42}
+                    exposure={0.85}
+                    rippleStrength={0.45}
+                    interactive
+                    intro={false}
+                    maxDevicePixelRatio={1.5}
+                  />
+                </Suspense>
+              )}
+            </div>
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 top-0 h-[360px] bg-[radial-gradient(50%_100%_at_50%_0%,rgba(198,161,91,0.22),transparent_70%)]"
