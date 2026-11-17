@@ -39,6 +39,20 @@ export function GlassNav({
 }) {
   const [condensed, setCondensed] = useState(false);
   const [open, setOpen] = useState(false);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
+
+  // Escape dismisses the mobile disclosure and returns keyboard focus to its trigger.
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setOpen(false);
+      requestAnimationFrame(() => menuToggleRef.current?.focus());
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
 
   useEffect(() => {
     const onScroll = () => setCondensed(window.scrollY > 40);
@@ -104,11 +118,13 @@ export function GlassNav({
           </button>
 
           <button
+            ref={menuToggleRef}
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
+            aria-controls="netso-primary-mobile-menu"
             onClick={() => setOpen((value) => !value)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[rgba(255,250,240,0.16)] text-[#fffaf0] lg:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[rgba(255,250,240,0.16)] text-[#fffaf0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--g-gold)] lg:hidden"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
@@ -116,7 +132,7 @@ export function GlassNav({
       </nav>
 
       {open && (
-        <div className="pointer-events-auto fixed inset-x-4 top-[76px] z-50 rounded-3xl border border-[rgba(255,250,240,0.12)] bg-[rgba(4,13,9,0.9)] p-3 backdrop-blur-2xl lg:hidden">
+        <div id="netso-primary-mobile-menu" className="pointer-events-auto fixed inset-x-4 top-[76px] z-50 rounded-3xl border border-[rgba(255,250,240,0.12)] bg-[rgba(4,13,9,0.9)] p-3 backdrop-blur-2xl lg:hidden">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
