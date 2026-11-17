@@ -43,3 +43,9 @@ Status: **BASELINE PASS / TASTE SECURITY REVIEW OPEN / RELEASE NOT APPROVED**.
 - **Unverified:** production deployment, hosted PR commit parity, contact form delivery, visually reviewed screenshots across all sections, full keyboard/focus sequences, WCAG conformance, animation performance under network throttling. Release remains **NO-GO**.
 
 The browser-only tests are intentionally opt-in, not part of `npm test`, because the default CI dependencies do not install Playwright/Chromium. Setup in the isolated checkout: `cd app && npm install --no-save --package-lock=false playwright`, with a local Chromium-compatible browser and `NETSO_STAGING_URL` configured. This is not a recommendation to install or run the security-unreviewed Taste Skill scripts.
+
+### Hosted CI failure adjudication (2026-11-17)
+
+GitHub Actions run `44065186287` for PR head `ea4957040d610f87af63677155618d341715065b` shows both `app-build` and `charter-and-gaps` failed before their first step. GitHub check-run annotations say **"The job was not started because your account is locked due to a billing issue."** This is a provider/account-level block, **not evidence of a source-code or test failure**. No hosted CI success can be claimed until the account issue is resolved and these jobs are actually re-run to completion. The existing local test/build evidence remains separately valid.
+
+The Vercel `netso-energy-kimi-preview` check independently reports **"Account is blocked"**, with direct HTTP 402. Resolving one provider does not automatically resolve the other. No billing settings, payment methods or spending authorizations were changed during this work.

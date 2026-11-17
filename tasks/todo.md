@@ -13,3 +13,4 @@
 - [ ] Resolve Vercel preview account block (HTTP 402); verify exact PR commit preview
 - [ ] Independent full visual/a11y/performance and contact handoff sign-off
 - [ ] Human authorization for any merge or live deployment
+- [ ] Resolve GitHub Actions billing lock and rerun `app-build` and `charter-and-gaps` with completed step logs
