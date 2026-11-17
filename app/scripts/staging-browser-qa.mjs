@@ -8,11 +8,11 @@ try { ({ chromium } = await import('playwright')); }
 catch { console.error('BLOCKED: Playwright is not installed. Run npm install --no-save playwright and npx playwright install chromium.'); process.exit(2); }
 const base = process.env.NETSO_STAGING_URL || 'https://netso-energy-kimi-preview.vercel.app';
 const routes = ['/', '/solutions', '/capex', '/opex', '/homes', '/calculator', '/contact'];
-const widths = [360,390,768,1440];
+const widths = process.env.NETSO_QA_WIDTHS ? process.env.NETSO_QA_WIDTHS.split(',').map(Number) : [360,390,768,1440];
 const out = resolve(process.env.NETSO_QA_OUTPUT || 'verification-results/browser');
 await mkdir(out, {recursive:true});
 const results=[];
-const browser = await chromium.launch({headless:true});
+const browser = await chromium.launch({headless:true, ...(process.env.NETSO_BROWSER_EXECUTABLE ? {executablePath:process.env.NETSO_BROWSER_EXECUTABLE} : {})});
 try {
  for (const reducedMotion of ['no-preference','reduce']) {
   for (const width of widths) {
@@ -23,7 +23,7 @@ try {
     const errors=[];
     page.on('pageerror',e=>errors.push(e.message));
     try {
-     const response=await page.goto(new URL(route,base).href,{waitUntil:'networkidle',timeout:30000});
+     const response=await page.goto(new URL(route,base).href,{waitUntil:'domcontentloaded',timeout:12000});
      await page.waitForTimeout(400);
      entry.httpStatus=response?.status() ?? null;
      entry.heading=await page.locator('h1').first().textContent().catch(()=>null);
