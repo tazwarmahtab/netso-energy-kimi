@@ -1,5 +1,4 @@
-import { lazy, Suspense, useState } from "react";
-const LiquidChrome = lazy(() => import("../ui/LiquidChrome"));
+import { useState } from "react";
 import { Link } from "react-router";
 import {
   ArrowRight,
@@ -450,46 +449,15 @@ export function GlassNetwork() {
 /* ========================================================================== */
 
 export function GlassCTA({ onAssess }: { onAssess: () => void }) {
-  const { ref: chromeRef, inView: chromeVisible } = useInView<HTMLDivElement>({ threshold: 0.01, rootMargin: "160px 0px" });
   return (
     <section id="cta" className="g-section">
       <div className="g-wrap">
         <Reveal>
-          <Panel className="relative overflow-hidden px-4 pb-14 pt-4 text-center md:px-6 md:pb-20 md:pt-6" variant="gold">
-            {/* Full-opacity material experience: distinct from the CTA copy so
-                the WebGL texture is actually visible and can receive pointer input. */}
-            <div className="relative mb-12 overflow-hidden rounded-[18px] border border-[rgba(198,161,91,0.34)] bg-[#030705] md:mb-16 md:rounded-[24px]">
-              <div
-                ref={chromeRef}
-                aria-hidden="true"
-                className="h-[300px] w-full md:h-[440px]"
-              >
-                {chromeVisible && (
-                  <Suspense fallback={null}>
-                    <LiquidChrome
-                      color="#f4e4bb"
-                      speed={0.22}
-                      amplitude={0.38}
-                      detail={4}
-                      roughness={0.18}
-                      exposure={1.35}
-                      rippleStrength={0.8}
-                      interactive
-                      intro={false}
-                      maxDevicePixelRatio={1.5}
-                    />
-                  </Suspense>
-                )}
-              </div>
-              <div className="pointer-events-none absolute inset-x-0 top-0 flex items-center justify-between gap-2 p-4 text-left md:p-6">
-                <span className="rounded-full border border-white/20 bg-[#030705]/70 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#f6e0aa] backdrop-blur-sm">
-                  Energy in motion
-                </span>
-                <span className="hidden rounded-full border border-white/20 bg-[#030705]/70 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-white/75 backdrop-blur-sm sm:inline">
-                  Move to interact
-                </span>
-              </div>
-            </div>
+          <Panel className="relative overflow-hidden px-6 py-16 text-center md:px-16 md:py-24" variant="gold">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 h-[360px] bg-[radial-gradient(50%_100%_at_50%_0%,rgba(198,161,91,0.22),transparent_70%)]"
+            />
             <p className="g-label relative justify-center">Rooftop assessment</p>
             <h2 className="g-display g-display--lg relative mx-auto mt-6 max-w-[18ch]">
               The sky is already <em>working.</em>

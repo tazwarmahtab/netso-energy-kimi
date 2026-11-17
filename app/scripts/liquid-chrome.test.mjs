@@ -18,13 +18,15 @@ test("LiquidChrome ships a self-contained WebGL2 implementation and stylesheet",
   assert.match(css, /\.liquid-chrome__canvas/);
 });
 
-test("The homepage mounts chrome only as decorative CTA art, not over the hero", () => {
-  const source = read("src/components/glass/sections-b.tsx");
-  assert.match(source, /LiquidChrome/);
-  const cta = source.slice(source.indexOf("export function GlassCTA"));
-  assert.match(cta, /<LiquidChrome/);
-  assert.match(cta, /maxDevicePixelRatio=\{1\.5\}/);
-  assert.match(cta, /aria-hidden="true"/);
+test("The homepage mounts chrome after the service ticker, not in the hero or CTA", () => {
+  const page = read("src/pages/Glass.tsx");
+  const bridge = read("src/components/glass/LiquidChromeBridge.tsx");
+  const cta = read("src/components/glass/sections-b.tsx");
+  assert.match(page, /<GlassTicker\s*\/>\s*<LiquidChromeBridge\s*\/>\s*<GlassArchitecture\s*\/>/);
+  assert.match(bridge, /<LiquidChrome/);
+  assert.match(bridge, /maxDevicePixelRatio=\{1\.25\}/);
+  assert.match(bridge, /aria-hidden="true"/);
+  assert.doesNotMatch(cta, /<LiquidChrome/);
 });
 
 test("The WebGL renderer includes motion/performance escape hatches", () => {

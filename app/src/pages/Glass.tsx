@@ -18,6 +18,7 @@ import {
   GlassProcess,
   GlassProof,
 } from "../components/glass/sections-b";
+import LiquidChromeBridge from "../components/glass/LiquidChromeBridge";
 import "../styles/glass.css";
 
 /**
@@ -40,6 +41,7 @@ export default function Glass() {
       <main>
         <GlassHero onAssess={() => setIsModalOpen(true)} />
         <GlassTicker />
+        <LiquidChromeBridge />
         <GlassArchitecture />
         <GlassOperations />
         <GlassProof />
