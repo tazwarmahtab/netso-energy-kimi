@@ -29,3 +29,17 @@ No merge, no production deployment, no site copy changes.
 5. Review PRs and only merge to staging after checks; no automatic merge or live publish.
 
 Status: **BASELINE PASS / TASTE SECURITY REVIEW OPEN / RELEASE NOT APPROVED**.
+
+## Follow-up implementation and polish checkpoint (2026-11-17)
+
+- **Reliability fix:** `app/scripts/staging-browser-qa.mjs` now isolates each route in a new page, supports a known-route subset via `NETSO_QA_ROUTES`, waits for a visible `main h1` after React Suspense, and records failure screenshots after timeout. This avoids falsely failing pages still loading their lazy bundle and prevents runtime error listeners from accumulating between routes.
+- **Test-first proof:** dedicated `npm run test:browser` now covers a deliberately delayed main-heading test (RED before the fix; PASS after) and an interactive mobile-menu Escape/focus test (RED before the fix; PASS after).
+- **Accessible UI fix:** mobile `GlassNav` closes on Escape, restores focus to its menu button and shows a visible keyboard-focus ring; no homepage copy, section order, commercial claims or visual concept changed.
+- **Local smoke verification:** 70/70 pass across seven routes × five widths (360, 390, 768, 1024, 1440) × normal/reduced motion before the nav refinement; 28/28 recheck at 390/1440 after the refinement. HTTP 200 and no reported page errors or document horizontal overflow. Reports are local `verification-results/taste-local-browser-v2/report.json` and `verification-results/taste-post-polish/report.json`, **not uploaded or represented as hosted evidence**.
+- **Local standard checks:** `npm test` 7/7 pass, `npm run test:browser` 2/2 pass (with NETSO_STAGING_URL and local Chrome), `npm run lint` pass, `npm run build` pass. Build continues to warn about two >500kB output chunks.
+- **No Taste Skill script execution:** the full upstream package remains local/uncommitted; security hold documented in `docs/TASTE-SKILL-SECURITY-HOLD.md`.
+- **GitHub review:** PR #9 remained a draft, with zero inline review threads at last check. No automated reviewer pass can be claimed; do not request re-review while the security/hosted-preview release gates remain blocked.
+- **Hosted checks:** GitHub `Vercel – netso-energy-kimi` reported success; separate `Vercel – netso-energy-kimi-preview` reported `Account is blocked`. Direct checks of the preview alias and immutable preview URL returned HTTP 402. An old READY deployment record does not prove the current preview is accessible.
+- **Unverified:** production deployment, hosted PR commit parity, contact form delivery, visually reviewed screenshots across all sections, full keyboard/focus sequences, WCAG conformance, animation performance under network throttling. Release remains **NO-GO**.
+
+The browser-only tests are intentionally opt-in, not part of `npm test`, because the default CI dependencies do not install Playwright/Chromium. Setup in the isolated checkout: `cd app && npm install --no-save --package-lock=false playwright`, with a local Chromium-compatible browser and `NETSO_STAGING_URL` configured. This is not a recommendation to install or run the security-unreviewed Taste Skill scripts.
