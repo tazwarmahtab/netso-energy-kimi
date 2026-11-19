@@ -382,18 +382,39 @@ export default function LiquidChrome({
     canvas.addEventListener('webglcontextlost', onLost);
     canvas.addEventListener('webglcontextrestored', onRestored);
 
-    const resizeObserver = new ResizeObserver(() => {
+    const onResize = () => {
       if (lost || !visible || !pageVisible) return;
       resize();
       wake();
-    });
-    resizeObserver.observe(container);
-    const intersection = new IntersectionObserver(entries => {
-      visible = entries.some(entry => entry.isIntersecting);
+    };
+    const resizeObserver = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(onResize)
+      : null;
+    if (resizeObserver) resizeObserver.observe(container);
+    else window.addEventListener('resize', onResize, { passive: true });
+
+    const intersection = typeof IntersectionObserver !== 'undefined'
+      ? new IntersectionObserver(entries => {
+          visible = entries.some(entry => entry.isIntersecting);
+          if (!visible) { cancelAnimationFrame(raf); raf = 0; }
+          else { resize(); wake(); }
+        }, { threshold: 0 })
+      : null;
+    const onFallbackVisibility = () => {
+      const rect = container.getBoundingClientRect();
+      const next = rect.bottom > 0 && rect.top < window.innerHeight;
+      if (next === visible) return;
+      visible = next;
       if (!visible) { cancelAnimationFrame(raf); raf = 0; }
       else { resize(); wake(); }
-    }, { threshold: 0 });
-    intersection.observe(container);
+    };
+    if (intersection) intersection.observe(container);
+    else {
+      // Older WebGL2 browsers can still pause the shader when offscreen.
+      window.addEventListener('scroll', onFallbackVisibility, { passive: true });
+      window.addEventListener('resize', onFallbackVisibility, { passive: true });
+      onFallbackVisibility();
+    }
     const onVisibility = () => {
       pageVisible = document.visibilityState !== 'hidden';
       if (!pageVisible) { cancelAnimationFrame(raf); raf = 0; }
@@ -404,8 +425,13 @@ export default function LiquidChrome({
     return () => {
       cancelAnimationFrame(raf);
       wakeRef.current = null;
-      resizeObserver.disconnect();
-      intersection.disconnect();
+      resizeObserver?.disconnect();
+      intersection?.disconnect();
+      if (!resizeObserver) window.removeEventListener('resize', onResize);
+      if (!intersection) {
+        window.removeEventListener('scroll', onFallbackVisibility);
+        window.removeEventListener('resize', onFallbackVisibility);
+      }
       container.removeEventListener('pointermove', onPointerMove);
       container.removeEventListener('pointerdown', onPointerDown);
       container.removeEventListener('pointerleave', onLeave);

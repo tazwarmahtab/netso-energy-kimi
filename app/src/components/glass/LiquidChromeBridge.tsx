@@ -15,25 +15,36 @@ export default function LiquidChromeBridge() {
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let disposed = false;
     const updateCapability = () => {
-      setCanRender(Boolean(window.WebGL2RenderingContext) && !motionQuery.matches);
+      if (!disposed) setCanRender(Boolean(window.WebGL2RenderingContext) && !motionQuery.matches);
     };
-    updateCapability();
+    // Defer the initial update until after the mount effect; a disposed effect
+    // cannot update state during React Strict Mode's mount/cleanup replay.
+    queueMicrotask(updateCapability);
     motionQuery.addEventListener?.("change", updateCapability);
 
     const element = containerRef.current;
     if (!element || typeof IntersectionObserver === "undefined") {
-      setInView(true);
-      return () => motionQuery.removeEventListener?.("change", updateCapability);
+      queueMicrotask(() => {
+        if (!disposed) setInView(true);
+      });
+      return () => {
+        disposed = true;
+        motionQuery.removeEventListener?.("change", updateCapability);
+      };
     }
 
     const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
+      ([entry]) => {
+        if (!disposed) setInView(entry.isIntersecting);
+      },
       { rootMargin: "200px 0px", threshold: 0 }
     );
     observer.observe(element);
 
     return () => {
+      disposed = true;
       observer.disconnect();
       motionQuery.removeEventListener?.("change", updateCapability);
     };

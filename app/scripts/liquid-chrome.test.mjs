@@ -37,3 +37,10 @@ test("The WebGL renderer includes motion/performance escape hatches", () => {
   assert.match(source, /deleteTexture/);
   assert.match(source, /deleteFramebuffer/);
 });
+test("shader viewport remains functional when browser observer APIs are unavailable", () => {
+  const source = read("src/components/ui/LiquidChrome.jsx");
+  assert.match(source, /typeof ResizeObserver/);
+  assert.match(source, /typeof IntersectionObserver/);
+  assert.match(source, /resizeObserver\?\.disconnect/);
+  assert.match(source, /intersection\?\.disconnect/);
+});

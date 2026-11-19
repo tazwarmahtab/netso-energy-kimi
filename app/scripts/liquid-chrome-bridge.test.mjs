@@ -46,3 +46,11 @@ test("static fallback does not falsely advertise pointer interaction or an inven
   assert.doesNotMatch(bridge, /01 — 03/);
   assert.match(bridge, /aria-label="Reflective material study"/);
 });
+
+test("mount lifecycle defers capability state updates and prevents stale observer callbacks", () => {
+  const bridge = read("../src/components/glass/LiquidChromeBridge.tsx");
+  assert.doesNotMatch(bridge, /^\s*updateCapability\(\);\s*$/m);
+  assert.match(bridge, /queueMicrotask\(/);
+  assert.match(bridge, /disposed/);
+  assert.match(bridge, /typeof IntersectionObserver === "undefined"/);
+});
