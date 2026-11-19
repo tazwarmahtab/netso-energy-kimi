@@ -54,7 +54,8 @@ function ScrollManager() {
         if (cancelled) return;
         const el = selector ? document.querySelector(selector) : null;
         if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
+          const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          el.scrollIntoView({ behavior: reduceMotion ? "instant" : "smooth" });
           return;
         }
         if (performance.now() - started < ANCHOR_RETRY_MS) {
