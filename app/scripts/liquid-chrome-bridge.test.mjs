@@ -39,3 +39,10 @@ test("commercial content and five service tokens remain in place", () => {
     assert.ok(sections.includes(name), name);
   }
 });
+
+test("static fallback does not falsely advertise pointer interaction or an invented scene count", () => {
+  const bridge = read("../src/components/glass/LiquidChromeBridge.tsx");
+  assert.match(bridge, /\{canRender\s*&&\s*<span className="netso-liquid-bridge__hint">/);
+  assert.doesNotMatch(bridge, /01 — 03/);
+  assert.match(bridge, /aria-label="Reflective material study"/);
+});

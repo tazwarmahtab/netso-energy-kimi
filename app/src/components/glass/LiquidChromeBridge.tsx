@@ -45,7 +45,7 @@ export default function LiquidChromeBridge() {
       ref={containerRef}
       className="netso-liquid-bridge"
       data-testid="liquid-chrome-bridge"
-      aria-label="Interactive reflective material study"
+      aria-label="Reflective material study"
     >
       <div className="netso-liquid-bridge__frame">
         <div className="netso-liquid-bridge__fallback" aria-hidden="true" />
@@ -78,11 +78,11 @@ export default function LiquidChromeBridge() {
 
         <div className="netso-liquid-bridge__topline" aria-hidden="true">
           <span>NETSO / MATERIAL STUDY</span>
-          <span className="netso-liquid-bridge__hint">MOVE TO INTERACT</span>
+          {canRender && <span className="netso-liquid-bridge__hint">MOVE TO INTERACT</span>}
         </div>
         <div className="netso-liquid-bridge__baseline" aria-hidden="true">
           <span>LIGHT / MATERIAL / MOTION</span>
-          <span>01 — 03</span>
+          <span>NETSO ENERGY</span>
         </div>
       </div>
     </section>
