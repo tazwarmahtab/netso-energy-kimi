@@ -103,7 +103,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
             ease: "power3.out",
           }, 0.40);
 
-          // 4. Draw & bloom the 30% floating spread corridor in the SVG chart
+          // 4. Draw & bloom the illustrative spread corridor in the SVG chart
           tl.to(svgCorridorRef.current, {
             opacity: 1,
             scaleY: 1,
@@ -177,17 +177,17 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1 mb-3.5 backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
               <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-gold">
-                PPA-FIRST • ASSET-OWNED
+                Partner-owned solar
               </span>
             </div>
 
             <h2 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-[46px] font-bold tracking-tight text-cream leading-[1.08]">
-              Turn rooftop space into lower-cost power. <br />
+              Buy power from your rooftop. <br />
               <span className="text-gold italic font-serif">Without buying the solar asset.</span>
             </h2>
 
             <p className="mt-3 text-xs sm:text-sm md:text-base text-sage/85 leading-relaxed font-sans max-w-2xl">
-              We finance, build and operate rooftop solar. Customers can avoid upfront system investment by purchasing generated power under a long-term PPA, subject to financing, site feasibility and executed terms.
+              Under OPEX, a financing partner funds and owns the plant. The factory buys generated power under a site-specific PPA. Under CAPEX, the factory finances and owns the plant.
             </p>
           </div>
 
@@ -204,17 +204,17 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                     <ShieldCheck className="h-4 w-4" />
                   </div>
                   <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-gold bg-gold/10 px-2 py-0.5 rounded-full border border-gold/20">
-                    Zero Investment
+                    OPEX
                   </span>
                 </div>
-                <h3 className="font-display text-xl font-bold text-cream">৳0 Customer CAPEX</h3>
+                <h3 className="font-display text-xl font-bold text-cream">Partner-funded plant</h3>
                 <p className="mt-1.5 text-xs text-sage/80 leading-relaxed font-sans">
-                  Netso is designed around asset ownership and energy service. Financing structure, tenor and security package are established project by project.
+                  Netso assesses the roof and coordinates development. The partner and factory agree the financing and power purchase terms.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-white/5 font-mono text-[10px] text-cream/50 flex items-center gap-1.5">
                 <CheckCircle2 className="h-3 w-3 text-emerald-400 shrink-0" />
-                <span>Zero balance sheet encumbrance</span>
+                <span>Site-specific agreement</span>
               </div>
             </motion.div>
 
@@ -232,7 +232,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                     Illustrative PPA scenario
                   </span>
                 </div>
-                <h3 className="font-display text-xl font-bold text-cream">Below-grid target</h3>
+                <h3 className="font-display text-xl font-bold text-cream">PPA pricing</h3>
                 <p className="mt-1.5 text-xs text-sage/80 leading-relaxed font-sans">
                   Illustrative discount scenario. Final PPA pricing is set against site-specific load, tariff, generation, financing and contractual requirements.
                 </p>
@@ -257,14 +257,14 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                     Turnkey Service
                   </span>
                 </div>
-                <h3 className="font-display text-xl font-bold text-cream">We Operate Everything</h3>
+                <h3 className="font-display text-xl font-bold text-cream">Operations and maintenance</h3>
                 <p className="mt-1.5 text-xs text-sage/80 leading-relaxed font-sans">
                   Netso coordinates design, permitting, installation and operating services. Delivery schedules and maintenance commitments are defined in the project documents.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-white/5 font-mono text-[10px] text-cream/50 flex items-center gap-1.5">
                 <CheckCircle2 className="h-3 w-3 text-emerald-400 shrink-0" />
-                <span>Zero factory maintenance effort</span>
+                <span>Responsibilities set in the agreement</span>
               </div>
             </motion.div>
           </div>
@@ -320,7 +320,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                       />
                     ))}
 
-                    {/* Shaded 30% Savings Area */}
+                    {/* Illustrative spread */}
                     <polygon
                       ref={svgCorridorRef}
                       points="50,160 140,140 230,125 320,105 410,85 500,60 570,40 570,115 500,135 410,150 320,165 230,180 140,190 50,200"
@@ -359,7 +359,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
 
                     <rect x="375" y="107" width="185" height="20" rx="4" fill="#141E1A" stroke="#C6A15B" strokeWidth="0.75" />
                     <text x="467" y="121" fill="#C6A15B" fontSize="9" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
-                      Illustrative: 30% Below Grid
+                      Illustrative PPA price
                     </text>
 
                     {/* Central Spread Callout */}
@@ -397,36 +397,36 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                   <div className="flex items-center gap-2">
                     <Zap className="h-4 w-4 text-gold" />
                     <span className="font-mono text-xs font-semibold uppercase tracking-wider text-warm/80">
-                      Typical 20,000 sq ft Plant
+                      What the assessment needs
                     </span>
                   </div>
                   <div className="flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-400 border border-emerald-500/20">
                     <Sparkles className="h-3 w-3" />
-                    <span>Illustrative</span>
+                    <span>Site inputs</span>
                   </div>
                 </div>
 
                 {/* Concrete Numbers: What You Actually Get */}
                 <div className="mt-4 space-y-2.5 font-mono text-[11px] sm:text-xs">
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2">
-                    <span className="text-warm/60">Customer Upfront Cost:</span>
-                    <span className="font-bold text-emerald-400">৳0.00 (Zero CAPEX)</span>
+                    <span className="text-warm/60">Financing model</span>
+                    <span className="font-bold text-emerald-400">CAPEX or OPEX</span>
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2">
-                    <span className="text-warm/60">Estimated Solar Capacity:</span>
-                    <span className="font-bold text-warm">200 kWp (Bifacial)</span>
+                    <span className="text-warm/60">Usable roof area</span>
+                    <span className="font-bold text-warm">Roof survey</span>
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2">
-                    <span className="text-warm/60">Estimated Monthly Savings:</span>
-                    <span className="benchmark-highlight font-bold text-emerald-400">৳4.6 Lakh / month</span>
+                    <span className="text-warm/60">Daytime consumption</span>
+                    <span className="benchmark-highlight font-bold text-emerald-400">Load profile</span>
                   </div>
                   <div className="flex items-center justify-between border-b border-warm/5 pb-2">
-                    <span className="text-warm/60">20-Year Retained Cash Flow:</span>
-                    <span className="benchmark-highlight font-bold text-gold text-sm">৳13.2+ Crore</span>
+                    <span className="text-warm/60">Imported electricity cost</span>
+                    <span className="benchmark-highlight font-bold text-gold text-sm">Utility bills</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-warm/60">Illustrative avoided emissions:</span>
-                    <span className="font-bold text-warm">~168 Tonnes CO₂ / yr</span>
+                    <span className="text-warm/60">Expected generation</span>
+                    <span className="font-bold text-warm">Site yield estimate</span>
                   </div>
                 </div>
               </div>
@@ -443,7 +443,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                 </button>
 
                 <div className="flex items-center justify-between text-[10px] font-mono text-warm/50 px-1">
-                  <span>Free shadow survey included</span>
+                  <span>Discuss your site</span>
                   <Link to="/calculator" className="text-gold font-semibold hover:underline inline-flex items-center gap-1">
                     <span>Custom Calculator</span>
                     <ArrowRight className="h-3 w-3" />
@@ -455,7 +455,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
 
           {/* Sticky Scroll Progress Bar (Desktop only) */}
           <div className="hidden lg:flex items-center justify-between gap-4 font-mono text-[9px] text-cream/40 mt-6 pt-3 border-t border-white/5">
-            <span>01 The 3 Zero-Effort Pillars</span>
+            <span>01 Project terms</span>
             <div className="h-1 flex-1 max-w-sm rounded-full bg-white/10 overflow-hidden">
               <div
                 ref={progressBarRef}
@@ -463,7 +463,7 @@ export default function InstitutionalEconomics({ onOpenAssessment }: Institution
                 style={{ width: "0%" }}
               />
             </div>
-            <span>02 Illustrative long-term cash flow</span>
+            <span>02 Assessment inputs</span>
           </div>
         </div>
       </div>
