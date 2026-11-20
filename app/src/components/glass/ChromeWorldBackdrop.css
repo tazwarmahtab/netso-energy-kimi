@@ -1,0 +1,186 @@
+/*
+ * Netso Chrome World — isolated concept at /chrome-world.
+ * One viewport-sized WebGL2 renderer, reused from hero to footer.
+ * Do not add section-local shader instances: one context is the budget.
+ */
+
+.g-chrome-world.g-canvas {
+  background: #030806;
+}
+
+.g-chrome-world.g-canvas::before {
+  display: none;
+}
+
+/* Keep the fixed material below all semantic content, navigation and forms. */
+.g-chrome-world__background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+  background: #050706;
+}
+
+.g-chrome-world__fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 35% 20%, rgba(244, 244, 235, .29), transparent 46%),
+    radial-gradient(ellipse at 80% 75%, rgba(211, 211, 201, .20), transparent 38%),
+    linear-gradient(133deg, #080b09 3%, #454640 34%, #090b0a 49%, #4a4944 68%, #060907 96%);
+}
+
+.g-chrome-world__background > .liquid-chrome {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.g-chrome-world__background .liquid-chrome__canvas {
+  display: block;
+}
+
+/* A permanent exposure veil: chromium remains legible but does not overpower
+   the engineering, product information, accessibility or imagery. */
+.g-chrome-world__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(2, 8, 6, .33), rgba(2, 8, 6, .25) 48%, rgba(2, 8, 6, .39)),
+    radial-gradient(ellipse 95% 65% at 50% 50%, transparent 12%, rgba(2, 8, 6, .28) 100%);
+  pointer-events: none;
+}
+
+.g-chrome-world > main,
+.g-chrome-world > footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Existing photographic hero stays image-led; fixed chromium peeks out below. */
+.g-chrome-world .g-hero {
+  isolation: isolate;
+}
+.g-chrome-world .g-hero__media::after {
+  background:
+    linear-gradient(180deg, rgba(3, 10, 7, .76), rgba(3, 10, 7, .2) 33%, rgba(3, 10, 7, .58) 75%, rgba(3, 10, 7, .7) 100%),
+    radial-gradient(75% 65% at 18% 78%, rgba(3, 10, 7, .72), transparent 70%);
+}
+.g-chrome-world .g-marquee {
+  background: rgba(3, 11, 8, .76);
+  border-color: rgba(247, 234, 212, .13);
+}
+
+/* The content is lifted onto discrete dark editorial panels, not a single
+   7000px blur layer. Individual existing cards retain their glass behavior. */
+.g-chrome-world .g-section {
+  background: transparent;
+  padding-block: clamp(72px, 9vw, 134px);
+}
+
+.g-chrome-world .g-section > .g-wrap {
+  width: calc(100% - clamp(16px, 3vw, 54px));
+  max-width: 1390px;
+  padding: clamp(24px, 4.4vw, 68px);
+  border: 1px solid rgba(246, 237, 218, .20);
+  border-radius: clamp(22px, 3.1vw, 42px);
+  background:
+    linear-gradient(165deg, rgba(4, 12, 9, .93) 0%, rgba(5, 15, 11, .86) 55%, rgba(3, 9, 7, .91) 100%);
+  box-shadow: 0 36px 100px rgba(1, 5, 4, .29), inset 0 1px 0 rgba(255, 249, 236, .10);
+  position: relative;
+}
+
+/* Variation prevents the repeated boxes from becoming monotonous. */
+.g-chrome-world #architecture > .g-wrap,
+.g-chrome-world #benefits > .g-wrap {
+  background: linear-gradient(155deg, rgba(4, 12, 9, .88), rgba(4, 12, 9, .81));
+  border-color: rgba(198, 161, 91, .34);
+}
+.g-chrome-world #operations > .g-wrap,
+.g-chrome-world #process > .g-wrap {
+  background: linear-gradient(155deg, rgba(3, 10, 8, .94), rgba(8, 20, 15, .88));
+}
+.g-chrome-world #cta > .g-wrap {
+  border-color: rgba(198, 161, 91, .55);
+}
+.g-chrome-world #cta .g-glass--gold {
+  background: linear-gradient(145deg, rgba(4, 12, 9, .82), rgba(5, 15, 10, .67));
+}
+
+/* Deliberate visual silence: no text, CTAs or cards cover the metal. */
+.g-chrome-world__interlude {
+  position: relative;
+  width: 100%;
+  pointer-events: none;
+}
+.g-chrome-world__interlude--opening {
+  min-height: clamp(310px, 62svh, 670px);
+}
+.g-chrome-world__interlude--mid {
+  min-height: clamp(280px, 56svh, 600px);
+}
+.g-chrome-world__interlude--closing {
+  min-height: clamp(200px, 34svh, 420px);
+}
+
+/* Final chrome reveal behind the brand typography, not an extra canvas. */
+.g-chrome-world footer {
+  background: linear-gradient(180deg, rgba(2, 9, 7, .82), rgba(2, 9, 7, .94));
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-top-color: rgba(198, 161, 91, .38);
+}
+.g-chrome-world footer > div:first-child {
+  opacity: .9;
+}
+
+/* Show a non-animated metallic fallback without a large paint or blur cost. */
+@media (prefers-reduced-motion: reduce) {
+  .g-chrome-world .g-glass::before {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .g-chrome-world .g-section {
+    padding-block: 42px;
+  }
+  .g-chrome-world .g-section > .g-wrap {
+    width: calc(100% - 16px);
+    padding: 23px 17px;
+    border-radius: 22px;
+  }
+  .g-chrome-world__interlude--opening {
+    min-height: 44svh;
+  }
+  .g-chrome-world__interlude--mid {
+    min-height: 38svh;
+  }
+  .g-chrome-world__interlude--closing {
+    min-height: 22svh;
+  }
+}
+
+/* Respect forced-colors users: keep readable content instead of relying on the metal. */
+@media (forced-colors: active) {
+  .g-chrome-world__background {
+    display: none;
+  }
+  .g-chrome-world .g-section > .g-wrap {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+}
+
+/* Reading surfaces are deliberately more opaque than the open metal intervals. */
+.g-chrome-world .g-section .g-body {
+  color: rgba(255, 250, 240, .77);
+}
+
+.g-chrome-world .g-section .g-glass--light .g-body {
+  color: #20322a;
+}
