@@ -1,0 +1,81 @@
+/* Single chrome stage. Scoped; does not change the existing hero or CTA. */
+.netso-liquid-bridge {
+  position: relative;
+  width: 100%;
+  padding: clamp(10px, 1.8vw, 30px);
+  isolation: isolate;
+  background: #050b08;
+  overflow: clip;
+}
+
+.netso-liquid-bridge__frame {
+  position: relative;
+  width: 100%;
+  height: clamp(320px, 37vw, 480px);
+  overflow: hidden;
+  border: 1px solid rgba(198, 161, 91, .42);
+  border-radius: clamp(14px, 2vw, 26px);
+  background: #050705;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, .28), inset 0 1px rgba(255, 255, 255, .14);
+}
+
+.netso-liquid-bridge__fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 29% 30%, rgba(244, 244, 235, .32), transparent 34%),
+    radial-gradient(ellipse at 75% 65%, rgba(225, 218, 192, .28), transparent 38%),
+    linear-gradient(140deg, #020302 0%, #3a3c38 34%, #070807 48%, #353732 68%, #030403 100%);
+}
+
+.netso-liquid-bridge__render {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.netso-liquid-bridge__render > * {
+  height: 100%;
+  width: 100%;
+}
+
+.netso-liquid-bridge__topline,
+.netso-liquid-bridge__baseline {
+  position: absolute;
+  left: clamp(16px, 3vw, 40px);
+  right: clamp(16px, 3vw, 40px);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #f5f1e8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(9px, .8vw, 11px);
+  letter-spacing: .16em;
+  line-height: 1.4;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .9);
+  pointer-events: none;
+  user-select: none;
+}
+
+.netso-liquid-bridge__topline { top: clamp(16px, 3vw, 36px); }
+.netso-liquid-bridge__baseline {
+  bottom: clamp(16px, 3vw, 36px);
+  color: rgba(250, 244, 230, .72);
+}
+
+@media (max-width: 640px) {
+  .netso-liquid-bridge { padding: 8px; }
+  .netso-liquid-bridge__frame {
+    height: min(65svh, 360px);
+    min-height: 280px;
+    border-radius: 14px;
+  }
+  .netso-liquid-bridge__hint { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .netso-liquid-bridge__frame { scroll-behavior: auto; }
+}
