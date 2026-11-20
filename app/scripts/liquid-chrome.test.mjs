@@ -22,7 +22,7 @@ test("The homepage mounts chrome after the service ticker, not in the hero or CT
   const page = read("src/pages/Glass.tsx");
   const bridge = read("src/components/glass/LiquidChromeBridge.tsx");
   const cta = read("src/components/glass/sections-b.tsx");
-  assert.match(page, /<GlassTicker\s*\/>\s*<LiquidChromeBridge\s*\/>\s*<GlassArchitecture\s*\/>/);
+  assert.match(page, /<GlassTicker\s*\/>\s*\{chromeWorld \? <ChromeWorldInterlude placement="opening" \/> : <LiquidChromeBridge \/>\}\s*<GlassArchitecture\s*\/>/);
   assert.match(bridge, /<LiquidChrome/);
   assert.match(bridge, /maxDevicePixelRatio=\{1\.25\}/);
   assert.match(bridge, /aria-hidden="true"/);

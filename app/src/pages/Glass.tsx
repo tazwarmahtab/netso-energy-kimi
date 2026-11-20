@@ -19,6 +19,7 @@ import {
   GlassProof,
 } from "../components/glass/sections-b";
 import LiquidChromeBridge from "../components/glass/LiquidChromeBridge";
+import { ChromeWorldBackdrop, ChromeWorldInterlude } from "../components/glass/ChromeWorldBackdrop";
 import "../styles/glass.css";
 
 /**
@@ -29,36 +30,39 @@ import "../styles/glass.css";
  * one-line route change. Design direction, the section-by-section audit and the
  * decision ledger live in `docs/GLASS-AUDIT.md`.
  */
-export default function Glass() {
+export default function Glass({ chromeWorld = false }: { chromeWorld?: boolean }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   useSmoothScroll();
 
   return (
-    <div className="g-root g-canvas g-grain overflow-x-clip">
+    <div className={`g-root g-canvas g-grain overflow-x-clip${chromeWorld ? " g-chrome-world" : ""}`}>
+      {chromeWorld ? <ChromeWorldBackdrop /> : null}
       <GlassProgress />
       <GlassNav onAssess={() => setIsModalOpen(true)} />
 
       <main>
         <GlassHero onAssess={() => setIsModalOpen(true)} />
         <GlassTicker />
-        <LiquidChromeBridge />
+        {chromeWorld ? <ChromeWorldInterlude placement="opening" /> : <LiquidChromeBridge />}
         <GlassArchitecture />
         <GlassOperations />
         <GlassProof />
         <GlassBenefits />
         <GlassProcess />
+        {chromeWorld && <ChromeWorldInterlude placement="mid" />}
         <GlassNetwork />
         <GlassCTA onAssess={() => setIsModalOpen(true)} />
+        {chromeWorld && <ChromeWorldInterlude placement="closing" />}
       </main>
 
       <GlassFooter />
 
-      <div className="fixed bottom-4 left-4 z-40 hidden md:block">
+      <div className={chromeWorld ? "fixed bottom-4 left-4 z-40" : "fixed bottom-4 left-4 z-40 hidden md:block"}>
         <Link
-          to="/classic"
+          to={chromeWorld ? "/glass" : "/classic"}
           className="g-chip !bg-[rgba(4,13,9,0.7)] !text-[9px] hover:!text-[var(--g-gold-hi)]"
         >
-          ← Classic view
+          {chromeWorld ? "← Standard" : "← Classic view"}
         </Link>
       </div>
 

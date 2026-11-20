@@ -83,6 +83,7 @@ export default function LiquidChrome({
   intro = true,
   lightMode = false,
   maxDevicePixelRatio = 2,
+  maxFrameRate = 60,
   className = '',
   style
 }) {
@@ -106,7 +107,8 @@ export default function LiquidChrome({
     tilt: Math.max(0, tilt),
     intro,
     light: lightMode,
-    maxRatio: clamp(maxDevicePixelRatio, 0.5, 3)
+    maxRatio: clamp(maxDevicePixelRatio, 0.5, 3),
+    frameInterval: 1000 / clamp(maxFrameRate, 1, 60)
   };
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
@@ -276,6 +278,10 @@ export default function LiquidChrome({
       raf = 0;
       if (lost || !visible || !pageVisible) return;
       const s = settingsRef.current;
+      if (now - last < s.frameInterval) {
+        raf = requestAnimationFrame(frame);
+        return;
+      }
       const dt = clamp((now - last) / 1000 || 0, 0, 0.05);
       last = now;
       if (!reduced) time += dt * s.speed;

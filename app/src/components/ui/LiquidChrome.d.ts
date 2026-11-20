@@ -18,6 +18,7 @@ export interface LiquidChromeProps {
   intro?: boolean;
   lightMode?: boolean;
   maxDevicePixelRatio?: number;
+  maxFrameRate?: number;
   className?: string;
   style?: CSSProperties;
 }

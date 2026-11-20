@@ -7,7 +7,7 @@ const read = (name) => readFileSync(path(name), "utf8");
 
 test("chrome bridge occupies exactly the services-to-architecture transition", () => {
   const page = read("../src/pages/Glass.tsx");
-  assert.match(page, /<GlassTicker\s*\/>\s*<LiquidChromeBridge\s*\/>\s*<GlassArchitecture\s*\/>/);
+  assert.match(page, /<GlassTicker\s*\/>\s*\{chromeWorld \? <ChromeWorldInterlude placement="opening" \/> : <LiquidChromeBridge \/>\}\s*<GlassArchitecture\s*\/>/);
   assert.equal((page.match(/<LiquidChromeBridge\s*\/>/g) ?? []).length, 1);
 });
 
