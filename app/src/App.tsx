@@ -99,6 +99,8 @@ export default function App() {
               so existing links and previews do not 404. */}
           <Route path="/" element={<Glass />} />
           <Route path="/glass" element={<Glass />} />
+          {/* Isolated preview: one fixed chrome backdrop from the hero to the footer. */}
+          <Route path="/chrome-world" element={<Glass chromeWorld />} />
           <Route path="/classic" element={<Home />} />
           <Route path="/product" element={<Product />} />
           <Route path="/solutions" element={<SolutionsPage />} />
