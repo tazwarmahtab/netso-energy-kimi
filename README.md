@@ -160,7 +160,7 @@ The site is a Vite SPA. **Every route now renders Glass v3** — the design syst
 |---|---|
 | `/` | **Glass v3** homepage |
 | `/glass` | Alias of `/` so older links keep working |
-| `/classic` | The previous homepage, preserved verbatim |
+| /classic | Legacy bookmark redirects to /; old source remains in Git history |
 | `/product` · `/calculator` · `/about` · `/partners` · `/contact` · `/support` | Glass v3 inner pages via `GlassShell` |
 | `/insights` · `/careers` · `/brand` · `/licenses` · `/legal/privacy-policy` · `/legal/terms-of-service` | Glass v3 — ported in the documentation pass |
 | `*` | Glass v3 404 with a route table |

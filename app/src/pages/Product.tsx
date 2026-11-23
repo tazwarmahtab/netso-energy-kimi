@@ -24,72 +24,68 @@ import roof from "../assets/solar-roof-dusk.jpg";
 const FLOW = [
   {
     n: "01",
-    t: "Zero-CAPEX construction",
-    c: "An elevated structural steel pergola is installed without penetrating the roof membrane. Netso capitalises the civil works, modules and installation.",
-    tag: "CAPEX ৳0",
+    t: "Assess and choose a commercial route",
+    c: "The factory borrows and owns under CAPEX. Netso provides agreed development services inside the EPC scope. A separate partner-funded OPEX route is possible only subject to funding approval and a site-specific PPA.",
+    tag: "Two distinct routes",
   },
   {
     n: "02",
-    t: "Direct daylight consumption",
-    c: "Generation routes into the facility main distribution board and covers the daytime manufacturing load. Commercial terms are determined by the selected CAPEX or OPEX route and project agreements.",
-    tag: "Site-specific terms",
+    t: "Design for daytime electricity demand",
+    c: "Feasible generation depends on roof area, structure, electricity use, operating hours and the approved grid connection.",
+    tag: "Load-led design",
   },
   {
     n: "03",
-    t: "SREDA net metering (NEM 2025)",
-    c: "Surplus daylight generation exports to the 11 kV / 33 kV line, with 90% of net exported kWh credited on the utility bill each cycle.",
-    tag: "90% monthly credit",
+    t: "Review utility interconnection",
+    c: "Net-metering eligibility, approval, settlement and export treatment depend on current rules and the facility's utility connection. No credit percentage is assumed.",
+    tag: "Utility review",
   },
   {
     n: "04",
-    t: "NEOS telemetry and metering",
-    c: "Bidirectional revenue metering at Class 0.2s accuracy, tracking generation, performance ratio and monthly settlement reconciliation.",
-    tag: "Class 0.2s metering",
+    t: "Agree monitoring and maintenance",
+    c: "Metering, fault monitoring, O&M duties and any commercial reconciliation are specified in project contracts after the design and ownership route are approved.",
+    tag: "Contract-led scope",
   },
 ];
-
-/* ------------------------------------------------------------------------- */
-/*  Hardware                                                                  */
-/* ------------------------------------------------------------------------- */
 
 const HW = [
   {
     icon: PanelsTopLeft,
-    t: "Tier-1 architectural solar pergola",
-    c: "Elevated dual-glass TOPCon 585 Wp+ bifacial modules on an engineered steel pergola. Ownership, insurance and maintenance depend on the project structure and executed agreements.",
+    t: "Roof-specific solar mounting",
+    c: "The mounting concept is selected after structural, wind-uplift, waterproofing, access and drainage review. A pergola or canopy is not assumed suitable for every building.",
     points: [
-      "Cyclone loading engineered to BNBC 2020 — modelled to 260 km/h",
-      "Non-penetrating base plates, so the roof waterproofing warranty stands",
-      "Bifacial dual-glass architecture captures rear albedo gain",
-      "30-year linear performance warranty backed by Netso",
+      "Verify roof structure, corrosion exposure and wind-load requirements",
+      "Assess drainage, penetrations, waterproofing and maintenance access",
+      "Select modules and suppliers during engineering and procurement",
+      "Manufacturer warranties depend on the products actually contracted",
     ],
     img: roof,
-    alt: "Pergola-style solar canopy on a factory rooftop at dusk",
+    alt: "Illustrative rooftop solar-canopy arrangement",
     isTerminal: false,
   },
   {
     icon: Zap,
-    t: "Huawei SUN2000 smart string inverters",
-    c: "Grid-tied multi-MPPT industrial string inverters synchronise generation with the incoming utility feeder, with arc-fault interruption on every string.",
+    t: "Project-selected grid-tied inverters",
+    c: "Inverters, protection settings, isolation and any utility interface are selected through engineering and approved specifications, not guaranteed by a generic webpage.",
     points: [
-      "Multi-MPPT architecture, up to 98.8% European efficiency",
-      "AFCI arc-fault interruption inside 0.5 seconds",
-      "SREDA Net Metering (NEM 2025) compliant bidirectional interface",
-      "IP66 cast-aluminium enclosure for subtropical humidity",
+      "Electrical design considers load profiles and selected system capacity",
+      "Protection features must be verified against the actual datasheet",
+      "Environmental ratings and warranties depend on final selection",
+      "Utility interconnection and commissioning require applicable approvals",
     ],
     img: inverters,
-    alt: "String inverters mounted in a factory electrical room",
+    alt: "Illustrative electrical equipment installation",
     isTerminal: false,
   },
   {
     icon: Activity,
-    t: "NEOS industrial SCADA telemetry",
-    c: "Netso's operating system watches every string, inverter and revenue meter, reconciles settlement and exports carbon attributes.",
+    t: "Monitoring and O&M design",
+    c: "Monitoring can be scoped to generation, inverter health and maintenance needs where hardware and connectivity permit. No live system or certification activity is represented here.",
     points: [
-      "Class 0.2s utility-grade revenue metering",
-      "String-level I-V tracing and fault detection",
-      "Monthly settlement reconciled against the utility billing cycle",
-      "Quarterly I-REC attribute certification",
+      "Generation and inverter data availability depend on selected equipment",
+      "Alerts, maintenance response and reporting are contract-specific",
+      "Environmental attribute rights and eligibility require separate review",
+      "Telemetry screen shown here is a design concept, not a commissioned asset",
     ],
     img: null,
     alt: "",
@@ -98,33 +94,33 @@ const HW = [
 ];
 
 const NODES = [
-  { name: "Solar pergola", spec: "80 kWp DC array", role: "Primary generator" },
-  { name: "Huawei inverters", spec: "SUN2000 400 V 3-phase", role: "Power conversion" },
-  { name: "Facility MDB", spec: "Daytime self-consumption", role: "Direct load offset" },
-  { name: "NEM Class 0.2s meter", spec: "SREDA 2025 bidirectional", role: "90% utility credit" },
+  { name: "Solar array", spec: "Site-sized DC array", role: "Primary generation" },
+  { name: "Grid-tied inverters", spec: "Selected during engineering", role: "Power conversion" },
+  { name: "Facility switchboard", spec: "Subject to electrical survey", role: "Daytime load connection" },
+  { name: "Utility metering", spec: "Subject to utility approval", role: "Metering and interconnection review" },
 ];
 
 const ROWS = [
-  { k: "Upfront capital expenditure", cash: "Capital deployed from corporate reserves", dl: "৳0 — financed by Netso" },
-  { k: "Contractual tariff", cash: "Return depends on execution and yield", dl: "Site-specific commercial terms" },
-  { k: "Technical and generation risk", cash: "Borne by your facility", dl: "Netso carries performance and degradation risk" },
-  { k: "Operations and maintenance", cash: "Internal staff, inverter replacement", dl: "20-year O&M, washing and spares included" },
-  { k: "SREDA and interconnection", cash: "Handled in-house", dl: "Handled end-to-end by Netso" },
-  { k: "Balance-sheet impact", cash: "Fixed assets and liabilities", dl: "Operating expense; you buy power, not plant" },
-  { k: "Carbon and I-REC ownership", cash: "Manual certification audits", dl: "I-REC attribute certification quarterly" },
+  { k: "Plant ownership", cash: "Factory owns the installed asset", dl: "Funding partner may own the plant subject to approval" },
+  { k: "Finance", cash: "Factory arranges borrowing or uses its own funds", dl: "Separate funding partner assesses credit and conditions" },
+  { k: "Electricity costs", cash: "Grid offset depends on metered generation and self-use", dl: "PPA tariff, term and energy settlement are site-specific" },
+  { k: "Engineering scope", cash: "Agreed EPC design and commissioning", dl: "Partner-approved EPC design and commissioning" },
+  { k: "O&M responsibilities", cash: "Factory agrees maintenance arrangements", dl: "Owner and service obligations are specified in contracts" },
+  { k: "Grid connection", cash: "Utility eligibility and approvals are assessed", dl: "Utility eligibility and approvals are assessed" },
+  { k: "Environmental claims", cash: "Any attribute rights require verification", dl: "Attribute rights and reporting require written terms" },
 ];
 
 /* ------------------------------------------------------------------------- */
-/*  NEOS terminal                                                             */
+/*  Illustrative monitoring interface — no connected asset                   */
 /* ------------------------------------------------------------------------- */
 
 const KPIS = [
-  { icon: Activity, label: "Active generation", value: "64.8 kW", note: "sample read-out" },
-  { icon: Gauge, label: "Performance ratio", value: "81.4%", note: "vs 78% design basis" },
-  { icon: Zap, label: "Today's generation", value: "394.2 kWh", note: "irradiance 5.4 kWh/m²" },
-  { icon: ShieldCheck, label: "Grid displacement", value: "−30.0%", note: "discount basis" },
-  { icon: Cpu, label: "String balance", value: "10 / 10", note: "MPPTs nominal" },
-  { icon: Activity, label: "I-REC tracking", value: "Active", note: "quarterly certification" },
+  { icon: Activity, label: "Generation output", value: "—", note: "concept only" },
+  { icon: Gauge, label: "Performance ratio", value: "—", note: "concept only" },
+  { icon: Zap, label: "Daily generation", value: "—", note: "concept only" },
+  { icon: ShieldCheck, label: "Grid self-use", value: "—", note: "concept only" },
+  { icon: Cpu, label: "Equipment state", value: "—", note: "concept only" },
+  { icon: Activity, label: "Maintenance log", value: "—", note: "concept only" },
 ];
 
 function NeosTerminal() {
@@ -134,12 +130,12 @@ function NeosTerminal() {
         <div className="flex items-center gap-2.5">
           <span className="h-2 w-2 rounded-full bg-[rgba(255,250,240,0.25)]" />
           <span className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-[rgba(255,250,240,0.55)]">
-            NEOS telemetry · node CGS-01
+            Monitoring Concept UI · No live data
           </span>
         </div>
         <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[rgba(255,250,240,0.4)]">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-          Class 0.2s · illustrative
+          <span className="h-1.5 w-1.5 rounded-full bg-[rgba(255,250,240,0.4)]" />
+          Design illustration
         </span>
       </div>
 
@@ -167,19 +163,19 @@ function NeosTerminal() {
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[rgba(255,250,240,0.09)] pt-4 font-mono text-[10px] text-[rgba(255,250,240,0.4)]">
-        <span>SREDA NEM 2025 sync</span>
-        <span className="text-[var(--g-gold)]">Automated settlement · 24:00 UTC+6</span>
+        <span>Utility assessment pending</span>
+        <span className="text-[var(--g-gold)]">Not connected to a live plant</span>
       </div>
 
       <a
         href={getNetsoWhatsAppUrl(
-          "Hello Netso Telemetry Desk, we would like the single-line diagram (SLD) and Class 0.2s bidirectional meter interconnection specs under SREDA NEM 2025 guidelines.",
+          "Hello Netso, please share proposed monitoring, metering and O&M options after a site-specific roof assessment.",
         )}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-3 inline-flex items-center justify-between gap-3 rounded-xl border border-[rgba(255,250,240,0.1)] bg-[rgba(255,250,240,0.03)] px-3.5 py-2.5 text-[11.5px] text-[rgba(255,250,240,0.7)] transition-colors hover:border-[rgba(198,161,91,0.45)] hover:text-[#fffaf0]"
       >
-        <span>Ask the SCADA desk for the SLD and meter specification</span>
+        <span>Ask about monitoring and metering design</span>
         <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
       </a>
     </Panel>
@@ -197,7 +193,7 @@ export default function Product() {
   return (
     <GlassShell onAssess={() => setModalOpen(true)} modalOpen={modalOpen} closeModal={() => setModalOpen(false)}>
       <PageHero
-        eyebrow="Architectural solar pergola · 20-year agreement"
+        eyebrow="Architectural rooftop solar · site-assessed"
         title={
           <>
             Your roof&rsquo;s institutional <em>energy asset.</em>
@@ -205,9 +201,9 @@ export default function Product() {
         }
         lede={
           <>
-            An elevated pergola canopy turns idle commercial roof area into a generating
-            asset. A funding partner may finance and own the plant under an OPEX agreement; the customer purchases daytime power on a
-            site-specific commercial basis.
+            Rooftop solar can support daytime factory demand where the roof and
+            grid connection are suitable. The factory owns the CAPEX asset;
+            partner-funded OPEX depends on third-party approval and a site-specific PPA.
           </>
         }
         image={panels}
@@ -222,7 +218,7 @@ export default function Product() {
               Request roof assessment
             </button>
             <a href="#hardware" className="g-btn g-btn--ghost">
-              Engineering specifications
+              Engineering approach
             </a>
           </>
         }
@@ -230,10 +226,10 @@ export default function Product() {
           <>
             <span className="g-chip">
               <span className="g-dot" aria-hidden="true" />
-              Class 0.2s telemetry
+              Proposed monitoring
             </span>
-            <span className="g-chip">Non-penetrative attachment</span>
-            <span className="g-chip">SREDA NEM 2025</span>
+            <span className="g-chip">Mounting subject to survey</span>
+            <span className="g-chip">Net-metering eligibility review</span>
           </>
         }
       />
@@ -244,13 +240,13 @@ export default function Product() {
         eyebrow="Architecture & operation"
         title={
           <>
-            Engineered for industrial reliability and <em>bankable</em> yields.
+            Engineering and responsibilities defined <em>site by site.</em>
           </>
         }
         aside={
           <p>
-            Four stages, one agreement. Each stage is measured, metered and reconciled
-            against the settlement basis in the executed document.
+            Engineering, ownership and payment arrangements depend on the
+            chosen route and written agreements. No system performance is assumed.
           </p>
         }
       >
@@ -292,7 +288,7 @@ export default function Product() {
         eyebrow="Engineered hardware & intelligence"
         title={
           <>
-            Bankable hardware behind institutional <em>uptime.</em>
+            Hardware selected for site-specific <em>reliability.</em>
           </>
         }
         tight
@@ -343,9 +339,9 @@ export default function Product() {
         }
         aside={
           <p>
-            Generation covers daytime machinery and lighting first. Surplus flows through
-            SREDA net metering and accrues monthly bill credits, metered and reconciled by
-            NEOS.
+            Generation can offset daytime demand where the system design allows it.
+            Any export, net-metering credit or settlement requires utility approval and
+            a site-specific evaluation; no universal credit is promised.
           </p>
         }
       >
@@ -373,7 +369,7 @@ export default function Product() {
                   <span className="border-t border-[rgba(255,250,240,0.07)] pt-2.5 font-mono text-[9.5px] text-[rgba(255,250,240,0.32)]">
                     {index < NODES.length - 1
                       ? `→ feeds stage 0${index + 2}`
-                      : "→ 11 kV / 33 kV feeder"}
+                      : "→ site interconnection review"}
                   </span>
                 </div>
               ))}
@@ -382,9 +378,9 @@ export default function Product() {
             <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[rgba(255,250,240,0.08)] pt-4 font-mono text-[10px] text-[rgba(255,250,240,0.42)]">
               <span className="flex items-center gap-2">
                 <ShieldCheck className="h-3.5 w-3.5 text-[var(--g-gold)]" />
-                SREDA NEM 2025 · 90% monthly kWh credit
+                Net-metering and exports require utility approval
               </span>
-              <span className="text-[var(--g-gold)]">BERC tariff class LT-D1 / HT-3</span>
+              <span className="text-[var(--g-gold)]">Actual utility class requires bill verification</span>
             </div>
           </Panel>
         </Reveal>
@@ -396,7 +392,7 @@ export default function Product() {
         eyebrow="Commercial comparison"
         title={
           <>
-            Direct purchase versus the Netso <em>agreement.</em>
+            Factory-owned CAPEX versus <em>partner-funded OPEX.</em>
           </>
         }
       >
@@ -407,10 +403,10 @@ export default function Product() {
                 Evaluation metric
               </span>
               <span className="g-label !text-[9px] p-5 text-[rgba(255,250,240,0.55)]">
-                Direct EPC / cash purchase
+                Factory-owned CAPEX
               </span>
               <span className="g-label !text-[9px] p-5 text-[var(--g-gold-hi)]">
-                Netso 20-year agreement
+                Partner-funded OPEX (if approved)
               </span>
             </div>
 
@@ -437,8 +433,9 @@ export default function Product() {
 
         <Reveal delay={140}>
           <p className="mt-6 max-w-[76ch] text-[11.5px] leading-relaxed text-[rgba(255,250,240,0.32)]">
-            Comparison is illustrative and describes the structure of each route. Binding
-            terms, savings basis and risk allocation are set only in an executed agreement.
+            The factory borrows and owns under CAPEX; a separate financing partner may
+            own the OPEX system under a negotiated PPA. No tariff, finance or saving is
+            promised without site-specific written agreements.
           </p>
         </Reveal>
       </PageSection>
@@ -450,7 +447,7 @@ export default function Product() {
             Your roof is an institutional <em>asset.</em>
           </>
         }
-        copy="Start with the assessment: fifteen minutes of plant data is enough to say whether the roof qualifies."
+        copy="Start with a roof and load assessment. A site survey and applicable utility approvals determine project suitability."
       />
     </GlassShell>
   );

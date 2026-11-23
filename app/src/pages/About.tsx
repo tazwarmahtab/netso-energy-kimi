@@ -6,19 +6,19 @@ import aerial from "../assets/neighborhood-aerial.jpg";
 
 const MEANS = [
   {
-    title: "A factory's biggest controllable cost",
-    desc: "Electricity demand and tariff exposure vary by facility. A site assessment determines the appropriate solar design and commercial route.",
-    stat: "Term-wide discount",
+    title: "Electricity cost depends on the plant",
+    desc: "Grid tariffs, operating hours, building loads and roof conditions determine which solar route may be suitable. An assessment comes before any savings estimate.",
+    stat: "Site-specific economics",
   },
   {
-    title: "Idle roof area becomes a generating asset",
-    desc: "Hundreds of thousands of square metres of reinforced industrial roof sit unused across Chattogram and Gazipur. They are already grid-connected, already secured and already maintained.",
-    stat: "৳0 upfront CAPEX",
+    title: "Industrial roofs can host generating assets",
+    desc: "Structural capacity, wind exposure, drainage, maintenance access and daytime demand must be assessed before a rooftop plant can be designed.",
+    stat: "Factory-owned CAPEX",
   },
   {
-    title: "Power for the economy the world buys from",
-    desc: "Buyers increasingly ask suppliers for evidence of decarbonisation. The operating model produces metered generation data and quarterly I-REC attribute certification.",
-    stat: "Metered attributes",
+    title: "Performance evidence matters",
+    desc: "Commissioned projects can be monitored using agreed metering and O&M requirements. Environmental attribute eligibility needs separate confirmation.",
+    stat: "Verified operating data",
   },
 ];
 
@@ -30,25 +30,25 @@ const THESIS = [
         Generation belongs where power is <em>consumed.</em>
       </>
     ),
-    body: "Transmission losses, imported fuel and unpredictable tariffs throttle factory competitiveness. Generating on the plant roof removes the transmission leg, reduces diesel generator cycling and turns price uncertainty into a defined structure.",
+    body: "Commercial rooftops can serve daytime loads when suitable engineering and interconnection conditions are satisfied. Benefits depend on actual generation and electricity use.",
   },
   {
     eyebrow: "Corporate model",
     title: (
       <>
-        A utility partner, not a hardware <em>broker.</em>
+        Site-specific models, not a blanket <em>promise.</em>
       </>
     ),
-    body: "Factory-owned CAPEX and partner-funded OPEX have different ownership and operating responsibilities. These are agreed in each project contract.",
+    body: "The factory borrows and owns in the CAPEX route; Netso delivers agreed development services as a subcontractor inside EPC, with no Netso debt or guarantee. A separate funding partner may own an OPEX project under an approved site-specific PPA.",
   },
   {
-    eyebrow: "Institutional architecture",
+    eyebrow: "Bankability",
     title: (
       <>
-        Structured for bankable <em>scale.</em>
+        Evidence before <em>commitment.</em>
       </>
     ),
-    body: "Each site is ring-fenced in a project vehicle with lender-grade documentation. The IDCOL senior-debt facility is applied for and under appraisal; terms are set at financial close, not on this page.",
+    body: "Lender eligibility, site engineering, funding and ownership responsibilities are evaluated separately for each project. No facility, financing term or project award is represented as secured.",
   },
 ];
 
@@ -58,7 +58,7 @@ export default function About() {
   return (
     <GlassShell onAssess={() => setModalOpen(true)} modalOpen={modalOpen} closeModal={() => setModalOpen(false)}>
       <PageHero
-        eyebrow="Netso Energy · Dhaka, Bangladesh"
+        eyebrow="Netso Energy · Chattogram, Bangladesh"
         title={
           <>
             Industrial rooftop infrastructure, engineered for <em>Bangladesh.</em>
@@ -66,12 +66,13 @@ export default function About() {
         }
         lede={
           <>
-            We finance, build and operate architectural solar pergolas on industrial roofs —
-            and sell the power under agreements that outlast the tariff cycle.
+            Netso develops and coordinates rooftop solar for factories in Bangladesh.
+            Ownership and financing follow the assessed project: factory-owned CAPEX
+            or separately partner-funded OPEX, subject to written terms.
           </>
         }
         image={aerial}
-        imageAlt="Industrial rooftop solar arrays across a manufacturing district"
+        imageAlt="Illustrative aerial view of industrial buildings"
         actions={
           <>
             <button type="button" onClick={() => setModalOpen(true)} className="g-btn">
@@ -86,9 +87,9 @@ export default function About() {
           <>
             <span className="g-chip">
               <span className="g-dot" aria-hidden="true" />
-              Build · own · operate
+              Development · engineering · delivery
             </span>
-            <span className="g-chip">20-year agreements</span>
+            <span className="g-chip">Commercial terms site-specific</span>
           </>
         }
       />
@@ -157,7 +158,7 @@ export default function About() {
         aside={
           <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.14em] text-[rgba(255,250,240,0.45)]">
             <ShieldCheck className="h-4 w-4 text-[var(--g-gold)]" />
-            Transo Ltd trading as Netso Energy · Dhaka
+            Transo Ltd trading as Netso Energy · Chattogram
           </div>
         }
       >
@@ -166,36 +167,36 @@ export default function About() {
             <Panel className="p-6 md:p-9" variant="quiet">
               <div className="space-y-5">
                 <p className="g-body">
-                  I founded Netso in Dhaka because of an unmistakable paradox: Bangladesh&rsquo;s
-                  manufacturing base drives the global supply chain, yet it is squeezed by tariff
-                  steps, diesel backup costs and tightening international audits.
+                  I founded Netso in Chattogram to develop practical rooftop-solar projects
+                  for Bangladesh's manufacturing sector. Each roof and facility has different
+                  technical, commercial and operating needs.
                 </p>
                 <p className="g-body">
-                  At the same time, millions of square feet of prime industrial roof sit under
-                  high-irradiance equatorial sun, unutilised.
+                  The opportunity is to evaluate suitable industrial roofs against building
+                  loads, maintenance needs, wind conditions and daytime consumption before
+                  proposing any design or financing model.
                 </p>
                 <p className="g-body">
-                  The bottleneck was never solar technology — it was financial architecture.
-                  Industrialists should not lock core working capital into non-core power hardware
-                  or carry electrical maintenance. Netso removes both: we provide{" "}
-                  <strong>the capital</strong>, build the pergola, operate the telemetry, and sell
-                  electricity at a defined discount to the grid for two decades.
+                  Our factory-owned CAPEX route places borrowing and asset ownership
+                  with the factory. Netso provides agreed development services within EPC.
+                  A separate partner-funded OPEX route may be considered only after
+                  funding-partner approval and site-specific PPA negotiations.
                 </p>
                 <p className="g-body">
-                  One factory roof stabilises an enterprise. A thousand roofs change a grid. The
-                  sun is already shining; we are building the infrastructure to harvest it.
+                  Our focus is a first bankable, site-verified transaction that can
+                  establish a repeatable process without overstating savings or financing.
                 </p>
               </div>
 
               <div className="mt-8 border-t border-[rgba(255,250,240,0.09)] pt-6">
                 <p className="g-display text-[24px]">Tazwar Mahtab</p>
                 <p className="g-label mt-2 !text-[9px] text-[var(--g-gold)]">
-                  Founder &amp; Managing Director · Transo Ltd trading as Netso Energy
+                  Founder · Transo Ltd trading as Netso Energy
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  <span className="g-chip !text-[9px]">Reference site</span>
-                  <span className="g-chip !text-[9px]">IDCOL application · under appraisal</span>
-                  <span className="g-chip !text-[9px]">SREDA NEM 2025</span>
+                  <span className="g-chip !text-[9px]">Project feasibility</span>
+                  <span className="g-chip !text-[9px]">Financing subject to lender review</span>
+                  <span className="g-chip !text-[9px]">Net-metering eligibility review</span>
                 </div>
               </div>
             </Panel>
@@ -206,20 +207,21 @@ export default function About() {
               <Panel className="p-6">
                 <p className="g-label !text-[9px] text-[rgba(255,250,240,0.45)]">Model</p>
                 <p className="mt-2 text-[14px] leading-relaxed text-[rgba(255,250,240,0.72)]">
-                  Build-own-operate rooftop solar, sold as a long-term power agreement rather than
-                  a capital purchase.
+                  Factory-owned CAPEX or separately partner-funded OPEX, depending on
+                  feasibility, ownership responsibilities and written agreements.
                 </p>
               </Panel>
               <Panel className="p-6">
                 <p className="g-label !text-[9px] text-[rgba(255,250,240,0.45)]">Footprint</p>
                 <p className="mt-2 text-[14px] leading-relaxed text-[rgba(255,250,240,0.72)]">
-                  Chattogram, Gazipur, Narayanganj and the Ashulia industrial corridor.
+                  Chattogram-based, with suitability of other Bangladesh industrial sites
+                  assessed on an individual basis.
                 </p>
               </Panel>
               <Panel className="p-6">
                 <p className="g-label !text-[9px] text-[rgba(255,250,240,0.45)]">Standards</p>
                 <p className="mt-2 text-[14px] leading-relaxed text-[rgba(255,250,240,0.72)]">
-                  BNBC 2020 structural loading, SREDA NEM 2025 settlement and BERC tariff basis.
+                  BNBC 2020 structural loading, Net-metering eligibility review settlement and BERC tariff basis.
                 </p>
               </Panel>
             </div>
@@ -234,7 +236,7 @@ export default function About() {
             Start with your own <em>roof.</em>
           </>
         }
-        copy="The assessment is the fastest way to see whether the building, the load and the tariff make this work."
+        copy="A roof and load assessment establishes which technical and commercial routes deserve a detailed study."
       />
     </GlassShell>
   );

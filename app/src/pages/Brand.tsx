@@ -44,7 +44,7 @@ const TOKENS: Token[] = [
   { name: "Kelp", hex: "#0B2419", varName: "--g-kelp", onDark: true, note: "First lift. Alternate sections and quiet panes.", group: "surface" },
   { name: "Lift", hex: "#10301F", varName: "--g-lift", onDark: true, note: "Second lift. Hover states on deep panes.", group: "surface" },
   { name: "Lift 2", hex: "#163A27", varName: "--g-lift-2", onDark: true, note: "Third lift. Reserved — used sparingly for emphasis blocks.", group: "surface" },
-  { name: "Parchment", hex: "#F6EFDF", varName: "--g-parchment", onDark: false, note: "Warm paper. Light panes and the classic-view canvas.", group: "light" },
+  { name: "Parchment", hex: "#F6EFDF", varName: "--g-parchment", onDark: false, note: "Warm paper used in earlier visual studies.", group: "light" },
   { name: "Cream", hex: "#FFFAF0", varName: "--g-cream", onDark: false, note: "Primary text on glass, and the lightest pane.", group: "light" },
   { name: "Gold", hex: "#C6A15B", varName: "--g-gold", onDark: false, note: "The single voltage. Actions, metrics, rules, focus rings.", group: "accent" },
   { name: "Gold high", hex: "#F0D9A4", varName: "--g-gold-hi", onDark: false, note: "Lit gold. Inline links and hover on gold text.", group: "accent" },
@@ -399,10 +399,9 @@ export default function Brand() {
 
               <Reveal>
                 <p className="mt-6 max-w-[70ch] font-sans text-[12px] leading-relaxed text-[rgba(255,250,240,0.38)]">
-                  The warm cream, ink, beige and sand tones documented in earlier revisions of
-                  this page remain in the classic stylesheet and still render at{" "}
-                  <span className="font-mono text-[11px] text-[rgba(255,250,240,0.6)]">/classic</span>.
-                  They are legacy, not canonical — new work uses the forest stack above.
+                  Earlier cream, ink, beige and sand palettes remain archived in
+                  source control, not the canonical public design. New work uses
+                  the forest stack above.
                 </p>
               </Reveal>
             </section>
