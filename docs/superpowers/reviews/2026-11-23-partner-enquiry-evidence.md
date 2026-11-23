@@ -22,3 +22,6 @@ Status: LOCALLY VERIFIED FOR THIS LIMITED CHANGE; WEBSITE PRODUCTION NO-GO.
 
 ## Local reviewer ruling
 Keep the existing Glass composition and change only unsupported commitments and handoff semantics. No new runtime dependency. Keep isolated branch and do not merge/push without explicit approval. Certify production only after independent reviewer and full-site release matrix.
+
+## 2026-11-24 browser-matrix follow-up
+A complete local Vite production-preview route/render/overflow/pageerror audit was run using the system Chrome binary as a fallback through the NETSO_BROWSER_EXECUTABLE override. The unmodified auditor failed before running any cases because its managed Chromium headless shell was absent (RED). After the minimal fallback change, all 56 cases passed (GREEN): seven routes (/, /solutions, /capex, /opex, /homes, /calculator, /contact) at widths 360/390/768/1440, for reduced-motion on/off, using http://127.0.0.1:4185. Raw results are in docs/superpowers/reviews/artifacts/2026-11-24-local-route-matrix.json. This proves a local smoke test only; staged Vercel/browser parity and end-to-end delivery remain unverified.

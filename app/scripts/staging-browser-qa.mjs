@@ -2,6 +2,7 @@
 // Independent, read-only browser QA. Install locally: npm install --no-save playwright
 // Then: npx playwright install chromium && node scripts/staging-browser-qa.mjs
 import { mkdir, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 let chromium;
 try { ({ chromium } = await import('playwright')); }
@@ -12,7 +13,10 @@ const widths = [360,390,768,1440];
 const out = resolve(process.env.NETSO_QA_OUTPUT || 'verification-results/browser');
 await mkdir(out, {recursive:true});
 const results=[];
-const browser = await chromium.launch({headless:true});
+const systemChrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const executablePath = process.env.NETSO_BROWSER_EXECUTABLE
+  || (process.platform === 'darwin' && existsSync(systemChrome) ? systemChrome : undefined);
+const browser = await chromium.launch({headless:true, ...(executablePath ? {executablePath} : {})});
 try {
  for (const reducedMotion of ['no-preference','reduce']) {
   for (const width of widths) {

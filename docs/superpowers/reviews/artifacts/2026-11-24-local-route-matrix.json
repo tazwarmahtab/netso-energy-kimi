@@ -1,0 +1,574 @@
+{
+  "observedAt": "2026-11-23T19:04:22.014Z",
+  "base": "http://127.0.0.1:4185",
+  "scope": "browser route/render/overflow/runtime smoke; no form submission",
+  "results": [
+    {
+      "route": "/",
+      "width": 360,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Your roof.A new energy asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/solutions",
+      "width": 360,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "One roof. Different ways to build.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/capex",
+      "width": 360,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Your roof. Your asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/opex",
+      "width": 360,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Power without plant ownership.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/homes",
+      "width": 360,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Designed for your home.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/calculator",
+      "width": 360,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Start with the right assumptions.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/contact",
+      "width": 360,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "A direct line to the people who build it.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/",
+      "width": 390,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Your roof.A new energy asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/solutions",
+      "width": 390,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "One roof. Different ways to build.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/capex",
+      "width": 390,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Your roof. Your asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/opex",
+      "width": 390,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Power without plant ownership.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/homes",
+      "width": 390,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Designed for your home.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/calculator",
+      "width": 390,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Start with the right assumptions.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/contact",
+      "width": 390,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "A direct line to the people who build it.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Your roof.A new energy asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/solutions",
+      "width": 768,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "One roof. Different ways to build.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/capex",
+      "width": 768,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Your roof. Your asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/opex",
+      "width": 768,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Power without plant ownership.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/homes",
+      "width": 768,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Designed for your home.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/calculator",
+      "width": 768,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Start with the right assumptions.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/contact",
+      "width": 768,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "A direct line to the people who build it.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Your roof.A new energy asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/solutions",
+      "width": 1440,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "One roof. Different ways to build.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/capex",
+      "width": 1440,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Your roof. Your asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/opex",
+      "width": 1440,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Power without plant ownership.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/homes",
+      "width": 1440,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Designed for your home.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/calculator",
+      "width": 1440,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "Start with the right assumptions.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/contact",
+      "width": 1440,
+      "reducedMotion": "no-preference",
+      "httpStatus": 200,
+      "heading": "A direct line to the people who build it.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/",
+      "width": 360,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Your roof.A new energy asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/solutions",
+      "width": 360,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "One roof. Different ways to build.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/capex",
+      "width": 360,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Your roof. Your asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/opex",
+      "width": 360,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Power without plant ownership.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/homes",
+      "width": 360,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Designed for your home.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/calculator",
+      "width": 360,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Start with the right assumptions.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/contact",
+      "width": 360,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "A direct line to the people who build it.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/",
+      "width": 390,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Your roof.A new energy asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/solutions",
+      "width": 390,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "One roof. Different ways to build.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/capex",
+      "width": 390,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Your roof. Your asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/opex",
+      "width": 390,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Power without plant ownership.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/homes",
+      "width": 390,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Designed for your home.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/calculator",
+      "width": 390,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Start with the right assumptions.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/contact",
+      "width": 390,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "A direct line to the people who build it.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Your roof.A new energy asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/solutions",
+      "width": 768,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "One roof. Different ways to build.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/capex",
+      "width": 768,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Your roof. Your asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/opex",
+      "width": 768,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Power without plant ownership.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/homes",
+      "width": 768,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Designed for your home.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/calculator",
+      "width": 768,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Start with the right assumptions.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/contact",
+      "width": 768,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "A direct line to the people who build it.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/",
+      "width": 1440,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Your roof.A new energy asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/solutions",
+      "width": 1440,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "One roof. Different ways to build.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/capex",
+      "width": 1440,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Your roof. Your asset.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/opex",
+      "width": 1440,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Power without plant ownership.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/homes",
+      "width": 1440,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Designed for your home.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/calculator",
+      "width": 1440,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "Start with the right assumptions.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    },
+    {
+      "route": "/contact",
+      "width": 1440,
+      "reducedMotion": "reduce",
+      "httpStatus": 200,
+      "heading": "A direct line to the people who build it.",
+      "overflow": false,
+      "errors": [],
+      "state": "PASS"
+    }
+  ],
+  "unverified": [
+    "contact delivery",
+    "exact deployment commit",
+    "visual design review",
+    "keyboard accessibility",
+    "animation timing"
+  ]
+}
