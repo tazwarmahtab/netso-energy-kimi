@@ -25,7 +25,7 @@ test("governance failures cannot be concealed by a passing app build", () => {
 });
 
 test("app CI covers reproducible install, build, tests, lint, security and source identity", () => {
-  for (const cmd of ["npm ci", "npm test", "npm run lint", "npm run build", "npm audit --omit=dev --audit-level=high"]) {
+  for (const cmd of ["npm ci", "npm test", "npm run lint", "npm run build", "npm audit --audit-level=high"]) {
     assert.ok(source.includes(cmd), cmd);
   }
   assert.match(source, /CIRCLE_SHA1/);

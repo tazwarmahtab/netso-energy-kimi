@@ -70,8 +70,8 @@ jobs:
           name: Typecheck and build
           command: cd app && npm run build
       - run:
-          name: Audit production dependencies
-          command: cd app && npm audit --omit=dev --audit-level=high
+          name: Audit full dependency tree (including build tooling)
+          command: cd app && npm audit --audit-level=high
       - run:
           name: Record exact commit and build hashes
           command: |

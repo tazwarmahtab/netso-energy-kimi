@@ -33,3 +33,7 @@ New verification/public-claims-gate.test.mjs was written before remediation and 
 - CircleCI YAML validity does not prove the project is connected, a hosted job ran, or its artifacts can be retrieved. Must verify exact run SHA, each job result and report digest from the service.
 - Browser viewport testing, shipping visual/source provenance, Vercel preview and independent reviewer approval remain separate gates.
 - No deployed product, public URL, DNS, pipeline settings or credentials were modified.
+
+
+## 2026-11-24 full toolchain-security gate amendment
+A later full dependency audit found a high-severity Vite advisory and moderate tooling/transitive advisories not seen by the production-only audit. The CircleCI app-quality step was tightened from npm audit --omit=dev --audit-level=high to npm audit --audit-level=high. This was TDD-verified: modified config contract RED against old step, then GREEN after replacement. The gate will correctly fail on this isolated branch until both security PRs #17 (Zod) and #19 (toolchain) are included. No bypass or omitted classes.
