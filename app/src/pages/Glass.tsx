@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FeasibilityModal from "../components/FeasibilityModal";
+import { EnergyEcosystem } from "../components/glass/EnergyEcosystem";
 import { useSmoothScroll } from "../hooks/useSmoothScroll";
 import {
   GlassArchitecture,
@@ -44,6 +45,7 @@ export default function Glass() {
         <GlassBenefits />
         <GlassProcess />
         <GlassNetwork />
+        <EnergyEcosystem />
         <GlassCTA onAssess={() => setIsModalOpen(true)} />
       </main>
 
