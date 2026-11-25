@@ -880,3 +880,23 @@
 .g-embed [data-embed-hide] {
   display: none !important;
 }
+
+
+/* Infinite ecosystem marquee — transform-only loop, paused for reduced motion. */
+@keyframes wensity-marquee-x {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes wensity-marquee-x-reverse {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wensity-marquee-track {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+}
