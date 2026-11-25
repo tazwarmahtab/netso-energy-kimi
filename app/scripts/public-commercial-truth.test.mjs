@@ -108,3 +108,32 @@ test("homepage hero clearly separates ownership routes without implying a delive
   assert.match(homeHero,/partner may own OPEX/i);
   assert.match(homeHero,/Illustrative only/i);
 });
+
+
+test("Product network diagram is clearly conceptual and does not imply a commissioned flow", () => {
+  assert.match(product, /Illustrative system architecture/i);
+  assert.match(product, /not a commissioned installation/i);
+  assert.doesNotMatch(product, /bg-emerald-400\/80/);
+  assert.doesNotMatch(product, /feeds stage/);
+});
+
+test("About standards copy names distinct reviews without implying approval or certification", () => {
+  assert.doesNotMatch(about, /Net-metering eligibility review settlement/i);
+  assert.match(about, /BNBC 2020 structural loading/i);
+  assert.match(about, /utility interconnection/i);
+  assert.match(about, /BERC tariff framework/i);
+  assert.match(about, /do not imply approval or certification/i);
+});
+
+test("browser QA dependencies and setup are reproducible from a clean npm install", () => {
+  const packageJson = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+  const fullQa = readFileSync(new URL("./run-full-staging-qa.sh", import.meta.url), "utf8");
+  const browserQa = readFileSync(new URL("./staging-browser-qa.mjs", import.meta.url), "utf8");
+  assert.ok(packageJson.devDependencies?.playwright, "Playwright must be declared in app devDependencies");
+  assert.equal(packageJson.scripts?.["test:browser"], "node --test scripts/*.browser.mjs");
+  assert.equal(packageJson.scripts?.["test:browser:install"], "playwright install chromium");
+  assert.match(fullQa, /npm run test:browser:install/);
+  assert.doesNotMatch(fullQa, /npm install --no-save/);
+  assert.match(browserQa, /npm run test:browser:install/);
+  assert.doesNotMatch(browserQa, /npm install --no-save playwright/);
+});

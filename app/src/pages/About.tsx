@@ -196,7 +196,7 @@ export default function About() {
                 <div className="mt-4 flex flex-wrap gap-2">
                   <span className="g-chip !text-[9px]">Project feasibility</span>
                   <span className="g-chip !text-[9px]">Financing subject to lender review</span>
-                  <span className="g-chip !text-[9px]">Net-metering eligibility review</span>
+                  <span className="g-chip !text-[9px]">Utility interconnection review</span>
                 </div>
               </div>
             </Panel>
@@ -221,7 +221,9 @@ export default function About() {
               <Panel className="p-6">
                 <p className="g-label !text-[9px] text-[rgba(255,250,240,0.45)]">Standards</p>
                 <p className="mt-2 text-[14px] leading-relaxed text-[rgba(255,250,240,0.72)]">
-                  BNBC 2020 structural loading, Net-metering eligibility review settlement and BERC tariff basis.
+                  BNBC 2020 structural loading, utility interconnection and net-metering requirements,
+                  and the applicable BERC tariff framework are reviewed for each site. These reviews
+                  do not imply approval or certification.
                 </p>
               </Panel>
             </div>

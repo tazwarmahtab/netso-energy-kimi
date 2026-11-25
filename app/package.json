@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "test": "node --test scripts/*.test.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:browser": "node --test scripts/*.browser.mjs",
+    "test:browser:install": "playwright install chromium"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -77,6 +79,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "kimi-plugin-inspect-react": "^1.0.3",
+    "playwright": "^1.65.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.19",
     "tailwindcss-animate": "^1.0.7",

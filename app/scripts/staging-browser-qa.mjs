@@ -1,18 +1,22 @@
 #!/usr/bin/env node
-// Independent, read-only browser QA. Install locally: npm install --no-save playwright
-// Then: npx playwright install chromium && node scripts/staging-browser-qa.mjs
+// Independent, read-only browser QA. Install dependencies with npm ci, then run:
+// npm run test:browser:install && node scripts/staging-browser-qa.mjs
 import { mkdir, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 let chromium;
 try { ({ chromium } = await import('playwright')); }
-catch { console.error('BLOCKED: Playwright is not installed. Run npm install --no-save playwright and npx playwright install chromium.'); process.exit(2); }
+catch { console.error('BLOCKED: Playwright is not installed. Run npm ci, then npm run test:browser:install.'); process.exit(2); }
 const base = process.env.NETSO_STAGING_URL || 'https://netso-energy-kimi-preview.vercel.app';
 const routes = ['/', '/solutions', '/capex', '/opex', '/homes', '/calculator', '/contact'];
 const widths = [360,390,768,1440];
 const out = resolve(process.env.NETSO_QA_OUTPUT || 'verification-results/browser');
 await mkdir(out, {recursive:true});
 const results=[];
-const browser = await chromium.launch({headless:true});
+const systemChrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const executablePath = process.env.NETSO_BROWSER_EXECUTABLE
+  || (process.platform === 'darwin' && existsSync(systemChrome) ? systemChrome : undefined);
+const browser = await chromium.launch({headless:true, ...(executablePath ? {executablePath} : {})});
 try {
  for (const reducedMotion of ['no-preference','reduce']) {
   for (const width of widths) {
