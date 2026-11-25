@@ -22,27 +22,27 @@ import aerial from "../../assets/neighborhood-aerial.jpg";
 const OPS = [
   {
     n: "01",
-    t: "Survey and structural model",
-    d: "Roof geometry, purlin spacing, sanctioned load and shading are measured. The pergola is modelled against local wind and monsoon loading before a single clamp is ordered.",
-    meta: "Week 1–2",
+    t: "Survey and structural assessment",
+    d: "Roof structure, loads, corrosion exposure, water flow, maintenance access, grid data and shading are checked before a design is selected.",
+    meta: "Assessment",
   },
   {
     n: "02",
-    t: "Design, finance, approve",
-    d: "Layout, single-line diagram and yield model are issued together with the commercial structure. Disbursement milestones are agreed before mobilisation.",
-    meta: "Week 3–5",
+    t: "Design and route approval",
+    d: "Engineering and commercial feasibility determine whether factory-owned CAPEX or a separately partner-funded OPEX structure can proceed. Each party approves its own responsibilities.",
+    meta: "Feasibility",
   },
   {
     n: "03",
-    t: "Build around production",
-    d: "Installation is sequenced around shift patterns. Non-penetrative attachments avoid roof works; commissioning is scheduled to avoid line stoppage.",
-    meta: "Week 6–12",
+    t: "Plan installation around production",
+    d: "The EPC scope, work schedule, roof attachment, safety controls and commissioning responsibilities are set after site review and relevant approvals.",
+    meta: "EPC delivery",
   },
   {
     n: "04",
-    t: "Operate and settle",
-    d: "Generation, maintenance and settlement run through one operating model. Class 0.2s metering records what was produced and what it replaces.",
-    meta: "Year 1–20",
+    t: "Operate under agreed responsibilities",
+    d: "Monitoring, maintenance, performance review and any settlement obligations are specified in contracts. No live installation or universal service term is implied.",
+    meta: "After handover",
   },
 ];
 
@@ -54,7 +54,7 @@ export function GlassOperations() {
           eyebrow="Operations"
           title={
             <>
-              One accountable party from survey to <em>settlement.</em>
+              Clear responsibilities from survey to <em>commissioning.</em>
             </>
           }
           aside={
@@ -76,10 +76,10 @@ export function GlassOperations() {
                   loading="lazy"
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(180deg,transparent,rgba(4,13,9,0.92))] p-5">
-                  <span className="g-label !text-[9px]">Reference detail</span>
+                  <span className="g-label !text-[9px]">Illustrative mounting concept</span>
                   <p className="mt-2 max-w-[32ch] text-[13px] leading-relaxed text-[rgba(255,250,240,0.7)]">
-                    Dual-glass bifacial modules on a hot-dip galvanised steel frame,
-                    detailed for standing-seam roofs.
+                    Hardware and mounting are chosen after roof, wind and drainage assessment;
+                    this image does not represent an approved Netso site.
                   </p>
                 </div>
               </div>
@@ -127,32 +127,32 @@ const PROOF = [
   {
     icon: Sun,
     t: "Daytime load matching",
-    d: "Sewing and processing lines run through the solar window. Generation is consumed behind the meter, so storage is not required to make the economics work.",
+    d: "Generation and self-consumption depend on facility hours, machinery loads and solar yield. Grid-tied PV alone does not provide backup power during outages.",
   },
   {
     icon: ShieldCheck,
     t: "Roof attachment",
-    d: "Standing-seam clamps and ballasted frames. No penetration, no reliance on the waterproofing warranty being reissued.",
+    d: "Clamped, ballasted or penetrative mounting options require structural and waterproofing review. No method or existing roof warranty is guaranteed in advance.",
   },
   {
     icon: Wrench,
-    t: "Installation around operations",
-    d: "Mobilisation is sequenced against shift patterns and material flow. Roof access and crane positions are agreed with plant management.",
+    t: "Installation planning",
+    d: "Site access, safety, shifts and material handling shape any installation program after agreement with plant management.",
   },
   {
     icon: Leaf,
     t: "Buyer reporting",
-    d: "Generation and avoided-emissions data can support EU CBAM and buyer audit requests. Reporting readiness, not a certification claim.",
+    d: "Metered generation records may support applicable buyer sustainability reporting. Any claim or certificate needs independently verified eligibility and data.",
   },
   {
     icon: Gauge,
     t: "Grid and net metering",
-    d: "Designed against SREDA NEM 2025 settlement rules, with bidirectional metering and a documented import/export boundary.",
+    d: "Utility connection, export permissions, meter configuration and billing treatment require assessment and utility approval under applicable rules.",
   },
   {
     icon: Building2,
-    t: "Local O&M",
-    d: "Regional technicians, spares held in-country, and a defined response window. Performance risk stays with Netso.",
+    t: "Project-specific O&M",
+    d: "Spare parts, response times, monitoring duties and allocation of performance responsibility are determined through the executed EPC and O&M agreements.",
   },
 ];
 
@@ -161,7 +161,7 @@ export function GlassProof() {
     <section id="proof" className="g-section g-section--tight">
       <div className="g-wrap">
         <SectionHead
-          eyebrow="Operational proof"
+          eyebrow="Engineering considerations"
           title={
             <>
               The objections are <em>engineering</em> questions.
@@ -169,8 +169,8 @@ export function GlassProof() {
           }
           aside={
             <p className="g-body max-w-[40ch] lg:ml-auto">
-              Every objection a plant head raises is answered by a detail, not a brochure
-              line. These are the six that decide whether a roof moves forward.
+              These are common site-feasibility questions. Answers depend on measured
+              loads, the roof and contractual responsibilities.
             </p>
           }
         />
@@ -208,23 +208,23 @@ const LENSES = [
   {
     id: "cost",
     label: "Cost",
-    title: "Lower the cost of power without buying the asset",
-    body: "Partner-funded OPEX may be suitable after site and credit assessment. Pricing, term and other commercial provisions are agreed per project.",
-    points: ["Partner-funded installation", "Site-specific power purchase agreement", "Assessment before commercial terms"],
+    title: "Choose the right rooftop ownership route",
+    body: "A factory may borrow and own the plant under CAPEX, or consider partner-funded OPEX after funding and site approval. Economics are modelled only after feasibility.",
+    points: ["Factory-owned CAPEX", "Partner-funded OPEX, subject to approval", "Site-specific pricing and terms"],
   },
   {
     id: "risk",
     label: "Risk",
-    title: "Replace an unhedged exposure with a defined one",
-    body: "A long-term agreement converts part of your grid-price exposure into a contractually defined structure. Netso carries construction, performance and maintenance risk for the term.",
-    points: ["Performance risk with Netso", "O&M inside the agreement", "Insured and monitored asset"],
+    title: "Define project risks before execution",
+    body: "Asset ownership, financing, warranties and maintenance responsibilities differ between CAPEX and OPEX. Contracts allocate them to the relevant parties, not automatically to Netso.",
+    points: ["Written owner and EPC duties", "O&M scope agreed separately", "No universal performance guarantee"],
   },
   {
     id: "control",
     label: "Control",
-    title: "See generation and settlement as one record",
-    body: "The operating model connects generation data, maintenance activity and commercial settlement, so the invoice can be reconciled against what the roof actually produced.",
-    points: ["Class 0.2s metering", "Settlement-grade data", "Live telemetry once commissioned"],
+    title: "Specify metering and reporting at the site",
+    body: "Where commissioned equipment supports it, monitoring data can help review generation, maintenance and power-use records. Connectivity, accuracy and reporting are project-specific.",
+    points: ["Metering subject to utility requirements", "Live data only after commissioning", "Reporting scope agreed per project"],
   },
 ];
 
@@ -237,7 +237,7 @@ export function GlassBenefits() {
       <div className="g-wrap">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHead
-            eyebrow="Why industrial offtakers sign"
+            eyebrow="How factories evaluate the options"
             title={
               <>
                 Three lenses on the <em>same asset.</em>
@@ -570,7 +570,7 @@ export function GlassFooter() {
             © 2026 Netso Energy · Bangladesh
           </p>
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[rgba(255,250,240,0.3)]">
-            SREDA NEM 2025 aligned · BERC tariff basis
+            Grid and tariff compliance requires site-specific review
           </p>
         </div>
       </div>
