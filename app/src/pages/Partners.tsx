@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import {
   Award,
   Building2,
@@ -10,7 +10,6 @@ import {
 import { Panel, Reveal } from "../components/glass/primitives";
 import { GlassShell, PageCTA, PageHero, PageSection } from "../components/glass/shell";
 import { getNetsoWhatsAppUrl, WhatsAppIcon } from "../components/ui/WhatsAppIcon";
-import { recordLeadForDispatch } from "../lib/notion";
 
 /* ------------------------------------------------------------------------- */
 /*  Structure metrics — financing is under appraisal, terms are not quoted    */
@@ -26,21 +25,21 @@ const STRUCTURE = [
 const CAPITAL = [
   {
     icon: Landmark,
-    t: "Senior project debt",
-    d: "Institutional term debt arranged per project at financial close. Terms are set in the project documents — no rates are disclosed on this site.",
-    tag: "Per project",
+    t: "Factory-owned CAPEX",
+    d: "The factory borrows and owns the rooftop plant. Netso provides agreed development services as a subcontractor within the EPC contract; credit decisions rest with the factory and lenders.",
+    tag: "Factory asset",
   },
   {
     icon: Scale,
-    t: "Lender-ready covenants",
-    d: "Debt service is tested against conservative generation modelling, with cash-flow buffers sized per project across all seasons.",
-    tag: "1.25× target",
+    t: "Partner-funded OPEX",
+    d: "A separate financing partner may fund and own the plant, subject to its approval and a site-specific PPA. No term, tariff, or financing commitment is offered here.",
+    tag: "Partner approval",
   },
   {
     icon: Building2,
-    t: "Ring-fenced delivery",
-    d: "Each site sits in a bankruptcy-remote vehicle with tri-partite escrow, milestone certification and an audited waterfall.",
-    tag: "SPV",
+    t: "Site-led delivery",
+    d: "Roof suitability, engineering, payment milestones, ownership and responsibilities are agreed through site review and written contracts before work starts.",
+    tag: "Site-specific",
   },
 ];
 
@@ -48,32 +47,32 @@ const EPC_WHY = [
   {
     n: "01",
     icon: Building2,
-    t: "Financed pipeline",
-    h: "No chasing unvetted leads",
-    c: "Netso originates, audits the structure, finances the vehicle and executes the agreement. You receive shovel-ready projects with capital behind them.",
+    t: "Screened opportunities",
+    h: "Assessment before commitment",
+    c: "Netso can originate candidate rooftops and coordinate feasibility. No financing, permit, pipeline volume or contracting outcome is promised in advance.",
   },
   {
     n: "02",
     icon: Layers,
-    t: "Standardised engineering",
-    h: "Modular pergola system",
-    c: "Pre-engineered structural drawings, wind-load ratings for coastal exposure, and a standard bill of materials across sites.",
+    t: "Site-specific engineering",
+    h: "Designed for the building",
+    c: "Structural condition, loads, coastal wind uplift, drainage, and maintenance access inform the eventual scope and bill of materials.",
   },
   {
     n: "03",
     icon: Award,
-    t: "Certified milestone escrow",
-    h: "No 120-day receivables",
-    c: "Disbursement runs against certified progress — mobilisation, mechanical completion and grid synchronisation — instead of a client invoice cycle.",
+    t: "Agreed EPC milestones",
+    h: "Payment terms in writing",
+    c: "EPC scope, acceptance and any milestone payment schedule are agreed in written, project-specific contracts. No escrow or payment timing is assumed.",
   },
 ];
 
 const CMP = [
-  { k: "Origination", old: "Months spent chasing and pitching factory owners", dl: "Financed, permitted projects handed over" },
-  { k: "Capital", old: "You carry the working capital while the client decides", dl: "Project vehicle funds construction" },
-  { k: "Engineering", old: "Bespoke drawings per site, rework risk", dl: "Standard system, site-specific foundation only" },
-  { k: "Payment", old: "Client receivable risk, 90–120 day terms", dl: "Escrow against certified milestones" },
-  { k: "Handover", old: "Commission, then the relationship ends", dl: "Operating partner for the full term" },
+  { k: "Origination", old: "A roof discussed without sufficient site data", dl: "Initial roof and load screening before a proposed scope" },
+  { k: "Capital", old: "Financing route not yet established", dl: "Factory-owned CAPEX or approved partner-funded OPEX" },
+  { k: "Engineering", old: "One layout applied to every roof", dl: "Engineering defined after building-specific review" },
+  { k: "Payment", old: "Milestones left unclear", dl: "Responsibilities and payments agreed in EPC documents" },
+  { k: "Handover", old: "Unclear post-installation responsibilities", dl: "O&M scope and access established by agreement" },
 ];
 
 const CATEGORIES = [
@@ -98,14 +97,17 @@ const LABEL =
 
 function Field({
   label,
+  id,
   ...props
 }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
   return (
     <div>
-      <label className={LABEL}>
+      <label htmlFor={inputId} className={LABEL}>
         {label} {props.required ? <span className="text-[var(--g-gold)]">*</span> : null}
       </label>
-      <input className={FIELD} {...props} />
+      <input id={inputId} className={FIELD} {...props} />
     </div>
   );
 }
@@ -121,7 +123,7 @@ export default function Partners() {
   const [company, setCompany] = useState("");
   const [track, setTrack] = useState(TRACK[0]);
   const [regions, setRegions] = useState<string[]>(["Chattogram"]);
-  const [sent, setSent] = useState(false);
+  const [prepared, setPrepared] = useState(false);
 
   const toggleRegion = (region: string) =>
     setRegions((current) =>
@@ -133,38 +135,20 @@ export default function Partners() {
     return `Hello Netso, I am writing about a ${label} partnership.\n\nName: ${first} ${last}\nRole: ${title}\nEntity: ${company}\nEmail: ${email}\nPhone: ${phone}\nTrack record: ${track}\nDistricts: ${regions.join(", ") || "—"}`;
   }, [category, first, last, title, company, email, phone, track, regions]);
 
-  const dispatch = async () => {
-    try {
-      await recordLeadForDispatch({
-        contactName: `${first} ${last}`.trim() || "Partner enquiry",
-        orgName: company || "Partner enquiry",
-        email,
-        phone,
-        facilityType: "commercial",
-        roofArea: "20000",
-        monthlySpend: "500000",
-        notes: summary,
-      });
-    } catch {
-      // The local ledger keeps the lead; never block the handover.
-    }
-    setSent(true);
-    window.open(getNetsoWhatsAppUrl(summary), "_blank", "noopener,noreferrer");
-  };
-
   return (
     <GlassShell onAssess={() => setModalOpen(true)} modalOpen={modalOpen} closeModal={() => setModalOpen(false)}>
       <PageHero
         eyebrow="Partners · capital & delivery"
         title={
           <>
-            Bankable structures for the people who <em>build and fund</em> them.
+            Rooftop opportunities for the people who <em>build and fund</em> them.
           </>
         }
         lede={
           <>
-            Netso originates and finances distributed rooftop assets. Lenders underwrite the
-            project vehicle; contractors build a standard system against certified milestones.
+            Netso develops rooftop solar opportunities with factory owners and partners.
+            The factory borrows and owns in CAPEX; OPEX requires a separate funding partner
+            and a site-specific PPA.
           </>
         }
         actions={
@@ -181,9 +165,9 @@ export default function Partners() {
           <>
             <span className="g-chip">
               <span className="g-dot" aria-hidden="true" />
-              Non-recourse SPVs
+              Factory-owned CAPEX
             </span>
-            <span className="g-chip">IDCOL application · under appraisal</span>
+            <span className="g-chip">Partner-funded OPEX · subject to approval</span>
           </>
         }
       />
@@ -214,13 +198,13 @@ export default function Partners() {
         eyebrow="Capital structure"
         title={
           <>
-            Depth of water, not a stack of <em>guarantees.</em>
+            Capital follows the project, not a <em>headline.</em>
           </>
         }
         aside={
           <p>
-            Financing is underwritten per project. The facility is applied for and under
-            appraisal; nothing on this page is a committed term.
+            The factory arranges any borrowing for CAPEX. An OPEX partner decides whether
+            to finance and own a separate plant. Netso provides no debt or guarantee.
           </p>
         }
       >
@@ -250,8 +234,8 @@ export default function Partners() {
 
         <Reveal delay={140}>
           <p className="mt-6 max-w-[78ch] text-[11.5px] leading-relaxed text-[rgba(255,250,240,0.3)]">
-            Indicative only. Facility size, tenor, covenant package and pricing are set at
-            financial close between the project vehicle and its lenders, and are not published.
+            All commercial routes are subject to roof assessment, the relevant lender or
+            funding partner, and written site-specific terms. Nothing here is a binding offer.
           </p>
         </Reveal>
       </PageSection>
@@ -261,13 +245,13 @@ export default function Partners() {
         eyebrow="For contractors & engineers"
         title={
           <>
-            Why EPC teams build <em>with</em> Netso.
+            How EPC teams could work <em>with</em> Netso.
           </>
         }
         aside={
           <p>
-            Focus on precision electrical and structural work. Origination, agreement
-            structuring and financing sit with Netso.
+            Netso can support origination, feasibility and agreed development services
+            inside the EPC contract; funding and engineering responsibilities depend on the route.
           </p>
         }
         tight
@@ -317,12 +301,12 @@ export default function Partners() {
           <div className="overflow-hidden rounded-[20px] border border-[rgba(255,250,240,0.1)]">
             <div className="grid grid-cols-2 bg-[rgba(255,250,240,0.05)]">
               <div className="p-5">
-                <p className="g-label !text-[9px] text-[rgba(255,250,240,0.4)]">The legacy way</p>
-                <p className="mt-1.5 text-[15px] text-[rgba(255,250,240,0.6)]">Typical subcontract</p>
+                <p className="g-label !text-[9px] text-[rgba(255,250,240,0.4)]">Without defined assessment</p>
+                <p className="mt-1.5 text-[15px] text-[rgba(255,250,240,0.6)]">Unverified project scope</p>
               </div>
               <div className="border-l border-[rgba(198,161,91,0.25)] bg-[rgba(198,161,91,0.08)] p-5">
-                <p className="g-label !text-[9px] text-[var(--g-gold)]">The Netso partnership</p>
-                <p className="mt-1.5 text-[15px] font-semibold text-[#fffaf0]">Project SPV partner</p>
+                <p className="g-label !text-[9px] text-[var(--g-gold)]">Site-assessed approach</p>
+                <p className="mt-1.5 text-[15px] font-semibold text-[#fffaf0]">Proposed delivery process</p>
               </div>
             </div>
 
@@ -352,7 +336,7 @@ export default function Partners() {
                 Partner outcome
               </p>
               <p className="text-[14px] font-medium text-[var(--g-gold-hi)]">
-                Predictable cash flow, no sales drag.
+                Clearer scope and responsibilities before commitment.
               </p>
             </div>
           </div>
@@ -372,15 +356,15 @@ export default function Partners() {
                 Tell us how you <em>build or fund.</em>
               </h2>
               <p className="g-body mt-5 max-w-[38ch]">
-                Applications are reviewed by the origination desk. Expect a reply within two
-                working days, with a diligence pack where there is a fit.
+                Tell Netso about your experience. Preparing a message here does not send an
+                enquiry; you decide whether to send it through WhatsApp.
               </p>
 
               <div className="mt-8 space-y-3">
                 {[
-                  "NDA on request before any commercial detail is shared",
-                  "Structured diligence pack for lenders",
-                  "Standard bill of materials for contractors",
+                  "Confidentiality arrangements agreed before sensitive documents are shared",
+                  "Financing and diligence requirements assessed per project",
+                  "Engineering scope and materials reviewed for each site",
                 ].map((line) => (
                   <p key={line} className="flex items-start gap-2.5 text-[12.5px] text-[rgba(255,250,240,0.5)]">
                     <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 flex-none text-[var(--g-gold)]" />
@@ -393,24 +377,39 @@ export default function Partners() {
 
           <Reveal delay={80}>
             <Panel className="p-6 md:p-8" variant="gold">
-              {sent ? (
-                <div className="py-12 text-center">
-                  <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-400" />
-                  <h3 className="g-display mt-4 text-[24px]">Application recorded</h3>
-                  <p className="g-body mx-auto mt-3 max-w-[42ch]">
-                    The desk has your details. If the WhatsApp handover did not open, the
-                    ledger copy is still queued for review.
+              {prepared ? (
+                <div className="py-8">
+                  <CheckCircle2 className="h-9 w-9 text-[var(--g-gold)]" aria-hidden="true" />
+                  <h3 className="g-display mt-4 text-[24px]">Partnership enquiry ready to review</h3>
+                  <p className="g-body mt-3 max-w-[52ch]">
+                    Netso has not received this enquiry. Your details were not saved on this device.
+                    Review the draft below, then choose Continue in WhatsApp and press Send in that app.
+                    Opening WhatsApp does not confirm delivery.
                   </p>
-                  <button type="button" onClick={() => setSent(false)} className="g-btn g-btn--ghost mt-7">
-                    Submit another
-                  </button>
+                  <div className="mt-6 max-h-64 overflow-y-auto rounded-xl border border-[rgba(255,250,240,0.14)] bg-black/20 p-4">
+                    <pre className="whitespace-pre-wrap break-words font-sans text-[12px] leading-relaxed text-[#fffaf0]">{summary}</pre>
+                  </div>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <a
+                      href={getNetsoWhatsAppUrl(summary)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="g-btn"
+                    >
+                      <WhatsAppIcon className="h-4 w-4 shrink-0" />
+                      Continue in WhatsApp
+                    </a>
+                    <button type="button" onClick={() => setPrepared(false)} className="g-btn g-btn--ghost">
+                      Edit enquiry
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form
                   className="space-y-6"
                   onSubmit={(event) => {
                     event.preventDefault();
-                    void dispatch();
+                    setPrepared(true);
                   }}
                 >
                   <fieldset>
@@ -464,10 +463,11 @@ export default function Partners() {
                       placeholder="Crescent Infrastructure Ltd."
                     />
                     <div>
-                      <label className={LABEL}>
+                      <label htmlFor="partner-track" className={LABEL}>
                         Track record <span className="text-[var(--g-gold)]">*</span>
                       </label>
                       <select
+                        id="partner-track"
                         className={FIELD}
                         required
                         value={track}
@@ -505,12 +505,12 @@ export default function Partners() {
 
                   <button type="submit" className="g-btn w-full">
                     <WhatsAppIcon className="h-4 w-4 shrink-0" />
-                    Submit application
+                    Review partnership enquiry
                   </button>
 
                   <p className="text-center text-[10.5px] leading-relaxed text-[rgba(255,250,240,0.3)]">
-                    Submitting records your details for this application and opens a WhatsApp
-                    handover to the origination desk.
+                    Review only. Nothing is saved or sent to Netso by this form.
+                    To contact the desk, continue in WhatsApp and press Send there.
                   </p>
                 </form>
               )}
@@ -523,10 +523,10 @@ export default function Partners() {
         onAssess={() => setModalOpen(true)}
         title={
           <>
-            Underwrite the <em>roof,</em> not the promise.
+            Assess the <em>roof,</em> then define the terms.
           </>
         }
-        copy="The assessment produces the geometry, yield and settlement basis a credit committee actually needs."
+        copy="A site assessment identifies engineering, demand and commercial information needed for partner review. No financing commitment is implied."
       />
     </GlassShell>
   );
