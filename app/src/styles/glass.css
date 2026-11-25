@@ -894,7 +894,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .group\\/marquee > div {
+  .wensity-marquee-track {
     animation: none !important;
     transform: none !important;
     will-change: auto;
