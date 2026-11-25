@@ -45,7 +45,7 @@ export function InfiniteMarquee({
       aria-label={label}
     >
       <div
-        className={cn("flex w-max items-center will-change-transform", gap)}
+        className={cn("wensity-marquee-track flex w-max items-center will-change-transform", gap)}
         style={{
           animation: `${animationName} ${speed}s linear infinite`,
           animationPlayState: "running",
