@@ -331,10 +331,10 @@ export default function Product() {
       {/* Network */}
       <PageSection
         id="network"
-        eyebrow="Distributed grid architecture"
+        eyebrow="Illustrative system architecture"
         title={
           <>
-            Bidirectional flow, synchronised with your <em>tariff.</em>
+            Electrical design starts with your <em>load.</em>
           </>
         }
         aside={
@@ -347,30 +347,24 @@ export default function Product() {
       >
         <Reveal delay={100} className="mt-12">
           <Panel className="p-5 md:p-8" variant="deep">
+            <p className="mb-5 max-w-[72ch] text-[11.5px] leading-relaxed text-[rgba(255,250,240,0.48)]">
+              Conceptual components only — equipment selection, electrical connections,
+              metering and approvals are established through site-specific engineering.
+              This is not a commissioned installation.
+            </p>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {NODES.map((node, index) => (
+              {NODES.map((node) => (
                 <div
                   key={node.name}
                   className="flex flex-col justify-between rounded-2xl border border-[rgba(255,250,240,0.08)] bg-[rgba(255,250,240,0.025)] p-5"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="g-label !text-[9px] text-[rgba(198,161,91,0.75)]">
-                      Stage 0{index + 1}
-                    </span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
-                  </div>
-                  <div className="my-5">
+                  <div className="my-2">
                     <h4 className="text-[15px] font-semibold text-[#fffaf0]">{node.name}</h4>
                     <p className="mt-1 font-mono text-[10.5px] text-[rgba(198,161,91,0.85)]">
                       {node.spec}
                     </p>
                     <p className="mt-2 text-[12px] text-[rgba(255,250,240,0.5)]">{node.role}</p>
                   </div>
-                  <span className="border-t border-[rgba(255,250,240,0.07)] pt-2.5 font-mono text-[9.5px] text-[rgba(255,250,240,0.32)]">
-                    {index < NODES.length - 1
-                      ? `→ feeds stage 0${index + 2}`
-                      : "→ site interconnection review"}
-                  </span>
                 </div>
               ))}
             </div>

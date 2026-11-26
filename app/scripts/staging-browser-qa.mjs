@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-// Independent, read-only browser QA. Install locally: npm install --no-save playwright
-// Then: npx playwright install chromium && node scripts/staging-browser-qa.mjs
+// Independent, read-only browser QA. Install dependencies with npm ci, then run:
+// npm run test:browser:install && node scripts/staging-browser-qa.mjs
 import { mkdir, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 let chromium;
 try { ({ chromium } = await import('playwright')); }
-catch { console.error('BLOCKED: Playwright is not installed. Run npm install --no-save playwright and npx playwright install chromium.'); process.exit(2); }
+catch { console.error('BLOCKED: Playwright is not installed. Run npm ci, then npm run test:browser:install.'); process.exit(2); }
 const base = process.env.NETSO_STAGING_URL || 'https://netso-energy-kimi-preview.vercel.app';
 const routes = ['/', '/solutions', '/capex', '/opex', '/homes', '/calculator', '/contact'];
 const widths = [360,390,768,1440];

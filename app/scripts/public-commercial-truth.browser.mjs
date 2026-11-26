@@ -56,11 +56,18 @@ test("classic bookmarks redirect; About and Product have evidence-safe claims ac
           assert.match(body,/factory borrows and owns/i);
           assert.doesNotMatch(body,/We finance, build and operate/i);
           assert.doesNotMatch(body,/IDCOL application/i);
+          assert.match(body,/BNBC 2020 structural loading/i);
+          assert.match(body,/BERC tariff framework/i);
+          assert.match(body,/do not imply approval or certification/i);
+          assert.doesNotMatch(body,/Net-metering eligibility review settlement/i);
         } else {
           assert.match(body,/Concept UI/i);
           assert.match(body,/No live data/i);
           assert.doesNotMatch(body,/90% monthly kWh credit/i);
           assert.doesNotMatch(body,/Netso funds 100%/i);
+          assert.match(body,/Illustrative system architecture/i);
+          assert.match(body,/not a commissioned installation/i);
+          assert.doesNotMatch(body,/feeds stage/i);
         }
       }
       assert.deepEqual(errors,[],"browser runtime errors at "+viewport.width);
