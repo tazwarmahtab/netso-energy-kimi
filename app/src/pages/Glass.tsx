@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router";
 import FeasibilityModal from "../components/FeasibilityModal";
 import { useSmoothScroll } from "../hooks/useSmoothScroll";
 import {
@@ -23,10 +22,9 @@ import "../styles/glass.css";
 /**
  * NETSO GLASS — the v3 homepage.
  *
- * Served at `/` (and `/glass`). The previous homepage remains reachable at
- * `/classic` so the two can be compared and so the swap can be reverted with a
- * one-line route change. Design direction, the section-by-section audit and the
- * decision ledger live in `docs/GLASS-AUDIT.md`.
+ * Served at / and /glass. Legacy classic code is preserved in Git history,
+ * not publicly routable while its outdated commercial claims remain unverified.
+ * Design/audit context lives in docs/GLASS-AUDIT.md.
  */
 export default function Glass() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,15 +48,6 @@ export default function Glass() {
       </main>
 
       <GlassFooter />
-
-      <div className="fixed bottom-4 left-4 z-40 hidden md:block">
-        <Link
-          to="/classic"
-          className="g-chip !bg-[rgba(4,13,9,0.7)] !text-[9px] hover:!text-[var(--g-gold-hi)]"
-        >
-          ← Classic view
-        </Link>
-      </div>
 
       <FeasibilityModal
         isOpen={isModalOpen}

@@ -205,7 +205,7 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
             <div className="flex flex-wrap items-center gap-2.5">
               <span className="g-chip">
                 <span className="g-dot" aria-hidden="true" />
-                Chattogram · Gazipur · Narayanganj
+                Based in Chattogram · Bangladesh
               </span>
               <span className="g-chip hidden sm:inline-flex">Site-specific solutions</span>
             </div>
@@ -251,8 +251,8 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
                     Commercial shape
                   </span>
                   <span className="flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-[rgba(255,250,240,0.4)]">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-                    Reference model
+                    <span className="h-1.5 w-1.5 rounded-full bg-[rgba(255,250,240,0.35)]" />
+                    Illustrative only
                   </span>
                 </div>
 
@@ -270,13 +270,13 @@ export function GlassHero({ onAssess }: { onAssess: () => void }) {
                   </div>
                   <div>
                     <dt className="g-label !text-[9px] !tracking-[0.18em] text-[rgba(255,250,240,0.45)]">
-                      Client CAPEX
+                      Ownership model
                     </dt>
                     <dd className="g-num mt-2 text-[clamp(1.5rem,2.4vw,2rem)] leading-none">
-                      Partner-funded
+                      Factory / partner
                     </dd>
                     <p className="mt-1.5 text-[11px] leading-snug text-[rgba(255,250,240,0.42)]">
-                      subject to partner funding and site approval
+                      factory owns CAPEX; partner may own OPEX
                     </p>
                   </div>
                   <div>

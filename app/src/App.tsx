@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router";
+import { Navigate, Route, Routes, useLocation } from "react-router";
 import Glass from "./pages/Glass";
 import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
 
@@ -8,10 +8,9 @@ import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
  *
  * The homepage is imported eagerly — it is the one route that has to paint on
  * the first frame. Everything else is a dynamic import, which keeps Three.js
- * (used only by the archived `/classic` page), the calculator, and the long
+ * previously used by the archived classic page), the calculator, and long
  * copy pages out of the initial chunk.
  */
-const Home = lazy(() => import("./pages/Home"));
 const Product = lazy(() => import("./pages/Product"));
 const SolutionsPage = lazy(() => import("./pages/Solutions"));
 const CalculatorPage = lazy(() => import("./pages/Calculator"));
@@ -94,12 +93,11 @@ export default function App() {
       <ScrollManager />
       <Suspense fallback={<RouteFallback />}>
         <Routes>
-          {/* Glass v3 is the canonical homepage. The classic page stays routable
-              at /classic (one-line revert if needed), and /glass remains an alias
-              so existing links and previews do not 404. */}
+          {/* Glass is canonical. Legacy classic remains in Git history only.
+              Old classic bookmarks redirect to the homepage. */}
           <Route path="/" element={<Glass />} />
           <Route path="/glass" element={<Glass />} />
-          <Route path="/classic" element={<Home />} />
+          <Route path="/classic" element={<Navigate to="/" replace />} />
           <Route path="/product" element={<Product />} />
           <Route path="/solutions" element={<SolutionsPage />} />
           <Route path="/capex" element={<SolutionsPage route="capex" />} />
