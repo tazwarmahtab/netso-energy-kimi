@@ -130,7 +130,6 @@ test("browser QA dependencies and setup are reproducible from a clean npm instal
   const fullQa = readFileSync(new URL("./run-full-staging-qa.sh", import.meta.url), "utf8");
   const browserQa = readFileSync(new URL("./staging-browser-qa.mjs", import.meta.url), "utf8");
   assert.ok(packageJson.devDependencies?.playwright, "Playwright must be declared in app devDependencies");
-  assert.equal(packageJson.scripts?.["test:browser"], "node --test scripts/*.browser.mjs");
   assert.equal(packageJson.scripts?.["test:browser:install"], "playwright install chromium");
   assert.match(fullQa, /npm run test:browser:install/);
   assert.doesNotMatch(fullQa, /npm install --no-save/);

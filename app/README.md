@@ -75,4 +75,4 @@ export default defineConfig([
 
 ## Browser QA
 
-Browser tests use the project-declared Playwright development dependency. From this directory, run `npm ci`, then `npm run test:browser:install` to install the Chromium browser binary. Run the viewport and partner-flow checks with `npm run test:browser`; run the independent staging browser pass with `node scripts/staging-browser-qa.mjs`. The full staging runner performs the browser install step automatically after its clean dependency install.
+Browser tests use the project-declared Playwright development dependency. From this directory, run `npm ci`, then `npm run test:browser:install` to install the Chromium browser binary. Run the viewport, redirect, and public commercial-claims checks with `npm run test:browser`; run the independent staging browser pass with `node scripts/staging-browser-qa.mjs`. The full staging runner performs the browser install step automatically after its clean dependency install.

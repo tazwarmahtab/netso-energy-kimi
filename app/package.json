@@ -10,7 +10,8 @@
     "test": "node --test scripts/*.test.mjs",
     "preview": "vite preview",
     "test:browser": "node --test scripts/*.browser.mjs",
-    "test:browser:install": "playwright install chromium"
+    "test:browser:install": "playwright install chromium",
+    "pretest:browser": "npm run build"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
