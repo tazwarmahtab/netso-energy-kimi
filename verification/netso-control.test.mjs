@@ -1,5 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {spawnSync} from 'node:child_process';
+import {mkdtempSync,writeFileSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join,dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {evaluate,observe,GATES} from './netso-control.mjs';
 function valid() {
  const commit='abc123', artifactDigest='sha256:example';
@@ -28,3 +33,30 @@ test('future observatory timestamp blocks',()=>{const s=valid();s.observatory.ob
 
 test('observatory detects changed artifact evidence even when gate errors are unchanged',()=>{const a=valid(),b=valid();b.deployment.artifactDigest='sha256:changed';assert.equal(observe(b,a).changed,true)});
 test('observatory detects updated evidence with unchanged pass status',()=>{const a=valid(),b=valid();b.requirements[0].evidenceId='new-evidence';assert.equal(observe(b,a).changed,true)});
+
+
+test('CLI reports the expected BLOCKED decision and exit code for incomplete state',()=>{
+ const root=dirname(fileURLToPath(import.meta.url));
+ const result=spawnSync(process.execPath,[join(root,'netso-control.mjs'),'verify',join(root,'STATE.example.json')],{encoding:'utf8'});
+ assert.equal(result.status,1);
+ assert.match(result.stdout,/"decision":\\s*"BLOCKED"/);
+});
+
+test('CLI argument, missing-file, and malformed-JSON errors cannot masquerade as BLOCKED',()=>{
+ const root=dirname(fileURLToPath(import.meta.url));
+ const cli=join(root,'netso-control.mjs');
+ const dir=mkdtempSync(join(tmpdir(),'netso-control-'));
+ const malformed=join(dir,'malformed.json');
+ writeFileSync(malformed,'{not-json');
+ try {
+  const cases=[
+   spawnSync(process.execPath,[cli,'nonsense','x'],{encoding:'utf8'}),
+   spawnSync(process.execPath,[cli,'verify',join(dir,'missing.json')],{encoding:'utf8'}),
+   spawnSync(process.execPath,[cli,'verify',malformed],{encoding:'utf8'})
+  ];
+  for(const result of cases){
+   assert.equal(result.status,2);
+   assert.doesNotMatch(result.stdout,/"decision":\\s*"BLOCKED"/);
+  }
+ } finally {rmSync(dir,{recursive:true,force:true});}
+});
