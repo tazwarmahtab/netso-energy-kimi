@@ -1,0 +1,114 @@
+# Netso LiquidChrome: quality and governance only. NEVER deploy/merge in CI.
+version: 2.1
+
+executors:
+  node22:
+    docker:
+      - image: cimg/node:22.18.0
+    resource_class: small
+    working_directory: ~/netso
+
+jobs:
+  delivery-contracts:
+    executor: node22
+    steps:
+      - checkout
+      - run:
+          name: Delivery charter and observatory tests
+          command: node --test verification/*.test.mjs
+      - run:
+          name: Incomplete releases must fail closed
+          command: |
+            set +e
+            output=$(node verification/netso-control.mjs verify verification/STATE.example.json 2>&1)
+            status=$?
+            set -e
+            printf '%s\\n' "$output"
+            if [ "$status" -ne 1 ] || ! printf '%s' "$output" | grep -Fq '"decision": "BLOCKED"'; then
+              echo "Unsafe: expected a BLOCKED decision with exit code 1" >&2
+              exit 1
+            fi
+      - run:
+          name: Validate gap register schema
+          command: |
+            node -e '
+              const fs = require("node:fs");
+              const g = JSON.parse(fs.readFileSync("verification/GAP-REGISTER.json", "utf8"));
+              if (!Array.isArray(g.gaps)) process.exit(2);
+              const ids = new Set();
+              for (const x of g.gaps) {
+                if (!x.id || ids.has(x.id) || !["P0","P1","P2","P3"].includes(x.severity) || !x.status) process.exit(2);
+                ids.add(x.id);
+              }
+              console.log("Gap schema valid; release approval remains separate.");
+            '
+
+  commercial-claims:
+    executor: node22
+    steps:
+      - checkout
+      - run:
+          name: Reject unsupported Netso commercial claims
+          command: node verification/claims-cli.mjs app/src
+
+  app-quality:
+    executor: node22
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - netso-node22-v1-{{ checksum "app/package-lock.json" }}
+      - run:
+          name: Reproducible dependency installation
+          command: cd app && npm ci --no-audit --no-fund
+      - save_cache:
+          key: netso-node22-v1-{{ checksum "app/package-lock.json" }}
+          paths:
+            - ~/.npm
+      - run:
+          name: App tests
+          command: cd app && npm test
+      - run:
+          name: Lint app
+          command: cd app && npm run lint
+      - run:
+          name: Typecheck and build
+          command: cd app && npm run build
+      - run:
+          name: Audit full dependency tree (including build tooling)
+          command: cd app && npm audit --audit-level=high
+      - run:
+          name: Record exact commit and build hashes
+          command: |
+            mkdir -p /tmp/netso-ci-evidence
+            test "$(git rev-parse HEAD)" = "$CIRCLE_SHA1"
+            printf '%s\n' "$CIRCLE_SHA1" > /tmp/netso-ci-evidence/commit.txt
+            (cd app && find dist -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum) > /tmp/netso-ci-evidence/build.sha256
+      - store_artifacts:
+          path: /tmp/netso-ci-evidence
+          destination: release-verification
+
+workflows:
+  review-staging-gates:
+    jobs:
+      - delivery-contracts:
+          filters:
+            branches:
+              only:
+                - feature/liquid-chrome-material-bridge-preview
+                - staging/netso-delivery-control
+                - /review\/.*/
+      - commercial-claims:
+          filters:
+            branches:
+              only:
+                - feature/liquid-chrome-material-bridge-preview
+                - staging/netso-delivery-control
+                - /review\/.*/
+      - app-quality:
+          filters:
+            branches:
+              only:
+                - feature/liquid-chrome-material-bridge-preview
+                - staging/netso-delivery-control
+                - /review\/.*/
