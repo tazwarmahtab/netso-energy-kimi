@@ -39,7 +39,7 @@ test('CLI reports the expected BLOCKED decision and exit code for incomplete sta
  const root=dirname(fileURLToPath(import.meta.url));
  const result=spawnSync(process.execPath,[join(root,'netso-control.mjs'),'verify',join(root,'STATE.example.json')],{encoding:'utf8'});
  assert.equal(result.status,1);
- assert.match(result.stdout,/"decision":\\s*"BLOCKED"/);
+ assert.match(result.stdout,/"decision":\s*"BLOCKED"/);
 });
 
 test('CLI argument, missing-file, and malformed-JSON errors cannot masquerade as BLOCKED',()=>{
@@ -56,7 +56,7 @@ test('CLI argument, missing-file, and malformed-JSON errors cannot masquerade as
   ];
   for(const result of cases){
    assert.equal(result.status,2);
-   assert.doesNotMatch(result.stdout,/"decision":\\s*"BLOCKED"/);
+   assert.doesNotMatch(result.stdout,/"decision":\s*"BLOCKED"/);
   }
  } finally {rmSync(dir,{recursive:true,force:true});}
 });
