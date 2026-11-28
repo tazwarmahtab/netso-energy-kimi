@@ -19,8 +19,13 @@ jobs:
       - run:
           name: Incomplete releases must fail closed
           command: |
-            if node verification/netso-control.mjs verify verification/STATE.example.json; then
-              echo "Unsafe: incomplete release approved" >&2
+            set +e
+            output=$(node verification/netso-control.mjs verify verification/STATE.example.json 2>&1)
+            status=$?
+            set -e
+            printf '%s\\n' "$output"
+            if [ "$status" -ne 1 ] || ! printf '%s' "$output" | grep -Fq '"decision": "BLOCKED"'; then
+              echo "Unsafe: expected a BLOCKED decision with exit code 1" >&2
               exit 1
             fi
       - run:
