@@ -883,17 +883,43 @@
 
 
 /* Infinite ecosystem marquee — transform-only loop, paused for reduced motion. */
+.wensity-marquee__toggle {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  right: 12px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 250, 240, 0.24);
+  border-radius: 999px;
+  color: var(--g-cream);
+  background: rgba(4, 13, 9, 0.82);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.wensity-marquee__toggle:focus-visible {
+  outline: 2px solid var(--g-gold-hi);
+  outline-offset: 3px;
+}
+
 @keyframes wensity-marquee-x {
   from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(calc(0px - var(--marquee-loop-distance, 50%)), 0, 0); }
 }
 
 @keyframes wensity-marquee-x-reverse {
-  from { transform: translate3d(-50%, 0, 0); }
+  from { transform: translate3d(calc(0px - var(--marquee-loop-distance, 50%)), 0, 0); }
   to { transform: translate3d(0, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .wensity-marquee {
+    overflow-x: auto !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
+
   .wensity-marquee-track {
     animation: none !important;
     transform: none !important;
